@@ -1,0 +1,1 @@
+lrelease zh_CN.ts

@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>font/CUVAwesome.ttf</file>
+        <file>font/segoe_slboot_EX.ttf</file>
+        <file>font/segoen_slboot_EX.ttf</file>
+        <file>image/crucal.png</file>
+    </qresource>
+</RCC>

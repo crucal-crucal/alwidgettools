@@ -1,0 +1,125 @@
+﻿#pragma once
+
+#include <QWidget>
+
+#include "uvwidgettoolsdef.hpp"
+
+#ifdef Q_OS_WIN
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#define Q_TAKEOVER_NATIVEEVENT_H bool nativeEvent(const QByteArray& eventType, void* message, qintptr* result) override;
+#else
+#define Q_TAKEOVER_NATIVEEVENT_H bool nativeEvent(const QByteArray& eventType, void* message, long* result) override;
+#endif
+#else
+#define Q_TAKEOVER_NATIVEEVENT_H
+#endif
+
+#ifdef Q_OS_WIN
+#define CUVAPPBAR_HANDLE(CUVAppBar)                                           \
+	if (CUVAppBar) {                                                          \
+		int ret = CUVAppBar->takeOverNativeEvent(eventType, message, result); \
+		if (ret == -1) {                                                      \
+			return QWidget::nativeEvent(eventType, message, result);          \
+		}                                                                     \
+		return static_cast<bool>(ret);										  \
+	}                                                                         \
+	return QWidget::nativeEvent(eventType, message, result);
+#endif
+
+#ifdef Q_OS_WIN
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#define Q_TAKEOVER_NATIVEEVENT_CPP(CLASS, CUVAppBar)                                       \
+    bool CLASS::nativeEvent(const QByteArray& eventType, void* message, qintptr* result) { \
+        CUVAPPBAR_HANDLE(CUVAppBar)                                                        \
+    }
+#else
+#define Q_TAKEOVER_NATIVEEVENT_CPP(CLASS, CUVAppBar)                                    \
+    bool CLASS::nativeEvent(const QByteArray& eventType, void* message, long* result) { \
+        CUVAPPBAR_HANDLE(CUVAppBar)                                                     \
+    }
+#endif
+#else
+#define Q_TAKEOVER_NATIVEEVENT_CPP(CLASS, CUVAppBar)
+#endif
+
+class CUVAppBarPrivate;
+
+class CUVWIDGETTOOLS_EXPORT CUVAppBar : public QWidget {
+	Q_OBJECT
+	Q_DECLARE_PRIVATE(CUVAppBar)
+	Q_PROPERTY(bool isStayTop READ getIsStayTop WRITE setIsStayTop NOTIFY sigIsStayTopChanged)
+	Q_PROPERTY(bool isFixedSize READ getIsFixedSize WRITE setIsFixedSize NOTIFY sigIsFixedSizeChanged)
+	Q_PROPERTY(bool iSDefaultClosed READ getIsDefaultClosed WRITE setIsDefaultClosed NOTIFY sigIsDefaultClosedChanged)
+	Q_PROPERTY(bool isOnlyAllowMinAndClose READ getIsOnlyAllowMinAndClose WRITE setIsOnlyAllowMinAndClose NOTIFY sigIsOnlyAllowMinAndCloseChanged)
+	Q_PROPERTY(int appBarHeight READ getAppBarHeight WRITE setAppBarHeight NOTIFY sigAppBarHeightChanged)
+	Q_PROPERTY(int customWidgetMaximumWidth READ getCustomWidgetMaximumWidth WRITE setCustomWidgetMaximumWidth NOTIFY sigCustomWidgetMaximumWidthChanged)
+
+public:
+	explicit CUVAppBar(QWidget* parent);
+	~CUVAppBar() override;
+
+	void setIsStayTop(bool isStayTop);
+	[[nodiscard]] bool getIsStayTop() const;
+
+	void setIsFixedSize(bool isFixedSize);
+	[[nodiscard]] bool getIsFixedSize() const;
+
+	void setIsDefaultClosed(bool isDefaultClosed);
+	[[nodiscard]] bool getIsDefaultClosed() const;
+
+	void setIsOnlyAllowMinAndClose(bool isOnlyAllowMinAndClose);
+	[[nodiscard]] bool getIsOnlyAllowMinAndClose() const;
+
+	void setAppBarHeight(int appBarHeight);
+	[[nodiscard]] int getAppBarHeight() const;
+
+	void setCustomWidgetMaximumWidth(int customWidgetMaximumWidth);
+	[[nodiscard]] int getCustomWidgetMaximumWidth() const;
+
+	void setBackgroundColor(const QColor& color);
+	[[nodiscard]] QColor getBackgroundColor() const;
+
+	void setCustomWidget(const UVAppBarType::CustomArea& customArea, QWidget* widget);
+	[[nodiscard]] QWidget* getCustomWidget() const;
+
+	void setWindowButtonFlag(const UVAppBarType::ButtonFlag& buttonFlag, bool isEnable = true);
+	void setWindowButtonFlags(const UVAppBarType::ButtonFlags& buttonFlags);
+	[[nodiscard]] UVAppBarType::ButtonFlags getWindowButtonFlags() const;
+
+	bool insertWidgetBeforeButton(QWidget* widget, const UVAppBarType::ButtonFlag& flag);
+	bool insertWidgetBeforeWidget(QWidget* widget, QWidget* targetWidget);
+	bool insertWidgetBeforeLayout(QWidget* widget, QLayout* targetLayout);
+	bool insertLayoutBeforeButton(QLayout* layout, const UVAppBarType::ButtonFlag& flag);
+	bool insertLayoutBeforeWidget(QLayout* layout, QWidget* targetWidget);
+	bool insertLayoutBeforeLayout(QLayout* layout, QLayout* targetLayout);
+
+	void setRouteBackButtonEnable(bool isEnable);
+
+	void closeWindow();
+#ifdef Q_OS_WIN
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+	int takeOverNativeEvent(const QByteArray& eventType, void* message, qintptr* result);
+#else
+	int takeOverNativeEvent(const QByteArray& eventType, const void* message, long* result);
+#endif
+#endif
+
+Q_SIGNALS:
+	void sigIsStayTopChanged();
+	void sigIsFixedSizeChanged();
+	void sigIsDefaultClosedChanged();
+	void sigIsOnlyAllowMinAndCloseChanged();
+	void sigAppBarHeightChanged();
+	void sigCustomWidgetMaximumWidthChanged();
+	void sigRouteBackButtonClicked();
+	void sigNavigationButtonClicked();
+	void sigThemeChangeButtonClicked();
+	void sigCloseButtonClicked();
+	void sigCustomWidgetChanged();
+
+protected:
+	const QScopedPointer<CUVAppBarPrivate> d_ptr{ nullptr };
+
+	void paintEvent(QPaintEvent* event) override;
+	bool eventFilter(QObject* watched, QEvent* event) override;
+};

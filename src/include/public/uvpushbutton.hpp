@@ -1,0 +1,100 @@
+﻿#pragma once
+
+#include <QPushButton>
+
+#include "uvwidgettoolsdef.hpp"
+
+class CUVPushButtonPrivate;
+
+class CUVWIDGETTOOLS_EXPORT CUVPushButton : public QPushButton {
+	Q_OBJECT
+	Q_DISABLE_COPY(CUVPushButton)
+	Q_DECLARE_PRIVATE(CUVPushButton)
+	Q_PROPERTY(int borderRadius READ getBorderRadius WRITE setBorderRadius NOTIFY sigBorderRadiusChanged)
+	Q_PROPERTY(QColor lightDefaultColor READ getLightDefaultColor WRITE setLightDefaultColor NOTIFY sigLightDefaultColorChanged)
+	Q_PROPERTY(QColor darkDefaultColor READ getDarkDefaultColor WRITE setDarkDefaultColor NOTIFY sigDarkDefaultColorChanged)
+	Q_PROPERTY(QColor lightHoverColor READ getLightHoverColor WRITE setLightHoverColor NOTIFY sigLightHoverColorChanged)
+	Q_PROPERTY(QColor darkHoverColor READ getDarkHoverColor WRITE setDarkHoverColor NOTIFY sigDarkHoverColorChanged)
+	Q_PROPERTY(QColor lightPressedColor READ getLightPressedColor WRITE setLightPressedColor NOTIFY sigLightPressedColorChanged)
+	Q_PROPERTY(QColor darkPressedColor READ getDarkPressedColor WRITE setDarkPressedColor NOTIFY sigDarkPressedColorChanged)
+
+public:
+	enum ButtonStyle {
+		Normal     = 0x00,
+		BottomLine = 0x01,
+		Shadow     = 0x02,
+		Border     = 0x04,
+	};
+
+	Q_DECLARE_FLAGS(CustomButtonStyles, ButtonStyle)
+	Q_FLAGS(ButtonStyles)
+
+	explicit CUVPushButton(QWidget* parent = nullptr);
+	explicit CUVPushButton(const QString& text, QWidget* parent = nullptr);
+	~CUVPushButton() override;
+
+	void setBorderRadius(int borderRadius);
+	[[nodiscard]] int getBorderRadius() const;
+
+	void setLightDefaultColor(const QColor& defaultColor);
+	[[nodiscard]] QColor getLightDefaultColor() const;
+
+	void setDarkDefaultColor(const QColor& defaultColor);
+	[[nodiscard]] QColor getDarkDefaultColor() const;
+
+	void setLightHoverColor(const QColor& hoverColor);
+	[[nodiscard]] QColor getLightHoverColor() const;
+
+	void setDarkHoverColor(const QColor& hoverColor);
+	[[nodiscard]] QColor getDarkHoverColor() const;
+
+	void setLightPressedColor(const QColor& pressedColor);
+	[[nodiscard]] QColor getLightPressedColor() const;
+
+	void setDarkPressedColor(const QColor& pressedColor);
+	[[nodiscard]] QColor getDarkPressedColor() const;
+
+	void setLightTextColor(const QColor& textColor);
+	[[nodiscard]] QColor getLightTextColor() const;
+
+	void setDarkTextColor(const QColor& textColor);
+	[[nodiscard]] QColor getDarkTextColor() const;
+
+	void setShadowBorderWidth(int shadowBorderWidth);
+	[[nodiscard]] int getShadowBorderWidth() const;
+
+	void setCustomButtonStyles(const CustomButtonStyles& buttonStyles);
+	[[nodiscard]] bool hasStyle(const ButtonStyle& buttonStyle);
+
+	void setBorderWidth(qreal borderwidth);
+	[[nodiscard]] qreal getBorderWidth() const;
+
+	void setBorderColor(const QColor& borderColor);
+	[[nodiscard]] QColor getBorderColor() const;
+
+	void setTextPixelSize(int pixelSize);
+	[[nodiscard]] int getTextPixelSize() const;
+
+	void setTextPointSize(int size);
+	[[nodiscard]] int getTextPointSize() const;
+
+	void setToolTip(const QString& tooltip);
+
+signals:
+	void sigBorderRadiusChanged();
+	void sigLightDefaultColorChanged();
+	void sigDarkDefaultColorChanged();
+	void sigLightHoverColorChanged();
+	void sigDarkHoverColorChanged();
+	void sigLightPressedColorChanged();
+	void sigDarkPressedColorChanged();
+
+protected:
+	const QScopedPointer<CUVPushButtonPrivate> d_ptr{ nullptr };
+
+	void mousePressEvent(QMouseEvent* event) override;
+	void mouseReleaseEvent(QMouseEvent* event) override;
+	void paintEvent(QPaintEvent* event) override;
+};
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(CUVPushButton::CustomButtonStyles)
