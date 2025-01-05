@@ -25,7 +25,7 @@ private:
 	UVThemeType::ThemeMode themeMode{};
 	CUVToolTip* toolTip{ nullptr };
 	bool isPressed{ false };
-	CUVPushButton::CustomButtonStyles customButtonStyles{ CUVPushButton::ButtonStyle::Normal };
+	CUVPushButton::ButtonStyles customButtonStyles{ CUVPushButton::ButtonStyle::Normal };
 	int shadowBorderWidth{ 3 };
 	int borderRadius{};
 	qreal borderWidth{};

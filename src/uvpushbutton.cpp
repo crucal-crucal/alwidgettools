@@ -56,6 +56,18 @@ CUVPushButton::CUVPushButton(const QString& text, QWidget* parent): CUVPushButto
 
 CUVPushButton::~CUVPushButton() = default;
 
+void CUVPushButton::setButtonStyle(const ButtonStyle& buttonStyle, const bool isEnable) {
+	setButtonStyles(isEnable ? d_func()->customButtonStyles | buttonStyle : d_func()->customButtonStyles & ~buttonStyle);
+}
+
+void CUVPushButton::setButtonStyles(const ButtonStyles& buttonStyles) {
+	d_func()->customButtonStyles = buttonStyles;
+}
+
+CUVPushButton::ButtonStyles CUVPushButton::getButtonStyles() const {
+	return d_func()->customButtonStyles;
+}
+
 void CUVPushButton::setBorderRadius(const int borderRadius) {
 	Q_D(CUVPushButton);
 
@@ -155,14 +167,6 @@ int CUVPushButton::getShadowBorderWidth() const {
 	return d_func()->shadowBorderWidth;
 }
 
-void CUVPushButton::setCustomButtonStyles(const CustomButtonStyles& buttonStyles) {
-	d_func()->customButtonStyles = buttonStyles;
-}
-
-bool CUVPushButton::hasStyle(const ButtonStyle& buttonStyle) {
-	return d_func()->customButtonStyles.testFlag(buttonStyle);
-}
-
 void CUVPushButton::setBorderWidth(const qreal borderwidth) {
 	Q_D(CUVPushButton);
 
@@ -225,7 +229,7 @@ void CUVPushButton::paintEvent(QPaintEvent* event) {
 	painter.save();
 	painter.setRenderHints(QPainter::SmoothPixmapTransform | QPainter::Antialiasing | QPainter::TextAntialiasing);
 	// 阴影绘制
-	if (hasStyle(ButtonStyle::Shadow)) {
+	if (d->customButtonStyles.testFlag(ButtonStyle::Shadow)) {
 		UVTheme->drawEffectShadow(&painter, rect(), d->shadowBorderWidth, d->borderRadius);
 	}
 	// 背景绘制
@@ -239,12 +243,12 @@ void CUVPushButton::paintEvent(QPaintEvent* event) {
 	}
 	painter.drawRoundedRect(foregroundRect, d->borderRadius, d->borderRadius);
 	// 底边线绘制
-	if (!d->isPressed && hasStyle(ButtonStyle::BottomLine)) {
+	if (!d->isPressed && d->customButtonStyles.testFlag(ButtonStyle::BottomLine)) {
 		painter.setPen(UVThemeColor(d->themeMode, UVThemeType::BasicBaseLine));
 		painter.drawLine(foregroundRect.x() + d->borderRadius, height() - d->shadowBorderWidth, foregroundRect.width(), height() - d->shadowBorderWidth);
 	}
 	// 绘制边框
-	if (hasStyle(ButtonStyle::Border)) {
+	if (d->customButtonStyles.testFlag(ButtonStyle::Border)) {
 		painter.setPen(QPen(UVThemeColor(d->themeMode, UVThemeType::BasicBorder), d->borderWidth));
 		painter.drawRoundedRect(foregroundRect, d->borderRadius, d->borderRadius);
 	} else {

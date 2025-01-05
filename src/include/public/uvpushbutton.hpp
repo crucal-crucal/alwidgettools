@@ -26,12 +26,16 @@ public:
 		Border     = 0x04,
 	};
 
-	Q_DECLARE_FLAGS(CustomButtonStyles, ButtonStyle)
+	Q_DECLARE_FLAGS(ButtonStyles, ButtonStyle)
 	Q_FLAGS(ButtonStyles)
 
 	explicit CUVPushButton(QWidget* parent = nullptr);
 	explicit CUVPushButton(const QString& text, QWidget* parent = nullptr);
 	~CUVPushButton() override;
+
+	void setButtonStyle(const ButtonStyle& buttonStyle, bool isEnable = true);
+	void setButtonStyles(const ButtonStyles& buttonStyles);
+	[[nodiscard]] ButtonStyles getButtonStyles() const;
 
 	void setBorderRadius(int borderRadius);
 	[[nodiscard]] int getBorderRadius() const;
@@ -62,9 +66,6 @@ public:
 
 	void setShadowBorderWidth(int shadowBorderWidth);
 	[[nodiscard]] int getShadowBorderWidth() const;
-
-	void setCustomButtonStyles(const CustomButtonStyles& buttonStyles);
-	[[nodiscard]] bool hasStyle(const ButtonStyle& buttonStyle);
 
 	void setBorderWidth(qreal borderwidth);
 	[[nodiscard]] qreal getBorderWidth() const;
@@ -97,4 +98,4 @@ protected:
 	void paintEvent(QPaintEvent* event) override;
 };
 
-Q_DECLARE_OPERATORS_FOR_FLAGS(CUVPushButton::CustomButtonStyles)
+Q_DECLARE_OPERATORS_FOR_FLAGS(CUVPushButton::ButtonStyles)

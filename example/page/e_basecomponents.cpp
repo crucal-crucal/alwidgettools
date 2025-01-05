@@ -3,6 +3,8 @@
 #include <QHBoxLayout>
 #include <QMouseEvent>
 
+#include "uvmessagebar.hpp"
+#include "uvpushbutton.hpp"
 #include "uvtoggleswitch.hpp"
 #include "uvscrollpagearea.hpp"
 #include "uvtext.hpp"
@@ -11,6 +13,7 @@ E_BaseComponents::E_BaseComponents(QWidget* parent): E_BasePage(parent) {
 	setWindowTitle("CUVBaseComponents");
 	createCustomWidget("some thing...");
 
+	/// toggleSwitchArea
 	const auto toggleSwitch = new CUVToggleSwitch(this);
 	const auto toggleSwitchArea = new CUVScrollPageArea(this);
 	const auto toggleSwitchHLayout = new QHBoxLayout(toggleSwitchArea);
@@ -29,12 +32,54 @@ E_BaseComponents::E_BaseComponents(QWidget* parent): E_BasePage(parent) {
 	toggleSwitchHLayout->addWidget(toggleSwitchDisable);
 	toggleSwitchHLayout->addSpacing(10);
 
+	/// messageBarArea
+	const auto successButton = new CUVPushButton("Success", this);
+	successButton->setFixedSize(80, 38);
+	successButton->setButtonStyles(CUVPushButton::Shadow | CUVPushButton::Border);
+	connect(successButton, &CUVPushButton::clicked, this, [=]() { CUVMessageBar::success("Success", "This is a success message"); });
+	const auto warningButton = new CUVPushButton("Warning", this);
+	warningButton->setFixedSize(80, 38);
+	warningButton->setButtonStyles(CUVPushButton::Shadow | CUVPushButton::Border);
+	connect(warningButton, &CUVPushButton::clicked, this, [=]() { CUVMessageBar::warning("Warning", "This is a warning message"); });
+	const auto errorButton = new CUVPushButton("Error", this);
+	errorButton->setFixedSize(80, 38);
+	errorButton->setButtonStyles(CUVPushButton::Shadow | CUVPushButton::Border);
+	connect(errorButton, &CUVPushButton::clicked, this, [=]() { CUVMessageBar::error("Error", "This is an error message"); });
+	const auto infoButton = new CUVPushButton("Info", this);
+	infoButton->setFixedSize(80, 38);
+	infoButton->setButtonStyles(CUVPushButton::Shadow | CUVPushButton::Border);
+	connect(infoButton, &CUVPushButton::clicked, this, [=]() { CUVMessageBar::information("Info", "This is an info message"); });
+	const auto messageBarArea = new CUVScrollPageArea(this);
+	const auto messageBarAreaHLayout = new QHBoxLayout(messageBarArea);
+	const auto messageBarText = new CUVText("CUVMessageBar", this);
+	messageBarText->setTextPixelSize(15);
+	messageBarAreaHLayout->addWidget(messageBarText);
+	messageBarAreaHLayout->addWidget(successButton);
+	messageBarAreaHLayout->addWidget(warningButton);
+	messageBarAreaHLayout->addWidget(errorButton);
+	messageBarAreaHLayout->addWidget(infoButton);
+	messageBarAreaHLayout->addStretch();
+	const auto messageBarDisable = new CUVToggleSwitch(this);
+	const auto messageBarDisableText = new CUVText("Disable", this);
+	messageBarDisableText->setTextPixelSize(15);
+	connect(messageBarDisable, &CUVToggleSwitch::sigToggleChanged, this, [=](const bool toggled) {
+		successButton->setDisabled(toggled);
+		warningButton->setDisabled(toggled);
+		errorButton->setDisabled(toggled);
+		infoButton->setDisabled(toggled);
+	});
+	messageBarAreaHLayout->addWidget(messageBarDisableText);
+	messageBarAreaHLayout->addWidget(messageBarDisable);
+	messageBarAreaHLayout->addSpacing(10);
+
+
 	const auto centralWidget = new QWidget(this);
 	centralWidget->setWindowTitle("CUVBaseComponents");
 	const auto centralVLayout = new QVBoxLayout(centralWidget);
 	centralVLayout->setContentsMargins(0, 0, 0, 0);
 	centralVLayout->setSpacing(5);
 	centralVLayout->addWidget(toggleSwitchArea);
+	centralVLayout->addWidget(messageBarArea);
 	centralVLayout->addStretch();
 	addCentralWidget(centralWidget, true, true, 0);
 

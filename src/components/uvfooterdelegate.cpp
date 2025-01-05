@@ -138,9 +138,7 @@ void CUVFooterDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opt
 			painter->fillPath(path, UVThemeColor(themeMode, UVThemeType::BasicHoverAlpha));
 		}
 	}
-	painter->restore();
 
-	painter->save();
 	painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
 	itemRect = option.rect;
 
@@ -153,17 +151,14 @@ void CUVFooterDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opt
 	// ioco
 	painter->setPen(index == m_pressIndex ? UVThemeColor(themeMode, UVThemeType::BasicTextPress) : UVThemeColor(themeMode, UVThemeType::BasicText));
 	if (node->getAwesomeIcon() != UVIcon::CUVAweSomeIcon::None) {
-		painter->save();
 		QFont iconFont("CUVAwesome");
 		iconFont.setPixelSize(17);
 		painter->setFont(iconFont);
 		painter->drawText(itemRect.x() + 10, itemRect.y() + 3, 20, 20, Qt::AlignCenter, QChar(static_cast<unsigned short>(node->getAwesomeIcon())));
-		painter->restore();
 	}
 
 	// keyPoints
 	if (int keyPoints = node->getKeyPoints()) {
-		painter->save();
 		painter->setPen(Qt::NoPen);
 		painter->setBrush(Qt::white);
 		painter->drawEllipse(QPoint(255, itemRect.y() + itemRect.height() / 2), 10, 10);
@@ -176,18 +171,17 @@ void CUVFooterDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opt
 		font.setPixelSize(keyPoints > 9 ? 11 : 12);
 		painter->setFont(font);
 		painter->drawText(keyPoints > 9 ? 248 : 251, itemRect.y() + itemRect.height() / 2 + 4, QString::number(keyPoints));
-		painter->restore();
 	}
 
 	// text
 	painter->setPen(UVThemeColor(themeMode, index == m_pressIndex ? UVThemeType::BasicTextPress : UVThemeType::BasicText));
 	const int padding = node->getAwesomeIcon() != UVIcon::CUVAweSomeIcon::None ? m_iconAreaWidth : m_leftPadding;
-	const QRect textRect{itemRect.x() + padding, itemRect.y(), itemRect.width() - m_textRightSpacing - m_indicatorIconAreaWidth - padding, itemRect.height()};
+	const QRect textRect{ itemRect.x() + padding, itemRect.y(), itemRect.width() - m_textRightSpacing - m_indicatorIconAreaWidth - padding, itemRect.height() };
 	const QString text = painter->fontMetrics().elidedText(node->getNodeTitle(), Qt::ElideRight, textRect.width());
 	painter->drawText(textRect, Qt::AlignVCenter | Qt::AlignLeft, text);
 	// indicator
 	painter->setPen(Qt::NoPen);
-		painter->setBrush(UVThemeColor(themeMode, UVThemeType::PrimaryNormal));
+	painter->setBrush(UVThemeColor(themeMode, UVThemeType::PrimaryNormal));
 	if (m_isSelectMarkDisplay && (node == model->getSelectedNode())) {
 		painter->drawRoundedRect(QRectF(itemRect.x() + 3, itemRect.y() + m_selectMarkTop, 3, itemRect.height() - m_selectMarkTop - m_selectMarkBottom), 3, 3);
 	}
