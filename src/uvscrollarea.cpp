@@ -13,12 +13,6 @@
  * @param parent pointer to the parent class
  */
 CUVScrollAreaPrivate::CUVScrollAreaPrivate(CUVScrollArea* q, QObject* parent): QObject(parent), q_ptr(q) {
-	horizontalScrollBar = new CUVScrollBar(Qt::Horizontal, q);
-	verticalScrollBar = new CUVScrollBar(Qt::Vertical, q);
-	q->setHorizontalScrollBar(horizontalScrollBar);
-	q->setVerticalScrollBar(verticalScrollBar);
-
-	//this->setFocusPolicy(Qt::StrongFocus);
 }
 
 CUVScrollAreaPrivate::~CUVScrollAreaPrivate() = default;
@@ -32,6 +26,17 @@ CUVScrollBar* CUVScrollAreaPrivate::getScrollBar(const Qt::Orientation& orientat
  * @param parent pointer to the parent class
  */
 CUVScrollArea::CUVScrollArea(QWidget* parent): QScrollArea(parent), d_ptr(new CUVScrollAreaPrivate(this, this)) {
+	Q_D(CUVScrollArea);
+
+	setObjectName("CUVScrollArea");
+	setStyleSheet("#CUVScrollArea { background-color: transparent; border: none; }");
+
+	d->horizontalScrollBar = new CUVScrollBar(this);
+	d->verticalScrollBar = new CUVScrollBar(this);
+	setHorizontalScrollBar(d->horizontalScrollBar);
+	setVerticalScrollBar(d->verticalScrollBar);
+	QScrollArea::setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+	QScrollArea::setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 }
 
 CUVScrollArea::~CUVScrollArea() = default;

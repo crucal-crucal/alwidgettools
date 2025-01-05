@@ -29,6 +29,7 @@ void CUVAwesomeButtonPrivate::init() {
 	darkSelectedColor = QColor(0x00, 0x7A, 0xFF);
 	isSelected = false;
 	borderRaius = 0;
+	opacity = 1;
 }
 
 /**
@@ -207,6 +208,15 @@ bool CUVAwesomeButton::getIsSelected() const {
 	return d->isSelected;
 }
 
+void CUVAwesomeButton::setOpacity(const qreal opacity) {
+	d_func()->opacity = opacity;
+	Q_EMIT sigOpacityChanged(opacity);
+}
+
+qreal CUVAwesomeButton::getOpacity() const {
+	return d_func()->opacity;
+}
+
 void CUVAwesomeButton::setToolTip(const QString& tooltip) {
 	Q_D(CUVAwesomeButton);
 
@@ -222,6 +232,7 @@ void CUVAwesomeButton::paintEvent(QPaintEvent* event) {
 
 	QPainter painter(this);
 	painter.save();
+	painter.setOpacity(d->opacity);
 	painter.setRenderHints(QPainter::SmoothPixmapTransform | QPainter::Antialiasing | QPainter::TextAntialiasing);
 	painter.setPen(Qt::NoPen);
 	painter.setBrush(d->isSelected ? d->darkSelectedColor : isEnabled() ? underMouse() ? d->darkHoverColor : Qt::transparent : Qt::transparent);

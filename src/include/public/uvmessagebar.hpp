@@ -4,6 +4,7 @@
 
 #include "uvwidgettoolsdef.hpp"
 
+class CUVMessageBarManager;
 class CUVMessageBarPrivate;
 
 class CUVWIDGETTOOLS_EXPORT CUVMessageBar : public QWidget {
@@ -62,6 +63,8 @@ public:
 
 protected:
 	const QScopedPointer<CUVMessageBarPrivate> d_ptr{ nullptr };
+
+	friend class CUVMessageBarManager;
 
 	void paintEvent(QPaintEvent* event) override;
 	bool eventFilter(QObject* watched, QEvent* event) override;

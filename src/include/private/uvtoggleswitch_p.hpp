@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include <QObject>
+#include "uvwidgettoolsdef.hpp"
 
 class CUVToggleSwitch;
 
@@ -17,15 +17,16 @@ protected:
 	CUVToggleSwitch* const q_ptr{ nullptr };
 
 private:
-	bool _isToggled{ false };
-	int _margin{ 1 };
-	qreal _circleCenterX{ 0 };
-	qreal _circleRadius{ 0 };
-	bool _isLeftButtonPress{ false };
-	bool _isMousePressMove{ false };
-	int _lastMouseX{ 0 };
+	UVThemeType::ThemeMode themeMode{};
+	bool isToggled{ false };
+	int margin{ 1 };
+	qreal circleCenterX{ 0 };
+	qreal circleRadius{ 0 };
+	bool isLeftButtonPress{ false };
+	bool isMousePressMove{ false };
+	int lastMouseX{ 0 };
 
-	void _startPosAnimation(qreal startX, qreal endX, bool isToggle);
-	void _startRadiusAnimation(qreal startRadius, qreal endRadius);
-	void _adjustCircleCenterX();
+	void startPosAnimation(qreal startX, qreal endX, bool isToggle);
+	void startRadiusAnimation(qreal startRadius, qreal endRadius);
+	void adjustCircleCenterX();
 };

@@ -22,11 +22,13 @@ public:
 
 	void init();
 
-public:
+protected:
 	CUVAwesomeButton* const q_ptr{ nullptr };
 
+private:
 	CUVToolTip* tooltip{ nullptr };
-	int borderRaius{ 0 };
+	int borderRaius{};
+	qreal opacity{};
 	QFont iconFont{};
 	CUVAweSomeIcon iconType{};
 	QColor ligntSelectedColor{};

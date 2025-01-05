@@ -169,7 +169,7 @@ void CUVMenu::showEvent(QShowEvent* event) {
 		update();
 	});
 	posAnimation->setEasingCurve(QEasingCurve::OutCubic);
-	posAnimation->setDuration(200);
+	posAnimation->setDuration(400);
 	int targetPosY = height();
 	if (targetPosY > 160) {
 		if (targetPosY < 320) {

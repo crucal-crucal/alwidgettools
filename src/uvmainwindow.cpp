@@ -255,7 +255,7 @@ Q_TAKEOVER_NATIVEEVENT_CPP(CUVMainWindow, d_func()->appBar)
 CUVMainWindow::CUVMainWindow(QWidget* parent): QMainWindow(parent), d_ptr(new CUVMainWindowPrivate(this, this)) {
 	Q_D(CUVMainWindow);
 
-	setProperty("CUVBaseClassName", "CUVWindow");
+	setProperty("CUVBaseClassName", "CUVMainWindow");
 	resize(1020, 680);
 	d->themeChangeTime = 700;
 	d->navigationDisplayMode = UVNavigationType::Auto;

@@ -5,6 +5,7 @@
 #include <QStyleOption>
 
 #include "uvmenu.hpp"
+#include "uvthememanager.hpp"
 
 using namespace UVIcon;
 
@@ -13,8 +14,11 @@ using namespace UVIcon;
  * @param style pointer to the parent style
  */
 CUVMenuStyle::CUVMenuStyle(QStyle* style): QProxyStyle(style) {
-	_pMenuItemHeight = 32;
-	_windowLinearGradient = new QLinearGradient(0, 0, 100, 100);
+	m_iconWidth = 22;
+	m_shadowBorderWidth = 6;
+	m_menuItemHeight = 32;
+	m_themeMode = UVTheme->getThemeMode();
+	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const UVThemeType::ThemeMode& mode) { m_themeMode = mode; });
 }
 
 CUVMenuStyle::~CUVMenuStyle() = default;
@@ -22,35 +26,14 @@ CUVMenuStyle::~CUVMenuStyle() = default;
 void CUVMenuStyle::drawPrimitive(const PrimitiveElement element, const QStyleOption* option, QPainter* painter, const QWidget* widget) const {
 	switch (element) {
 		case QStyle::PE_PanelMenu: {
-#if 0
 			// 高性能阴影
 			painter->save();
 			painter->setRenderHint(QPainter::Antialiasing);
-			QPainterPath path;
-			path.setFillRule(Qt::WindingFill);
-			auto color = QColor(0x9C, 0x9B, 0x9E);
-			for (int i = 0; i < _shadowBorderWidth; i++) {
-				QPainterPath painter_path;
-				painter_path.setFillRule(Qt::WindingFill);
-				painter_path.addRoundedRect(_shadowBorderWidth - i, _shadowBorderWidth - i, option->rect.width() - (_shadowBorderWidth - i) * 2,
-				                            option->rect.height() - (_shadowBorderWidth - i) * 2, 6 + i, 6 + i);
-				const int alpha = 5 * (_shadowBorderWidth - i + 1);
-				color.setAlpha(alpha > 255 ? 255 : alpha);
-				painter->setPen(color);
-				painter->drawPath(painter_path);
-			}
-#else
-			// 绘制边框
-			painter->save();
-			painter->setRenderHint(QPainter::Antialiasing);
-			QPen pen(QColor(0x2a, 0x2b, 0x26));
-			pen.setWidth(2);  // 边框宽度为 2px
-			painter->setPen(pen);
-#endif
+			UVTheme->drawEffectShadow(painter, option->rect, m_shadowBorderWidth, 6);
 			// 背景绘制
-			const QRect foregroundRect(_shadowBorderWidth, _shadowBorderWidth, option->rect.width() - 2 * _shadowBorderWidth, option->rect.height() - 2 * _shadowBorderWidth);
-			// painter->setPen(QColor(25, 25, 25));
-			painter->setBrush(QColor(25, 25, 25));
+			const QRect foregroundRect(m_shadowBorderWidth, m_shadowBorderWidth, option->rect.width() - 2 * m_shadowBorderWidth, option->rect.height() - 2 * m_shadowBorderWidth);
+			painter->setPen(UVThemeColor(m_themeMode, UVThemeType::PopupBorder));
+			painter->setBrush(UVThemeColor(m_themeMode, UVThemeType::PopupBase));
 			painter->drawRoundedRect(foregroundRect, 6, 6);
 			painter->restore();
 			return;
@@ -75,7 +58,7 @@ void CUVMenuStyle::drawControl(const ControlElement element, const QStyleOption*
 					painter->save();
 					painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);
 					painter->setPen(Qt::NoPen);
-					painter->setBrush(QColor(0xB3, 0xB3, 0xB3));
+					painter->setBrush(UVThemeColor(m_themeMode, UVThemeType::BasicBaseLine));
 					painter->drawRoundedRect(QRectF(separatorRect.x() + separatorRect.width() * 0.055, separatorRect.center().y(), separatorRect.width() - separatorRect.width() * 0.11, 1.5), 1, 1);
 					painter->restore();
 					return;
@@ -90,7 +73,7 @@ void CUVMenuStyle::drawControl(const ControlElement element, const QStyleOption*
 						QRect hoverRect = menuRect;
 						hoverRect.adjust(0, 2, 0, -2);
 						painter->setPen(Qt::NoPen);
-						painter->setBrush(QColor(0x46, 0x46, 0x46));
+						painter->setBrush(UVThemeColor(m_themeMode, UVThemeType::PopupHover));
 						painter->drawRoundedRect(hoverRect, 5, 5);
 					}
 					// Icon绘制
@@ -99,10 +82,10 @@ void CUVMenuStyle::drawControl(const ControlElement element, const QStyleOption*
 					if (mopt->menuHasCheckableItems) {
 						painter->save();
 						painter->setPen(!mopt->state.testFlag(QStyle::State_Enabled) ? Qt::gray : Qt::white);
-						auto iconFont = QFont("CUVAwesome");
-						iconFont.setPixelSize(_pMenuItemHeight * 0.57); // NOLINT
+						QFont iconFont("CUVAwesome");
+						iconFont.setPixelSize(m_menuItemHeight * 0.57); // NOLINT
 						painter->setFont(iconFont);
-						painter->drawText(QRectF(menuRect.x() + contentPadding, menuRect.y(), _iconWidth, menuRect.height()),
+						painter->drawText(QRectF(menuRect.x() + contentPadding, menuRect.y(), m_iconWidth, menuRect.height()),
 						                  Qt::AlignCenter, mopt->checked ? QChar(static_cast<unsigned short>(CUVAweSomeIcon::Check)) : QChar(static_cast<unsigned short>(CUVAweSomeIcon::None)));
 						painter->restore();
 					} else {
@@ -114,35 +97,35 @@ void CUVMenuStyle::drawControl(const ControlElement element, const QStyleOption*
 						}
 						if (!iconText.isEmpty()) {
 							painter->save();
-							painter->setPen(!mopt->state.testFlag(QStyle::State_Enabled) ? Qt::gray : Qt::white);
+							painter->setPen(!mopt->state.testFlag(QStyle::State_Enabled) ? Qt::gray : m_themeMode == UVThemeType::Light ? Qt::black : Qt::white);
 							auto iconFont = QFont("CUVAwesome");
-							iconFont.setPixelSize(_pMenuItemHeight * 0.57); // NOLINT
+							iconFont.setPixelSize(m_menuItemHeight * 0.57); // NOLINT
 							painter->setFont(iconFont);
-							painter->drawText(QRectF(menuRect.x() + contentPadding, menuRect.y(), _iconWidth, menuRect.height()), Qt::AlignCenter, iconText);
+							painter->drawText(QRectF(menuRect.x() + contentPadding, menuRect.y(), m_iconWidth, menuRect.height()), Qt::AlignCenter, iconText);
 							painter->restore();
 						} else {
 							if (!menuIcon.isNull()) {
-								painter->drawPixmap(QRect(menuRect.x() + contentPadding, menuRect.center().y() - _iconWidth / 2, _iconWidth, _iconWidth), menuIcon.pixmap(_iconWidth, _iconWidth)); // NOLINT
+								painter->drawPixmap(QRect(menuRect.x() + contentPadding, menuRect.center().y() - m_iconWidth / 2, m_iconWidth, m_iconWidth), menuIcon.pixmap(m_iconWidth, m_iconWidth)); // NOLINT
 							}
 						}
 					}
 					// 文字和快捷键绘制
 					if (!mopt->text.isEmpty()) {
-						auto font = QFont("Source Han Sans SC Normal");
+						QFont font("Source Han Sans SC Normal");
 						font.setPixelSize(14);
 						painter->setFont(font);
 						QStringList textList = mopt->text.split("\t");
-						painter->setPen(!mopt->state.testFlag(QStyle::State_Enabled) ? Qt::gray : Qt::white);
+						painter->setPen(!mopt->state.testFlag(QStyle::State_Enabled) ? Qt::gray : m_themeMode == UVThemeType::Light ? Qt::black : Qt::white);
 
-						painter->drawText(QRectF(menuRect.x() + (_isAnyoneItemHasIcon ? contentPadding + textLeftSpacing : 0) + _iconWidth, menuRect.y(), menuRect.width(), menuRect.height()), Qt::AlignLeft | Qt::AlignVCenter | Qt::TextSingleLine, textList[0]);
+						painter->drawText(QRectF(menuRect.x() + (m_isAnyoneItemHasIcon ? contentPadding + textLeftSpacing : 0) + m_iconWidth, menuRect.y(), menuRect.width(), menuRect.height()), Qt::AlignLeft | Qt::AlignVCenter | Qt::TextSingleLine, textList[0]);
 						if (textList.count() > 1) {
-							painter->drawText(QRectF(menuRect.x() + contentPadding + _iconWidth + textLeftSpacing, menuRect.y(), menuRect.width() - (contentPadding * 2 + _iconWidth + textLeftSpacing), menuRect.height()), Qt::AlignRight | Qt::AlignVCenter | Qt::TextSingleLine, textList[1]);
+							painter->drawText(QRectF(menuRect.x() + contentPadding + m_iconWidth + textLeftSpacing, menuRect.y(), menuRect.width() - (contentPadding * 2 + m_iconWidth + textLeftSpacing), menuRect.height()), Qt::AlignRight | Qt::AlignVCenter | Qt::TextSingleLine, textList[1]);
 						}
 					}
 					// 展开图标
 					if (mopt->menuItemType == QStyleOptionMenuItem::SubMenu) {
 						painter->save();
-						painter->setPen(!mopt->state.testFlag(QStyle::State_Enabled) ? Qt::gray : Qt::white);
+						painter->setPen(!mopt->state.testFlag(QStyle::State_Enabled) ? Qt::gray : m_themeMode == UVThemeType::Light ? Qt::black : Qt::white);
 						auto iconFont = QFont("CUVAwesome");
 						iconFont.setPixelSize(18);
 						painter->setFont(iconFont);
@@ -169,11 +152,11 @@ int CUVMenuStyle::pixelMetric(const PixelMetric metric, const QStyleOption* opti
 	switch (metric) {
 		case QStyle::PM_SmallIconSize: {
 			//图标宽度
-			return _iconWidth;
+			return m_iconWidth;
 		}
 		case QStyle::PM_MenuPanelWidth: {
 			//外围容器宽度
-			return _shadowBorderWidth * 1.5; // NOLINT
+			return m_shadowBorderWidth * 1.5; // NOLINT
 		}
 		default: {
 			break;
@@ -192,12 +175,12 @@ QSize CUVMenuStyle::sizeFromContents(const ContentsType type, const QStyleOption
 				const QSize menuItemSize = QProxyStyle::sizeFromContents(type, option, size, widget);
 				const auto menu = dynamic_cast<const CUVMenu*>(widget);
 				if (menu->isHasIcon() || mopt->menuHasCheckableItems) {
-					_isAnyoneItemHasIcon = true;
+					m_isAnyoneItemHasIcon = true;
 				}
 				if (menu->isHasChildMenu()) {
-					return { menuItemSize.width() + 20, _pMenuItemHeight };
+					return { menuItemSize.width() + 20, m_menuItemHeight };
 				} else {
-					return { menuItemSize.width(), _pMenuItemHeight };
+					return { menuItemSize.width(), m_menuItemHeight };
 				}
 			}
 		}
@@ -209,10 +192,10 @@ QSize CUVMenuStyle::sizeFromContents(const ContentsType type, const QStyleOption
 }
 
 void CUVMenuStyle::setMenuItemHeight(const int height) {
-	_pMenuItemHeight = height;
+	m_menuItemHeight = height;
 	emit sigMenuItemHeightChanged();
 }
 
 int CUVMenuStyle::getMenuItemHeight() const {
-	return _pMenuItemHeight;
+	return m_menuItemHeight;
 }

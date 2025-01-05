@@ -5,6 +5,7 @@
 #include <QPainterPath>
 #include <QPropertyAnimation>
 
+#include "uvthememanager.hpp"
 #include "uvtoggleswitch_p.hpp"
 
 /**
@@ -18,28 +19,28 @@ CUVToggleSwitchPrivate::CUVToggleSwitchPrivate(CUVToggleSwitch* q, QObject* pare
 
 CUVToggleSwitchPrivate::~CUVToggleSwitchPrivate() = default;
 
-void CUVToggleSwitchPrivate::_startPosAnimation(const qreal startX, const qreal endX, const bool isToggle) {
+void CUVToggleSwitchPrivate::startPosAnimation(const qreal startX, const qreal endX, const bool isToggle) {
 	Q_Q(CUVToggleSwitch);
 
 	const auto circleAnimation = new QPropertyAnimation(q, "circleCenterX");
 	connect(circleAnimation, &QPropertyAnimation::valueChanged, q, [=](const QVariant& value) {
-		this->_circleCenterX = value.toReal();
+		this->circleCenterX = value.toReal();
 		q->update();
 	});
 	circleAnimation->setStartValue(startX);
 	circleAnimation->setEndValue(endX);
 	circleAnimation->setEasingCurve(QEasingCurve::InOutSine);
 	circleAnimation->start(QAbstractAnimation::DeleteWhenStopped);
-	_isToggled = isToggle;
+	isToggled = isToggle;
 	emit q->sigToggleChanged(isToggle);
 }
 
-void CUVToggleSwitchPrivate::_startRadiusAnimation(const qreal startRadius, const qreal endRadius) {
+void CUVToggleSwitchPrivate::startRadiusAnimation(const qreal startRadius, const qreal endRadius) {
 	Q_Q(CUVToggleSwitch);
 
 	const auto circleRadiusAnimation = new QPropertyAnimation(q, "circleRadius");
 	connect(circleRadiusAnimation, &QPropertyAnimation::valueChanged, q, [=](const QVariant& value) {
-		this->_circleRadius = value.toReal();
+		this->circleRadius = value.toReal();
 		q->update();
 	});
 	circleRadiusAnimation->setStartValue(startRadius);
@@ -48,15 +49,15 @@ void CUVToggleSwitchPrivate::_startRadiusAnimation(const qreal startRadius, cons
 	circleRadiusAnimation->start(QAbstractAnimation::DeleteWhenStopped);
 }
 
-void CUVToggleSwitchPrivate::_adjustCircleCenterX() {
+void CUVToggleSwitchPrivate::adjustCircleCenterX() {
 	Q_Q(CUVToggleSwitch);
 
-	if (_circleCenterX > q->width() - q->height() / 2 - _margin * 2) {
-		_circleCenterX = q->width() - q->height() / 2 - _margin * 2;
+	if (circleCenterX > q->width() - q->height() / 2.0 - margin * 2) {
+		circleCenterX = q->width() - q->height() / 2.0 - margin * 2;
 	}
 
-	if (_circleCenterX < q->height() / 2) {
-		_circleCenterX = q->height() / 2;
+	if (circleCenterX < q->height() / 2.0) {
+		circleCenterX = q->height() / 2.0;
 	}
 }
 
@@ -65,10 +66,14 @@ void CUVToggleSwitchPrivate::_adjustCircleCenterX() {
  * @param parent pointer to the parent class
  */
 CUVToggleSwitch::CUVToggleSwitch(QWidget* parent) : QWidget(parent), d_ptr(new CUVToggleSwitchPrivate(this, this)) {
+	Q_D(CUVToggleSwitch);
+
 	setMouseTracking(true);
 	setFixedSize(44, 22);
-	d_func()->_circleCenterX = -1;
-	d_func()->_isToggled = false;
+	d->circleCenterX = -1;
+	d->isToggled = false;
+	d->themeMode = UVTheme->getThemeMode();
+	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const UVThemeType::ThemeMode& mode) { d->themeMode = mode; });
 	setProperty("circleCenterX", 0.01);
 	setProperty("circleRadius", 0.01);
 }
@@ -78,19 +83,19 @@ CUVToggleSwitch::~CUVToggleSwitch() = default;
 void CUVToggleSwitch::setIsToggled(const bool isToggled) {
 	Q_D(CUVToggleSwitch);
 
-	if (d->_isToggled == isToggled) {
+	if (d->isToggled == isToggled) {
 		return;
 	}
 
-	const qreal startX = d->_isToggled ? width() - height() / 2.0 - d->_margin * 2.0 : height() / 2.0;
-	const qreal endX = d->_isToggled ? height() / 2.0 : width() - height() / 2.0 - d->_margin * 2.0;
-	d->_startPosAnimation(startX, endX, isToggled);
+	const qreal startX = d->isToggled ? width() - height() / 2.0 - d->margin * 2.0 : height() / 2.0;
+	const qreal endX = d->isToggled ? height() / 2.0 : width() - height() / 2.0 - d->margin * 2.0;
+	d->startPosAnimation(startX, endX, isToggled);
 }
 
 bool CUVToggleSwitch::isToggled() const {
 	Q_D(const CUVToggleSwitch);
 
-	return d->_isToggled;
+	return d->isToggled;
 }
 
 bool CUVToggleSwitch::event(QEvent* event) {
@@ -99,13 +104,13 @@ bool CUVToggleSwitch::event(QEvent* event) {
 	switch (event->type()) {
 		case QEvent::Enter: {
 			if (isEnabled()) {
-				d->_startRadiusAnimation(height() * 0.3, height() * 0.35);
+				d->startRadiusAnimation(height() * 0.3, height() * 0.35);
 			}
 			break;
 		}
 		case QEvent::Leave: {
 			if (isEnabled()) {
-				d->_startRadiusAnimation(height() * 0.35, height() * 0.3);
+				d->startRadiusAnimation(height() * 0.35, height() * 0.3);
 			}
 			break;
 		}
@@ -122,44 +127,44 @@ bool CUVToggleSwitch::event(QEvent* event) {
 void CUVToggleSwitch::mousePressEvent(QMouseEvent* event) {
 	Q_D(CUVToggleSwitch);
 
-	d->_adjustCircleCenterX();
-	d->_isLeftButtonPress = true;
-	d->_lastMouseX = event->pos().x();
-	d->_startRadiusAnimation(d->_circleRadius, height() * 0.25);
+	d->adjustCircleCenterX();
+	d->isLeftButtonPress = true;
+	d->lastMouseX = event->pos().x();
+	d->startRadiusAnimation(d->circleRadius, height() * 0.25);
 
-	// QWidget::mousePressEvent(event);
+	QWidget::mousePressEvent(event);
 }
 
 void CUVToggleSwitch::mouseReleaseEvent(QMouseEvent* event) {
 	Q_D(CUVToggleSwitch);
 
-	d->_isLeftButtonPress = false;
-	// QWidget::mouseReleaseEvent(event);
+	d->isLeftButtonPress = false;
+	QWidget::mouseReleaseEvent(event);
 
-	if (d->_isMousePressMove) {
-		d->_isMousePressMove = false;
-		const qreal endx = (d->_circleCenterX > width() / 2.0) ? (width() - height() / 2.0 - d->_margin * 2.0) : (height() / 2.0);
-		d->_startPosAnimation(d->_circleCenterX, endx, d->_circleCenterX > width() / 2.0);
+	if (d->isMousePressMove) {
+		d->isMousePressMove = false;
+		const qreal endx = (d->circleCenterX > width() / 2.0) ? (width() - height() / 2.0 - d->margin * 2.0) : (height() / 2.0);
+		d->startPosAnimation(d->circleCenterX, endx, d->circleCenterX > width() / 2.0);
 	} else {
-		const qreal endx = d->_isToggled ? (height() / 2.0) : (width() - height() / 2.0 - d->_margin * 2.0);
-		d->_startPosAnimation(d->_circleCenterX, endx, !d->_isToggled);
+		const qreal endx = d->isToggled ? (height() / 2.0) : (width() - height() / 2.0 - d->margin * 2.0);
+		d->startPosAnimation(d->circleCenterX, endx, !d->isToggled);
 	}
 
-	d->_startRadiusAnimation(height() * 0.25, height() * 0.35);
+	d->startRadiusAnimation(height() * 0.25, height() * 0.35);
 }
 
 void CUVToggleSwitch::mouseMoveEvent(QMouseEvent* event) {
 	Q_D(CUVToggleSwitch);
 
-	if (d->_isLeftButtonPress) {
-		d->_isMousePressMove = true;
-		const int moveX = event->pos().x() - d->_lastMouseX;
-		d->_lastMouseX = event->pos().x();;
-		d->_circleCenterX += moveX;
-		d->_adjustCircleCenterX();
+	if (d->isLeftButtonPress) {
+		d->isMousePressMove = true;
+		const int moveX = event->pos().x() - d->lastMouseX;
+		d->lastMouseX = event->pos().x();;
+		d->circleCenterX += moveX;
+		d->adjustCircleCenterX();
 	}
 
-	// QWidget::mouseMoveEvent(event);
+	QWidget::mouseMoveEvent(event);
 }
 
 void CUVToggleSwitch::paintEvent(QPaintEvent* event) {
@@ -169,30 +174,30 @@ void CUVToggleSwitch::paintEvent(QPaintEvent* event) {
 	painter.save();
 	painter.setRenderHints(QPainter::SmoothPixmapTransform | QPainter::Antialiasing | QPainter::TextAntialiasing);
 	// 背景绘制
-	painter.setPen(d->_isToggled ? QPen(QColor(0x4B, 0x4B, 0x4B), 1.5) : QPen(QColor(0x5C, 0x5C, 0x5C), 1.5));
-	painter.setBrush(isEnabled() ? d->_isToggled ? qRgb(82, 164, 255) : (underMouse() ? QColor(0x40, 0x40, 0x40) : QColor(0x34, 0x34, 0x34)) : QColor(0x2A, 0x2A, 0x2A));
+	painter.setPen(QPen(UVThemeColor(d->themeMode, d->isToggled ? UVThemeType::BasicBorder : UVThemeType::BasicBorderDeep), 1.5));
+	painter.setBrush(UVThemeColor(d->themeMode, isEnabled() ? d->isToggled ? UVThemeType::PrimaryNormal : underMouse() ? UVThemeType::BasicHover : UVThemeType::BasicBase : UVThemeType::BasicDisable));
 	QPainterPath path;
-	path.moveTo(width() - height() - d->_margin, height() - d->_margin);
-	path.arcTo(QRectF(QPointF(width() - height() - d->_margin, d->_margin), QSize(height() - d->_margin * 2, height() - d->_margin * 2)), -90, 180);
-	path.lineTo(height() / 2 + d->_margin, d->_margin);
-	path.arcTo(QRectF(QPointF(d->_margin, d->_margin), QSize(height() - d->_margin * 2, height() - d->_margin * 2)), 90, 180);
-	path.lineTo(width() - height() - d->_margin, height() - d->_margin);
+	path.moveTo(width() - height() - d->margin, height() - d->margin);
+	path.arcTo(QRectF(QPointF(width() - height() - d->margin, d->margin), QSize(height() - d->margin * 2, height() - d->margin * 2)), -90, 180);
+	path.lineTo(height() / 2.0 + d->margin, d->margin);
+	path.arcTo(QRectF(QPointF(d->margin, d->margin), QSize(height() - d->margin * 2, height() - d->margin * 2)), 90, 180);
+	path.lineTo(width() - height() - d->margin, height() - d->margin);
 	path.closeSubpath();
 	painter.drawPath(path);
 
 	// 圆心绘制
 	painter.setPen(Qt::NoPen);
-	painter.setBrush(isEnabled() ? d->_isToggled ? Qt::white : QColor(0xD0, 0xD0, 0xD0) : QColor(0xA7, 0xA7, 0xA7));
-	if (d->_circleRadius == 0) {
-		d->_circleRadius = this->isEnabled() ? (underMouse() ? height() * 0.35 : height() * 0.3) : height() * 0.3;
+	painter.setBrush(UVThemeColor(d->themeMode, isEnabled() ? d->isToggled ? UVThemeType::BasicTextInvert : UVThemeType::ToggleSwitchNoToggledCenter : UVThemeType::BasicTextDisable));
+	if (d->circleRadius == 0) {
+		d->circleRadius = this->isEnabled() ? (underMouse() ? height() * 0.35 : height() * 0.3) : height() * 0.3;
 	}
-	if (d->_isLeftButtonPress) {
-		painter.drawEllipse(QPointF(d->_circleCenterX, height() / 2), d->_circleRadius, d->_circleRadius);
+	if (d->isLeftButtonPress) {
+		painter.drawEllipse(QPointF(d->circleCenterX, height() / 2.0), d->circleRadius, d->circleRadius);
 	} else {
-		if (d->_circleCenterX == -1) {
-			d->_circleCenterX = d->_isToggled ? width() - height() / 2 - d->_margin * 2 : height() / 2;
+		if (d->circleCenterX == -1) {
+			d->circleCenterX = d->isToggled ? width() - height() / 2 - d->margin * 2 : height() / 2;
 		}
-		painter.drawEllipse(QPointF(d->_circleCenterX, height() / 2), d->_circleRadius, d->_circleRadius);
+		painter.drawEllipse(QPointF(d->circleCenterX, height() / 2.0), d->circleRadius, d->circleRadius);
 	}
 	painter.restore();
 }

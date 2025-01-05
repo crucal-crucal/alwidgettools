@@ -21,6 +21,7 @@ class CUVWIDGETTOOLS_EXPORT CUVAwesomeButton : public QPushButton {
 	Q_PROPERTY(QColor ligntSelectedColor READ getLigntSelectedColor WRITE setLigntSelectedColor NOTIFY sigLigntSelectedColorChanged)
 	Q_PROPERTY(QColor darkSelectedColor READ getDarkSelectedColor WRITE setDarkSelectedColor NOTIFY sigDarkSelectedColorChanged)
 	Q_PROPERTY(bool isSelected READ getIsSelected WRITE setIsSelected NOTIFY sigIsSelectedChanged)
+	Q_PROPERTY(qreal opacity READ getOpacity WRITE setOpacity NOTIFY sigOpacityChanged)
 
 public:
 	explicit CUVAwesomeButton(const CUVAweSomeIcon& iconType, QWidget* parent = nullptr);
@@ -55,17 +56,21 @@ public:
 	void setIsSelected(bool isSelected);
 	[[nodiscard]] bool getIsSelected() const;
 
+	void setOpacity(qreal opacity);
+	[[nodiscard]] qreal getOpacity() const;
+
 	void setToolTip(const QString& tooltip);
 
-signals:
-	void sigBorderRadiusChanged(int radius);
-	void sigLightHoverColorChanged(const QColor& color);
-	void sigDarkHoverColorChanged(const QColor& color);
-	void sigLightIconColorChanged(const QColor& color);
-	void sigDarkIconColorChanged(const QColor& color);
-	void sigLigntSelectedColorChanged(const QColor& color);
-	void sigDarkSelectedColorChanged(const QColor& color);
-	void sigIsSelectedChanged(bool isSelected);
+Q_SIGNALS:
+	Q_SIGNAL void sigBorderRadiusChanged(int radius);
+	Q_SIGNAL void sigLightHoverColorChanged(const QColor& color);
+	Q_SIGNAL void sigDarkHoverColorChanged(const QColor& color);
+	Q_SIGNAL void sigLightIconColorChanged(const QColor& color);
+	Q_SIGNAL void sigDarkIconColorChanged(const QColor& color);
+	Q_SIGNAL void sigLigntSelectedColorChanged(const QColor& color);
+	Q_SIGNAL void sigDarkSelectedColorChanged(const QColor& color);
+	Q_SIGNAL void sigIsSelectedChanged(bool isSelected);
+	Q_SIGNAL void sigOpacityChanged(qreal opacity);
 
 protected:
 	const QScopedPointer<CUVAwesomeButtonPrivate> d_ptr{ nullptr };
