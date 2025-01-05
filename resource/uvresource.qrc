@@ -4,5 +4,6 @@
         <file>font/segoe_slboot_EX.ttf</file>
         <file>font/segoen_slboot_EX.ttf</file>
         <file>image/crucal.png</file>
+        <file>translation/zh_CN.qm</file>
     </qresource>
 </RCC>

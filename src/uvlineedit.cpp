@@ -11,7 +11,7 @@
 #include "uvlineeditstyle.hpp"
 #include "uvlineedit_p.hpp"
 #include "uvmenu.hpp"
-#include "uvtheme.hpp"
+#include "uvthememanager.hpp"
 
 /**
  * @brief \class CUVLineEditPrivate

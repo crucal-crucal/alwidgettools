@@ -1,4 +1,4 @@
-#include "uvapplication.hpp"
+﻿#include "uvapplication.hpp"
 
 #include <QApplication>
 #include <QDebug>
@@ -13,7 +13,7 @@
 
 #include "uvapplication_p.hpp"
 #include "uvmicabaseinitobject.hpp"
-#include "uvtheme.hpp"
+#include "uvthememanager.hpp"
 
 /**
  * @brief \class CUVApplicationPrivate
@@ -133,7 +133,7 @@ void CUVApplication::init() {
 	QResource::registerResource(applicationDirPath + QDir::separator() + "uvresource.rcc");
 	QApplication::setAttribute(Qt::AA_DontCreateNativeWidgetSiblings);
 	QFontDatabase::addApplicationFont(":/font/CUVAwesome.ttf");
-	d->translator->load(applicationDirPath + QDir::separator() + "zh_CN.qm");
+	d->translator->load(":/translation/zh_CN.qm");
 	QApplication::installTranslator(d->translator);
 
 	QFont font = QApplication::font();

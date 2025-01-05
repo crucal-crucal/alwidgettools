@@ -11,7 +11,7 @@
 #include "uvsuggestbox_p.hpp"
 #include "uvsuggestdelegate.hpp"
 #include "uvsuggestmodel.hpp"
-#include "uvtheme.hpp"
+#include "uvthememanager.hpp"
 
 /**
  * @brief \class CUVSuggestion

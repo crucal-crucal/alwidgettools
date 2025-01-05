@@ -7,7 +7,7 @@
 #include <QPropertyAnimation>
 
 #include "uviconbutton_p.hpp"
-#include "uvtheme.hpp"
+#include "uvthememanager.hpp"
 #include "uvtooltip.hpp"
 
 /**

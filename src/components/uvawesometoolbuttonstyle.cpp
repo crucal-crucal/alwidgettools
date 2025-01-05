@@ -5,8 +5,12 @@
 #include <QStyleOption>
 #include <QtMath>
 
-#include "uvtheme.hpp"
+#include "uvthememanager.hpp"
 
+/**
+ * @brief \class CUVAwesomeToolButtonStyle
+ * @param style pointer to the parent style
+ */
 CUVAwesomeToolButtonStyle::CUVAwesomeToolButtonStyle(QStyle* style) {
 	m_isSelected = false;
 	m_isTransparent = true;

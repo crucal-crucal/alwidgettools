@@ -1,9 +1,9 @@
-﻿#include "uvtheme.hpp"
+﻿#include "uvthememanager.hpp"
 
 #include <QPainter>
 #include <QPainterPath>
 
-#include "uvtheme_p.hpp"
+#include "uvthememanager_p.hpp"
 
 /**
  * @brief \class CUVThemeManagerPrivate

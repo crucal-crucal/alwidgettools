@@ -1,5 +1,9 @@
 ﻿#include "uvsuggestmodel.hpp"
 
+/**
+ * @brief \class CUVSuggestModel
+ * @param parent pointer to the parent class
+ */
 CUVSuggestModel::CUVSuggestModel(QObject* parent): QAbstractListModel(parent) {
 }
 

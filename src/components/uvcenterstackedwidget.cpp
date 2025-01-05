@@ -3,8 +3,12 @@
 #include <QPainter>
 #include <QPainterPath>
 
-#include "uvtheme.hpp"
+#include "uvthememanager.hpp"
 
+/**
+ * @brief \class CUVCenterStackedWidget
+ * @param parent pointer to the parent class
+ */
 CUVCenterStackedWidget::CUVCenterStackedWidget(QWidget* parent): QStackedWidget(parent) {
 	setObjectName("CUVCenterStackedWidget");
 	m_themeMode = UVTheme->getThemeMode();

@@ -21,8 +21,4 @@ protected:
 private:
 	CUVScrollBar* horizontalScrollBar{ nullptr };
 	CUVScrollBar* verticalScrollBar{ nullptr };
-	QPoint moveStartPosition{};
-	QPoint wheelStartPosition{};
-	bool bStartMove{};
-	bool bWheelToScrollBarEnabled{ true }; // 是否将滚轮事件应用到滚动条上
 };

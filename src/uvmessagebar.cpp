@@ -12,6 +12,7 @@
 
 #include "uvawesomebutton.hpp"
 #include "uvmessagebar_p.hpp"
+#include "uvthememanager.hpp"
 
 #ifdef Q_OS_WIN
 #include <dwmapi.h>
@@ -509,23 +510,12 @@ void CUVMessageBar::paintEvent(QPaintEvent* event) {
 	Q_D(CUVMessageBar);
 
 	QPainter painter(this);
+	// painter.setOpacity(d._)
 	painter.setRenderHints(QPainter::SmoothPixmapTransform | QPainter::Antialiasing | QPainter::TextAntialiasing);
+
+	UVTheme->drawEffectShadow(&painter, rect(), d->shadowBorderWidth, d->borderRadius);
+
 	painter.save();
-
-	QPainterPath path;
-	path.setFillRule(Qt::WindingFill);
-	auto color = QColor(165, 165, 165, 155);
-	for (int i = 0; i < d->shadowBorderWidth; i++) {
-		QPainterPath pa;
-		pa.setFillRule(Qt::WindingFill);
-		pa.addRoundedRect(d->shadowBorderWidth - i, d->shadowBorderWidth - i, this->width() - (d->shadowBorderWidth - i) * 2,
-		                  this->height() - (d->shadowBorderWidth - i) * 2, d->borderRadius + i, d->borderRadius + i);
-		const int alpha = 5 * (d->shadowBorderWidth - i + 1);
-		color.setAlpha(alpha);
-		painter.setPen(color);
-		painter.drawPath(pa);
-	}
-
 	// 背景和图标绘制
 	painter.setPen(Qt::NoPen);
 	switch (d->messageMode) {

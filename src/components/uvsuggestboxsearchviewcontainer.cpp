@@ -2,8 +2,12 @@
 
 #include <QPainter>
 
-#include "uvtheme.hpp"
+#include "uvthememanager.hpp"
 
+/**
+ * @brief \class CUVSuggestBoxSearchViewContainer
+ * @param parent pointer to the parent class
+ */
 CUVSuggestBoxSearchViewContainer::CUVSuggestBoxSearchViewContainer(QWidget* parent): QWidget(parent) {
 	setContentsMargins(8, 8, 8, 8);
 	setObjectName("CUVSuggestBoxSearchViewContainer");

@@ -4,6 +4,10 @@
 #include <QPainterPath>
 #include <QPropertyAnimation>
 
+/**
+ * @brief \class CUVThemeAnimationWidget
+ * @param parent pointer to the parent class
+ */
 CUVThemeAnimationWidget::CUVThemeAnimationWidget(QWidget* parent): QWidget(parent) {
 	m_endRadius = 0.01;
 }

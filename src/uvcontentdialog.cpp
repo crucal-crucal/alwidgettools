@@ -2,13 +2,12 @@
 
 #include <QDebug>
 #include <QKeyEvent>
-#include <QLabel>
 #include <QVBoxLayout>
 
 #include "uvcontentdialog_p.hpp"
 #include "uvpushbutton.hpp"
 #include "uvtext.hpp"
-#include "uvtheme.hpp"
+#include "uvthememanager.hpp"
 
 /**
  * @brief \class CUVContentDialogPrivate

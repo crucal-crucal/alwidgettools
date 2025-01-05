@@ -109,7 +109,7 @@ bool CUVAwesomeToolButton::eventFilter(QObject* watched, QEvent* event) {
 		switch (event->type()) {
 			case QEvent::Show: {
 				//指示器动画
-				const auto rotateAnimation = new QPropertyAnimation(d->style, "pExpandIconRotate");
+				const auto rotateAnimation = new QPropertyAnimation(d->style, "expandIconRotate");
 				connect(rotateAnimation, &QPropertyAnimation::valueChanged, this, [=](const QVariant& value) {
 					update();
 				});

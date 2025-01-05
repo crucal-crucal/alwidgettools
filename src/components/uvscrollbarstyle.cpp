@@ -8,6 +8,10 @@
 
 #include "uvscrollbar.hpp"
 
+/**
+ * @brief \class CUVScrollBarStyle
+ * @param style pointer to the parent style
+ */
 CUVScrollBarStyle::CUVScrollBarStyle(QStyle* style): QProxyStyle(style) {
 	_pIsExpand = false;
 	_pOpacity = 0;

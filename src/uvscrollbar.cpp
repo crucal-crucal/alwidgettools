@@ -29,7 +29,7 @@ CUVScrollBarPrivate::~CUVScrollBarPrivate() = default;
 void CUVScrollBarPrivate::slotRangeChanged(const int min, const int max) {
 	Q_Q(CUVScrollBar);
 
-	if (q->isVisible() && _pIsAnimation && max != 0) {
+	if (q->isVisible() && isAnimation && max != 0) {
 		const auto rangeSmoothAnimation = new QPropertyAnimation(this, "pTargetMaximum");
 		connect(rangeSmoothAnimation, &QPropertyAnimation::valueChanged, this, [=](const QVariant& value) {
 			q->blockSignals(true);
@@ -42,27 +42,27 @@ void CUVScrollBarPrivate::slotRangeChanged(const int min, const int max) {
 		});
 		rangeSmoothAnimation->setEasingCurve(QEasingCurve::OutSine);
 		rangeSmoothAnimation->setDuration(200);
-		rangeSmoothAnimation->setStartValue(_pTargetMaximum);
+		rangeSmoothAnimation->setStartValue(targetMaximum);
 		rangeSmoothAnimation->setEndValue(max);
 		rangeSmoothAnimation->start(QAbstractAnimation::DeleteWhenStopped);
 	} else {
 		if (0 == max) {
-			_scrollValue = -1;
+			scrollValue = -1;
 		}
-		_pTargetMaximum = max;
+		targetMaximum = max;
 	}
 }
 
 void CUVScrollBarPrivate::setTargetMaximum(const int targetMaximum) {
-	_pTargetMaximum = targetMaximum;
+	this->targetMaximum = targetMaximum;
 	emit sigTargetMaximumChanged();
 }
 
 int CUVScrollBarPrivate::getTargetMaximum() const {
-	return _pTargetMaximum;
+	return targetMaximum;
 }
 
-void CUVScrollBarPrivate::_scroll(const Qt::KeyboardModifiers& modifiers, const int value) {
+void CUVScrollBarPrivate::scroll(const Qt::KeyboardModifiers& modifiers, const int value) {
 	Q_Q(CUVScrollBar);
 
 	int stepsToScroll;
@@ -74,17 +74,17 @@ void CUVScrollBarPrivate::_scroll(const Qt::KeyboardModifiers& modifiers, const 
 	} else {
 		stepsToScroll = QApplication::wheelScrollLines() * static_cast<int>(offset) * singleStep;
 	}
-	if (std::abs(_scrollValue - q->value()) > std::abs(stepsToScroll * _pSpeedLimit)) {
-		_scrollValue = q->value();
+	if (std::abs(scrollValue - q->value()) > std::abs(stepsToScroll * speedLimit)) {
+		scrollValue = q->value();
 	}
-	_scrollValue -= stepsToScroll;
-	_slideSmoothAnimation->stop();
-	_slideSmoothAnimation->setStartValue(q->value());
-	_slideSmoothAnimation->setEndValue(_scrollValue);
-	_slideSmoothAnimation->start();
+	scrollValue -= stepsToScroll;
+	slideSmoothAnimation->stop();
+	slideSmoothAnimation->setStartValue(q->value());
+	slideSmoothAnimation->setEndValue(scrollValue);
+	slideSmoothAnimation->start();
 }
 
-int CUVScrollBarPrivate::_pixelPosToRangeValue(const int pos) const {
+int CUVScrollBarPrivate::pixelPosToRangeValue(const int pos) const {
 	Q_Q(const CUVScrollBar);
 
 	QStyleOptionSlider opt;
@@ -108,35 +108,35 @@ int CUVScrollBarPrivate::_pixelPosToRangeValue(const int pos) const {
 	return QStyle::sliderValueFromPosition(q->minimum(), q->maximum(), pos - sliderMin, sliderMax - sliderMin, opt.upsideDown);
 }
 
-void CUVScrollBarPrivate::_initAllConfig() {
+void CUVScrollBarPrivate::initAllConfig() {
 	Q_Q(CUVScrollBar);
 
-	_handleScrollBarRangeChanged(_originScrollBar->minimum(), _originScrollBar->maximum());
-	q->setSingleStep(_originScrollBar->singleStep());
-	q->setPageStep(_originScrollBar->pageStep());
+	handleScrollBarRangeChanged(originScrollBar->minimum(), originScrollBar->maximum());
+	q->setSingleStep(originScrollBar->singleStep());
+	q->setPageStep(originScrollBar->pageStep());
 }
 
-void CUVScrollBarPrivate::_handleScrollBarValueChanged(QScrollBar* scrollBar, const int value) {
+void CUVScrollBarPrivate::handleScrollBarValueChanged(QScrollBar* scrollBar, const int value) {
 	scrollBar->setValue(value);
 }
 
-void CUVScrollBarPrivate::_handleScrollBarRangeChanged(const int min, const int max) {
+void CUVScrollBarPrivate::handleScrollBarRangeChanged(const int min, const int max) {
 	Q_Q(CUVScrollBar);
 
 	q->setRange(min, max);
 	q->setVisible(max > 0);
 }
 
-void CUVScrollBarPrivate::_handleScrollBarGeometry() {
+void CUVScrollBarPrivate::handleScrollBarGeometry() {
 	Q_Q(CUVScrollBar);
 
 	q->raise();
-	q->setSingleStep(_originScrollBar->singleStep());
-	q->setPageStep(_originScrollBar->pageStep());
+	q->setSingleStep(originScrollBar->singleStep());
+	q->setPageStep(originScrollBar->pageStep());
 	if (q->orientation() == Qt::Horizontal) {
-		q->setGeometry(0, _originScrollArea->height() - 10, _originScrollArea->width(), 10);
+		q->setGeometry(0, originScrollArea->height() - 10, originScrollArea->width(), 10);
 	} else {
-		q->setGeometry(_originScrollArea->width() - 10, 0, 10, _originScrollArea->height());
+		q->setGeometry(originScrollArea->width() - 10, 0, 10, originScrollArea->height());
 	}
 }
 
@@ -150,23 +150,23 @@ CUVScrollBar::CUVScrollBar(QWidget* parent): QScrollBar(parent), d_ptr(new CUVSc
 	setSingleStep(1);
 	setObjectName("CUVScrollBar");
 	setAttribute(Qt::WA_OpaquePaintEvent, false);
-	d->_pSpeedLimit = 20;
-	d->_pTargetMaximum = 0;
-	d->_pIsAnimation = false;
+	d->speedLimit = 20;
+	d->targetMaximum = 0;
+	d->isAnimation = false;
 	connect(this, &CUVScrollBar::rangeChanged, d, &CUVScrollBarPrivate::slotRangeChanged);
 	const auto scrollBarStyle = new CUVScrollBarStyle(style());
 	scrollBarStyle->setScrollBar(this);
 	setStyle(scrollBarStyle);
-	d->_slideSmoothAnimation = new QPropertyAnimation(this, "value");
-	d->_slideSmoothAnimation->setEasingCurve(QEasingCurve::OutSine);
-	d->_slideSmoothAnimation->setDuration(300);
-	connect(d->_slideSmoothAnimation, &QPropertyAnimation::finished, this, [=]() { d->_scrollValue = value(); });
+	d->slideSmoothAnimation = new QPropertyAnimation(this, "value");
+	d->slideSmoothAnimation->setEasingCurve(QEasingCurve::OutSine);
+	d->slideSmoothAnimation->setDuration(300);
+	connect(d->slideSmoothAnimation, &QPropertyAnimation::finished, this, [=]() { d->scrollValue = value(); });
 
-	d->_expandTimer = new QTimer(this);
-	connect(d->_expandTimer, &QTimer::timeout, this, [=]() {
-		d->_expandTimer->stop();
-		d->_isExpand = underMouse();
-		scrollBarStyle->startExpandAnimation(d->_isExpand);
+	d->expandTimer = new QTimer(this);
+	connect(d->expandTimer, &QTimer::timeout, this, [=]() {
+		d->expandTimer->stop();
+		d->isExpand = underMouse();
+		scrollBarStyle->startExpandAnimation(d->isExpand);
 	});
 }
 
@@ -182,23 +182,23 @@ CUVScrollBar::CUVScrollBar(QScrollBar* originScrollBar, QAbstractScrollArea* par
 		return;
 	}
 
-	d->_originScrollArea = parent;
+	d->originScrollArea = parent;
 	const Qt::Orientation orientation = originScrollBar->orientation();
 	setOrientation(orientation);
 	orientation == Qt::Horizontal ? parent->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff) : parent->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	parent->installEventFilter(this);
 
-	d->_originScrollBar = originScrollBar;
-	d->_initAllConfig();
+	d->originScrollBar = originScrollBar;
+	d->initAllConfig();
 
-	connect(d->_originScrollBar, &QScrollBar::valueChanged, this, [=](const int value) {
-		CUVScrollBarPrivate::_handleScrollBarValueChanged(this, value);
+	connect(d->originScrollBar, &QScrollBar::valueChanged, this, [=](const int value) {
+		CUVScrollBarPrivate::handleScrollBarValueChanged(this, value);
 	});
 	connect(this, &QScrollBar::valueChanged, this, [=](const int value) {
-		CUVScrollBarPrivate::_handleScrollBarValueChanged(d->_originScrollBar, value);
+		CUVScrollBarPrivate::handleScrollBarValueChanged(d->originScrollBar, value);
 	});
-	connect(d->_originScrollBar, &QScrollBar::rangeChanged, this, [=](const int min, const int max) {
-		d->_handleScrollBarRangeChanged(min, max);
+	connect(d->originScrollBar, &QScrollBar::rangeChanged, this, [=](const int min, const int max) {
+		d->handleScrollBarRangeChanged(min, max);
 	});
 }
 
@@ -207,73 +207,73 @@ CUVScrollBar::~CUVScrollBar() = default;
 void CUVScrollBar::setIsAnimation(const bool isAnimation) {
 	Q_D(CUVScrollBar);
 
-	d->_pIsAnimation = isAnimation;
+	d->isAnimation = isAnimation;
 	emit sigIsAnimationChanged();
 }
 
 bool CUVScrollBar::getIsAnimation() const {
-	return d_func()->_pIsAnimation;
+	return d_func()->isAnimation;
 }
 
 void CUVScrollBar::setSpeedLimit(const qreal speedLimit) {
 	Q_D(CUVScrollBar);
 
-	d->_pSpeedLimit = speedLimit;
+	d->speedLimit = speedLimit;
 	emit sigSpeedLimitChanged();
 }
 
 qreal CUVScrollBar::getSpeedLimit() const {
-	return d_func()->_pSpeedLimit;
+	return d_func()->speedLimit;
 }
 
 void CUVScrollBar::setContextMenuFlags(const ContextMenuFlags& flags) {
-	d_func()->_pContextMenuFlags = flags;
+	d_func()->contextMenuFlags = flags;
 }
 
 CUVScrollBar::ContextMenuFlags CUVScrollBar::getContextMenuFlags() const {
-	return d_func()->_pContextMenuFlags;
+	return d_func()->contextMenuFlags;
 }
 
 bool CUVScrollBar::hasFlag(const ContextMenuFlag& flag) const {
-	return d_func()->_pContextMenuFlags.testFlag(flag);
+	return d_func()->contextMenuFlags.testFlag(flag);
 }
 
 void CUVScrollBar::mousePressEvent(QMouseEvent* event) {
 	Q_D(CUVScrollBar);
 
-	d->_slideSmoothAnimation->stop();
+	d->slideSmoothAnimation->stop();
 	QScrollBar::mousePressEvent(event);
-	d->_scrollValue = value();
+	d->scrollValue = value();
 }
 
 void CUVScrollBar::mouseReleaseEvent(QMouseEvent* event) {
 	Q_D(CUVScrollBar);
 
-	d->_slideSmoothAnimation->stop();
+	d->slideSmoothAnimation->stop();
 	QScrollBar::mouseReleaseEvent(event);
-	d->_scrollValue = value();
+	d->scrollValue = value();
 }
 
 void CUVScrollBar::mouseMoveEvent(QMouseEvent* event) {
 	Q_D(CUVScrollBar);
 
-	d->_slideSmoothAnimation->stop();
+	d->slideSmoothAnimation->stop();
 	QScrollBar::mouseMoveEvent(event);
-	d->_scrollValue = value();
+	d->scrollValue = value();
 }
 
 void CUVScrollBar::wheelEvent(QWheelEvent* event) {
 	Q_D(CUVScrollBar);
 
-	if (d->_slideSmoothAnimation->state() == QAbstractAnimation::Stopped) {
-		d->_scrollValue = value();
+	if (d->slideSmoothAnimation->state() == QAbstractAnimation::Stopped) {
+		d->scrollValue = value();
 	}
 
 	if (const int delta = event->angleDelta().y() != 0 ? event->angleDelta().y() : event->angleDelta().x();
 		(value() == minimum() && delta > 0) || (value() == maximum() && delta < 0)) {
 		QScrollBar::wheelEvent(event); // 边界情况调用基类处理
 	} else {
-		d->_scroll(event->modifiers(), delta);
+		d->scroll(event->modifiers(), delta);
 	}
 
 	event->accept();
@@ -301,7 +301,7 @@ void CUVScrollBar::contextMenuEvent(QContextMenuEvent* event) {
 		return;
 	}
 	if (actionSelected == actScrollHere) {
-		setValue(d->_pixelPosToRangeValue(horiz ? event->pos().x() : event->pos().y()));
+		setValue(d->pixelPosToRangeValue(horiz ? event->pos().x() : event->pos().y()));
 	} else if (actionSelected == actScrollTop) {
 		triggerAction(QAbstractSlider::SliderToMinimum);
 	} else if (actionSelected == actScrollBottom) {
@@ -322,16 +322,16 @@ bool CUVScrollBar::event(QEvent* event) {
 
 	switch (event->type()) {
 		case QEvent::Enter: {
-			d->_expandTimer->stop();
-			if (!d->_isExpand) {
-				d->_expandTimer->start(350);
+			d->expandTimer->stop();
+			if (!d->isExpand) {
+				d->expandTimer->start(350);
 			}
 			break;
 		}
 		case QEvent::Leave: {
-			d->_expandTimer->stop();
-			if (d->_isExpand) {
-				d->_expandTimer->start(350);
+			d->expandTimer->stop();
+			if (d->isExpand) {
+				d->expandTimer->start(350);
 			}
 			break;
 		}
@@ -348,7 +348,7 @@ bool CUVScrollBar::eventFilter(QObject* watched, QEvent* event) {
 		case QEvent::Show:
 		case QEvent::Resize:
 		case QEvent::LayoutRequest: {
-			d->_handleScrollBarGeometry();
+			d->handleScrollBarGeometry();
 			break;
 		}
 		default: break;

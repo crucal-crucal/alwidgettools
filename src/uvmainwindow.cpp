@@ -17,7 +17,7 @@
 #include "uvmenu.hpp"
 #include "uvnavigationbar.hpp"
 #include "uvnavigationrouter.hpp"
-#include "uvtheme.hpp"
+#include "uvthememanager.hpp"
 #include "uvthemeanimationwidget.hpp"
 
 /**
@@ -304,7 +304,7 @@ CUVMainWindow::CUVMainWindow(QWidget* parent): QMainWindow(parent), d_ptr(new CU
 
 	setObjectName("CUVWindow");
 	setStyleSheet("#CUVWindow { background-color: transparent; }");
-	setStyle(new CUVWindowStyle(style()));
+	setStyle(new CUVMainWindowStyle(style()));
 
 	/// Delay rendering
 	QTimer::singleShot(1, this, [=]() {

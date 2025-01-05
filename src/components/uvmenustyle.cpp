@@ -8,6 +8,10 @@
 
 using namespace UVIcon;
 
+/**
+ * @brief \class CUVMenuStyle
+ * @param style pointer to the parent style
+ */
 CUVMenuStyle::CUVMenuStyle(QStyle* style): QProxyStyle(style) {
 	_pMenuItemHeight = 32;
 	_windowLinearGradient = new QLinearGradient(0, 0, 100, 100);

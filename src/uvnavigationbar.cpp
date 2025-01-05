@@ -1,5 +1,6 @@
 ﻿#include "uvnavigationbar.hpp"
 
+#include <QDebug>
 #include <QLayout>
 #include <QPainter>
 #include <QPainterPath>
@@ -19,7 +20,7 @@
 #include "uvnavigationrouter.hpp"
 #include "uvnavigationview.hpp"
 #include "uvsuggestbox.hpp"
-#include "uvtheme.hpp"
+#include "uvthememanager.hpp"
 
 /**
  * @brief \class CUVNavigationBarPrivate

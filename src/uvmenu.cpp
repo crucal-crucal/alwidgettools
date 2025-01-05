@@ -195,7 +195,9 @@ void CUVMenu::paintEvent(QPaintEvent* event) {
 	QPainter painter(this);
 	painter.setRenderHints(QPainter::SmoothPixmapTransform | QPainter::Antialiasing);
 	if (!d->_animationPix.isNull()) {
+		painter.save();
 		painter.drawPixmap(QRect(0, d->_pAnimationImagePosY, width(), height()), d->_animationPix);
+		painter.restore();
 	} else {
 		QMenu::paintEvent(event);
 	}

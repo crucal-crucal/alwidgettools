@@ -12,7 +12,7 @@
 #include <QVBoxLayout>
 
 #include "uvtext.hpp"
-#include "uvtheme.hpp"
+#include "uvthememanager.hpp"
 #include "uvtooltip_p.hpp"
 
 /**

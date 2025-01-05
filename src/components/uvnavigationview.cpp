@@ -82,17 +82,17 @@ void CUVNavigationView::slotCustomContextMenuRequested(const QPoint& pos) {
 }
 
 void CUVNavigationView::mouseReleaseEvent(QMouseEvent* event) {
-	m_navigationStyle->setPressIndex(indexAt(event->pos()));
-	viewport()->update();
 	QTreeView::mouseReleaseEvent(event);
-}
-
-void CUVNavigationView::mouseDoubleClickEvent(QMouseEvent* event) {
-	QTreeView::mouseDoubleClickEvent(event);
 	if (event->button() == Qt::LeftButton) {
 		if (const QModelIndex index = indexAt(event->pos()); index.isValid()) {
 			Q_EMIT sigNavigationClicked(index);
 		}
 		m_navigationStyle->setPressIndex({});
 	}
+}
+
+void CUVNavigationView::mouseDoubleClickEvent(QMouseEvent* event) {
+	m_navigationStyle->setPressIndex(indexAt(event->pos()));
+	viewport()->update();
+	QTreeView::mouseDoubleClickEvent(event);
 }

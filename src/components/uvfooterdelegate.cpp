@@ -7,8 +7,12 @@
 #include "uvbaselistview.hpp"
 #include "uvfootermodel.hpp"
 #include "uvnavigationnode.hpp"
-#include "uvtheme.hpp"
+#include "uvthememanager.hpp"
 
+/**
+ * @brief \class CUVFooterDelegate
+ * @param parent pointer to the parent class
+ */
 CUVFooterDelegate::CUVFooterDelegate(QObject* parent): QStyledItemDelegate(parent) {
 	themeMode = UVTheme->getThemeMode();
 	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const UVThemeType::ThemeMode& mode) { themeMode = mode; });

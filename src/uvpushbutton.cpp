@@ -4,7 +4,7 @@
 #include <QPainterPath>
 
 #include "uvpushbutton_p.hpp"
-#include "uvtheme.hpp"
+#include "uvthememanager.hpp"
 #include "uvtooltip.hpp"
 
 /**
@@ -222,8 +222,8 @@ void CUVPushButton::mouseReleaseEvent(QMouseEvent* event) {
 void CUVPushButton::paintEvent(QPaintEvent* event) {
 	Q_D(CUVPushButton);
 	QPainter painter(this);
-	painter.setRenderHints(QPainter::SmoothPixmapTransform | QPainter::Antialiasing | QPainter::TextAntialiasing);
 	painter.save();
+	painter.setRenderHints(QPainter::SmoothPixmapTransform | QPainter::Antialiasing | QPainter::TextAntialiasing);
 	// 阴影绘制
 	if (hasStyle(ButtonStyle::Shadow)) {
 		UVTheme->drawEffectShadow(&painter, rect(), d->shadowBorderWidth, d->borderRadius);

@@ -9,30 +9,11 @@
 
 #include "uvbasedialog_p.hpp"
 #include "uvmaskwidget.hpp"
-#include "uvtheme.hpp"
+#include "uvthememanager.hpp"
 
 #ifdef Q_OS_WIN
 #include <dwmapi.h>
 #include <windowsx.h>
-
-typedef LONG (WINAPI*RtlGetVersionPtr)(PRTL_OSVERSIONINFOW);
-
-bool isWindows10() {
-	if (const HMODULE hNtDll = GetModuleHandleW(L"ntdll.dll")) {
-		if (const auto RtlGetVersion = reinterpret_cast<RtlGetVersionPtr>(GetProcAddress(hNtDll, "RtlGetVersion"))) {
-			RTL_OSVERSIONINFOW osvi;
-			ZeroMemory(&osvi, sizeof(RTL_OSVERSIONINFOW));
-			osvi.dwOSVersionInfoSize = sizeof(RTL_OSVERSIONINFOW);
-
-			// 获取系统版本信息
-			RtlGetVersion(&osvi);
-			// 判断是否是 Windows 10
-			return osvi.dwMajorVersion == 10 && osvi.dwBuildNumber < 22000;
-		}
-	}
-
-	return false;
-}
 #endif
 
 /**
@@ -71,10 +52,6 @@ void CUVBaseDialogPrivate::_doCloseAnimation() {
 CUVBaseDialog::CUVBaseDialog(QWidget* parent): QDialog(parent), d_ptr(new CUVBaseDialogPrivate(this, this)) {
 	Q_D(CUVBaseDialog);
 
-#ifdef Q_OS_WIN
-	d->isWin10 = isWindows10();
-#endif
-
 	QWidget* targetParent = parent ? parent : QApplication::activeWindow();
 	d->maskWidget = new CUVMaskWidget(targetParent);
 	d->maskWidget->setFixedSize(targetParent->size());
@@ -97,7 +74,7 @@ CUVBaseDialog::CUVBaseDialog(QWidget* parent): QDialog(parent), d_ptr(new CUVBas
 	connect(d->fadeOutAnimation, &QPropertyAnimation::finished, this, &QDialog::close);
 
 	d->themeMode = UVTheme->getThemeMode();
-	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const UVThemeType::ThemeMode& mode) { d->themeMode = mode;});
+	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const UVThemeType::ThemeMode& mode) { d->themeMode = mode; });
 }
 
 CUVBaseDialog::~CUVBaseDialog() {
@@ -138,23 +115,9 @@ void CUVBaseDialog::paintEvent(QPaintEvent* event) {
 	painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);
 	painter.setPen(Qt::NoPen);
 	painter.setBrush(UVThemeColor(d->themeMode, UVThemeType::DialogBase));
-#ifdef Q_OS_WIN
-	if (d->isWin10) {
-		// 针对 Windows 10 绘制边框
-		QPen pen(QColor(149, 151, 155));
-		pen.setWidthF(1.5);
-		painter.setPen(pen);
-		painter.drawRect(rect().adjusted(1, 1, -1, -1));
-	} else {
-#endif
-		// 通用绘制逻辑
-		painter.drawRect(rect());
-		painter.setBrush(UVThemeColor(d->themeMode, UVThemeType::DialogLayoutArea));
-		painter.drawRoundedRect(QRectF(0, height() - 60, width(), 60), 8, 8);
-#ifdef Q_OS_WIN
-	}
-#endif
-
+	painter.drawRect(rect());
+	painter.setBrush(UVThemeColor(d->themeMode, UVThemeType::DialogLayoutArea));
+	painter.drawRoundedRect(QRectF(0, height() - 60, width(), 60), 8, 8);
 	painter.restore();
 }
 

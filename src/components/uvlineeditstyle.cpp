@@ -5,8 +5,12 @@
 #include <QStyleOption>
 #include <QtMath>
 
-#include "uvtheme.hpp"
+#include "uvthememanager.hpp"
 
+/**
+ * @brief \class CUVLineEditStyle
+ * @param style pointer to the parent style
+ */
 CUVLineEditStyle::CUVLineEditStyle(QStyle* style) {
 	themeMode = UVTheme->getThemeMode();
 	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const UVThemeType::ThemeMode& mode) { themeMode = mode; });

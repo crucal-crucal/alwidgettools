@@ -22,7 +22,7 @@
 #include "uviconbutton.hpp"
 #include "uvnavigationbar.hpp"
 #include "uvtext.hpp"
-#include "uvtheme.hpp"
+#include "uvthememanager.hpp"
 #include "uvwinshadowhelper.hpp"
 
 /**
@@ -918,9 +918,11 @@ void CUVAppBar::paintEvent(QPaintEvent* event) {
 
 	if (d->backgroundColor.isValid()) {
 		QPainter painter(this);
+		painter.save();
 		painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);
 		painter.setBrush(d->backgroundColor);
 		painter.drawRect(rect());
+		painter.restore();
 	}
 
 	QWidget::paintEvent(event);

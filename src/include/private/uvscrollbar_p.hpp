@@ -13,7 +13,7 @@ class CUVScrollBarPrivate final : public QObject {
 	Q_OBJECT
 	Q_DISABLE_COPY(CUVScrollBarPrivate)
 	Q_DECLARE_PUBLIC(CUVScrollBar)
-	Q_PROPERTY(int pTargetMaximum MEMBER _pTargetMaximum NOTIFY sigTargetMaximumChanged)
+	Q_PROPERTY(int pTargetMaximum MEMBER targetMaximum NOTIFY sigTargetMaximumChanged)
 
 public:
 	explicit CUVScrollBarPrivate(CUVScrollBar* q, QObject* parent = nullptr);
@@ -31,24 +31,24 @@ protected:
 	CUVScrollBar* const q_ptr{ nullptr };
 
 private:
-	QScrollBar* _originScrollBar{ nullptr };
-	QAbstractScrollArea* _originScrollArea{ nullptr };
-	QTimer* _expandTimer{ nullptr };
-	QPropertyAnimation* _slideSmoothAnimation{ nullptr };
-	bool _isExpand{ false };
-	bool _pIsAnimation{};
-	CUVScrollBar::ContextMenuFlags _pContextMenuFlags{ CUVScrollBar::NoFlag };
-	qreal _pSpeedLimit{};
-	int _pTargetMaximum{};
-	int _scrollValue{ -1 };
-	int _lastHorizontalDeltaAngle{ -120 };
-	int _lastVerticalDeltaAngle{ -120 };
+	QScrollBar* originScrollBar{ nullptr };
+	QAbstractScrollArea* originScrollArea{ nullptr };
+	QTimer* expandTimer{ nullptr };
+	QPropertyAnimation* slideSmoothAnimation{ nullptr };
+	bool isExpand{ false };
+	bool isAnimation{};
+	CUVScrollBar::ContextMenuFlags contextMenuFlags{ CUVScrollBar::NoFlag };
+	qreal speedLimit{};
+	int targetMaximum{};
+	int scrollValue{ -1 };
+	int lastHorizontalDeltaAngle{ -120 };
+	int lastVerticalDeltaAngle{ -120 };
 
-	void _scroll(const Qt::KeyboardModifiers& modifiers, int value);
-	[[nodiscard]] int _pixelPosToRangeValue(int pos) const;
+	void scroll(const Qt::KeyboardModifiers& modifiers, int value);
+	[[nodiscard]] int pixelPosToRangeValue(int pos) const;
 
-	void _initAllConfig();
-	static void _handleScrollBarValueChanged(QScrollBar* scrollBar, int value);
-	void _handleScrollBarRangeChanged(int min, int max);
-	void _handleScrollBarGeometry();
+	void initAllConfig();
+	static void handleScrollBarValueChanged(QScrollBar* scrollBar, int value);
+	void handleScrollBarRangeChanged(int min, int max);
+	void handleScrollBarGeometry();
 };

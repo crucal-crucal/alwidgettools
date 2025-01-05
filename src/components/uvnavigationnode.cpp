@@ -2,6 +2,11 @@
 
 #include <QUuid>
 
+/**
+ * @brief \class CUVNavigationNode
+ * @param nodeTitle title of the node
+ * @param parent pointer to the parent class
+ */
 CUVNavigationNode::CUVNavigationNode(const QString& nodeTitle, CUVNavigationNode* parent): QObject(parent) {
 	m_depth = 0;
 	m_keyPoints = 0;

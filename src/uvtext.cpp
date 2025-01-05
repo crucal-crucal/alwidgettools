@@ -4,7 +4,7 @@
 #include <QPalette>
 
 #include "uvtext_p.hpp"
-#include "uvtheme.hpp"
+#include "uvthememanager.hpp"
 
 /**
  * @brief \class CUVTextPrivate

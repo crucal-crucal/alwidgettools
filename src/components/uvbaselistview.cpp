@@ -4,6 +4,10 @@
 
 #include "uvscrollbar.hpp"
 
+/**
+ * @brief \class CUVBaseListView
+ * @param parent pointer to the parent class
+ */
 CUVBaseListView::CUVBaseListView(QWidget* parent): QListView(parent) {
 	setObjectName("CUVBaseListView");
 	setStyleSheet("#CUVBaseListView { background-color: transparent; border: 0px; }"

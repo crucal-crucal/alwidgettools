@@ -4,7 +4,7 @@
 #include <QPainterPath>
 
 #include "uvinteractivecard_p.hpp"
-#include "uvtheme.hpp"
+#include "uvthememanager.hpp"
 
 /**
  * @brief \class CUVInteractiveCardPrivate
@@ -146,7 +146,6 @@ void CUVInteractiveCard::paintEvent(QPaintEvent* event) {
 
 	/// 图片
 	if (!d->cardPixmap.isNull()) {
-		painter.save();
 		QPainterPath path;
 		if (d->cardPixMode == UVCardPixType::Ellipse) {
 			path.addEllipse(QPointF(d->cardPixmapSize.width() / 2.0 + 10, height() / 2.0), d->cardPixmapSize.width() / 2.0, d->cardPixmapSize.height() / 2.0);
@@ -155,7 +154,6 @@ void CUVInteractiveCard::paintEvent(QPaintEvent* event) {
 			path.addRoundedRect(10, (height() - d->cardPixmapSize.height()) / 2.0, d->cardPixmapSize.width(), d->cardPixmapSize.height(), d->cardPixmapBorderRadius, d->cardPixmapBorderRadius);
 		}
 		painter.drawPixmap(10, (height() - d->cardPixmapSize.height()) / 2, d->cardPixmapSize.width(), d->cardPixmapSize.height(), d->cardPixmap);
-		painter.restore();
 	}
 
 	/// 文字

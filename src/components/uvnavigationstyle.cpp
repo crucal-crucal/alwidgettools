@@ -7,7 +7,7 @@
 #include "uvnavigationmodel.hpp"
 #include "uvnavigationnode.hpp"
 #include "uvnavigationview.hpp"
-#include "uvtheme.hpp"
+#include "uvthememanager.hpp"
 
 /**
  * @brief \class CUVNavigationStyle
@@ -173,8 +173,8 @@ void CUVNavigationStyle::drawPrimitive(const PrimitiveElement pe, const QStyleOp
 						}
 					}
 				}
+				p->restore();
 			}
-
 			return;
 		}
 		case QStyle::PE_PanelItemViewRow:  // 行背景
@@ -220,14 +220,12 @@ void CUVNavigationStyle::drawControl(const ControlElement element, const QStyleO
 				}
 
 				// 图标绘制
-				p->setPen(vopt->index == m_pressIndex ? UVThemeColor(m_themeMode, UVThemeType::BasicTextPress) : UVThemeColor(m_themeMode, UVThemeType::BasicText));
+				p->setPen(UVThemeColor(m_themeMode, vopt->index == m_pressIndex ? UVThemeType::BasicTextPress : UVThemeType::BasicText));
 				if (node->getAwesomeIcon() != UVIcon::CUVAweSomeIcon::None) {
-					p->save();
 					auto iconFont = QFont("CUVAwesome");
 					iconFont.setPixelSize(17);
 					p->setFont(iconFont);
 					p->drawText(QRect(itemRect.x(), itemRect.y(), m_iconAreaWidth, itemRect.height()), Qt::AlignCenter, QChar(static_cast<unsigned short>(node->getAwesomeIcon())));
-					p->restore();
 				}
 
 				const int viewWidth = w->width();
@@ -244,7 +242,6 @@ void CUVNavigationStyle::drawControl(const ControlElement element, const QStyleO
 						if (node->getIsHasChild()) {
 							const QRectF expandIconRect(itemRect.right() - m_indicatorIconAreaWidth, itemRect.y(), 17, itemRect.height());
 
-							p->save();
 							auto iconFont = QFont("CUVAwesome");
 							iconFont.setPixelSize(17);
 							p->setFont(iconFont);
@@ -252,20 +249,16 @@ void CUVNavigationStyle::drawControl(const ControlElement element, const QStyleO
 							p->rotate(node == m_expandAnimationTargetNode ? m_rotate : node->getIsExpanded() ? -180 : 0);
 							p->translate(-expandIconRect.x() - expandIconRect.width() / 2.0 + 1, -expandIconRect.y() - expandIconRect.height() / 2.0);
 							p->drawText(expandIconRect, Qt::AlignVCenter, QChar(static_cast<unsigned short>(UVIcon::CUVAweSomeIcon::AngleDown)));
-							p->restore();
 						}
 
 						if (node->getIsChildHasKeyPoints()) {
-							p->save();
 							p->setPen(Qt::NoPen);
 							p->setBrush(UVThemeColor(m_themeMode, UVThemeType::PrimaryNormal));
 							p->drawEllipse(QPoint(itemRect.right() - 17, itemRect.y() + 12), 3, 3);
-							p->restore();
 						}
 					} else {
 						if (int keyPoints = node->getKeyPoints()) {
 							// keyPoints
-							p->save();
 							p->setPen(Qt::NoPen);
 							p->setBrush(Qt::white);
 							p->drawEllipse(QPoint(itemRect.right() - 26, itemRect.y() + itemRect.height() / 2), 10, 10);
@@ -278,7 +271,6 @@ void CUVNavigationStyle::drawControl(const ControlElement element, const QStyleO
 							font.setPixelSize(keyPoints > 9 ? 11 : 12);
 							p->setFont(font);
 							p->drawText(keyPoints > 9 ? itemRect.right() - 33 : itemRect.right() - 30, itemRect.y() + itemRect.height() / 2 + 4, QString::number(keyPoints));
-							p->restore();
 						}
 					}
 				}
@@ -391,7 +383,7 @@ bool CUVNavigationStyle::compareItemY(CUVNavigationNode* node1, CUVNavigationNod
 			if (node1Depth == node2Depth) {
 				return node1ParentNode->getModelIndex().row() < node2ParentNode->getModelIndex().row();
 			} else if (node1Depth < node2Depth) {
-				while(node2ParentNode->getDepth() != node1Depth) {
+				while (node2ParentNode->getDepth() != node1Depth) {
 					node2ParentNode = node2ParentNode->getParentNode();
 				}
 				// 父子节点关系
@@ -400,7 +392,7 @@ bool CUVNavigationStyle::compareItemY(CUVNavigationNode* node1, CUVNavigationNod
 				}
 				return node1->getModelIndex().row() < node2ParentNode->getModelIndex().row();
 			} else {
-				while(node1ParentNode->getDepth() != node2Depth) {
+				while (node1ParentNode->getDepth() != node2Depth) {
 					node1ParentNode = node1ParentNode->getParentNode();
 				}
 				// 父子节点关系

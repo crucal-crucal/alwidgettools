@@ -2,6 +2,10 @@
 
 #include <QMouseEvent>
 
+/**
+ * @brief \class CUVComboBoxView
+ * @param parent pointer to the parent class
+ */
 CUVComboBoxView::CUVComboBoxView(QWidget* parent): QListView(parent) {
 }
 

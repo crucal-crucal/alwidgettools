@@ -5,16 +5,20 @@
 #include <QPainterPath>
 #include <QStyleOption>
 
-#include "uvtheme.hpp"
+#include "uvthememanager.hpp"
 
-CUVWindowStyle::CUVWindowStyle(QStyle* style) {
+/**
+ * @brief \class CUVMainWindowStyle
+ * @param style pointer to the parent style
+ */
+CUVMainWindowStyle::CUVMainWindowStyle(QStyle* style) {
 	m_themeMode = UVTheme->getThemeMode();
 	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const UVThemeType::ThemeMode& mode) { m_themeMode = mode; });
 }
 
-CUVWindowStyle::~CUVWindowStyle() = default;
+CUVMainWindowStyle::~CUVMainWindowStyle() = default;
 
-void CUVWindowStyle::drawPrimitive(const PrimitiveElement pe, const QStyleOption* opt, QPainter* p, const QWidget* w) const {
+void CUVMainWindowStyle::drawPrimitive(const PrimitiveElement pe, const QStyleOption* opt, QPainter* p, const QWidget* w) const {
 	switch (pe) {
 		case QStyle::PE_FrameTabBarBase: {
 			return;
@@ -89,7 +93,7 @@ void CUVWindowStyle::drawPrimitive(const PrimitiveElement pe, const QStyleOption
 	QProxyStyle::drawPrimitive(pe, opt, p, w);
 }
 
-void CUVWindowStyle::drawControl(const ControlElement element, const QStyleOption* opt, QPainter* p, const QWidget* w) const {
+void CUVMainWindowStyle::drawControl(const ControlElement element, const QStyleOption* opt, QPainter* p, const QWidget* w) const {
 	switch (element) {
 		case QStyle::CE_RubberBand: {
 			// 预览颜色

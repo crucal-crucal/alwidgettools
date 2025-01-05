@@ -4,10 +4,14 @@
 #include <QVBoxLayout>
 
 #include "uvapplication.hpp"
-#include "uvtheme.hpp"
+#include "uvthememanager.hpp"
 
 Q_TAKEOVER_NATIVEEVENT_CPP(CUVCustomWidget, m_appBar)
 
+/**
+ * @brief \class CUVCustomWidget
+ * @param parent pointer to the parent class
+ */
 CUVCustomWidget::CUVCustomWidget(QWidget* parent): QDialog(parent) {
 	resize(500, 500);
 	setObjectName("CUVCustomWidget");

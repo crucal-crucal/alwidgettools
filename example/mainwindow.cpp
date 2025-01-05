@@ -4,6 +4,8 @@
 
 #include "uvcontentdialog.hpp"
 
+#include "page/e_basecomponents.hpp"
+
 MainWindow::MainWindow(QWidget* parent): CUVMainWindow(parent) {
 	initWindow();
 	initEdgeLayout();
@@ -28,4 +30,6 @@ void MainWindow::initEdgeLayout() {
 }
 
 void MainWindow::initContent() {
+	m_baseComponents = new E_BaseComponents(this);
+	addPageNode(m_baseComponents->windowTitle(), m_baseComponents, UVIcon::CUVAweSomeIcon::CabinetFiling);
 }

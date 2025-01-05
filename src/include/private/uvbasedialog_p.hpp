@@ -25,7 +25,6 @@ private:
 	qint64 currentWinID{ 0 };
 	UVDialogPolicy::ShowPolicys showPolicys{ UVDialogPolicy::Normal };
 	CUVMaskWidget* maskWidget{ nullptr };
-	bool isWin10{ false };
 
 	/// animation
 	QPropertyAnimation* fadeInAnimation{ nullptr }; // 淡入动画

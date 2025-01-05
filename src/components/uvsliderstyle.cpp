@@ -4,6 +4,10 @@
 #include <QPropertyAnimation>
 #include <QStyleOptionSlider>
 
+/**
+ * @brief \class CUVSliderStyle
+ * @param style pointer to the parent style
+ */
 CUVSliderStyle::CUVSliderStyle(QStyle* style) {
 	setProperty("circleRadius", 0.01);
 

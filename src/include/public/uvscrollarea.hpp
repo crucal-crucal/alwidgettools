@@ -41,27 +41,6 @@ public:
 	void setIsAnimation(const Qt::Orientation& orientation, bool bIsAnimation);
 	[[nodiscard]] bool getIsAnimation(const Qt::Orientation& orientation) const;
 
-	void setWheelToScrollBarEnabled(bool bEnabled);
-	[[nodiscard]] bool getWheelToScrollBarEnabled() const;
-
-	[[nodiscard]] CUVScrollBar* getHorizontalScrollBar() const;
-	[[nodiscard]] CUVScrollBar* getVerticalScrollBar() const;
-
-	bool m_bScrollBarVisible{ true };
-	void setScrollBarVisible(bool bVisible) { m_bScrollBarVisible = bVisible; }
-
-protected:
-	void mousePressEvent(QMouseEvent* ev) override;
-	void mouseMoveEvent(QMouseEvent* ev) override;
-	void mouseReleaseEvent(QMouseEvent* ev) override;
-	void wheelEvent(QWheelEvent* ev) override;
-	void resizeEvent(QResizeEvent* event) override;
-	void enterEvent(QEvent* event) override;
-	void leaveEvent(QEvent* event) override;
-
-signals:
-	void sigWheelDeltaValueChangedWithoutKey(int deltaValue, QPoint curMousePnt);
-
 protected:
 	const QScopedPointer<CUVScrollAreaPrivate> d_ptr{ nullptr };
 

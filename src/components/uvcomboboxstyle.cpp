@@ -5,6 +5,10 @@
 #include <QStyleOption>
 #include <QWidget>
 
+/**
+ * @brief \class CUVComboBoxStyle
+ * @param style pointer to the parent style
+ */
 CUVComboBoxStyle::CUVComboBoxStyle(QStyle* style): QProxyStyle(style) {
 	_pExpandIconRotate = 0;
 	_pExpandMarkWidth = 0;

@@ -344,8 +344,8 @@ void CUVMultiSelectComboBox::paintEvent(QPaintEvent* event) {
 	}
 	// 文字绘制
 	painter.setPen(isEnabled() ? Qt::white : Qt::gray);
-	const QString currentText = painter.fontMetrics().elidedText(tr("Automatically track target Settings"), Qt::ElideRight, foregroundRect.width() - 27 - static_cast<int>(width() * 0.05));
-	//const QString currentText = painter.fontMetrics().elidedText(d->_currentText, Qt::ElideRight, foregroundRect.width() - 27 - static_cast<int>(width() * 0.05));
+	// const QString currentText = painter.fontMetrics().elidedText(tr("Automatically track target Settings"), Qt::ElideRight, foregroundRect.width() - 27 - static_cast<int>(width() * 0.05));
+	const QString currentText = painter.fontMetrics().elidedText(d->_currentText, Qt::ElideRight, foregroundRect.width() - 27 - static_cast<int>(width() * 0.05));
 	QFont font = painter.font();
 	font.setPixelSize(12);
 	painter.setFont(font);
