@@ -98,16 +98,16 @@ QRect CUVSpinBoxStyle::subControlRect(const ComplexControl cc, const QStyleOptio
 			switch (sc) {
 				case SC_ScrollBarAddLine: {
 					// add button
-					QRect spinBoxRect = QProxyStyle::subControlRect(cc, opt, SC_SpinBoxFrame, widget);
+					const QRect spinBoxRect = QProxyStyle::subControlRect(cc, opt, SC_SpinBoxFrame, widget);
 					return { spinBoxRect.width() - spinBoxRect.height(), 0, spinBoxRect.height(), spinBoxRect.height() };
 				}
 				case SC_ScrollBarSubLine: {
 					// sub buttom
-					QRect spinBoxRect = QProxyStyle::subControlRect(cc, opt, SC_SpinBoxFrame, widget);
+					const QRect spinBoxRect = QProxyStyle::subControlRect(cc, opt, SC_SpinBoxFrame, widget);
 					return { 0, 0, spinBoxRect.height(), spinBoxRect.height() };
 				}
 				case SC_SpinBoxEditField: {
-					QRect spinBoxRect = QProxyStyle::subControlRect(cc, opt, SC_SpinBoxFrame, widget);
+					const QRect spinBoxRect = QProxyStyle::subControlRect(cc, opt, SC_SpinBoxFrame, widget);
 					return { spinBoxRect.height(), 0, spinBoxRect.width() - spinBoxRect.height() * 2, spinBoxRect.height() };
 				}
 				default: {
