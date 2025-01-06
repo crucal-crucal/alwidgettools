@@ -376,7 +376,7 @@ void CUVNavigationBarPrivate::handleMaximalToCompactLayout() const {
 		navigationButtonVLayout->takeAt(0);
 	}
 	navigationButtonVLayout->addSpacing(isShowUserCard ? 76 : 40);
-	navigationButtonVLayout->addStretch();
+	navigationSuggestBoxHLayout->addStretch();
 
 	while (userButtonVLayout->count()) {
 		userButtonVLayout->takeAt(0);

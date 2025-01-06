@@ -39,7 +39,6 @@ CUVPushButton::CUVPushButton(QWidget* parent): QPushButton(parent), d_ptr(new CU
 	d->lightBorderColor = UVThemeColor(UVThemeType::Light, UVThemeType::BasicBorder);
 	d->darkBorderColor = UVThemeColor(UVThemeType::Dark, UVThemeType::BasicBorder);
 	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const UVThemeType::ThemeMode& mode) { d->themeMode = mode; });
-	d->toolTip = new CUVToolTip(this);
 
 	setMouseTracking(true);
 	setFixedHeight(30);
@@ -210,7 +209,13 @@ int CUVPushButton::getTextPointSize() const {
 }
 
 void CUVPushButton::setToolTip(const QString& tooltip) {
-	d_func()->toolTip->setToolTip(tooltip);
+	Q_D(CUVPushButton);
+
+	if (!d->toolTip) {
+		d->toolTip = new CUVToolTip(this);
+	}
+
+	d->toolTip->setToolTip(tooltip);
 }
 
 void CUVPushButton::mousePressEvent(QMouseEvent* event) {

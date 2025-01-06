@@ -2,11 +2,13 @@
 
 #include <QProxyStyle>
 
+#include "uvwidgettoolsdef.hpp"
+
 class CUVComboBoxStyle final : public QProxyStyle {
 	Q_OBJECT
 
-	Q_PROPERTY(qreal pExpandIconRotate READ getExpandIconRotate WRITE setExpandIconRotate NOTIFY sigExpandIconRotateChanged)
-	Q_PROPERTY(qreal pExpandMarkWidth READ getExpandMarkWidth WRITE setExpandMarkWidth NOTIFY sigExpandMarkWidthChanged)
+	Q_PROPERTY(qreal expandIconRotate READ getExpandIconRotate WRITE setExpandIconRotate NOTIFY sigExpandIconRotateChanged)
+	Q_PROPERTY(qreal expandMarkWidth READ getExpandMarkWidth WRITE setExpandMarkWidth NOTIFY sigExpandMarkWidthChanged)
 
 public:
 	explicit CUVComboBoxStyle(QStyle* style = nullptr);
@@ -25,22 +27,13 @@ public:
 	void setExpandMarkWidth(qreal ExpandMarkWidth);
 	[[nodiscard]] qreal getExpandMarkWidth() const;
 
-signals:
-	void sigExpandIconRotateChanged();
+	signals:
+		void sigExpandIconRotateChanged();
 	void sigExpandMarkWidthChanged();
 
 private:
-	qreal _pExpandIconRotate{};
-	qreal _pExpandMarkWidth{};
-	int _shadowBorderWidth{};
-
-public:
-	QColor normalColor{};
-	QColor mouseHoverColor{};
-	QColor mouseSelectedColor{};
-	QColor borderColor{};
-	QColor selectedMarkColor{};
-	QColor itemHoverColor{};
-	QColor expansionIndicatorColor{};
-	QColor unselectedMarkColor{};
+	UVThemeType::ThemeMode m_themeMode{};
+	qreal m_expandIconRotate{};
+	qreal m_expandMarkWidth{};
+	int m_shadowBorderWidth{};
 };

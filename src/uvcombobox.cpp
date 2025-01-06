@@ -8,6 +8,7 @@
 #include "uvcomboboxstyle.hpp"
 #include "uvcombobox_p.hpp"
 #include "uvscrollbar.hpp"
+#include "uvthememanager.hpp"
 
 /**
  * @brief \class CUVComboBoxPrivate
@@ -27,11 +28,13 @@ CUVComboBoxPrivate::~CUVComboBoxPrivate() = default;
 CUVComboBox::CUVComboBox(QWidget* parent): QComboBox(parent), d_ptr(new CUVComboBoxPrivate(this, this)) {
 	Q_D(CUVComboBox);
 
-	d->_pBorderRadius = 3;
+	d->borderRadius = 3;
+	d->themeMode = UVTheme->getThemeMode();
+	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const UVThemeType::ThemeMode& mode) { d->themeMode = mode; });
 	setObjectName("CUVComboBox");
 	setFixedHeight(35);
-	d->_comboBoxStyle = new CUVComboBoxStyle(style());
-	setStyle(d->_comboBoxStyle);
+	d->comboBoxStyle = new CUVComboBoxStyle(style());
+	setStyle(d->comboBoxStyle);
 
 	// 调用view 让container初始化
 	setView(new QListView(this));
@@ -43,14 +46,14 @@ CUVComboBox::CUVComboBox(QWidget* parent): QComboBox(parent), d_ptr(new CUVCombo
 	comboBoxView->setSelectionMode(QAbstractItemView::NoSelection);
 	comboBoxView->setObjectName("CUVComboBoxView");
 	comboBoxView->setStyleSheet("#CUVComboBoxView{ background-color: transparent; }");
-	comboBoxView->setStyle(d->_comboBoxStyle);
+	comboBoxView->setStyle(d->comboBoxStyle);
 	comboBoxView->verticalScrollBar()->setVisible(true);
 	comboBoxView->horizontalScrollBar()->setVisible(false);
 	if (QWidget* container = this->findChild<QFrame*>()) {
 		container->setWindowFlags(Qt::Popup | Qt::FramelessWindowHint | Qt::NoDropShadowWindowHint);
 		container->setAttribute(Qt::WA_TranslucentBackground);
 		container->setObjectName("CUVComboBoxContainer");
-		container->setStyle(d->_comboBoxStyle);
+		container->setStyle(d->comboBoxStyle);
 		QLayout* layout = container->layout();
 		while (layout->count()) {
 			layout->takeAt(0);
@@ -66,62 +69,14 @@ CUVComboBox::~CUVComboBox() = default;
 void CUVComboBox::setBorderRadius(const int borderRadius) {
 	Q_D(CUVComboBox);
 
-	d->_pBorderRadius = borderRadius;
+	d->borderRadius = borderRadius;
 	emit sigBorderRadiusChanged();
 }
 
 int CUVComboBox::getBorderRadius() const {
 	Q_D(const CUVComboBox);
 
-	return d->_pBorderRadius;
-}
-
-void CUVComboBox::setNomalColor(const QColor& color) {
-	Q_D(CUVComboBox);
-
-	d->_comboBoxStyle->normalColor = color;
-}
-
-QColor CUVComboBox::getNomalColor() const {
-	Q_D(const CUVComboBox);
-
-	return d->_comboBoxStyle->normalColor;
-}
-
-void CUVComboBox::setMouseHoverColor(const QColor& color) {
-	Q_D(CUVComboBox);
-
-	d->_comboBoxStyle->mouseHoverColor = color;
-}
-
-QColor CUVComboBox::getMouseHoverColor() const {
-	Q_D(const CUVComboBox);
-
-	return d->_comboBoxStyle->mouseHoverColor;
-}
-
-void CUVComboBox::setMouseSelectedColor(const QColor& color) {
-	Q_D(CUVComboBox);
-
-	d->_comboBoxStyle->mouseSelectedColor = color;
-}
-
-QColor CUVComboBox::getMouseSelectedColor() const {
-	Q_D(const CUVComboBox);
-
-	return d->_comboBoxStyle->mouseSelectedColor;
-}
-
-void CUVComboBox::setBorderColor(const QColor& color) {
-	Q_D(CUVComboBox);
-
-	d->_comboBoxStyle->borderColor = color;
-}
-
-QColor CUVComboBox::getBorderColor() const {
-	Q_D(const CUVComboBox);
-
-	return d->_comboBoxStyle->borderColor;
+	return d->borderRadius;
 }
 
 void CUVComboBox::showPopup() {
@@ -147,9 +102,7 @@ void CUVComboBox::showPopup() {
 				layout->takeAt(0);
 			}
 			const auto fixedSizeAnimation = new QPropertyAnimation(container, "maximumHeight");
-			connect(fixedSizeAnimation, &QPropertyAnimation::valueChanged, this, [=](const QVariant& value) {
-				container->setFixedHeight(value.toInt());
-			});
+			connect(fixedSizeAnimation, &QPropertyAnimation::valueChanged, this, [=](const QVariant& value) { container->setFixedHeight(value.toInt()); });
 			fixedSizeAnimation->setStartValue(1);
 			fixedSizeAnimation->setEndValue(containerHeight);
 			fixedSizeAnimation->setEasingCurve(QEasingCurve::OutCubic);
@@ -158,7 +111,7 @@ void CUVComboBox::showPopup() {
 
 			const auto viewPosAnimation = new QPropertyAnimation(view(), "pos");
 			connect(viewPosAnimation, &QPropertyAnimation::finished, this, [=]() {
-				d->_isAllowHidePopup = true;
+				d->isAllowHidePopup = true;
 				layout->addWidget(view());
 			});
 			const QPoint viewPos = view()->pos();
@@ -169,20 +122,18 @@ void CUVComboBox::showPopup() {
 			viewPosAnimation->start(QAbstractAnimation::DeleteWhenStopped);
 		}
 		// 指示器动画
-		const auto rotateAnimation = new QPropertyAnimation(d->_comboBoxStyle, "pExpandIconRotate");
-		connect(rotateAnimation, &QPropertyAnimation::valueChanged, this, [=](const QVariant& value) {
-			update();
-		});
+		const auto rotateAnimation = new QPropertyAnimation(d->comboBoxStyle, "expandIconRotate");
+		connect(rotateAnimation, &QPropertyAnimation::valueChanged, this, [=](const QVariant& value) { update(); });
 		rotateAnimation->setDuration(300);
 		rotateAnimation->setEasingCurve(QEasingCurve::InOutSine);
-		rotateAnimation->setStartValue(d->_comboBoxStyle->getExpandIconRotate());
+		rotateAnimation->setStartValue(d->comboBoxStyle->getExpandIconRotate());
 		rotateAnimation->setEndValue(-180);
 		rotateAnimation->start(QAbstractAnimation::DeleteWhenStopped);
-		const auto markAnimation = new QPropertyAnimation(d->_comboBoxStyle, "pExpandMarkWidth");
+		const auto markAnimation = new QPropertyAnimation(d->comboBoxStyle, "expandMarkWidth");
 		markAnimation->setDuration(300);
 		markAnimation->setEasingCurve(QEasingCurve::InOutSine);
-		markAnimation->setStartValue(d->_comboBoxStyle->getExpandMarkWidth());
-		markAnimation->setEndValue(width() / 2 - d->_pBorderRadius - 6);
+		markAnimation->setStartValue(d->comboBoxStyle->getExpandMarkWidth());
+		markAnimation->setEndValue(width() / 2 - d->borderRadius - 6);
 		markAnimation->start(QAbstractAnimation::DeleteWhenStopped);
 	}
 }
@@ -190,7 +141,7 @@ void CUVComboBox::showPopup() {
 void CUVComboBox::hidePopup() {
 	Q_D(CUVComboBox);
 
-	if (d->_isAllowHidePopup) {
+	if (d->isAllowHidePopup) {
 		QWidget* container = this->findChild<QFrame*>();
 		const int containerHeight = container->height();
 		if (container) { // NOLINT
@@ -199,9 +150,7 @@ void CUVComboBox::hidePopup() {
 				layout->takeAt(0);
 			}
 			const auto viewPosAnimation = new QPropertyAnimation(view(), "pos");
-			connect(viewPosAnimation, &QPropertyAnimation::finished, this, [=]() {
-				layout->addWidget(view());
-			});
+			connect(viewPosAnimation, &QPropertyAnimation::finished, this, [=]() { layout->addWidget(view()); });
 			constexpr auto viewPos = QPoint(7, 1);
 			connect(viewPosAnimation, &QPropertyAnimation::finished, this, [=]() { view()->move(viewPos); });
 			viewPosAnimation->setStartValue(viewPos);
@@ -214,29 +163,25 @@ void CUVComboBox::hidePopup() {
 				QComboBox::hidePopup();
 				container->setFixedHeight(containerHeight);
 			});
-			connect(fixedSizeAnimation, &QPropertyAnimation::valueChanged, this, [=](const QVariant& value) {
-				container->setFixedHeight(value.toInt());
-			});
+			connect(fixedSizeAnimation, &QPropertyAnimation::valueChanged, this, [=](const QVariant& value) { container->setFixedHeight(value.toInt()); });
 			fixedSizeAnimation->setStartValue(container->height());
 			fixedSizeAnimation->setEndValue(1);
 			fixedSizeAnimation->setEasingCurve(QEasingCurve::InCubic);
 			fixedSizeAnimation->start(QAbstractAnimation::DeleteWhenStopped);
-			d->_isAllowHidePopup = false;
+			d->isAllowHidePopup = false;
 		}
 		// 指示器动画
-		const auto rotateAnimation = new QPropertyAnimation(d->_comboBoxStyle, "pExpandIconRotate");
-		connect(rotateAnimation, &QPropertyAnimation::valueChanged, this, [=](const QVariant& value) {
-			update();
-		});
+		const auto rotateAnimation = new QPropertyAnimation(d->comboBoxStyle, "expandIconRotate");
+		connect(rotateAnimation, &QPropertyAnimation::valueChanged, this, [=](const QVariant& value) { update(); });
 		rotateAnimation->setDuration(300);
 		rotateAnimation->setEasingCurve(QEasingCurve::InOutSine);
-		rotateAnimation->setStartValue(d->_comboBoxStyle->getExpandIconRotate());
+		rotateAnimation->setStartValue(d->comboBoxStyle->getExpandIconRotate());
 		rotateAnimation->setEndValue(0);
 		rotateAnimation->start(QAbstractAnimation::DeleteWhenStopped);
-		const auto markAnimation = new QPropertyAnimation(d->_comboBoxStyle, "pExpandMarkWidth");
+		const auto markAnimation = new QPropertyAnimation(d->comboBoxStyle, "expandMarkWidth");
 		markAnimation->setDuration(300);
 		markAnimation->setEasingCurve(QEasingCurve::InOutSine);
-		markAnimation->setStartValue(d->_comboBoxStyle->getExpandMarkWidth());
+		markAnimation->setStartValue(d->comboBoxStyle->getExpandMarkWidth());
 		markAnimation->setEndValue(0);
 		markAnimation->start(QAbstractAnimation::DeleteWhenStopped);
 	}

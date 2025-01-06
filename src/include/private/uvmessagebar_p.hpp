@@ -20,11 +20,42 @@ class CUVMessageBarManager final : public QObject {
 public:
 	static CUVMessageBarManager* instance();
 
+	/**
+	 * @brief 请求事件堆栈调用
+	 * @param messageBar 消息栏
+	 */
 	void requestMessageBarEvent(CUVMessageBar* messageBar);
+
+	/**
+	 * @brief 发布创建事件
+	 * @param messageBar 消息栏
+	 */
 	void postMessageBarCreateEvent(CUVMessageBar* messageBar);
+
+	/**
+	 * @brief 发布终止事件
+	 * @param messageBar 消息栏
+	 */
 	void postMessageBarEndEvent(CUVMessageBar* messageBar);
+
+	/**
+	 * @brief 强制发布终止事件
+	 * @param messageBar 消息栏
+	 */
 	void forcePostMessageBarEndEvent(CUVMessageBar* messageBar);
+
+	/**
+	 * @brief 获取当前事件数量
+	 * @param messageBar 消息栏
+	 * @return 当前时间数量
+	 */
 	int getMessageBarEventCount(CUVMessageBar* messageBar);
+
+	/**
+	 * @brief 更新活动序列
+	 * @param messageBar 消息栏
+	 * @param isActive 是否活动
+	 */
 	void updateActionMap(CUVMessageBar* messageBar, bool isActive);
 
 protected:

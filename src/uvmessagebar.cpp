@@ -59,7 +59,7 @@ void CUVMessageBarManager::postMessageBarCreateEvent(CUVMessageBar* messageBar) 
 		return;
 	}
 
-	updateActionMap(messageBar, true);
+	updateActionMap(messageBar, true); // 计算坐标前增加
 	if (!mapMessageBarEvent.contains(messageBar)) {
 		QList<QVariantMap> eventList{};
 		QVariantMap eventData{};
@@ -77,7 +77,7 @@ void CUVMessageBarManager::postMessageBarEndEvent(CUVMessageBar* messageBar) {
 	updateActionMap(messageBar, false);
 	// Other MessageBar 事件入栈, 记录同一策略事件
 	const UVMessageBarType::PositionPolicy policy = messageBar->d_func()->policy;
-	for (const auto otherMessageBar: *mapMessageBarActive.value(policy)) {
+	for (const auto& otherMessageBar : *mapMessageBarActive.value(policy)) {
 		if (otherMessageBar->d_func()->judgeCreateDrder(messageBar)) {
 			QList<QVariantMap> eventList = mapMessageBarEvent[otherMessageBar];
 			// 优先执行先触发的事件, end 事件保持首位
@@ -159,7 +159,7 @@ CUVMessageBarPrivate::CUVMessageBarPrivate(CUVMessageBar* q, QObject* parent): Q
 CUVMessageBarPrivate::~CUVMessageBarPrivate() = default;
 
 void CUVMessageBarPrivate::init() {
-	borderRadius = 5;
+	borderRadius = 6;
 	title = "";
 	text = "";
 	leftPadding = 20;
@@ -171,7 +171,7 @@ void CUVMessageBarPrivate::init() {
 	messageBarVerticalBottomMargin = 20;
 	messageBarVerticalTopMargin = 50;
 	messageBarSpacing = 15;
-	shadowBorderWidth = 0;
+	shadowBorderWidth = 6;
 
 	isMessageBarCreateAnimationFinished = false;
 	isReadyToEnd = false;
@@ -253,10 +253,10 @@ void CUVMessageBarPrivate::slotCloseButtonClicked() {
 		q->update();
 	});
 	connect(opacityAnimation, &QPropertyAnimation::finished, this, [=]() { q->deleteLater(); });
+	opacityAnimation->setEasingCurve(QEasingCurve::InOutSine);
 	opacityAnimation->setStartValue(opacity);
 	opacityAnimation->setEndValue(0);
 	opacityAnimation->setDuration(220);
-	opacityAnimation->setEasingCurve(QEasingCurve::InOutSine);
 	opacityAnimation->start(QAbstractAnimation::DeleteWhenStopped);
 }
 
@@ -318,14 +318,14 @@ void CUVMessageBarPrivate::calculateInitialPos(int& startX, int& startY, int& en
 		case UVMessageBarType::Top: {
 			// 25动画距离
 			startX = q->parentWidget()->width() / 2 - q->minimumWidth() / 2;
-			startY = minimumHeightTotal + messageBarSpacing + indexLessCount + messageBarVerticalTopMargin - 25;
+			startY = minimumHeightTotal + messageBarSpacing * indexLessCount + messageBarVerticalTopMargin - 25;
 			endX = startX;
-			endY = minimumHeightTotal + messageBarSpacing + indexLessCount + messageBarVerticalTopMargin;
+			endY = minimumHeightTotal + messageBarSpacing * indexLessCount + messageBarVerticalTopMargin;
 			break;
 		}
 		case UVMessageBarType::Left: {
 			startX = -q->minimumWidth();
-			startY = minimumHeightTotal + messageBarSpacing + indexLessCount + q->parentWidget()->height() / 2;
+			startY = minimumHeightTotal + messageBarSpacing * indexLessCount + q->parentWidget()->height() / 2;
 			endX = messageBarHorizontalMargin;
 			endY = startY;
 			break;
@@ -339,35 +339,35 @@ void CUVMessageBarPrivate::calculateInitialPos(int& startX, int& startY, int& en
 		}
 		case UVMessageBarType::Right: {
 			startX = q->parentWidget()->width();
-			startY = minimumHeightTotal + messageBarSpacing + indexLessCount + q->parentWidget()->height() / 2;
+			startY = minimumHeightTotal + messageBarSpacing * indexLessCount + q->parentWidget()->height() / 2;
 			endX = q->parentWidget()->width() - q->minimumWidth() - messageBarHorizontalMargin;
 			endY = startY;
 			break;
 		}
 		case UVMessageBarType::TopRight: {
 			startX = q->parentWidget()->width();
-			startY = minimumHeightTotal + messageBarSpacing + indexLessCount + messageBarVerticalTopMargin;
+			startY = minimumHeightTotal + messageBarSpacing * indexLessCount + messageBarVerticalTopMargin;
 			endX = q->parentWidget()->width() - q->minimumWidth() - messageBarHorizontalMargin;
 			endY = startY;
 			break;
 		}
 		case UVMessageBarType::TopLeft: {
 			startX = -q->minimumWidth();
-			startY = minimumHeightTotal + messageBarSpacing + indexLessCount + messageBarVerticalTopMargin;
+			startY = minimumHeightTotal + messageBarSpacing * indexLessCount + messageBarVerticalTopMargin;
 			endX = this->messageBarHorizontalMargin;
 			endY = startY;
 			break;
 		}
 		case UVMessageBarType::BottomRight: {
 			startX = q->parentWidget()->width();
-			startY = q->parentWidget()->height() - q->minimumHeight() - minimumHeightTotal - messageBarSpacing + indexLessCount - messageBarVerticalBottomMargin;
+			startY = q->parentWidget()->height() - q->minimumHeight() - minimumHeightTotal - messageBarSpacing * indexLessCount - messageBarVerticalBottomMargin;
 			endX = q->parentWidget()->width() - q->minimumWidth() - this->messageBarHorizontalMargin;
 			endY = startY;
 			break;
 		}
 		case UVMessageBarType::BottomLeft: {
 			startX = -q->minimumWidth();
-			startY = q->parentWidget()->height() - q->minimumHeight() - minimumHeightTotal - messageBarSpacing + indexLessCount - messageBarVerticalBottomMargin;
+			startY = q->parentWidget()->height() - q->minimumHeight() - minimumHeightTotal - messageBarSpacing * indexLessCount - messageBarVerticalBottomMargin;
 			endX = this->messageBarHorizontalMargin;
 			endY = startY;
 			break;
@@ -390,7 +390,7 @@ QList<int> CUVMessageBarPrivate::getOtherMessageBarTotalData(const bool isJudgeC
 	int minimumHeightTotal{ 0 };
 	int indexLessCount{ 0 };
 	QList<CUVMessageBar*>* messageBarList = mapMessageBarActive[policy];
-	for (const auto& messageBar: *messageBarList) {
+	for (const auto& messageBar : *messageBarList) {
 		if (messageBar == q) {
 			continue;
 		}
@@ -423,7 +423,7 @@ qreal CUVMessageBarPrivate::calculateTargetPosY() {
 		case UVMessageBarType::Bottom:
 		case UVMessageBarType::BottomLeft:
 		case UVMessageBarType::BottomRight: {
-			return q->parentWidget()->height() - q->minimumHeight() - minimumHeightTotal * indexLessCount - messageBarVerticalBottomMargin;
+			return q->parentWidget()->height() - q->minimumHeight() - minimumHeightTotal - messageBarSpacing * indexLessCount - messageBarVerticalBottomMargin;
 		}
 	}
 	return 0;
@@ -440,7 +440,6 @@ void CUVMessageBarPrivate::drawMessage(QPainter* painter, const QColor& backgrou
 	painter->setBrush(backgroundColor);
 	const QRect foregroundRect(shadowBorderWidth, shadowBorderWidth, q->width() - 2 * shadowBorderWidth, q->height() - 2 * shadowBorderWidth);
 	painter->drawRoundedRect(foregroundRect, borderRadius, borderRadius);
-
 	// 图标绘制
 	painter->save();
 	painter->setPen(penColor);
@@ -448,25 +447,23 @@ void CUVMessageBarPrivate::drawMessage(QPainter* painter, const QColor& backgrou
 	textPath.addEllipse(QPoint(leftPadding + 6, q->height() / 2), 9, 9);
 	painter->setClipPath(textPath);
 	painter->fillPath(textPath, iconColor);
-
-	auto iconFont = QFont("CUVAwesome");
+	QFont iconFont("CUVAwesome");
 	iconFont.setPixelSize(iconPixelSize);
 	painter->setFont(iconFont);
 	painter->drawText(iconX, 0, q->width(), q->height(), Qt::AlignVCenter, iconText);
 	painter->restore();
-
 	// 文字颜色
 	painter->setPen(textColor);
 }
 
 void CUVMessageBarPrivate::drawSuccess(QPainter* painter) {
-	drawMessage(painter, QColor(45, 45, 45), QColor(0x11, 0x77, 0x10), QChar(static_cast<ushort>(CUVAweSomeIcon::Check)),
-	            Qt::white, 12, leftPadding);
+	drawMessage(painter, QColor(0xE0, 0xF6, 0xDD), QColor(0x11, 0x77, 0x10), QChar(static_cast<ushort>(CUVAweSomeIcon::Check)),
+	            Qt::black, 12, leftPadding);
 }
 
 void CUVMessageBarPrivate::drawError(QPainter* painter) {
 	drawMessage(painter, QColor(0xFE, 0xE7, 0xEA), QColor(0xBA, 0x2D, 0x20), QChar(static_cast<ushort>(CUVAweSomeIcon::Close)),
-	            Qt::white, 13, leftPadding + 1);
+	            Qt::black, 13, leftPadding + 1);
 }
 
 void CUVMessageBarPrivate::drawWarning(QPainter* painter) {
@@ -475,8 +472,8 @@ void CUVMessageBarPrivate::drawWarning(QPainter* painter) {
 }
 
 void CUVMessageBarPrivate::drawInfo(QPainter* painter) {
-	drawMessage(painter, QColor(45, 45, 45), QColor(0x00, 0x66, 0xB4), QString("i"),
-	            Qt::white, 12, leftPadding + 4);
+	drawMessage(painter, QColor(0xF4, 0xF4, 0xF4), QColor(0x00, 0x66, 0xB4), QString("i"),
+	            Qt::black, 12, leftPadding + 4);
 }
 
 void CUVMessageBarPrivate::setOpacity(const qreal opacity) {
@@ -488,10 +485,10 @@ qreal CUVMessageBarPrivate::getOpacity() const {
 	return opacity;
 }
 
-void CUVMessageBarPrivate::showMessageBar(const UVMessageBarType::PositionPolicy& positionPolicy, const UVMessageBarType::MessageLevel& messageLevel, const QString& title, const QString& message, int displayMsec, QWidget* parent) {
+void CUVMessageBarPrivate::showMessageBar(const UVMessageBarType::PositionPolicy& positionPolicy, const UVMessageBarType::MessageLevel& messageLevel, const QString& title, const QString& message, const int displayMsec, QWidget* parent) {
 	if (!parent) {
 		QList<QWidget*> widgetList = QApplication::topLevelWidgets();
-		for (const auto& widget: widgetList) {
+		for (const auto& widget : widgetList) {
 			if (widget->property("CUVBaseClassName").toString() == "CUVMainWindow") {
 				parent = widget;
 				break;
@@ -534,8 +531,8 @@ CUVMessageBar::CUVMessageBar(const UVMessageBarType::PositionPolicy& policy, con
 	d->text = message;
 	d->policy = policy;
 	d->messageMode = messageLevel;
-	d->themeMode = UVTheme->getThemeMode();
 	d->opacity = 1;
+	d->themeMode = UVTheme->getThemeMode();
 	setFixedHeight(60);
 	setMouseTracking(true);
 	setFont(QFont("Source Han Sans SC Normal"));
@@ -544,7 +541,7 @@ CUVMessageBar::CUVMessageBar(const UVMessageBarType::PositionPolicy& policy, con
 	switch (d->messageMode) {
 		case UVMessageBarType::Success: {
 			d->closeButton->setLightHoverColor(QColor(0xE6, 0xFC, 0xE3));
-			d->closeButton->setDarkHoverColor(QColor(30, 36, 51));
+			d->closeButton->setDarkHoverColor(QColor(0xE6, 0xFC, 0xE3));
 			d->closeButton->setDarkIconColor(Qt::white);
 			break;
 		}
@@ -557,8 +554,8 @@ CUVMessageBar::CUVMessageBar(const UVMessageBarType::PositionPolicy& policy, con
 		}
 		case UVMessageBarType::Info: {
 			d->closeButton->setLightHoverColor(QColor(0xEB, 0xEB, 0xEB));
-			d->closeButton->setDarkHoverColor(QColor(30, 36, 51));
-			d->closeButton->setDarkIconColor(Qt::white);
+			d->closeButton->setDarkHoverColor(QColor(0xEB, 0xEB, 0xEB));
+			d->closeButton->setDarkIconColor(Qt::black);
 			break;
 		}
 		case UVMessageBarType::Error: {
@@ -608,7 +605,7 @@ void CUVMessageBar::paintEvent(QPaintEvent* event) {
 	UVTheme->drawEffectShadow(&painter, rect(), d->shadowBorderWidth, d->borderRadius);
 	// 背景和图标绘制
 	painter.save();
-	painter.setPen(Qt::NoPen);
+	painter.setPen(d->themeMode == UVThemeType::Light ? QColor(0xBE, 0xBA, 0xBE) : QColor(0x52, 0x50, 0x52));
 	switch (d->messageMode) {
 		case UVMessageBarType::Success: {
 			d->drawSuccess(&painter);
@@ -634,15 +631,15 @@ void CUVMessageBar::paintEvent(QPaintEvent* event) {
 	font.setPixelSize(16);
 	painter.setFont(font);
 	const int titleTextWidth = qMin(painter.fontMetrics().horizontalAdvance(d->title) + 1, 100);
-	constexpr int textFlags = Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWordWrap;
+	constexpr int textFlags = Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWordWrap | Qt::TextWrapAnywhere;
 	painter.drawText(QRect(d->leftPadding + d->titleLeftSpacing, -1, titleTextWidth, height()), textFlags, d->title);
 	// 正文
-	font.setWeight(400);
-	font.setPixelSize(14);
+	font.setWeight(QFont::Light);
+	font.setPixelSize(15);
 	painter.setFont(font);
 	painter.drawText(QRect(d->leftPadding + d->titleLeftSpacing + titleTextWidth + d->textLeftSpacing, 0,
 	                       width() - (d->leftPadding + d->titleLeftSpacing + titleTextWidth + d->textLeftSpacing + d->closeButtonWidth +
-	                                  d->closeButtonLeftRightMargin / 2), height()), textFlags, d->text);
+		                       d->closeButtonLeftRightMargin / 2), height()), textFlags, d->text);
 	if (const int textHeight = painter.fontMetrics().boundingRect(
 		QRect(d->leftPadding + d->titleLeftSpacing + titleTextWidth + d->textLeftSpacing, 0,
 		      width() - (d->leftPadding + d->titleLeftSpacing + titleTextWidth + d->textLeftSpacing + d->closeButtonWidth + d->closeButtonLeftRightMargin),

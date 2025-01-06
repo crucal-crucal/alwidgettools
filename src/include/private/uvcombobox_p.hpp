@@ -2,6 +2,8 @@
 
 #include <QObject>
 
+#include "uvwidgettoolsdef.hpp"
+
 class CUVComboBox;
 class CUVComboBoxStyle;
 
@@ -18,7 +20,8 @@ protected:
 	CUVComboBox* const q_ptr{ nullptr };
 
 private:
-	int _pBorderRadius{};
-	CUVComboBoxStyle* _comboBoxStyle{ nullptr };
-	bool _isAllowHidePopup{ false };
+	UVThemeType::ThemeMode themeMode{};
+	int borderRadius{};
+	CUVComboBoxStyle* comboBoxStyle{ nullptr };
+	bool isAllowHidePopup{ false };
 };

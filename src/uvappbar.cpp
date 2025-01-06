@@ -235,7 +235,6 @@ CUVAppBar::CUVAppBar(QWidget* parent): QWidget(parent), d_ptr(new CUVAppBarPriva
 
 	Q_D(CUVAppBar);
 
-	d->buttonFlags = UVAppBarType::RouteBackButtonHint | UVAppBarType::StayTopButtonHint | UVAppBarType::ThemeChangeButtonHint | UVAppBarType::MinimizeButtonHint | UVAppBarType::MaximizeButtonHint | UVAppBarType::CloseButtonHint;
 	window()->setAttribute(Qt::WA_Mapped);
 	d->appBarHeight = 45;
 	setFixedHeight(d->appBarHeight);
@@ -270,7 +269,6 @@ CUVAppBar::CUVAppBar(QWidget* parent): QWidget(parent), d_ptr(new CUVAppBarPriva
 	d->navigationButton->setAweSomeIcon(UVIcon::CUVAweSomeIcon::Bars);
 	d->navigationButton->setFixedSize(40, 30);
 	d->navigationButton->setObjectName("CUVNavigationButton");
-	d->navigationButton->setVisible(false);
 	d->navigationButton->setToolTip(tr("Navigation"));
 	connect(d->navigationButton, &CUVAwesomeToolButton::clicked, this, &CUVAppBar::sigNavigationButtonClicked);
 
@@ -377,6 +375,7 @@ CUVAppBar::CUVAppBar(QWidget* parent): QWidget(parent), d_ptr(new CUVAppBarPriva
 	});
 	d->lastScreen = QApplication::screenAt(window()->geometry().center());
 #endif
+	setWindowButtonFlags(UVAppBarType::RouteBackButtonHint | UVAppBarType::StayTopButtonHint | UVAppBarType::ThemeChangeButtonHint | UVAppBarType::MinimizeButtonHint | UVAppBarType::MaximizeButtonHint | UVAppBarType::CloseButtonHint);
 }
 
 CUVAppBar::~CUVAppBar() = default;
@@ -440,9 +439,18 @@ bool CUVAppBar::getIsOnlyAllowMinAndClose() const {
 }
 
 void CUVAppBar::setAppBarHeight(const int appBarHeight) {
-	d_func()->appBarHeight = appBarHeight;
+	Q_D(CUVAppBar);
+
+	d->appBarHeight = appBarHeight;
+	d->routeBackButton->setFixedSize(appBarHeight, appBarHeight);
+	d->themeChangeButton->setFixedSize(appBarHeight, appBarHeight);
+	d->stayTopButton->setFixedSize(appBarHeight, appBarHeight);
+	d->minButton->setFixedSize(appBarHeight, appBarHeight);
+	d->maxButton->setFixedSize(appBarHeight, appBarHeight);
+	d->closeButton->setFixedSize(appBarHeight, appBarHeight);
 	setFixedHeight(appBarHeight);
 	window()->setContentsMargins(0, this->height(), 0, 0);
+
 	Q_EMIT sigAppBarHeightChanged();
 }
 
