@@ -24,4 +24,7 @@ private:
 	void initSliderArea();
 	void initProgressBarArea();
 	void initCheckBoxArea();
+	void initRadioButtonArea();
+	void initSpinBoxArea();
+	void initDoubleSpinBoxArea();
 };

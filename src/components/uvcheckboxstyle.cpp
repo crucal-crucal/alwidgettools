@@ -11,7 +11,7 @@
  */
 CUVCheckBoxStyle::CUVCheckBoxStyle(QStyle* style) {
 	m_borderRadius = 6;
-	m_checkIndicatorWidth = 22;
+	m_checkIndicatorWidth = 21;
 	m_themeMode = UVTheme->getThemeMode();
 	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const UVThemeType::ThemeMode& mode) { m_themeMode = mode; });
 }
@@ -49,10 +49,12 @@ void CUVCheckBoxStyle::drawControl(const ControlElement element, const QStyleOpt
 				// 图标绘制
 				p->setPen(UVThemeColor(m_themeMode, UVThemeType::BasicText));
 				if (bopt->state.testFlag(QStyle::State_On)) {
+					p->save();
 					QFont iconFont("CUVAwesome");
 					iconFont.setPixelSize(m_checkIndicatorWidth * 0.75); // NOLINT
 					p->setFont(iconFont);
 					p->drawText(checkRect, Qt::AlignCenter, QChar(static_cast<unsigned short>(UVIcon::CUVAweSomeIcon::Check)));
+					p->restore();
 				} else if (bopt->state.testFlag(QStyle::State_NoChange)) {
 					p->drawLine(checkRect.x() + 3, checkRect.center().y(), checkRect.right() - 3, checkRect.center().y());
 				}

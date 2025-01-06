@@ -9,12 +9,15 @@
 #include "uvcircularprogress.hpp"
 #include "uvcolordialog.hpp"
 #include "uvcombobox.hpp"
+#include "uvdoublespinbox.hpp"
 #include "uvmessagebar.hpp"
 #include "uvmultiselectcombobox.hpp"
 #include "uvprogressbar.hpp"
 #include "uvpushbutton.hpp"
+#include "uvradiobutton.hpp"
 #include "uvscrollpagearea.hpp"
 #include "uvslider.hpp"
+#include "uvspinbox.hpp"
 #include "uvtext.hpp"
 #include "uvtoggleswitch.hpp"
 
@@ -42,6 +45,12 @@ E_BaseComponents::E_BaseComponents(QWidget* parent): E_BasePage(parent) {
 	initSliderArea();
 	/// checkBoxArea
 	initCheckBoxArea();
+	/// radioButtonArea
+	initRadioButtonArea();
+	/// spinBoxArea
+	initSpinBoxArea();
+	/// doubleSpinBoxArea
+	initDoubleSpinBoxArea();
 
 	m_mainVLayout->addStretch();
 	addCentralWidget(centralWidget, true, true, 0);
@@ -307,4 +316,64 @@ void E_BaseComponents::initCheckBoxArea() {
 	checkBoxHLayout->addSpacing(10);
 
 	m_mainVLayout->addWidget(checkBoxArea);
+}
+
+void E_BaseComponents::initRadioButtonArea() {
+	const auto radioButton = new CUVRadioButton("radioButton", this);
+	const auto radioButtonArea = new CUVScrollPageArea(this);
+	const auto radioButtonHLayout = new QHBoxLayout(radioButtonArea);
+	const auto radioButtonText = new CUVText("CUVRadioButton", this);
+	radioButtonText->setTextPixelSize(15);
+	radioButtonHLayout->addWidget(radioButtonText);
+	radioButtonHLayout->addWidget(radioButton);
+	radioButtonHLayout->addStretch();
+	const auto radioButtonDisable = new CUVToggleSwitch(this);
+	const auto radioButtonDisableText = new CUVText("Disable", this);
+	radioButtonDisableText->setTextPixelSize(15);
+	connect(radioButtonDisable, &CUVToggleSwitch::sigToggleChanged, radioButton, &CUVRadioButton::setDisabled);
+	radioButtonHLayout->addWidget(radioButtonDisableText);
+	radioButtonHLayout->addWidget(radioButtonDisable);
+	radioButtonHLayout->addSpacing(10);
+
+	m_mainVLayout->addWidget(radioButtonArea);
+}
+
+void E_BaseComponents::initSpinBoxArea() {
+	const auto spinBox = new CUVSpinBox(this);
+	const auto spinBoxArea = new CUVScrollPageArea(this);
+	const auto spinBoxHLayout = new QHBoxLayout(spinBoxArea);
+	const auto spinBoxText = new CUVText("CUVSpinBox", this);
+	spinBoxText->setTextPixelSize(15);
+	spinBoxHLayout->addWidget(spinBoxText);
+	spinBoxHLayout->addWidget(spinBox);
+	spinBoxHLayout->addStretch();
+	const auto spinBoxDisable = new CUVToggleSwitch(this);
+	const auto spinBoxDisableText = new CUVText("Disable", this);
+	spinBoxDisableText->setTextPixelSize(15);
+	connect(spinBoxDisable, &CUVToggleSwitch::sigToggleChanged, spinBox, &CUVSpinBox::setDisabled);
+	spinBoxHLayout->addWidget(spinBoxDisableText);
+	spinBoxHLayout->addWidget(spinBoxDisable);
+	spinBoxHLayout->addSpacing(10);
+
+	m_mainVLayout->addWidget(spinBoxArea);
+}
+
+void E_BaseComponents::initDoubleSpinBoxArea() {
+	const auto doubleSpinBox = new CUVDoubleSpinBox(this);
+	const auto doubleSpinBoxArea = new CUVScrollPageArea(this);
+	const auto doubleSpinBoxHLayout = new QHBoxLayout(doubleSpinBoxArea);
+	const auto doubleSpinBoxText = new CUVText("CUVDoubleSpinBox", this);
+	doubleSpinBoxText->setTextPixelSize(15);
+	doubleSpinBoxHLayout->addWidget(doubleSpinBoxText);
+	doubleSpinBoxHLayout->addWidget(doubleSpinBox);
+	doubleSpinBoxHLayout->addStretch();
+	const auto doubleSpinBoxDisable = new CUVToggleSwitch(this);
+	const auto doubleSpinBoxDisableText = new CUVText("Disable", this);
+	doubleSpinBoxDisableText->setTextPixelSize(15);
+	connect(doubleSpinBoxDisable, &CUVToggleSwitch::sigToggleChanged, doubleSpinBox, &CUVDoubleSpinBox::setDisabled);
+	doubleSpinBoxHLayout->addWidget(doubleSpinBoxDisableText);
+	doubleSpinBoxHLayout->addWidget(doubleSpinBoxDisable);
+	doubleSpinBoxHLayout->addSpacing(10);
+
+	m_mainVLayout->addWidget(doubleSpinBoxArea);
 }
