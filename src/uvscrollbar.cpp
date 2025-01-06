@@ -30,7 +30,7 @@ void CUVScrollBarPrivate::slotRangeChanged(const int min, const int max) {
 	Q_Q(CUVScrollBar);
 
 	if (q->isVisible() && isAnimation && max != 0) {
-		const auto rangeSmoothAnimation = new QPropertyAnimation(this, "pTargetMaximum");
+		const auto rangeSmoothAnimation = new QPropertyAnimation(this, "targetMaximum");
 		connect(rangeSmoothAnimation, &QPropertyAnimation::valueChanged, this, [=](const QVariant& value) {
 			q->blockSignals(true);
 			q->setMinimum(value.toInt());

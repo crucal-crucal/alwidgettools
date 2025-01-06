@@ -133,6 +133,8 @@ void CUVApplication::init() {
 	QResource::registerResource(applicationDirPath + QDir::separator() + "uvresource.rcc");
 	QApplication::setAttribute(Qt::AA_DontCreateNativeWidgetSiblings);
 	QFontDatabase::addApplicationFont(":/font/CUVAwesome.ttf");
+	QFontDatabase::addApplicationFont(":/font/segoe_slboot_EX.ttf");
+	QFontDatabase::addApplicationFont(":/font/segoen_slboot_EX.ttf");
 	d->translator->load(":/translation/zh_CN.qm");
 	QApplication::installTranslator(d->translator);
 

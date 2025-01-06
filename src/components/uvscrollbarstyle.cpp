@@ -7,16 +7,18 @@
 #include <QtMath>
 
 #include "uvscrollbar.hpp"
+#include "uvthememanager.hpp"
 
 /**
  * @brief \class CUVScrollBarStyle
  * @param style pointer to the parent style
  */
 CUVScrollBarStyle::CUVScrollBarStyle(QStyle* style): QProxyStyle(style) {
-	_pIsExpand = false;
-	_pOpacity = 0;
-	_pScrollBar = nullptr;
-	_pSliderExtent = 2.4;
+	m_isExpand = false;
+	m_opacity = 0;
+	m_sliderExtent = 2.4;
+	m_themeMode = UVTheme->getThemeMode();
+	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const UVThemeType::ThemeMode& mode) { m_themeMode = mode; });
 }
 
 CUVScrollBarStyle::~CUVScrollBarStyle() = default;
@@ -29,15 +31,15 @@ void CUVScrollBarStyle::drawComplexControl(const ComplexControl control, const Q
 				painter->setRenderHint(QPainter::Antialiasing);
 				painter->setPen(Qt::NoPen);
 				const QRect scrollBarRect = sopt->rect;
-				if (_pIsExpand) {
+				if (m_isExpand) {
 					// 背景绘制
-					painter->setOpacity(_pOpacity);
+					painter->setOpacity(m_opacity);
 					painter->setPen(Qt::NoPen);
-					painter->setBrush(QColor(0x38, 0x38, 0x38));
+					painter->setBrush(UVThemeColor(m_themeMode, UVThemeType::BasicBase));
 					painter->drawRoundedRect(scrollBarRect, 6, 6);
 					// 指示器绘制
 					constexpr int sideLength = 8;
-					painter->setBrush(QColor(0x9F, 0x9F, 0x9F));
+					painter->setBrush(UVThemeColor(m_themeMode, UVThemeType::ScrollBarHandle));
 					if (sopt->orientation == Qt::Horizontal) {
 						const QRect leftIndicatorRect = subControlRect(control, sopt, QStyle::SC_ScrollBarSubLine, widget);
 						const QRect rightIndicatorRect = subControlRect(control, sopt, QStyle::SC_ScrollBarAddLine, widget);
@@ -87,13 +89,13 @@ void CUVScrollBarStyle::drawComplexControl(const ComplexControl control, const Q
 				painter->setOpacity(1);
 				// 滑块绘制
 				QRectF sliderRect = subControlRect(control, option, SC_ScrollBarSlider, widget);
-				painter->setBrush(QColor(0x9F, 0x9F, 0x9F));
+				painter->setBrush(UVThemeColor(m_themeMode, UVThemeType::ScrollBarHandle));
 				if (sopt->orientation == Qt::Horizontal) {
-					sliderRect.setRect(sliderRect.x(), sliderRect.bottom() - _sliderMargin - _pSliderExtent, sliderRect.width(), _pSliderExtent);
+					sliderRect.setRect(sliderRect.x(), sliderRect.bottom() - m_sliderMargin - m_sliderExtent, sliderRect.width(), m_sliderExtent);
 				} else {
-					sliderRect.setRect(sliderRect.right() - _sliderMargin - _pSliderExtent, sliderRect.y(), _pSliderExtent, sliderRect.height());
+					sliderRect.setRect(sliderRect.right() - m_sliderMargin - m_sliderExtent, sliderRect.y(), m_sliderExtent, sliderRect.height());
 				}
-				painter->drawRoundedRect(sliderRect, _pSliderExtent / 2.0, _pSliderExtent / 2.0);
+				painter->drawRoundedRect(sliderRect, m_sliderExtent / 2.0, m_sliderExtent / 2.0);
 				painter->restore();
 			}
 			return;
@@ -109,7 +111,7 @@ void CUVScrollBarStyle::drawComplexControl(const ComplexControl control, const Q
 int CUVScrollBarStyle::pixelMetric(const PixelMetric metric, const QStyleOption* option, const QWidget* widget) const {
 	switch (metric) {
 		case QStyle::PM_ScrollBarExtent: {
-			return _scrollBarExtent;
+			return m_scrollBarExtent;
 		}
 		default: {
 			break;
@@ -128,42 +130,68 @@ int CUVScrollBarStyle::styleHint(const StyleHint stylehint, const QStyleOption* 
 
 void CUVScrollBarStyle::startExpandAnimation(const bool isExpand) {
 	if (isExpand) {
-		_pIsExpand = true;
-		const auto opacityAnimation = new QPropertyAnimation(this, "pOpacity");
-		connect(opacityAnimation, &QPropertyAnimation::valueChanged, this, [=]() {
-			_pScrollBar->update();
-		});
+		m_isExpand = true;
+		const auto opacityAnimation = new QPropertyAnimation(this, "opacity");
+		connect(opacityAnimation, &QPropertyAnimation::valueChanged, this, [=]() { m_scrollBar->update(); });
 		opacityAnimation->setDuration(250);
 		opacityAnimation->setEasingCurve(QEasingCurve::InOutSine);
-		opacityAnimation->setStartValue(_pOpacity);
+		opacityAnimation->setStartValue(m_opacity);
 		opacityAnimation->setEndValue(1);
 		opacityAnimation->start(QAbstractAnimation::DeleteWhenStopped);
 
-		const auto extentAnimation = new QPropertyAnimation(this, "pSliderExtent");
+		const auto extentAnimation = new QPropertyAnimation(this, "sliderExtent");
 		extentAnimation->setDuration(250);
 		extentAnimation->setEasingCurve(QEasingCurve::InOutSine);
-		extentAnimation->setStartValue(_pSliderExtent);
-		extentAnimation->setEndValue(_scrollBarExtent - 2 * _sliderMargin);
+		extentAnimation->setStartValue(m_sliderExtent);
+		extentAnimation->setEndValue(m_scrollBarExtent - 2 * m_sliderMargin);
 		extentAnimation->start(QAbstractAnimation::DeleteWhenStopped);
 	} else {
-		const auto opacityAnimation = new QPropertyAnimation(this, "pOpacity");
-		connect(opacityAnimation, &QPropertyAnimation::finished, this, [=]() {
-			_pIsExpand = false;
-		});
-		connect(opacityAnimation, &QPropertyAnimation::valueChanged, this, [=]() {
-			_pScrollBar->update();
-		});
+		const auto opacityAnimation = new QPropertyAnimation(this, "opacity");
+		connect(opacityAnimation, &QPropertyAnimation::finished, this, [=]() { m_isExpand = false; });
+		connect(opacityAnimation, &QPropertyAnimation::valueChanged, this, [=]() { m_scrollBar->update(); });
 		opacityAnimation->setDuration(250);
 		opacityAnimation->setEasingCurve(QEasingCurve::InOutSine);
-		opacityAnimation->setStartValue(_pOpacity);
+		opacityAnimation->setStartValue(m_opacity);
 		opacityAnimation->setEndValue(0);
 		opacityAnimation->start(QAbstractAnimation::DeleteWhenStopped);
 
-		const auto extentAnimation = new QPropertyAnimation(this, "pSliderExtent");
+		const auto extentAnimation = new QPropertyAnimation(this, "sliderExtent");
 		extentAnimation->setDuration(250);
 		extentAnimation->setEasingCurve(QEasingCurve::InOutSine);
-		extentAnimation->setStartValue(_pSliderExtent);
+		extentAnimation->setStartValue(m_sliderExtent);
 		extentAnimation->setEndValue(2.4);
 		extentAnimation->start(QAbstractAnimation::DeleteWhenStopped);
 	}
+}
+
+void CUVScrollBarStyle::setOpacity(const qreal opacity) {
+	m_opacity = opacity;
+}
+
+qreal CUVScrollBarStyle::getOpacity() const {
+	return m_opacity;
+}
+
+void CUVScrollBarStyle::setSliderExtent(const qreal sliderExtent) {
+	m_sliderExtent = sliderExtent;
+}
+
+qreal CUVScrollBarStyle::getSliderExtent() const {
+	return m_sliderExtent;
+}
+
+void CUVScrollBarStyle::setIsExpand(const bool isExpand) {
+	m_isExpand = isExpand;
+}
+
+bool CUVScrollBarStyle::getIsExpand() const {
+	return m_isExpand;
+}
+
+void CUVScrollBarStyle::setScrollBar(CUVScrollBar* scrollBar) {
+	m_scrollBar = scrollBar;
+}
+
+CUVScrollBar* CUVScrollBarStyle::getScrollBar() const {
+	return m_scrollBar;
 }

@@ -19,12 +19,12 @@ CUVMenuPrivate::CUVMenuPrivate(CUVMenu* q, QObject* parent): QObject(parent), q_
 CUVMenuPrivate::~CUVMenuPrivate() = default;
 
 void CUVMenuPrivate::setAnimationImagePosY(const int pos) {
-	_pAnimationImagePosY = pos;
+	animationImagePosY = pos;
 	emit onAnimationImagePosYChanged();
 }
 
 int CUVMenuPrivate::getAnimationImagePosY() const {
-	return _pAnimationImagePosY;
+	return animationImagePosY;
 }
 
 /**
@@ -37,9 +37,9 @@ CUVMenu::CUVMenu(QWidget* parent): QMenu(parent), d_ptr(new CUVMenuPrivate(this,
 	setWindowFlags(Qt::Popup | Qt::FramelessWindowHint | Qt::NoDropShadowWindowHint);
 	setAttribute(Qt::WA_TranslucentBackground);
 	setObjectName("CUVMenu");
-	d->_menuStyle = new CUVMenuStyle(style());
-	setStyle(d->_menuStyle);
-	d->_pAnimationImagePosY = 0;
+	d->menuStyle = new CUVMenuStyle(style());
+	setStyle(d->menuStyle);
+	d->animationImagePosY = 0;
 }
 
 CUVMenu::CUVMenu(const QString& title, QWidget* parent): CUVMenu(parent) {
@@ -51,13 +51,13 @@ CUVMenu::~CUVMenu() = default;
 void CUVMenu::setMenuItemHeight(const int menuItemHeight) {
 	Q_D(CUVMenu);
 
-	d->_menuStyle->setMenuItemHeight(menuItemHeight);
+	d->menuStyle->setMenuItemHeight(menuItemHeight);
 }
 
 int CUVMenu::getMenuItemHeight() const {
 	Q_D(const CUVMenu);
 
-	return d->_menuStyle->getMenuItemHeight();
+	return d->menuStyle->getMenuItemHeight();
 }
 
 QAction* CUVMenu::addMenu(QMenu* menu) {
@@ -156,13 +156,13 @@ void CUVMenu::showEvent(QShowEvent* event) {
 
 	//消除阴影偏移
 	move(this->pos().x() - 6, this->pos().y());
-	if (!d->_animationPix.isNull()) {
-		d->_animationPix = QPixmap();
+	if (!d->animationPix.isNull()) {
+		d->animationPix = QPixmap();
 	}
-	d->_animationPix = this->grab(this->rect());
-	const auto posAnimation = new QPropertyAnimation(d, "pAnimationImagePosY");
+	d->animationPix = this->grab(this->rect());
+	const auto posAnimation = new QPropertyAnimation(d, "animationImagePosY");
 	connect(posAnimation, &QPropertyAnimation::finished, this, [=]() {
-		d->_animationPix = QPixmap();
+		d->animationPix = QPixmap();
 		update();
 	});
 	connect(posAnimation, &QPropertyAnimation::valueChanged, this, [=](const QVariant& value) {
@@ -179,7 +179,7 @@ void CUVMenu::showEvent(QShowEvent* event) {
 		}
 	}
 
-	if (pos().y() + d->_menuStyle->getMenuItemHeight() + 9 >= QCursor::pos().y()) {
+	if (pos().y() + d->menuStyle->getMenuItemHeight() + 9 >= QCursor::pos().y()) {
 		posAnimation->setStartValue(-targetPosY);
 	} else {
 		posAnimation->setStartValue(targetPosY);
@@ -194,9 +194,9 @@ void CUVMenu::paintEvent(QPaintEvent* event) {
 	Q_D(CUVMenu);
 	QPainter painter(this);
 	painter.setRenderHints(QPainter::SmoothPixmapTransform | QPainter::Antialiasing);
-	if (!d->_animationPix.isNull()) {
+	if (!d->animationPix.isNull()) {
 		painter.save();
-		painter.drawPixmap(QRect(0, d->_pAnimationImagePosY, width(), height()), d->_animationPix);
+		painter.drawPixmap(QRect(0, d->animationImagePosY, width(), height()), d->animationPix);
 		painter.restore();
 	} else {
 		QMenu::paintEvent(event);

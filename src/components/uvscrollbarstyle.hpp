@@ -2,12 +2,14 @@
 
 #include <QProxyStyle>
 
+#include "uvwidgettoolsdef.hpp"
+
 class CUVScrollBar;
 
 class CUVScrollBarStyle final : public QProxyStyle {
 	Q_OBJECT
-	Q_PROPERTY(qreal pOpacity MEMBER _pOpacity NOTIFY sigOpacityChanged)
-	Q_PROPERTY(qreal pSliderExtent MEMBER _pSliderExtent NOTIFY sigSliderExtentChanged)
+	Q_PROPERTY(qreal opacity MEMBER m_opacity NOTIFY sigOpacityChanged)
+	Q_PROPERTY(qreal sliderExtent MEMBER m_sliderExtent NOTIFY sigSliderExtentChanged)
 
 public:
 	explicit CUVScrollBarStyle(QStyle* style = nullptr);
@@ -35,42 +37,11 @@ signals:
 	void sigSliderExtentChanged();
 
 private:
-	bool _pIsExpand{};
-	qreal _pOpacity{};
-	qreal _pSliderExtent{};
-	CUVScrollBar* _pScrollBar{ nullptr };
-	qreal _sliderMargin{2.5};
-	int _scrollBarExtent{10};
+	UVThemeType::ThemeMode m_themeMode{};
+	bool m_isExpand{};
+	qreal m_opacity{};
+	qreal m_sliderExtent{};
+	CUVScrollBar* m_scrollBar{ nullptr };
+	qreal m_sliderMargin{ 2.5 };
+	int m_scrollBarExtent{ 10 };
 };
-
-inline void CUVScrollBarStyle::setOpacity(const qreal opacity) {
-	_pOpacity = opacity;
-}
-
-inline qreal CUVScrollBarStyle::getOpacity() const {
-	return _pOpacity;
-}
-
-inline void CUVScrollBarStyle::setSliderExtent(const qreal sliderExtent) {
-	_pSliderExtent = sliderExtent;
-}
-
-inline qreal CUVScrollBarStyle::getSliderExtent() const {
-	return _pSliderExtent;
-}
-
-inline void CUVScrollBarStyle::setIsExpand(const bool isExpand) {
-	_pIsExpand = isExpand;
-}
-
-inline bool CUVScrollBarStyle::getIsExpand() const {
-	return _pIsExpand;
-}
-
-inline void CUVScrollBarStyle::setScrollBar(CUVScrollBar* scrollBar) {
-	_pScrollBar = scrollBar;
-}
-
-inline CUVScrollBar* CUVScrollBarStyle::getScrollBar() const {
-	return _pScrollBar;
-}

@@ -10,7 +10,7 @@ class CUVWIDGETTOOLS_EXPORT CUVMultiSelectComboBox : public QComboBox {
 	Q_OBJECT
 	Q_DISABLE_COPY(CUVMultiSelectComboBox)
 	Q_DECLARE_PRIVATE(CUVMultiSelectComboBox)
-	Q_PROPERTY(int pBorderRadius READ getBorderRadius WRITE setBorderRadius NOTIFY sigBorderRadiusChanged)
+	Q_PROPERTY(int borderRadius READ getBorderRadius WRITE setBorderRadius NOTIFY sigBorderRadiusChanged)
 
 public:
 	explicit CUVMultiSelectComboBox(QWidget* parent = nullptr);
@@ -27,9 +27,6 @@ public:
 	void selectAllItems();
 	void deselectAllItems();
 	[[nodiscard]] bool isAllSelected() const;
-	void setIcon(const QPixmap& pixmap);
-	void setSvgIcon(const QString& iconpath);
-	void setIcon(const QIcon& icon, int width = 20, int height = 20);
 
 signals:
 	void sigItemSelectionChanged(const QVector<bool>& itemSelection);

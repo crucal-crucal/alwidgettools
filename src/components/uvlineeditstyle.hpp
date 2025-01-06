@@ -13,5 +13,5 @@ public:
 	void drawPrimitive(PrimitiveElement pe, const QStyleOption* opt, QPainter* p, const QWidget* w) const override;
 
 private:
-	UVThemeType::ThemeMode themeMode{};
+	UVThemeType::ThemeMode m_themeMode{};
 };

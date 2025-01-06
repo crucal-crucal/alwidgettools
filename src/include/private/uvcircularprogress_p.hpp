@@ -4,6 +4,7 @@
 
 #include "uvwidgettoolsdef.hpp"
 
+class QPainter;
 class CUVCircularProgressDelegate;
 class CUVCircularProgress;
 
@@ -68,9 +69,10 @@ public:
 	void setAngle(int nAngle);
 	[[nodiscard]] int getAngle() const;
 
-private:
-	CUVCircularProgress* const m_progress{ nullptr };
+protected:
+	CUVCircularProgress* const progress{ nullptr };
 
+private:
 	qreal dashOffset{};
 	qreal dashLength{};
 	int angle{};

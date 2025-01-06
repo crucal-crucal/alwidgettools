@@ -5,7 +5,7 @@ set NEW_FILE=new.ts
 set OLD_FILE=zh_CN.ts
 
 rem 使用 lupdate 生成新的 ts文件
-lupdate ..\src -ts %NEW_FILE%
+lupdate ..\..\src -ts %NEW_FILE%
 
 if exist %OLD_FILE% (
     rem 合并新的 ts文件和旧的 ts文件

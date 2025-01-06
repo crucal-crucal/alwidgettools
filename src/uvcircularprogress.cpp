@@ -185,7 +185,7 @@ void CUVCircularProgressPrivate::drawValue(QPainter& painter, QPen& pen) {
  * @param parent pointer to the CUVCircularProgress
  */
 CUVCircularProgressDelegate::CUVCircularProgressDelegate(CUVCircularProgress* parent)
-: QObject(parent), m_progress(parent), dashOffset(0.0), dashLength(89), angle(0) {
+: QObject(parent), progress(parent), dashOffset(0.0), dashLength(89), angle(0) {
 	Q_ASSERT(parent);
 }
 
@@ -193,7 +193,7 @@ CUVCircularProgressDelegate::~CUVCircularProgressDelegate() = default;
 
 void CUVCircularProgressDelegate::setDashOffset(const qreal offset) {
 	dashOffset = offset;
-	m_progress->update();
+	progress->update();
 }
 
 qreal CUVCircularProgressDelegate::getDashOffset() const {
@@ -202,7 +202,7 @@ qreal CUVCircularProgressDelegate::getDashOffset() const {
 
 void CUVCircularProgressDelegate::setDashLength(const qreal length) {
 	dashLength = length;
-	m_progress->update();
+	progress->update();
 }
 
 qreal CUVCircularProgressDelegate::getDashLength() const {
@@ -211,7 +211,7 @@ qreal CUVCircularProgressDelegate::getDashLength() const {
 
 void CUVCircularProgressDelegate::setAngle(const int nAngle) {
 	angle = nAngle;
-	m_progress->update();
+	progress->update();
 }
 
 int CUVCircularProgressDelegate::getAngle() const {

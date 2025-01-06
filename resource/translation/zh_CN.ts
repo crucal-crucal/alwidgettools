@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TS version="2.1" language="zh_CN">
+<!DOCTYPE TS>
+<TS version="2.1">
 <context>
     <name>CUVAppBar</name>
     <message>
@@ -10,7 +11,7 @@
     <message>
         <location filename="../src/uvappbar.cpp" line="267"/>
         <source>Navigation</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">导航栏</translation>
     </message>
     <message>
         <location filename="../src/uvappbar.cpp" line="274"/>
@@ -55,6 +56,77 @@
         <location filename="../src/uvappbar.cpp" line="70"/>
         <source>Switch to light theme</source>
         <translation type="unfinished">切换为白色主题</translation>
+    </message>
+</context>
+<context>
+    <name>CUVColorDialog</name>
+    <message>
+        <location filename="../../src/uvcolordialog.cpp" line="309"/>
+        <source>red</source>
+        <translation type="unfinished">红色</translation>
+    </message>
+    <message>
+        <location filename="../../src/uvcolordialog.cpp" line="323"/>
+        <source>green</source>
+        <translation type="unfinished">绿色</translation>
+    </message>
+    <message>
+        <location filename="../../src/uvcolordialog.cpp" line="337"/>
+        <source>blue</source>
+        <translation type="unfinished">蓝色</translation>
+    </message>
+    <message>
+        <location filename="../../src/uvcolordialog.cpp" line="379"/>
+        <source>basic color</source>
+        <translation type="unfinished">基础颜色</translation>
+    </message>
+    <message>
+        <location filename="../../src/uvcolordialog.cpp" line="409"/>
+        <source>custom color</source>
+        <translation type="unfinished">自定义颜色</translation>
+    </message>
+    <message>
+        <location filename="../../src/uvcolordialog.cpp" line="430"/>
+        <source>ok</source>
+        <translation type="unfinished">确定</translation>
+    </message>
+    <message>
+        <location filename="../../src/uvcolordialog.cpp" line="444"/>
+        <source>cancel</source>
+        <translation type="unfinished">取消</translation>
+    </message>
+</context>
+<context>
+    <name>CUVColorDialogPrivate</name>
+    <message>
+        <location filename="../../src/uvcolordialog.cpp" line="56"/>
+        <source>red</source>
+        <translation type="unfinished">红色</translation>
+    </message>
+    <message>
+        <location filename="../../src/uvcolordialog.cpp" line="57"/>
+        <source>green</source>
+        <translation type="unfinished">绿色</translation>
+    </message>
+    <message>
+        <location filename="../../src/uvcolordialog.cpp" line="58"/>
+        <source>blue</source>
+        <translation type="unfinished">蓝色</translation>
+    </message>
+    <message>
+        <location filename="../../src/uvcolordialog.cpp" line="61"/>
+        <source>hue</source>
+        <translation type="unfinished">色调</translation>
+    </message>
+    <message>
+        <location filename="../../src/uvcolordialog.cpp" line="62"/>
+        <source>saturation</source>
+        <translation type="unfinished">饱和度</translation>
+    </message>
+    <message>
+        <location filename="../../src/uvcolordialog.cpp" line="63"/>
+        <source>value</source>
+        <translation type="unfinished">值</translation>
     </message>
 </context>
 <context>
@@ -111,14 +183,6 @@
         <location filename="../src/uvlineedit.cpp" line="201"/>
         <source>select all</source>
         <translation type="unfinished">全选</translation>
-    </message>
-</context>
-<context>
-    <name>CUVMultiSelectComboBox</name>
-    <message>
-        <location filename="../src/uvmultiselectcombobox.cpp" line="347"/>
-        <source>Automatically track target Settings</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -209,6 +273,14 @@
         <location filename="../src/uvsuggestbox.cpp" line="207"/>
         <source>search Feature</source>
         <translation type="unfinished">查找功能</translation>
+    </message>
+</context>
+<context>
+    <name>CUVMultiSelectComboBox</name>
+    <message>
+        <location filename="../src/uvmultiselectcombobox.cpp" line="347"/>
+        <source>Automatically track target Settings</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

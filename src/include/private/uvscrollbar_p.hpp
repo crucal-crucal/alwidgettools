@@ -13,7 +13,7 @@ class CUVScrollBarPrivate final : public QObject {
 	Q_OBJECT
 	Q_DISABLE_COPY(CUVScrollBarPrivate)
 	Q_DECLARE_PUBLIC(CUVScrollBar)
-	Q_PROPERTY(int pTargetMaximum MEMBER targetMaximum NOTIFY sigTargetMaximumChanged)
+	Q_PROPERTY(int targetMaximum MEMBER targetMaximum NOTIFY sigTargetMaximumChanged)
 
 public:
 	explicit CUVScrollBarPrivate(CUVScrollBar* q, QObject* parent = nullptr);
@@ -37,12 +37,10 @@ private:
 	QPropertyAnimation* slideSmoothAnimation{ nullptr };
 	bool isExpand{ false };
 	bool isAnimation{};
-	CUVScrollBar::ContextMenuFlags contextMenuFlags{ CUVScrollBar::NoFlag };
+	CUVScrollBar::ContextMenuFlags contextMenuFlags{ CUVScrollBar::HasIcon };
 	qreal speedLimit{};
 	int targetMaximum{};
 	int scrollValue{ -1 };
-	int lastHorizontalDeltaAngle{ -120 };
-	int lastVerticalDeltaAngle{ -120 };
 
 	void scroll(const Qt::KeyboardModifiers& modifiers, int value);
 	[[nodiscard]] int pixelPosToRangeValue(int pos) const;

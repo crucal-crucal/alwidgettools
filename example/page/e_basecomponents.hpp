@@ -20,4 +20,8 @@ private:
 	void initToggleSwitchArea();
 	void initMessageBarArea();
 	void initCircularProgressArea();
+	void initMultiSelectComboBoxArea();
+	void initSliderArea();
+	void initProgressBarArea();
+	void initCheckBoxArea();
 };

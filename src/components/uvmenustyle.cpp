@@ -111,9 +111,6 @@ void CUVMenuStyle::drawControl(const ControlElement element, const QStyleOption*
 					}
 					// 文字和快捷键绘制
 					if (!mopt->text.isEmpty()) {
-						QFont font("Source Han Sans SC Normal");
-						font.setPixelSize(14);
-						painter->setFont(font);
 						QStringList textList = mopt->text.split("\t");
 						painter->setPen(!mopt->state.testFlag(QStyle::State_Enabled) ? Qt::gray : m_themeMode == UVThemeType::Light ? Qt::black : Qt::white);
 

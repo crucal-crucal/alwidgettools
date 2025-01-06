@@ -12,7 +12,7 @@ class CUVMenuPrivate final : public QObject {
 	Q_DISABLE_COPY(CUVMenuPrivate)
 	Q_DECLARE_PUBLIC(CUVMenu)
 
-	Q_PROPERTY(int pAnimationImagePosY READ getAnimationImagePosY WRITE setAnimationImagePosY NOTIFY onAnimationImagePosYChanged)
+	Q_PROPERTY(int animationImagePosY READ getAnimationImagePosY WRITE setAnimationImagePosY NOTIFY onAnimationImagePosYChanged)
 
 public:
 	explicit CUVMenuPrivate(CUVMenu* q, QObject* parent = nullptr);
@@ -28,9 +28,9 @@ protected:
 	CUVMenu* const q_ptr{ nullptr };
 
 private:
-	int _pAnimationImagePosY{};
-	QPixmap _animationPix;
-	bool _isCloseAnimation{ false };
-	QPoint _mousePressPoint;
-	CUVMenuStyle* _menuStyle{ nullptr };
+	int animationImagePosY{};
+	QPixmap animationPix;
+	bool isCloseAnimation{ false };
+	QPoint mousePressPoint;
+	CUVMenuStyle* menuStyle{ nullptr };
 };

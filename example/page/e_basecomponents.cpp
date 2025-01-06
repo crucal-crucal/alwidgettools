@@ -1,15 +1,22 @@
 ﻿#include "e_basecomponents.hpp"
 
+#include <QDebug>
 #include <QHBoxLayout>
+#include <QMetaEnum>
 #include <QMouseEvent>
 
+#include "uvcheckbox.hpp"
 #include "uvcircularprogress.hpp"
 #include "uvcolordialog.hpp"
+#include "uvcombobox.hpp"
 #include "uvmessagebar.hpp"
+#include "uvmultiselectcombobox.hpp"
+#include "uvprogressbar.hpp"
 #include "uvpushbutton.hpp"
-#include "uvtoggleswitch.hpp"
 #include "uvscrollpagearea.hpp"
+#include "uvslider.hpp"
 #include "uvtext.hpp"
+#include "uvtoggleswitch.hpp"
 
 E_BaseComponents::E_BaseComponents(QWidget* parent): E_BasePage(parent) {
 	setWindowTitle("CUVBaseComponents");
@@ -20,12 +27,21 @@ E_BaseComponents::E_BaseComponents(QWidget* parent): E_BasePage(parent) {
 	m_mainVLayout = new QVBoxLayout(centralWidget);
 	m_mainVLayout->setContentsMargins(0, 0, 0, 0);
 	m_mainVLayout->setSpacing(5);
+
 	/// toggleSwitchArea
 	initToggleSwitchArea();
 	/// messageBarArea
 	initMessageBarArea();
 	/// circularProgressArea
 	initCircularProgressArea();
+	/// progressBarArea
+	initProgressBarArea();
+	/// multiSelectComboBoxArea
+	initMultiSelectComboBoxArea();
+	/// sliderArea
+	initSliderArea();
+	/// checkBoxArea
+	initCheckBoxArea();
 
 	m_mainVLayout->addStretch();
 	addCentralWidget(centralWidget, true, true, 0);
@@ -83,9 +99,7 @@ void E_BaseComponents::initToggleSwitchArea() {
 	const auto toggleSwitchDisable = new CUVToggleSwitch(this);
 	const auto toggleSwitchDisableText = new CUVText("Disable", this);
 	toggleSwitchDisableText->setTextPixelSize(15);
-	connect(toggleSwitchDisable, &CUVToggleSwitch::sigToggleChanged, this, [=](const bool toggled) {
-		toggleSwitch->setDisabled(toggled);
-	});
+	connect(toggleSwitchDisable, &CUVToggleSwitch::sigToggleChanged, toggleSwitch, &CUVToggleSwitch::setDisabled);
 	toggleSwitchHLayout->addWidget(toggleSwitchDisableText);
 	toggleSwitchHLayout->addWidget(toggleSwitchDisable);
 	toggleSwitchHLayout->addSpacing(10);
@@ -143,8 +157,23 @@ void E_BaseComponents::initCircularProgressArea() {
 	circularProgress->setSize(30);
 	circularProgress->setLineWidth(5.0);
 	circularProgress->setColor(colorDialog->getCurrentColor());
-	connect(colorDialog, &CUVColorDialog::sigColorSelected, this, [=](const QColor& color) {
-		circularProgress->setColor(color);
+	connect(colorDialog, &CUVColorDialog::sigColorSelected, circularProgress, &CUVCircularProgress::setColor);
+	const auto circularProgressType = new CUVComboBox(this);
+	circularProgressType->addItem("DeterminateProgress");
+	circularProgressType->addItem("IndeterminateProgress");
+	circularProgressType->addItem("DiscontinuousLoading");
+	circularProgressType->addItem("ContinuousLoading");
+	const QMetaObject metaObject = UVProgressType::staticMetaObject;
+	const QMetaEnum metaEnum = metaObject.enumerator(metaObject.indexOfEnumerator("ProgressType"));
+	circularProgressType->setCurrentText(QString(metaEnum.valueToKey(circularProgress->getProgressType())));
+	connect(circularProgressType, &CUVComboBox::currentTextChanged, this, [=](const QString& type) {
+		const QMetaObject tmpMetaObject = UVProgressType::staticMetaObject;
+		const QMetaEnum tmpMetaEnum = tmpMetaObject.enumerator(tmpMetaObject.indexOfEnumerator("ProgressType"));
+		if (const int value = tmpMetaEnum.keyToValue(type.toLocal8Bit().constData()); value != -1) {
+			circularProgress->setProgressType(static_cast<UVProgressType::ProgressType>(value));
+		} else {
+			qWarning() << "Invalid progress type: " << type;
+		}
 	});
 	const auto circularProgressArea = new CUVScrollPageArea(this);
 	const auto circularProgressHLayout = new QHBoxLayout(circularProgressArea);
@@ -153,18 +182,129 @@ void E_BaseComponents::initCircularProgressArea() {
 	const auto circularProgerssColorButton = new CUVPushButton("Color", this);
 	circularProgerssColorButton->setFixedSize(80, 38);
 	circularProgerssColorButton->setButtonStyles(CUVPushButton::Shadow | CUVPushButton::Border);
-	connect(circularProgerssColorButton, &CUVPushButton::clicked, this, [=]() { colorDialog->exec(); });
+	connect(circularProgerssColorButton, &CUVPushButton::clicked, colorDialog, &CUVColorDialog::exec);
 	circularProgressHLayout->addWidget(circularProgressText);
 	circularProgressHLayout->addWidget(circularProgress);
 	circularProgressHLayout->addWidget(circularProgerssColorButton);
+	circularProgressHLayout->addWidget(circularProgressType);
 	circularProgressHLayout->addStretch();
 	const auto circularProgressDisable = new CUVToggleSwitch(this);
 	const auto circularProgressDisableText = new CUVText("Disable", this);
 	circularProgressDisableText->setTextPixelSize(15);
-	connect(circularProgressDisable, &CUVToggleSwitch::sigToggleChanged, this, [=](const bool toggled) { circularProgress->setDisabled(toggled); });
+	connect(circularProgressDisable, &CUVToggleSwitch::sigToggleChanged, circularProgress, &CUVCircularProgress::setDisabled);
 	circularProgressHLayout->addWidget(circularProgressDisableText);
 	circularProgressHLayout->addWidget(circularProgressDisable);
 	circularProgressHLayout->addSpacing(10);
 
 	m_mainVLayout->addWidget(circularProgressArea);
+}
+
+void E_BaseComponents::initMultiSelectComboBoxArea() {
+	const auto multiSelectComboBox = new CUVMultiSelectComboBox(this);
+	multiSelectComboBox->setFixedWidth(300);
+	const auto multiSelectComboBoxArea = new CUVScrollPageArea(this);
+	const auto multiSelectComboBoxHLayout = new QHBoxLayout(multiSelectComboBoxArea);
+	const auto multiSelectComboBoxText = new CUVText("CUVMultiSelectComboBox", this);
+	multiSelectComboBoxText->setTextPixelSize(15);
+	multiSelectComboBoxHLayout->addWidget(multiSelectComboBoxText);
+	multiSelectComboBoxHLayout->addWidget(multiSelectComboBox);
+	multiSelectComboBoxHLayout->addStretch();
+	const auto multiSelectComboBoxDisable = new CUVToggleSwitch(this);
+	const auto multiSelectComboBoxDisableText = new CUVText("Disable", this);
+	multiSelectComboBoxDisableText->setTextPixelSize(15);
+	connect(multiSelectComboBoxDisable, &CUVToggleSwitch::sigToggleChanged, multiSelectComboBox, &CUVMultiSelectComboBox::setDisabled);
+	multiSelectComboBoxHLayout->addWidget(multiSelectComboBoxDisableText);
+	multiSelectComboBoxHLayout->addWidget(multiSelectComboBoxDisable);
+	multiSelectComboBoxHLayout->addSpacing(10);
+	multiSelectComboBox->addItem("select all");
+	for (int i = 0; i < 15; i++) {
+		multiSelectComboBox->addItem(QString("test %1").arg(i));
+	}
+	multiSelectComboBox->setCurrentSelection(QList<int>{ 1, 2, 3, 4, 5 });
+
+	m_mainVLayout->addWidget(multiSelectComboBoxArea);
+}
+
+void E_BaseComponents::initSliderArea() {
+	const auto slider = new CUVSlider(this);
+	const auto sliderArea = new CUVScrollPageArea(this);
+	const auto sliderHLayout = new QHBoxLayout(sliderArea);
+	const auto sliderText = new CUVText("CUVSlider", this);
+	sliderText->setTextPixelSize(15);
+	sliderHLayout->addWidget(sliderText);
+	sliderHLayout->addWidget(slider);
+	sliderHLayout->addStretch();
+	const auto sliderDisable = new CUVToggleSwitch(this);
+	const auto sliderDisableText = new CUVText("Disable", this);
+	sliderDisableText->setTextPixelSize(15);
+	connect(sliderDisable, &CUVToggleSwitch::sigToggleChanged, slider, &CUVSlider::setDisabled);
+	sliderHLayout->addWidget(sliderDisableText);
+	sliderHLayout->addWidget(sliderDisable);
+	sliderHLayout->addSpacing(10);
+
+	m_mainVLayout->addWidget(sliderArea);
+}
+
+void E_BaseComponents::initProgressBarArea() {
+	const auto colorDialog = new CUVColorDialog(this);
+	const auto progressBar = new CUVProgressBar(this);
+	progressBar->setProgressColor(colorDialog->getCurrentColor());
+	connect(colorDialog, &CUVColorDialog::sigColorSelected, progressBar, &CUVProgressBar::setProgressColor);
+	const auto progressBarType = new CUVComboBox(this);
+	progressBarType->addItem("DeterminateProgress");
+	progressBarType->addItem("IndeterminateProgress");
+	const QMetaObject metaObject = UVProgressType::staticMetaObject;
+	const QMetaEnum metaEnum = metaObject.enumerator(metaObject.indexOfEnumerator("ProgressType"));
+	progressBarType->setCurrentText(QString(metaEnum.valueToKey(progressBar->getProgressType())));
+	connect(progressBarType, &CUVComboBox::currentTextChanged, this, [=](const QString& type) {
+		const QMetaObject tmpMetaObject = UVProgressType::staticMetaObject;
+		const QMetaEnum tmpMetaEnum = tmpMetaObject.enumerator(tmpMetaObject.indexOfEnumerator("ProgressType"));
+		if (const int value = tmpMetaEnum.keyToValue(type.toLocal8Bit().constData()); value != -1) {
+			progressBar->setProgressType(static_cast<UVProgressType::ProgressType>(value));
+		} else {
+			qWarning() << "Invalid progress type: " << type;
+		}
+	});
+	const auto progressBarArea = new CUVScrollPageArea(this);
+	const auto progressBarHLayout = new QHBoxLayout(progressBarArea);
+	const auto progressBarText = new CUVText("CUVProgressBar", this);
+	progressBarText->setTextPixelSize(15);
+	const auto progressBarProgerssColorButton = new CUVPushButton("progress Color", this);
+	progressBarProgerssColorButton->setFixedSize(120, 38);
+	progressBarProgerssColorButton->setButtonStyles(CUVPushButton::Shadow | CUVPushButton::Border);
+	connect(progressBarProgerssColorButton, &CUVPushButton::clicked, colorDialog, &CUVColorDialog::exec);
+	progressBarHLayout->addWidget(progressBarText);
+	progressBarHLayout->addWidget(progressBar);
+	progressBarHLayout->addWidget(progressBarProgerssColorButton);
+	progressBarHLayout->addWidget(progressBarType);
+	progressBarHLayout->addStretch();
+	const auto progressBarDisable = new CUVToggleSwitch(this);
+	const auto progressBarDisableText = new CUVText("Disable", this);
+	progressBarDisableText->setTextPixelSize(15);
+	connect(progressBarDisable, &CUVToggleSwitch::sigToggleChanged, progressBar, &CUVProgressBar::setDisabled);
+	progressBarHLayout->addWidget(progressBarDisableText);
+	progressBarHLayout->addWidget(progressBarDisable);
+	progressBarHLayout->addSpacing(10);
+
+	m_mainVLayout->addWidget(progressBarArea);
+}
+
+void E_BaseComponents::initCheckBoxArea() {
+	const auto checkBox = new CUVCheckBox("checkBox", this);
+	const auto checkBoxArea = new CUVScrollPageArea(this);
+	const auto checkBoxHLayout = new QHBoxLayout(checkBoxArea);
+	const auto checkBoxText = new CUVText("CUVCheckBox", this);
+	checkBoxText->setTextPixelSize(15);
+	checkBoxHLayout->addWidget(checkBoxText);
+	checkBoxHLayout->addWidget(checkBox);
+	checkBoxHLayout->addStretch();
+	const auto checkBoxDisable = new CUVToggleSwitch(this);
+	const auto checkBoxDisableText = new CUVText("Disable", this);
+	checkBoxDisableText->setTextPixelSize(15);
+	connect(checkBoxDisable, &CUVToggleSwitch::sigToggleChanged, checkBox, &CUVSlider::setDisabled);
+	checkBoxHLayout->addWidget(checkBoxDisableText);
+	checkBoxHLayout->addWidget(checkBoxDisable);
+	checkBoxHLayout->addSpacing(10);
+
+	m_mainVLayout->addWidget(checkBoxArea);
 }
