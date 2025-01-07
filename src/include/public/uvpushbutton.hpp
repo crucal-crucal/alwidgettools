@@ -2,13 +2,13 @@
 
 #include <QPushButton>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class CUVPushButtonPrivate;
 
-class CUVWIDGETTOOLS_EXPORT CUVPushButton : public QPushButton {
+class CALWIDGETTOOLS_EXPORT CALPushButton : public QPushButton {
 	Q_OBJECT
-	Q_DISABLE_COPY(CUVPushButton)
+	Q_DISABLE_COPY(CALPushButton)
 	Q_DECLARE_PRIVATE(CUVPushButton)
 	Q_PROPERTY(int borderRadius READ getBorderRadius WRITE setBorderRadius NOTIFY sigBorderRadiusChanged)
 	Q_PROPERTY(QColor lightDefaultColor READ getLightDefaultColor WRITE setLightDefaultColor NOTIFY sigLightDefaultColorChanged)
@@ -29,9 +29,9 @@ public:
 	Q_DECLARE_FLAGS(ButtonStyles, ButtonStyle)
 	Q_FLAGS(ButtonStyles)
 
-	explicit CUVPushButton(QWidget* parent = nullptr);
-	explicit CUVPushButton(const QString& text, QWidget* parent = nullptr);
-	~CUVPushButton() override;
+	explicit CALPushButton(QWidget* parent = nullptr);
+	explicit CALPushButton(const QString& text, QWidget* parent = nullptr);
+	~CALPushButton() override;
 
 	void setButtonStyle(const ButtonStyle& buttonStyle, bool isEnable = true);
 	void setButtonStyles(const ButtonStyles& buttonStyles);
@@ -98,4 +98,4 @@ protected:
 	void paintEvent(QPaintEvent* event) override;
 };
 
-Q_DECLARE_OPERATORS_FOR_FLAGS(CUVPushButton::ButtonStyles)
+Q_DECLARE_OPERATORS_FOR_FLAGS(CALPushButton::ButtonStyles)

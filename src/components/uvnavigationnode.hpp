@@ -2,7 +2,7 @@
 
 #include <QModelIndex>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class CUVNavigationNode final : public QObject {
 	Q_OBJECT
@@ -27,8 +27,8 @@ public:
 	void setChildrenNodes(const QList<CUVNavigationNode*>& childrenNodes);
 	[[nodiscard]] QList<CUVNavigationNode*> getChildrenNodes() const;
 
-	void setAwesomeIcon(const UVIcon::CUVAweSomeIcon& awesomeIcon);
-	[[nodiscard]] UVIcon::CUVAweSomeIcon getAwesomeIcon() const;
+	void setAwesomeIcon(const ALIcon::AweSomeIcon& awesomeIcon);
+	[[nodiscard]] ALIcon::AweSomeIcon getAwesomeIcon() const;
 
 	void setModelIndex(const QModelIndex& modelIndex);
 	[[nodiscard]] QModelIndex getModelIndex() const;
@@ -88,7 +88,7 @@ Q_SIGNALS:
 private:
 	CUVNavigationNode* m_parentNode{ nullptr };
 	QList<CUVNavigationNode*> m_childrenNodes{};
-	UVIcon::CUVAweSomeIcon m_awesomeIcon{};
+	ALIcon::AweSomeIcon m_awesomeIcon{};
 	QModelIndex m_modelIndex{};
 	int m_keyPoints{};
 	int m_depth{};

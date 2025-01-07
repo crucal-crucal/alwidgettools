@@ -2,9 +2,9 @@
 
 #include <QWidget>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
-class CUVWIDGETTOOLS_EXPORT CUVMaskWidget : public QWidget {
+class CALWIDGETTOOLS_EXPORT CUVMaskWidget : public QWidget {
 	Q_OBJECT
 	Q_PROPERTY(int maskAlpha READ getMaskAlpha WRITE setMaskAlpha NOTIFY sigMaskAlphaChanged)
 

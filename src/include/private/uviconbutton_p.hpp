@@ -2,7 +2,7 @@
 
 #include <QPixmap>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class CUVIconButton;
 class CUVToolTip;
@@ -30,7 +30,7 @@ private:
 	CUVToolTip* tooltip{ nullptr };
 	qreal borderRadius{};
 	qreal opacity{};
-	UVIcon::CUVAweSomeIcon awesomeIcon{};
+	ALIcon::AweSomeIcon awesomeIcon{};
 	QColor lightHoverColor{};
 	QColor darkHoverColor{};
 	QColor lightIconColor{};
@@ -41,5 +41,5 @@ private:
 	int hoverAlpha{};
 	QPixmap iconPix{};
 	bool isAlphaAnimationFinished{ true };
-	UVThemeType::ThemeMode themeMode{};
+	ALThemeType::ThemeMode themeMode{};
 };

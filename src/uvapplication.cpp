@@ -1,4 +1,4 @@
-﻿#include "uvapplication.hpp"
+﻿#include "alapplication.hpp"
 
 #include <QApplication>
 #include <QDebug>
@@ -13,7 +13,7 @@
 
 #include "uvapplication_p.hpp"
 #include "uvmicabaseinitobject.hpp"
-#include "uvthememanager.hpp"
+#include "althememanager.hpp"
 
 /**
  * @brief \class CUVApplicationPrivate
@@ -26,7 +26,7 @@ CUVApplicationPrivate::CUVApplicationPrivate(CUVApplication* q, QObject* parent)
 
 CUVApplicationPrivate::~CUVApplicationPrivate() = default;
 
-void CUVApplicationPrivate::slotThemeModeChanged(const UVThemeType::ThemeMode& mode) {
+void CUVApplicationPrivate::slotThemeModeChanged(const ALThemeType::ThemeMode& mode) {
 	themeMode = mode;
 	updateAllMicaWidget();
 }
@@ -101,7 +101,7 @@ QRect CUVApplicationPrivate::calculateWindowVirtualGeometry(const QWidget* widge
 void CUVApplicationPrivate::updateMica(QWidget* widget, const bool isProcessEvent) const {
 	if (widget->isVisible()) {
 		QPalette palette = widget->palette();
-		const QImage& baseImage = themeMode == UVThemeType::Light ? lightBaseImage : darkBaseImage;
+		const QImage& baseImage = themeMode == ALThemeType::Light ? lightBaseImage : darkBaseImage;
 		palette.setBrush(QPalette::Window, baseImage.copy(calculateWindowVirtualGeometry(widget)).scaled(widget->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
 		widget->setPalette(palette);
 		if (isProcessEvent) {

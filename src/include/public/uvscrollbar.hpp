@@ -3,11 +3,11 @@
 #include <QAbstractScrollArea>
 #include <QScrollBar>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class CUVScrollBarPrivate;
 
-class CUVWIDGETTOOLS_EXPORT CUVScrollBar : public QScrollBar {
+class CALWIDGETTOOLS_EXPORT CUVScrollBar : public QScrollBar {
 	Q_OBJECT
 	Q_DISABLE_COPY(CUVScrollBar)
 	Q_DECLARE_PRIVATE(CUVScrollBar)

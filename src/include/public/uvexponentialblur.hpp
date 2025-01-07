@@ -3,12 +3,12 @@
 #include <QImage>
 #include <QObject>
 
-#include "uvwidgettoolsdef.hpp"
-#include "uvsingleton.hpp"
+#include "alwidgettoolsdef.hpp"
+#include "alsingleton.hpp"
 
 class CUVExponentialBlurPrivate;
 
-class CUVWIDGETTOOLS_EXPORT CUVExponentialBlur : public QObject {
+class CALWIDGETTOOLS_EXPORT CUVExponentialBlur : public QObject {
 	Q_OBJECT
 	Q_DECLARE_PRIVATE(CUVExponentialBlur)
 

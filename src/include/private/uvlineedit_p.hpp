@@ -1,8 +1,8 @@
 ﻿#pragma once
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
-class CUVEvent;
+class CALEvent;
 class CUVLineEdit;
 
 class CUVLineEditPrivate final : public QObject {
@@ -19,7 +19,7 @@ public:
 	[[nodiscard]] qreal getExpandMarkWidth() const;
 
 	Q_INVOKABLE void invokableWMWindowClickedEvent(const QVariantMap& data);
-	Q_SLOT void slotThemeChanged(const UVThemeType::ThemeMode& mode);
+	Q_SLOT void slotThemeChanged(const ALThemeType::ThemeMode& mode);
 
 Q_SIGNALS:
 	Q_SIGNAL void sigExpandMarkWidthChanged();
@@ -31,7 +31,7 @@ private:
 	int borderRadius{};
 	bool isClearButtonEnable{};
 	qreal expandMarkWidth{};
-	UVThemeType::ThemeMode themeMode{};
-	CUVEvent* focusEvent{ nullptr };
+	ALThemeType::ThemeMode themeMode{};
+	CALEvent* focusEvent{ nullptr };
 	qreal textSpacing{ 0.5 };
 };

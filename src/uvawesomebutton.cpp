@@ -1,4 +1,4 @@
-﻿#include "uvawesomebutton.hpp"
+﻿#include "alawesomebutton.hpp"
 
 #include <QDebug>
 #include <QPainter>
@@ -37,7 +37,7 @@ void CUVAwesomeButtonPrivate::init() {
  * @param iconType Awesome icon type
  * @param parent pointer to the parent class
  */
-CUVAwesomeButton::CUVAwesomeButton(const CUVAweSomeIcon& iconType, QWidget* parent)
+CUVAwesomeButton::CUVAwesomeButton(const AweSomeIcon& iconType, QWidget* parent)
 : QPushButton(parent), d_ptr(new CUVAwesomeButtonPrivate(this, this)) {
 	Q_D(CUVAwesomeButton);
 
@@ -54,7 +54,7 @@ CUVAwesomeButton::CUVAwesomeButton(const CUVAweSomeIcon& iconType, QWidget* pare
  * @param pixelSize font pixel size
  * @param parent pointer to the parent class
  */
-CUVAwesomeButton::CUVAwesomeButton(const CUVAweSomeIcon& iconType, const int pixelSize, QWidget* parent)
+CUVAwesomeButton::CUVAwesomeButton(const AweSomeIcon& iconType, const int pixelSize, QWidget* parent)
 : QPushButton(parent), d_ptr(new CUVAwesomeButtonPrivate(this, this)) {
 	Q_D(CUVAwesomeButton);
 
@@ -73,7 +73,7 @@ CUVAwesomeButton::CUVAwesomeButton(const CUVAweSomeIcon& iconType, const int pix
  * @param fixedHeight fixed button height
  * @param parent pointer to the parent class
  */
-CUVAwesomeButton::CUVAwesomeButton(const CUVAweSomeIcon& iconType, const int pixelSize, const int fixedWidth, const int fixedHeight, QWidget* parent)
+CUVAwesomeButton::CUVAwesomeButton(const AweSomeIcon& iconType, const int pixelSize, const int fixedWidth, const int fixedHeight, QWidget* parent)
 : CUVAwesomeButton(iconType, pixelSize, parent) {
 	this->setFixedSize(fixedWidth, fixedHeight);
 }
@@ -82,7 +82,7 @@ CUVAwesomeButton::~CUVAwesomeButton() {
 	SAFE_DELETE(d_func()->tooltip)
 }
 
-void CUVAwesomeButton::setAwesomeIcon(const CUVAweSomeIcon& iconType) {
+void CUVAwesomeButton::setAwesomeIcon(const AweSomeIcon& iconType) {
 	Q_D(CUVAwesomeButton);
 
 	if (d->iconType != iconType) {
@@ -91,7 +91,7 @@ void CUVAwesomeButton::setAwesomeIcon(const CUVAweSomeIcon& iconType) {
 	}
 }
 
-CUVAweSomeIcon CUVAwesomeButton::getAwesomeIcon() const {
+AweSomeIcon CUVAwesomeButton::getAwesomeIcon() const {
 	return d_func()->iconType;
 }
 

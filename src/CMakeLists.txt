@@ -1,4 +1,4 @@
-﻿set(TARGET_NAME uvwidgettools)
+﻿set(TARGET_NAME calwidgettools)
 
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 uv_initialize_build_flags()
@@ -46,18 +46,16 @@ endif ()
 if (WIN32)
     target_link_libraries(${TARGET_NAME} PUBLIC
             Qt5::Widgets
-            Qt5::Svg
             D3D11
             DXGI
     )
 else ()
     target_link_libraries(${TARGET_NAME} PUBLIC
             Qt5::Widgets
-            Qt5::Svg
     )
 endif ()
 
-target_compile_definitions(${TARGET_NAME} PRIVATE CUVWIDGETTOOLS_LIB)
+target_compile_definitions(${TARGET_NAME} PRIVATE CALWIDGETTOOLS_LIB)
 
 install(TARGETS ${TARGET_NAME}
         EXPORT ${TARGET_NAME}

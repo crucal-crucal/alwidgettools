@@ -3,7 +3,7 @@
 #include <QProxyStyle>
 
 #include "uvnavigationnode.hpp"
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class QPropertyAnimation;
 
@@ -79,7 +79,7 @@ private:
 	int m_textRightSapcing{ 3 };
 	int m_indicatorIconAreaWidth{ 34 };
 	bool m_isSelectedMarkDisplay{ true };
-	UVThemeType::ThemeMode m_themeMode{};
+	ALThemeType::ThemeMode m_themeMode{};
 	QModelIndex m_pressIndex{};
 	CUVNavigationView* m_navigationView{ nullptr };
 	CUVNavigationNode* m_opacityAnimationTargetNode{ nullptr };

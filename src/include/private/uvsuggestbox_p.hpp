@@ -2,7 +2,7 @@
 
 #include <QAction>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class CUVSuggestion final : public QObject {
 	Q_OBJECT
@@ -14,8 +14,8 @@ public:
 	explicit CUVSuggestion(QObject* parent = nullptr);
 	~CUVSuggestion() override;
 
-	void setAwesomeIcon(const UVIcon::CUVAweSomeIcon& icon);
-	[[nodiscard]] UVIcon::CUVAweSomeIcon getAwesomeIcon() const;
+	void setAwesomeIcon(const ALIcon::AweSomeIcon& icon);
+	[[nodiscard]] ALIcon::AweSomeIcon getAwesomeIcon() const;
 
 	void setSuggestText(const QString& text);
 	[[nodiscard]] QString getSuggestText() const;
@@ -29,7 +29,7 @@ Q_SIGNALS:
 	Q_SIGNAL void sigSuggestDataChanged();
 
 private:
-	UVIcon::CUVAweSomeIcon awesomeIcon{};
+	ALIcon::AweSomeIcon awesomeIcon{};
 	QString suggestText{};
 	QVariantMap suggestData{};
 };
@@ -53,7 +53,7 @@ public:
 	explicit CUVSuggestBoxPrivate(CUVSuggestBox* q, QObject* parent = nullptr);
 	~CUVSuggestBoxPrivate() override;
 
-	Q_SLOT void slotThemeModeChanged(const UVThemeType::ThemeMode& mode);
+	Q_SLOT void slotThemeModeChanged(const ALThemeType::ThemeMode& mode);
 	Q_SLOT void slotSearchEditTextEdit(const QString& searchText);
 	Q_SLOT void slotSearchViewClicked(const QModelIndex& index);
 
@@ -61,7 +61,7 @@ protected:
 	CUVSuggestBox* const q_ptr{ nullptr };
 
 private:
-	UVThemeType::ThemeMode themeMode{};
+	ALThemeType::ThemeMode themeMode{};
 	int borderRadius{};
 	Qt::CaseSensitivity caseSensitivity{};
 	QSize lastSize{};

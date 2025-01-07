@@ -4,7 +4,7 @@
 #include <QPainter>
 #include <QPainterPath>
 
-#include "uvthememanager.hpp"
+#include "althememanager.hpp"
 
 /**
  * @brief \class CUVColorPicker
@@ -30,11 +30,11 @@ CUVColorPicker::CUVColorPicker(QWidget* parent): QWidget(parent) {
 
 CUVColorPicker::~CUVColorPicker() = default;
 
-void CUVColorPicker::setThemeMode(const UVThemeType::ThemeMode& mode) {
+void CUVColorPicker::setThemeMode(const ALThemeType::ThemeMode& mode) {
 	m_themeMode = mode;
 }
 
-UVThemeType::ThemeMode CUVColorPicker::getThemeMode() const {
+ALThemeType::ThemeMode CUVColorPicker::getThemeMode() const {
 	return m_themeMode;
 }
 
@@ -83,7 +83,7 @@ void CUVColorPicker::paintEvent(QPaintEvent* event) {
 	// 色相图绘制
 	QRect pickerRect = rect();
 	pickerRect.adjust(penWidth, penWidth, -penWidth, -penWidth);
-	painter.setPen(QPen(UVThemeColor(m_themeMode, UVThemeType::BasicBorder), penWidth));
+	painter.setPen(QPen(UVThemeColor(m_themeMode, ALThemeType::BasicBorder), penWidth));
 	painter.drawRoundedRect(pickerRect, borderRadius, borderRadius);
 	QPainterPath path;
 	path.addRoundedRect(pickerRect, borderRadius, borderRadius);

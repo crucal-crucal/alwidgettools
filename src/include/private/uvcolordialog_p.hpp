@@ -3,11 +3,11 @@
 #include <QColor>
 #include <QModelIndex>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class QSlider;
 
-class CUVAppBar;
+class CALAppBar;
 class CUVColorDialog;
 class CUVColorPicker;
 class CUVColorDisplayModel;
@@ -18,7 +18,7 @@ class CUVBaseListView;
 class CUVLineEdit;
 class CUVComboBox;
 class CUVText;
-class CUVPushButton;
+class CALPushButton;
 class CUVAwesomeToolButton;
 
 class CUVColorDialogPrivate final : public QObject {
@@ -45,10 +45,10 @@ protected:
 	CUVColorDialog* const q_ptr{ nullptr };
 
 private:
-	UVThemeType::ThemeMode themeMode{};
+	ALThemeType::ThemeMode themeMode{};
 	QColor currentColor{};
 
-	CUVAppBar* appBar{ nullptr };
+	CALAppBar* appBar{ nullptr };
 	CUVColorPicker* colorPicker{ nullptr };
 	CUVColorPreview* colorPreview{ nullptr };
 	CUVColorValueSliderStyle* colorValueSliderStyle{ nullptr };
@@ -68,8 +68,8 @@ private:
 	CUVBaseListView* customColorView{ nullptr };
 	CUVColorDisplayModel* customColorModel{ nullptr };
 	CUVColorDisplayDelegate* customColorDelegate{ nullptr };
-	CUVPushButton* overButton{ nullptr };
-	CUVPushButton* cancelButton{ nullptr };
+	CALPushButton* overButton{ nullptr };
+	CALPushButton* cancelButton{ nullptr };
 	QSlider* colorValueSlider{ nullptr };
 
 	void initBasicColor() const;

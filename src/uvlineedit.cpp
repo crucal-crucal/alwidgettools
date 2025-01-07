@@ -6,12 +6,12 @@
 #include <QPainter>
 #include <QPropertyAnimation>
 
-#include "uvapplication.hpp"
+#include "alapplication.hpp"
 #include "uveventbus.hpp"
 #include "uvlineeditstyle.hpp"
 #include "uvlineedit_p.hpp"
 #include "uvmenu.hpp"
-#include "uvthememanager.hpp"
+#include "althememanager.hpp"
 
 /**
  * @brief \class CUVLineEditPrivate
@@ -36,12 +36,12 @@ qreal CUVLineEditPrivate::getExpandMarkWidth() const {
 void CUVLineEditPrivate::invokableWMWindowClickedEvent(const QVariantMap& data) {
 	Q_Q(CUVLineEdit);
 
-	if (const auto actionType = data.value("WMClickType").value<UVAppBarType::WMMouseActionType>(); actionType == UVAppBarType::WMLBUTTONDOWN) {
+	if (const auto actionType = data.value("WMClickType").value<ALAppBarType::WMMouseActionType>(); actionType == ALAppBarType::WMLBUTTONDOWN) {
 		if (q->hasSelectedText() && q->hasFocus()) {
 			q->clearFocus();
 		}
-	} else if (actionType == UVAppBarType::WMLBUTTONUP || actionType == UVAppBarType::WMNCLBUTTONDOWN) {
-		if (CUVApplication::containsCursorToItem(q) || (actionType == UVAppBarType::WMLBUTTONUP && q->hasSelectedText())) {
+	} else if (actionType == ALAppBarType::WMLBUTTONUP || actionType == ALAppBarType::WMNCLBUTTONDOWN) {
+		if (CUVApplication::containsCursorToItem(q) || (actionType == ALAppBarType::WMLBUTTONUP && q->hasSelectedText())) {
 			return;
 		}
 		if (q->hasFocus()) {
@@ -50,13 +50,13 @@ void CUVLineEditPrivate::invokableWMWindowClickedEvent(const QVariantMap& data) 
 	}
 }
 
-void CUVLineEditPrivate::slotThemeChanged(const UVThemeType::ThemeMode& mode) {
+void CUVLineEditPrivate::slotThemeChanged(const ALThemeType::ThemeMode& mode) {
 	Q_Q(CUVLineEdit);
 
 	themeMode = mode;
 	QPalette palette;
-	palette.setColor(QPalette::Text, mode == UVThemeType::Light ? Qt::black : Qt::white);
-	palette.setColor(QPalette::PlaceholderText, mode == UVThemeType::Light ? QColor(0x00, 0x00, 0x00, 128) : QColor(0xBA, 0xBA, 0xBA));
+	palette.setColor(QPalette::Text, mode == ALThemeType::Light ? Qt::black : Qt::white);
+	palette.setColor(QPalette::PlaceholderText, mode == ALThemeType::Light ? QColor(0x00, 0x00, 0x00, 128) : QColor(0xBA, 0xBA, 0xBA));
 	q->setPalette(palette);
 }
 
@@ -70,7 +70,7 @@ CUVLineEdit::CUVLineEdit(QWidget* parent): QLineEdit(parent), d_ptr(new CUVLineE
 	d->isClearButtonEnable = true;
 	setFocusPolicy(Qt::StrongFocus);
 	// 事件总线
-	d->focusEvent = new CUVEvent("WMWindowClicked", "invokableWMWindowClickedEvent", d);
+	d->focusEvent = new CALEvent("WMWindowClicked", "invokableWMWindowClickedEvent", d);
 	d->focusEvent->registerAndInit();
 	setMouseTracking(true);
 	QFont textFont = font();
@@ -148,7 +148,7 @@ void CUVLineEdit::paintEvent(QPaintEvent* event) {
 	painter.save();
 	painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);
 	painter.setPen(Qt::NoPen);
-	painter.setBrush(UVThemeColor(d->themeMode, UVThemeType::PrimaryNormal));
+	painter.setBrush(UVThemeColor(d->themeMode, ALThemeType::PrimaryNormal));
 	painter.drawRoundedRect(QRectF(width() / 2.0 - d->expandMarkWidth, height() - 2.5, d->expandMarkWidth * 2.0, 2.5), 2, 2);
 	painter.restore();
 }
@@ -159,11 +159,11 @@ void CUVLineEdit::contextMenuEvent(QContextMenuEvent* event) {
 	menu->setAttribute(Qt::WA_DeleteOnClose);
 	QAction* action;
 	if (!isReadOnly()) {
-		action = menu->addAction(UVIcon::CUVAweSomeIcon::ArrowRotateLeft, tr("Undo"), QKeySequence::Undo);
+		action = menu->addAction(ALIcon::AweSomeIcon::ArrowRotateLeft, tr("Undo"), QKeySequence::Undo);
 		action->setEnabled(isUndoAvailable());
 		connect(action, &QAction::triggered, this, &CUVLineEdit::undo);
 
-		action = menu->addAction(UVIcon::CUVAweSomeIcon::ArrowRotateRight, tr("Redo"), QKeySequence::Redo);
+		action = menu->addAction(ALIcon::AweSomeIcon::ArrowRotateRight, tr("Redo"), QKeySequence::Redo);
 		action->setEnabled(isRedoAvailable());
 		connect(action, &QAction::triggered, this, &CUVLineEdit::redo);
 		menu->addSeparator();
@@ -171,23 +171,23 @@ void CUVLineEdit::contextMenuEvent(QContextMenuEvent* event) {
 
 #ifndef QT_NO_CLIPBOARD
 	if (!isReadOnly()) {
-		action = menu->addAction(UVIcon::CUVAweSomeIcon::KnifeKitchen, tr("Cut"), QKeySequence::Cut);
+		action = menu->addAction(ALIcon::AweSomeIcon::KnifeKitchen, tr("Cut"), QKeySequence::Cut);
 		action->setEnabled(!isReadOnly() && hasSelectedText() && echoMode() == QLineEdit::Normal);
 		connect(action, &QAction::triggered, this, &CUVLineEdit::cut);
 	}
 
-	action = menu->addAction(UVIcon::CUVAweSomeIcon::Copy, tr("Copy"), QKeySequence::Copy);
+	action = menu->addAction(ALIcon::AweSomeIcon::Copy, tr("Copy"), QKeySequence::Copy);
 	action->setEnabled(hasSelectedText() && echoMode() == QLineEdit::Normal);
 	connect(action, &QAction::triggered, this, &CUVLineEdit::copy);
 
 	if (!isReadOnly()) {
-		action = menu->addAction(UVIcon::CUVAweSomeIcon::Paste, tr("Paste"), QKeySequence::Paste);
+		action = menu->addAction(ALIcon::AweSomeIcon::Paste, tr("Paste"), QKeySequence::Paste);
 		action->setEnabled(!isReadOnly() && !QGuiApplication::clipboard()->text().isEmpty());
 		connect(action, &QAction::triggered, this, &CUVLineEdit::paste);
 	}
 #endif
 	if (!isReadOnly()) {
-		action = menu->addAction(UVIcon::CUVAweSomeIcon::DeleteLeft, tr("delete"));
+		action = menu->addAction(ALIcon::AweSomeIcon::DeleteLeft, tr("delete"));
 		action->setEnabled(!isReadOnly() && !text().isEmpty() && hasSelectedText());
 		connect(action, &QAction::triggered, this, [=]() {
 			if (hasSelectedText()) {

@@ -2,12 +2,12 @@
 
 #include "uvmainwindow.hpp"
 
-class CUVContentDialog;
+class CALContentDialog;
 
 class E_BaseComponents;
 class E_Settings;
 
-class MainWindow : public CUVMainWindow {
+class MainWindow : public CALMainWindow {
 	Q_OBJECT
 
 public:
@@ -19,7 +19,7 @@ public:
 	void initContent();
 
 private:
-	CUVContentDialog* m_closeDialog{ nullptr };
+	CALContentDialog* m_closeDialog{ nullptr };
 
 	E_BaseComponents* m_baseComponents{ nullptr };
 	E_Settings* m_settings{ nullptr };

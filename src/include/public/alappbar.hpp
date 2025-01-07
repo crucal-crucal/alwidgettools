@@ -2,7 +2,7 @@
 
 #include <QWidget>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 #ifdef Q_OS_WIN
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
@@ -44,7 +44,7 @@
 
 class CUVAppBarPrivate;
 
-class CUVWIDGETTOOLS_EXPORT CUVAppBar : public QWidget {
+class CALWIDGETTOOLS_EXPORT CALAppBar : public QWidget {
 	Q_OBJECT
 	Q_DECLARE_PRIVATE(CUVAppBar)
 	Q_PROPERTY(bool isStayTop READ getIsStayTop WRITE setIsStayTop NOTIFY sigIsStayTopChanged)
@@ -55,8 +55,8 @@ class CUVWIDGETTOOLS_EXPORT CUVAppBar : public QWidget {
 	Q_PROPERTY(int customWidgetMaximumWidth READ getCustomWidgetMaximumWidth WRITE setCustomWidgetMaximumWidth NOTIFY sigCustomWidgetMaximumWidthChanged)
 
 public:
-	explicit CUVAppBar(QWidget* parent);
-	~CUVAppBar() override;
+	explicit CALAppBar(QWidget* parent);
+	~CALAppBar() override;
 
 	void setIsStayTop(bool isStayTop);
 	[[nodiscard]] bool getIsStayTop() const;
@@ -79,17 +79,17 @@ public:
 	void setBackgroundColor(const QColor& color);
 	[[nodiscard]] QColor getBackgroundColor() const;
 
-	void setCustomWidget(const UVAppBarType::CustomArea& customArea, QWidget* widget);
+	void setCustomWidget(const ALAppBarType::CustomArea& customArea, QWidget* widget);
 	[[nodiscard]] QWidget* getCustomWidget() const;
 
-	void setWindowButtonFlag(const UVAppBarType::ButtonFlag& buttonFlag, bool isEnable = true);
-	void setWindowButtonFlags(const UVAppBarType::ButtonFlags& buttonFlags);
-	[[nodiscard]] UVAppBarType::ButtonFlags getWindowButtonFlags() const;
+	void setWindowButtonFlag(const ALAppBarType::ButtonFlag& buttonFlag, bool isEnable = true);
+	void setWindowButtonFlags(const ALAppBarType::ButtonFlags& buttonFlags);
+	[[nodiscard]] ALAppBarType::ButtonFlags getWindowButtonFlags() const;
 
-	bool insertWidgetBeforeButton(QWidget* widget, const UVAppBarType::ButtonFlag& flag);
+	bool insertWidgetBeforeButton(QWidget* widget, const ALAppBarType::ButtonFlag& flag);
 	bool insertWidgetBeforeWidget(QWidget* widget, QWidget* targetWidget);
 	bool insertWidgetBeforeLayout(QWidget* widget, QLayout* targetLayout);
-	bool insertLayoutBeforeButton(QLayout* layout, const UVAppBarType::ButtonFlag& flag);
+	bool insertLayoutBeforeButton(QLayout* layout, const ALAppBarType::ButtonFlag& flag);
 	bool insertLayoutBeforeWidget(QLayout* layout, QWidget* targetWidget);
 	bool insertLayoutBeforeLayout(QLayout* layout, QLayout* targetLayout);
 

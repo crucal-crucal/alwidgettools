@@ -7,7 +7,7 @@
 #include <QPropertyAnimation>
 
 #include "uviconbutton_p.hpp"
-#include "uvthememanager.hpp"
+#include "althememanager.hpp"
 #include "uvtooltip.hpp"
 
 /**
@@ -41,36 +41,36 @@ CUVIconButton::CUVIconButton(const QPixmap& pix, QWidget* parent): QPushButton(p
 	d->iconPix = pix.copy();
 	d->hoverAlpha = 0;
 	d->opacity = 1;
-	d->lightHoverColor = UVThemeColor(UVThemeType::Light, UVThemeType::BasicHoverAlpha);
-	d->darkHoverColor = UVThemeColor(UVThemeType::Dark, UVThemeType::BasicHoverAlpha);
-	d->lightIconColor = UVThemeColor(UVThemeType::Light, UVThemeType::BasicText);
-	d->darkIconColor = UVThemeColor(UVThemeType::Dark, UVThemeType::BasicText);
-	d->lightHoverIconColor = UVThemeColor(UVThemeType::Light, UVThemeType::BasicText);
-	d->darkHoverIconColor = UVThemeColor(UVThemeType::Dark, UVThemeType::BasicText);
+	d->lightHoverColor = UVThemeColor(ALThemeType::Light, ALThemeType::BasicHoverAlpha);
+	d->darkHoverColor = UVThemeColor(ALThemeType::Dark, ALThemeType::BasicHoverAlpha);
+	d->lightIconColor = UVThemeColor(ALThemeType::Light, ALThemeType::BasicText);
+	d->darkIconColor = UVThemeColor(ALThemeType::Dark, ALThemeType::BasicText);
+	d->lightHoverIconColor = UVThemeColor(ALThemeType::Light, ALThemeType::BasicText);
+	d->darkHoverIconColor = UVThemeColor(ALThemeType::Dark, ALThemeType::BasicText);
 	d->isSelected = false;
 	d->borderRadius = 0;
 	d->themeMode = UVTheme->getThemeMode();
 	connect(this, &CUVIconButton::sigIsSelectedChanged, this, [=]() { update(); });
-	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const UVThemeType::ThemeMode& mode) {
+	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) {
 		d->themeMode = mode;
 		update();
 	});
 }
 
-CUVIconButton::CUVIconButton(const UVIcon::CUVAweSomeIcon& icon, QWidget* parent): CUVIconButton(icon, 15, parent) {
+CUVIconButton::CUVIconButton(const ALIcon::AweSomeIcon& icon, QWidget* parent): CUVIconButton(icon, 15, parent) {
 }
 
-CUVIconButton::CUVIconButton(const UVIcon::CUVAweSomeIcon& icon, const int& pixelSize, QWidget* parent): QPushButton(parent), d_ptr(new CUVIconButtonPrivate(this, this)) {
+CUVIconButton::CUVIconButton(const ALIcon::AweSomeIcon& icon, const int& pixelSize, QWidget* parent): QPushButton(parent), d_ptr(new CUVIconButtonPrivate(this, this)) {
 	Q_D(CUVIconButton);
 
 	d->hoverAlpha = 0;
 	d->opacity = 1;
-	d->lightHoverColor = UVThemeColor(UVThemeType::Light, UVThemeType::BasicHoverAlpha);
-	d->darkHoverColor = UVThemeColor(UVThemeType::Dark, UVThemeType::BasicHoverAlpha);
-	d->lightIconColor = UVThemeColor(UVThemeType::Light, UVThemeType::BasicText);
-	d->darkIconColor = UVThemeColor(UVThemeType::Dark, UVThemeType::BasicText);
-	d->lightHoverIconColor = UVThemeColor(UVThemeType::Light, UVThemeType::BasicText);
-	d->darkHoverIconColor = UVThemeColor(UVThemeType::Dark, UVThemeType::BasicText);
+	d->lightHoverColor = UVThemeColor(ALThemeType::Light, ALThemeType::BasicHoverAlpha);
+	d->darkHoverColor = UVThemeColor(ALThemeType::Dark, ALThemeType::BasicHoverAlpha);
+	d->lightIconColor = UVThemeColor(ALThemeType::Light, ALThemeType::BasicText);
+	d->darkIconColor = UVThemeColor(ALThemeType::Dark, ALThemeType::BasicText);
+	d->lightHoverIconColor = UVThemeColor(ALThemeType::Light, ALThemeType::BasicText);
+	d->darkHoverIconColor = UVThemeColor(ALThemeType::Dark, ALThemeType::BasicText);
 	d->isSelected = false;
 	d->borderRadius = 0;
 	d->themeMode = UVTheme->getThemeMode();
@@ -81,24 +81,24 @@ CUVIconButton::CUVIconButton(const UVIcon::CUVAweSomeIcon& icon, const int& pixe
 	d->awesomeIcon = icon;
 	this->setText(QChar(static_cast<unsigned short>(icon)));
 	connect(this, &CUVIconButton::sigIsSelectedChanged, this, [=]() { update(); });
-	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const UVThemeType::ThemeMode& mode) {
+	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) {
 		d->themeMode = mode;
 		update();
 	});
 }
 
-CUVIconButton::CUVIconButton(const UVIcon::CUVAweSomeIcon& icon, const int& pixelSize, const int& fixedWidth, const int& fixedHeight, QWidget* parent): CUVIconButton(icon, pixelSize, parent) {
+CUVIconButton::CUVIconButton(const ALIcon::AweSomeIcon& icon, const int& pixelSize, const int& fixedWidth, const int& fixedHeight, QWidget* parent): CUVIconButton(icon, pixelSize, parent) {
 	this->setFixedSize(fixedWidth, fixedHeight);
 }
 
 CUVIconButton::~CUVIconButton() = default;
 
-void CUVIconButton::setCUVIcon(const UVIcon::CUVAweSomeIcon& icon) {
+void CUVIconButton::setCUVIcon(const ALIcon::AweSomeIcon& icon) {
 	d_func()->awesomeIcon = icon;
 	this->setText(QChar(static_cast<unsigned short>(icon)));
 }
 
-UVIcon::CUVAweSomeIcon CUVIconButton::getCUVIcon() const {
+ALIcon::AweSomeIcon CUVIconButton::getCUVIcon() const {
 	return d_func()->awesomeIcon;
 }
 
@@ -203,7 +203,7 @@ bool CUVIconButton::event(QEvent* event) {
 				connect(alphaAnimation, &QPropertyAnimation::finished, this, [=]() { d->isAlphaAnimationFinished = true; });
 				alphaAnimation->setDuration(175);
 				alphaAnimation->setStartValue(d->hoverAlpha);
-				alphaAnimation->setEndValue(d->themeMode == UVThemeType::Light ? d->lightHoverColor.alpha() : d->darkHoverColor.alpha());
+				alphaAnimation->setEndValue(d->themeMode == ALThemeType::Light ? d->lightHoverColor.alpha() : d->darkHoverColor.alpha());
 				alphaAnimation->start(QAbstractAnimation::DeleteWhenStopped);
 			}
 			break;
@@ -237,9 +237,9 @@ void CUVIconButton::paintEvent(QPaintEvent* event) {
 	painter.setPen(Qt::NoPen);
 
 	if (d->isAlphaAnimationFinished || d->isSelected) {
-		painter.setBrush(d->isSelected ? d->themeMode == UVThemeType::Light ? d->lightHoverColor : d->darkHoverColor : isEnabled() ? underMouse() ? d->themeMode == UVThemeType::Light ? d->lightHoverColor : d->darkHoverColor : Qt::transparent : Qt::transparent);
+		painter.setBrush(d->isSelected ? d->themeMode == ALThemeType::Light ? d->lightHoverColor : d->darkHoverColor : isEnabled() ? underMouse() ? d->themeMode == ALThemeType::Light ? d->lightHoverColor : d->darkHoverColor : Qt::transparent : Qt::transparent);
 	} else {
-		QColor hoverColor = d->themeMode == UVThemeType::Light ? d->lightHoverColor : d->darkHoverColor;
+		QColor hoverColor = d->themeMode == ALThemeType::Light ? d->lightHoverColor : d->darkHoverColor;
 		hoverColor.setAlpha(d->hoverAlpha);
 		painter.setBrush(hoverColor);
 	}
@@ -252,7 +252,7 @@ void CUVIconButton::paintEvent(QPaintEvent* event) {
 		painter.setClipPath(path);
 		painter.drawPixmap(rect(), d->iconPix);
 	} else {
-		painter.setPen(isEnabled() ? d->themeMode == UVThemeType::Light ? underMouse() ? d->lightHoverIconColor : d->lightIconColor : underMouse() ? d->darkHoverIconColor : d->darkIconColor : UVThemeColor(d->themeMode, UVThemeType::BasicTextDisable));
+		painter.setPen(isEnabled() ? d->themeMode == ALThemeType::Light ? underMouse() ? d->lightHoverIconColor : d->lightIconColor : underMouse() ? d->darkHoverIconColor : d->darkIconColor : UVThemeColor(d->themeMode, ALThemeType::BasicTextDisable));
 		painter.drawText(rect(), Qt::AlignCenter, QChar(static_cast<unsigned short>(d->awesomeIcon)));
 	}
 

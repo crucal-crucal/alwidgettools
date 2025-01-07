@@ -2,11 +2,11 @@
 
 #include <QComboBox>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class CUVMultiSelectComboBoxPrivate;
 
-class CUVWIDGETTOOLS_EXPORT CUVMultiSelectComboBox : public QComboBox {
+class CALWIDGETTOOLS_EXPORT CUVMultiSelectComboBox : public QComboBox {
 	Q_OBJECT
 	Q_DISABLE_COPY(CUVMultiSelectComboBox)
 	Q_DECLARE_PRIVATE(CUVMultiSelectComboBox)

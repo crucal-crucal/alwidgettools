@@ -80,7 +80,7 @@ QVariant CUVNavigationModel::data(const QModelIndex& index, int role) const {
 	return {};
 }
 
-UVNavigationType::NodeOperateReturnType CUVNavigationModel::addExpanderNode(const QString& expanderTitle, QString& expanderKey, const UVIcon::CUVAweSomeIcon& awewomeIcon) {
+ALNavigationType::NodeOperateReturnType CUVNavigationModel::addExpanderNode(const QString& expanderTitle, QString& expanderKey, const ALIcon::AweSomeIcon& awewomeIcon) {
 	const auto node = new CUVNavigationNode(expanderTitle, m_rootNode);
 	node->setDepth(1);
 	node->setIsVisible(true);
@@ -92,17 +92,17 @@ UVNavigationType::NodeOperateReturnType CUVNavigationModel::addExpanderNode(cons
 	endInsertRows();
 	expanderKey = node->getNodeKey();
 
-	return UVNavigationType::Success;
+	return ALNavigationType::Success;
 }
 
-UVNavigationType::NodeOperateReturnType CUVNavigationModel::addExpanderNode(const QString& expanderTitle, QString& expanderKey, const QString& targetExpanderKey, const UVIcon::CUVAweSomeIcon& awewomeIcon) {
+ALNavigationType::NodeOperateReturnType CUVNavigationModel::addExpanderNode(const QString& expanderTitle, QString& expanderKey, const QString& targetExpanderKey, const ALIcon::AweSomeIcon& awewomeIcon) {
 	if (!m_mapNodes.contains(targetExpanderKey)) {
-		return UVNavigationType::TargetNodeInvalid;
+		return ALNavigationType::TargetNodeInvalid;
 	}
 
 	if (CUVNavigationNode* parentNode = m_mapNodes.value(targetExpanderKey); parentNode->getIsExpanderNode()) {
 		if (parentNode->getDepth() > NODE_MAX_DEPTHS) {
-			return UVNavigationType::TargetNodeDepthLimit;
+			return ALNavigationType::TargetNodeDepthLimit;
 		}
 
 		const auto node = new CUVNavigationNode(expanderTitle, parentNode);
@@ -116,13 +116,13 @@ UVNavigationType::NodeOperateReturnType CUVNavigationModel::addExpanderNode(cons
 		endInsertRows();
 		expanderKey = node->getNodeKey();
 
-		return UVNavigationType::Success;
+		return ALNavigationType::Success;
 	}
 
-	return UVNavigationType::TargetNodeTypeError;
+	return ALNavigationType::TargetNodeTypeError;
 }
 
-UVNavigationType::NodeOperateReturnType CUVNavigationModel::addPageNode(const QString& pageTitle, QString& pageKey, const UVIcon::CUVAweSomeIcon& awewomeIcon) {
+ALNavigationType::NodeOperateReturnType CUVNavigationModel::addPageNode(const QString& pageTitle, QString& pageKey, const ALIcon::AweSomeIcon& awewomeIcon) {
 	const auto node = new CUVNavigationNode(pageTitle, m_rootNode);
 	node->setDepth(1);
 	node->setAwesomeIcon(awewomeIcon);
@@ -137,17 +137,17 @@ UVNavigationType::NodeOperateReturnType CUVNavigationModel::addPageNode(const QS
 		m_selectedNode = node;
 	}
 
-	return UVNavigationType::Success;
+	return ALNavigationType::Success;
 }
 
-UVNavigationType::NodeOperateReturnType CUVNavigationModel::addPageNode(const QString& pageTitle, QString& pageKey, const QString& targetExpanderKey, const UVIcon::CUVAweSomeIcon& awewomeIcon) {
+ALNavigationType::NodeOperateReturnType CUVNavigationModel::addPageNode(const QString& pageTitle, QString& pageKey, const QString& targetExpanderKey, const ALIcon::AweSomeIcon& awewomeIcon) {
 	if (!m_mapNodes.contains(targetExpanderKey)) {
-		return UVNavigationType::TargetNodeInvalid;
+		return ALNavigationType::TargetNodeInvalid;
 	}
 
 	if (CUVNavigationNode* parentNode = m_mapNodes.value(targetExpanderKey); parentNode->getIsExpanderNode()) {
 		if (parentNode->getDepth() > NODE_MAX_DEPTHS) {
-			return UVNavigationType::TargetNodeDepthLimit;
+			return ALNavigationType::TargetNodeDepthLimit;
 		}
 
 		const auto node = new CUVNavigationNode(pageTitle, parentNode);
@@ -163,13 +163,13 @@ UVNavigationType::NodeOperateReturnType CUVNavigationModel::addPageNode(const QS
 			m_selectedNode = node;
 		}
 
-		return UVNavigationType::Success;
+		return ALNavigationType::Success;
 	}
 
-	return UVNavigationType::TargetNodeTypeError;
+	return ALNavigationType::TargetNodeTypeError;
 }
 
-UVNavigationType::NodeOperateReturnType CUVNavigationModel::addPageNode(const QString& pageTitle, QString& pageKey, const int keyPoints, const UVIcon::CUVAweSomeIcon& awewomeIcon) {
+ALNavigationType::NodeOperateReturnType CUVNavigationModel::addPageNode(const QString& pageTitle, QString& pageKey, const int keyPoints, const ALIcon::AweSomeIcon& awewomeIcon) {
 	const auto node = new CUVNavigationNode(pageTitle, m_rootNode);
 	node->setDepth(1);
 	node->setAwesomeIcon(awewomeIcon);
@@ -184,17 +184,17 @@ UVNavigationType::NodeOperateReturnType CUVNavigationModel::addPageNode(const QS
 		m_selectedNode = node;
 	}
 
-	return UVNavigationType::Success;
+	return ALNavigationType::Success;
 }
 
-UVNavigationType::NodeOperateReturnType CUVNavigationModel::addPageNode(const QString& pageTitle, QString& pageKey, const QString& targetExpanderKey, const int keyPoints, const UVIcon::CUVAweSomeIcon& awewomeIcon) {
+ALNavigationType::NodeOperateReturnType CUVNavigationModel::addPageNode(const QString& pageTitle, QString& pageKey, const QString& targetExpanderKey, const int keyPoints, const ALIcon::AweSomeIcon& awewomeIcon) {
 	if (!m_mapNodes.contains(targetExpanderKey)) {
-		return UVNavigationType::TargetNodeInvalid;
+		return ALNavigationType::TargetNodeInvalid;
 	}
 
 	if (CUVNavigationNode* parentNode = m_mapNodes.value(targetExpanderKey); parentNode->getIsExpanderNode()) {
 		if (parentNode->getDepth() > NODE_MAX_DEPTHS) {
-			return UVNavigationType::TargetNodeDepthLimit;
+			return ALNavigationType::TargetNodeDepthLimit;
 		}
 
 		const auto node = new CUVNavigationNode(pageTitle, parentNode);
@@ -211,10 +211,10 @@ UVNavigationType::NodeOperateReturnType CUVNavigationModel::addPageNode(const QS
 			m_selectedNode = node;
 		}
 
-		return UVNavigationType::Success;
+		return ALNavigationType::Success;
 	}
 
-	return UVNavigationType::TargetNodeTypeError;
+	return ALNavigationType::TargetNodeTypeError;
 }
 
 CUVNavigationNode* CUVNavigationModel::getNavigationNode(const QString& nodeKey) const {

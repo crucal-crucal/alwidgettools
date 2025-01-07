@@ -1,16 +1,16 @@
 ﻿#pragma once
 
-#include "uvbasedialog.hpp"
+#include "albasedialog.hpp"
 
-class CUVContentDialogPrivate;
+class CALContentDialogPrivate;
 
-class CUVWIDGETTOOLS_EXPORT CUVContentDialog : public CUVBaseDialog {
+class CALWIDGETTOOLS_EXPORT CALContentDialog : public CUVBaseDialog {
 	Q_OBJECT
-	Q_DECLARE_PRIVATE(CUVContentDialog)
+	Q_DECLARE_PRIVATE(CALContentDialog)
 
 public:
-	explicit CUVContentDialog(QWidget* parent);
-	~CUVContentDialog() override;
+	explicit CALContentDialog(QWidget* parent);
+	~CALContentDialog() override;
 
 	Q_SLOT virtual void slotCloseButtonClicked();
 	Q_SLOT virtual void slotCancelButtonClicked();
@@ -25,7 +25,7 @@ signals:
 	void sigCancelButtonClicked();
 
 protected:
-	const QScopedPointer<CUVContentDialogPrivate> d_ptr{ nullptr };
+	const QScopedPointer<CALContentDialogPrivate> d_ptr{ nullptr };
 
 	void keyPressEvent(QKeyEvent* event) override;
 };

@@ -7,7 +7,7 @@
  * @brief \class CUVIcon
  * @return CUVIcon instance
  */
-QIcon createIcon(const UVIcon::CUVAweSomeIcon& awesomeIcon, const int pixelSize = 25, const int fixedWidth = 30, const int fixedHeight = 30, const QColor& iconColor = Qt::black) {
+QIcon createIcon(const ALIcon::AweSomeIcon& awesomeIcon, const int pixelSize = 25, const int fixedWidth = 30, const int fixedHeight = 30, const QColor& iconColor = Qt::black) {
 	QFont iconFont("CUVAwesome");
 	iconFont.setPixelSize(pixelSize);
 
@@ -23,27 +23,27 @@ QIcon createIcon(const UVIcon::CUVAweSomeIcon& awesomeIcon, const int pixelSize 
 	return pix;
 }
 
-QIcon CUVIcon::getQIconFromAwesomeIcon(const UVIcon::CUVAweSomeIcon& awesomeIcon) { // NOLINT
+QIcon CUVIcon::getQIconFromAwesomeIcon(const ALIcon::AweSomeIcon& awesomeIcon) { // NOLINT
 	return createIcon(awesomeIcon);
 }
 
-QIcon CUVIcon::getQIconFromAwesomeIcon(const UVIcon::CUVAweSomeIcon& awesomeIcon, const QColor& iconColor) { // NOLINT
+QIcon CUVIcon::getQIconFromAwesomeIcon(const ALIcon::AweSomeIcon& awesomeIcon, const QColor& iconColor) { // NOLINT
 	return createIcon(awesomeIcon, 25, 30, 30, iconColor);
 }
 
-QIcon CUVIcon::getQIconFromAwesomeIcon(const UVIcon::CUVAweSomeIcon& awesomeIcon, const int pixelSize) { // NOLINT
+QIcon CUVIcon::getQIconFromAwesomeIcon(const ALIcon::AweSomeIcon& awesomeIcon, const int pixelSize) { // NOLINT
 	return createIcon(awesomeIcon, pixelSize);
 }
 
-QIcon CUVIcon::getQIconFromAwesomeIcon(const UVIcon::CUVAweSomeIcon& awesomeIcon, const int pixelSize, const QColor& iconColor) { // NOLINT
+QIcon CUVIcon::getQIconFromAwesomeIcon(const ALIcon::AweSomeIcon& awesomeIcon, const int pixelSize, const QColor& iconColor) { // NOLINT
 	return createIcon(awesomeIcon, pixelSize, 30, 30, iconColor);
 }
 
-QIcon CUVIcon::getQIconFromAwesomeIcon(const UVIcon::CUVAweSomeIcon& awesomeIcon, const int pixelSize, const int fixedWidth, const int fixedHeight) { // NOLINT
+QIcon CUVIcon::getQIconFromAwesomeIcon(const ALIcon::AweSomeIcon& awesomeIcon, const int pixelSize, const int fixedWidth, const int fixedHeight) { // NOLINT
 	return createIcon(awesomeIcon, pixelSize, fixedWidth, fixedHeight);
 }
 
-QIcon CUVIcon::getQIconFromAwesomeIcon(const UVIcon::CUVAweSomeIcon& awesomeIcon, const int pixelSize, const int fixedWidth, const int fixedHeight, const QColor& iconColor) { // NOLINT
+QIcon CUVIcon::getQIconFromAwesomeIcon(const ALIcon::AweSomeIcon& awesomeIcon, const int pixelSize, const int fixedWidth, const int fixedHeight, const QColor& iconColor) { // NOLINT
 	return createIcon(awesomeIcon, pixelSize, fixedWidth, fixedHeight, iconColor);
 }
 

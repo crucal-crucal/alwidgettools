@@ -1,4 +1,4 @@
-﻿#include "uvcombobox.hpp"
+﻿#include "alcombobox.hpp"
 
 #include <QApplication>
 #include <QLayout>
@@ -8,7 +8,7 @@
 #include "uvcomboboxstyle.hpp"
 #include "uvcombobox_p.hpp"
 #include "uvscrollbar.hpp"
-#include "uvthememanager.hpp"
+#include "althememanager.hpp"
 
 /**
  * @brief \class CUVComboBoxPrivate
@@ -30,7 +30,7 @@ CUVComboBox::CUVComboBox(QWidget* parent): QComboBox(parent), d_ptr(new CUVCombo
 
 	d->borderRadius = 3;
 	d->themeMode = UVTheme->getThemeMode();
-	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const UVThemeType::ThemeMode& mode) { d->themeMode = mode; });
+	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { d->themeMode = mode; });
 	setObjectName("CUVComboBox");
 	setFixedHeight(35);
 	d->comboBoxStyle = new CUVComboBoxStyle(style());

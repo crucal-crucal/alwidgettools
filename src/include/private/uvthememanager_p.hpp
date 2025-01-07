@@ -2,7 +2,7 @@
 
 #include <QColor>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class CUVThemeManager;
 
@@ -19,7 +19,7 @@ protected:
 	CUVThemeManager* const q_ptr{ nullptr };
 
 private:
-	UVThemeType::ThemeMode themeMode{};
+	ALThemeType::ThemeMode themeMode{};
 	QColor lightThemeColorList[40];
 	QColor darkThemeColorList[40];
 

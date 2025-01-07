@@ -3,48 +3,48 @@
 #include <QPainter>
 #include <QPainterPath>
 
-#include "uvthememanager.hpp"
+#include "althememanager.hpp"
 
 /**
- * @brief \class CUVCenterStackedWidget
+ * @brief \class CALCenterStackedWidget
  * @param parent pointer to the parent class
  */
-CUVCenterStackedWidget::CUVCenterStackedWidget(QWidget* parent): QStackedWidget(parent) {
+CALCenterStackedWidget::CALCenterStackedWidget(QWidget* parent): QStackedWidget(parent) {
 	setObjectName("CUVCenterStackedWidget");
 	m_themeMode = UVTheme->getThemeMode();
-	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, &CUVCenterStackedWidget::slotThemeModeChanged);
+	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, &CALCenterStackedWidget::slotThemeModeChanged);
 }
 
-CUVCenterStackedWidget::~CUVCenterStackedWidget() = default;
+CALCenterStackedWidget::~CALCenterStackedWidget() = default;
 
-void CUVCenterStackedWidget::slotThemeModeChanged(const UVThemeType::ThemeMode& mode) {
+void CALCenterStackedWidget::slotThemeModeChanged(const ALThemeType::ThemeMode& mode) {
 	m_themeMode = mode;
 	update();
 }
 
-void CUVCenterStackedWidget::setIsTransparent(const bool isTransparent) {
+void CALCenterStackedWidget::setIsTransparent(const bool isTransparent) {
 	m_isTransparent = isTransparent;
 	update();
 }
 
-bool CUVCenterStackedWidget::getIsTransparent() const {
+bool CALCenterStackedWidget::getIsTransparent() const {
 	return m_isTransparent;
 }
 
-void CUVCenterStackedWidget::setIsHasRadius(const bool isHasRadius) {
+void CALCenterStackedWidget::setIsHasRadius(const bool isHasRadius) {
 	m_isHasRadius = isHasRadius;
 	update();
 }
 
-void CUVCenterStackedWidget::paintEvent(QPaintEvent* event) {
+void CALCenterStackedWidget::paintEvent(QPaintEvent* event) {
 	if (!m_isTransparent) {
 		QPainter painter(this);
 		QRect targetRect = this->rect();
 		targetRect.adjust(1, 1, 10, 10);
 		painter.save();
 		painter.setRenderHint(QPainter::Antialiasing);
-		painter.setPen(QPen(UVThemeColor(m_themeMode, UVThemeType::BasicBaseLine), 1.5));
-		painter.setBrush(UVThemeColor(m_themeMode, UVThemeType::WindowCentralStackBase));
+		painter.setPen(QPen(UVThemeColor(m_themeMode, ALThemeType::BasicBaseLine), 1.5));
+		painter.setBrush(UVThemeColor(m_themeMode, ALThemeType::WindowCentralStackBase));
 		if (m_isHasRadius) {
 			painter.drawRoundedRect(targetRect, 10, 10);
 		} else {

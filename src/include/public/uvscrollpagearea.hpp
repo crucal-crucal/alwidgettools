@@ -2,11 +2,11 @@
 
 #include <QWidget>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class CUVScrollPageAreaPrivate;
 
-class CUVWIDGETTOOLS_EXPORT CUVScrollPageArea : public QWidget {
+class CALWIDGETTOOLS_EXPORT CUVScrollPageArea : public QWidget {
 	Q_OBJECT
 	Q_DECLARE_PRIVATE(CUVScrollPageArea)
 	Q_PROPERTY(int borderRadius READ getBorderRadius WRITE setBorderRadius NOTIFY sigBorderRadiusChanged)

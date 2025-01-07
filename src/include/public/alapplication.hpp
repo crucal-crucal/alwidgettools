@@ -1,13 +1,13 @@
 ﻿#pragma once
 
-#include "uvwidgettoolsdef.hpp"
-#include "uvsingleton.hpp"
+#include "alwidgettoolsdef.hpp"
+#include "alsingleton.hpp"
 
 #define uvApp CUVApplication::instance()
 
 class CUVApplicationPrivate;
 
-class CUVWIDGETTOOLS_EXPORT CUVApplication : public QObject {
+class CALWIDGETTOOLS_EXPORT CUVApplication : public QObject {
 	Q_OBJECT
 	Q_DECLARE_PRIVATE(CUVApplication)
 	Q_PROPERTY(bool isEnableMica READ getIsEnableMica WRITE setIsEnableMica NOTIFY sigIsEnableMicaChanged)

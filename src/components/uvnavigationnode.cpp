@@ -42,12 +42,12 @@ QList<CUVNavigationNode*> CUVNavigationNode::getChildrenNodes() const {
 	return m_childrenNodes;
 }
 
-void CUVNavigationNode::setAwesomeIcon(const UVIcon::CUVAweSomeIcon& awesomeIcon) {
+void CUVNavigationNode::setAwesomeIcon(const ALIcon::AweSomeIcon& awesomeIcon) {
 	m_awesomeIcon = awesomeIcon;
 	Q_EMIT sigAwesomeIconChanged();
 }
 
-UVIcon::CUVAweSomeIcon CUVNavigationNode::getAwesomeIcon() const {
+ALIcon::AweSomeIcon CUVNavigationNode::getAwesomeIcon() const {
 	return m_awesomeIcon;
 }
 

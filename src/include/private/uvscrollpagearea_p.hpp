@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class CUVScrollPageArea;
 
@@ -17,6 +17,6 @@ protected:
 	CUVScrollPageArea* const q_ptr{ nullptr };
 
 private:
-	UVThemeType::ThemeMode themeMode{};
+	ALThemeType::ThemeMode themeMode{};
 	int borderRadius{};
 };

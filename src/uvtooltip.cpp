@@ -12,7 +12,7 @@
 #include <QVBoxLayout>
 
 #include "uvtext.hpp"
-#include "uvthememanager.hpp"
+#include "althememanager.hpp"
 #include "uvtooltip_p.hpp"
 
 /**
@@ -152,7 +152,7 @@ CUVToolTip::CUVToolTip(QWidget* parent): QWidget(parent), d_ptr(new CUVToolTipPr
 	d->mainVLayout->addWidget(d->toolTipText);
 
 	d->themeMode = UVTheme->getThemeMode();
-	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const UVThemeType::ThemeMode& mode) {
+	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) {
 		d->themeMode = mode;
 		update();
 	});
@@ -269,8 +269,8 @@ void CUVToolTip::paintEvent(QPaintEvent* event) {
 	UVTheme->drawEffectShadow(&painter, rect(), d->shadowBorderWidth, d->borderRadius);
 	QRect forefroundRect = rect();
 	forefroundRect.adjust(d->shadowBorderWidth, d->shadowBorderWidth, -d->shadowBorderWidth, -d->shadowBorderWidth);
-	painter.setPen(UVThemeColor(d->themeMode, UVThemeType::PopupBorder));
-	painter.setBrush(UVThemeColor(d->themeMode, UVThemeType::PopupBase));
+	painter.setPen(UVThemeColor(d->themeMode, ALThemeType::PopupBorder));
+	painter.setBrush(UVThemeColor(d->themeMode, ALThemeType::PopupBase));
 	painter.drawRoundedRect(forefroundRect, d->borderRadius, d->borderRadius);
 	painter.restore();
 }

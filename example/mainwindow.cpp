@@ -2,19 +2,19 @@
 
 #include <QPushButton>
 
-#include "uvcontentdialog.hpp"
+#include "alcontentdialog.hpp"
 
 #include "page/e_basecomponents.hpp"
 #include "page/e_settings.hpp"
 
-MainWindow::MainWindow(QWidget* parent): CUVMainWindow(parent) {
+MainWindow::MainWindow(QWidget* parent): CALMainWindow(parent) {
 	initWindow();
 	initEdgeLayout();
 	initContent();
-	m_closeDialog = new CUVContentDialog(this);
-	m_closeDialog->setShowPolicys(UVDialogPolicy::ShowMask | UVDialogPolicy::EnableResize);
-	connect(m_closeDialog, &CUVContentDialog::sigCloseButtonClicked, this, &CUVMainWindow::closeWindow);
-	connect(this, &MainWindow::sigCloseButtonClicked, m_closeDialog, &CUVContentDialog::exec);
+	m_closeDialog = new CALContentDialog(this);
+	m_closeDialog->setShowPolicys(ALDialogPolicy::ShowMask | ALDialogPolicy::EnableResize);
+	connect(m_closeDialog, &CALContentDialog::sigCloseButtonClicked, this, &CALMainWindow::closeWindow);
+	connect(this, &MainWindow::sigCloseButtonClicked, m_closeDialog, &CALContentDialog::exec);
 	this->setIsDefaultClosed(false);
 	moveToCenter();
 }
@@ -32,9 +32,9 @@ void MainWindow::initEdgeLayout() {
 
 void MainWindow::initContent() {
 	m_baseComponents = new E_BaseComponents(this);
-	addPageNode(m_baseComponents->windowTitle(), m_baseComponents, UVIcon::CUVAweSomeIcon::CabinetFiling);
+	addPageNode(m_baseComponents->windowTitle(), m_baseComponents, ALIcon::AweSomeIcon::CabinetFiling);
 
 	m_settings = new E_Settings(this);
 	QString settingKey{};
-	addFooterNode(m_settings->windowTitle(), m_settings, settingKey, 0, UVIcon::CUVAweSomeIcon::GearComplex);
+	addFooterNode(m_settings->windowTitle(), m_settings, settingKey, 0, ALIcon::AweSomeIcon::GearComplex);
 }

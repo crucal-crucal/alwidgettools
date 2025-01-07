@@ -2,7 +2,7 @@
 
 #include <QPainter>
 
-#include "uvthememanager.hpp"
+#include "althememanager.hpp"
 
 /**
  * @brief \class CUVSuggestBoxSearchViewContainer
@@ -13,7 +13,7 @@ CUVSuggestBoxSearchViewContainer::CUVSuggestBoxSearchViewContainer(QWidget* pare
 	setObjectName("CUVSuggestBoxSearchViewContainer");
 	setStyleSheet("#CUVSuggestBoxSearchViewContainer { background-color: tranparent; } ");
 	themeMode = UVTheme->getThemeMode();
-	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const UVThemeType::ThemeMode& mode) { themeMode = mode; });
+	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { themeMode = mode; });
 }
 
 CUVSuggestBoxSearchViewContainer::~CUVSuggestBoxSearchViewContainer() = default;
@@ -24,8 +24,8 @@ void CUVSuggestBoxSearchViewContainer::paintEvent(QPaintEvent* event) {
 	painter.save();
 	painter.setRenderHint(QPainter::Antialiasing);
 	UVTheme->drawEffectShadow(&painter, rect(), 6, 8);
-	painter.setPen(UVThemeColor(themeMode, UVThemeType::PopupBorder));
-	painter.setBrush(UVThemeColor(themeMode, UVThemeType::PopupBase));
+	painter.setPen(UVThemeColor(themeMode, ALThemeType::PopupBorder));
+	painter.setBrush(UVThemeColor(themeMode, ALThemeType::PopupBase));
 	painter.drawRoundedRect(QRect(6, 0, rect().width() - 2 * 6, rect().height() - 6), 8, 8);
 	painter.restore();
 }

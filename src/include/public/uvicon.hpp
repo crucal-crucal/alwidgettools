@@ -2,16 +2,16 @@
 
 #include <QIcon>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
-class CUVWIDGETTOOLS_EXPORT CUVIcon {
+class CALWIDGETTOOLS_EXPORT CUVIcon {
 public:
-	static QIcon getQIconFromAwesomeIcon(const UVIcon::CUVAweSomeIcon& awesomeIcon);
-	static QIcon getQIconFromAwesomeIcon(const UVIcon::CUVAweSomeIcon& awesomeIcon, const QColor& iconColor);
-	static QIcon getQIconFromAwesomeIcon(const UVIcon::CUVAweSomeIcon& awesomeIcon, int pixelSize);
-	static QIcon getQIconFromAwesomeIcon(const UVIcon::CUVAweSomeIcon& awesomeIcon, int pixelSize, const QColor& iconColor);
-	static QIcon getQIconFromAwesomeIcon(const UVIcon::CUVAweSomeIcon& awesomeIcon, int pixelSize, int fixedWidth, int fixedHeight);
-	static QIcon getQIconFromAwesomeIcon(const UVIcon::CUVAweSomeIcon& awesomeIcon, int pixelSize, int fixedWidth, int fixedHeight, const QColor& iconColor);
+	static QIcon getQIconFromAwesomeIcon(const ALIcon::AweSomeIcon& awesomeIcon);
+	static QIcon getQIconFromAwesomeIcon(const ALIcon::AweSomeIcon& awesomeIcon, const QColor& iconColor);
+	static QIcon getQIconFromAwesomeIcon(const ALIcon::AweSomeIcon& awesomeIcon, int pixelSize);
+	static QIcon getQIconFromAwesomeIcon(const ALIcon::AweSomeIcon& awesomeIcon, int pixelSize, const QColor& iconColor);
+	static QIcon getQIconFromAwesomeIcon(const ALIcon::AweSomeIcon& awesomeIcon, int pixelSize, int fixedWidth, int fixedHeight);
+	static QIcon getQIconFromAwesomeIcon(const ALIcon::AweSomeIcon& awesomeIcon, int pixelSize, int fixedWidth, int fixedHeight, const QColor& iconColor);
 
 private:
 	explicit CUVIcon();

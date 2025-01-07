@@ -5,7 +5,7 @@
 #include <QPainterPath>
 #include <QStyleOption>
 
-#include "uvthememanager.hpp"
+#include "althememanager.hpp"
 
 /**
  * @brief \class CUVMainWindowStyle
@@ -13,7 +13,7 @@
  */
 CUVMainWindowStyle::CUVMainWindowStyle(QStyle* style) {
 	m_themeMode = UVTheme->getThemeMode();
-	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const UVThemeType::ThemeMode& mode) { m_themeMode = mode; });
+	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { m_themeMode = mode; });
 }
 
 CUVMainWindowStyle::~CUVMainWindowStyle() = default;
@@ -28,7 +28,7 @@ void CUVMainWindowStyle::drawPrimitive(const PrimitiveElement pe, const QStyleOp
 				p->save();
 				p->setRenderHint(QPainter::Antialiasing);
 				p->setPen(Qt::NoPen);
-				const QColor brushColor = opt->state.testFlag(QStyle::State_Sunken) ? UVThemeColor(m_themeMode, UVThemeType::BasicHoverAlpha) : opt->state.testFlag(QStyle::State_MouseOver) ? UVThemeColor(m_themeMode, UVThemeType::BasicPressAlpha) : Qt::transparent;
+				const QColor brushColor = opt->state.testFlag(QStyle::State_Sunken) ? UVThemeColor(m_themeMode, ALThemeType::BasicHoverAlpha) : opt->state.testFlag(QStyle::State_MouseOver) ? UVThemeColor(m_themeMode, ALThemeType::BasicPressAlpha) : Qt::transparent;
 				p->setBrush(brushColor);
 				p->drawRect(opt->rect);
 				p->restore();
@@ -39,7 +39,7 @@ void CUVMainWindowStyle::drawPrimitive(const PrimitiveElement pe, const QStyleOp
 			p->save();
 			p->setRenderHint(QPainter::Antialiasing);
 			p->setPen(Qt::NoPen);
-			p->setBrush(UVThemeColor(m_themeMode, opt->state.testFlag(QStyle::State_Enabled) ? UVThemeType::BasicText : UVThemeType::BasicTextDisable));
+			p->setBrush(UVThemeColor(m_themeMode, opt->state.testFlag(QStyle::State_Enabled) ? ALThemeType::BasicText : ALThemeType::BasicTextDisable));
 			// 左三角
 			constexpr int sideLength = 10;
 			const QRect indicatorRect = opt->rect;
@@ -56,7 +56,7 @@ void CUVMainWindowStyle::drawPrimitive(const PrimitiveElement pe, const QStyleOp
 			p->save();
 			p->setRenderHint(QPainter::Antialiasing);
 			p->setPen(Qt::NoPen);
-			p->setBrush(UVThemeColor(m_themeMode, opt->state.testFlag(QStyle::State_Enabled) ? UVThemeType::BasicText : UVThemeType::BasicTextDisable));
+			p->setBrush(UVThemeColor(m_themeMode, opt->state.testFlag(QStyle::State_Enabled) ? ALThemeType::BasicText : ALThemeType::BasicTextDisable));
 			// 右三角
 			constexpr int sideLength = 10;
 			const QRect indicatorRect = opt->rect;
@@ -75,7 +75,7 @@ void CUVMainWindowStyle::drawPrimitive(const PrimitiveElement pe, const QStyleOp
 		case QStyle::PE_IndicatorDockWidgetResizeHandle: {
 			p->save();
 			p->setRenderHint(QPainter::Antialiasing);
-			p->setPen(QPen(UVThemeColor(m_themeMode, UVThemeType::BasicBaseLine), 2));
+			p->setPen(QPen(UVThemeColor(m_themeMode, ALThemeType::BasicBaseLine), 2));
 			const QRect handleRect = opt->rect;
 			if (opt->state.testFlag(QStyle::State_Horizontal)) {
 				p->drawLine(handleRect.x(), handleRect.center().y(), handleRect.right(), handleRect.center().y());
@@ -101,7 +101,7 @@ void CUVMainWindowStyle::drawControl(const ControlElement element, const QStyleO
 			p->save();
 			p->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);
 			p->setPen(Qt::NoPen);
-			p->setBrush(UVThemeColor(m_themeMode, UVThemeType::BasicHoverAlpha));
+			p->setBrush(UVThemeColor(m_themeMode, ALThemeType::BasicHoverAlpha));
 			p->drawRect(rubberRandRect);
 			p->restore();
 			return;
@@ -115,22 +115,22 @@ void CUVMainWindowStyle::drawControl(const ControlElement element, const QStyleO
 				p->setPen(Qt::NoPen);
 				if (topt->state.testFlag(QStyle::State_Selected)) {
 					if (topt->state.testFlag(QStyle::State_Sunken)) {
-						p->setBrush(UVThemeColor(m_themeMode, UVThemeType::BasicHoverAlpha));
+						p->setBrush(UVThemeColor(m_themeMode, ALThemeType::BasicHoverAlpha));
 					} else {
-						p->setBrush(UVThemeColor(m_themeMode, topt->state.testFlag(QStyle::State_MouseOver) ? UVThemeType::BasicSelectedHoverAlpha : UVThemeType::BasicSelectedAlpha));
+						p->setBrush(UVThemeColor(m_themeMode, topt->state.testFlag(QStyle::State_MouseOver) ? ALThemeType::BasicSelectedHoverAlpha : ALThemeType::BasicSelectedAlpha));
 					}
 				} else {
 					if (topt->state.testFlag(QStyle::State_Sunken)) {
-						p->setBrush(UVThemeColor(m_themeMode, UVThemeType::BasicSelectedHoverAlpha));
+						p->setBrush(UVThemeColor(m_themeMode, ALThemeType::BasicSelectedHoverAlpha));
 					} else if (topt->state.testFlag(QStyle::State_MouseOver)) {
-						p->setBrush(UVThemeColor(m_themeMode, UVThemeType::BasicHoverAlpha));
+						p->setBrush(UVThemeColor(m_themeMode, ALThemeType::BasicHoverAlpha));
 					}
 				}
 				p->drawRect(tabRect);
 				// 间隔符绘制
 				if (topt->position != QStyleOptionTab::End) {
 					p->setPen(Qt::NoPen);
-					p->setBrush(UVThemeColor(m_themeMode, UVThemeType::PrimaryNormal));
+					p->setBrush(UVThemeColor(m_themeMode, ALThemeType::PrimaryNormal));
 					p->drawRoundedRect(QRectF(tabRect.right() - 3, tabRect.y() + 7, 3, tabRect.height() - 14), 2, 2);
 				}
 				p->restore();
@@ -142,7 +142,7 @@ void CUVMainWindowStyle::drawControl(const ControlElement element, const QStyleO
 			if (const auto topt = qstyleoption_cast<const QStyleOptionTab*>(opt)) {
 				p->save();
 				p->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);
-				p->setPen(UVThemeColor(m_themeMode, UVThemeType::BasicText));
+				p->setPen(UVThemeColor(m_themeMode, ALThemeType::BasicText));
 				p->drawText(topt->rect, Qt::AlignCenter, topt->text);
 				p->restore();
 			}

@@ -2,7 +2,7 @@
 
 #include <QColor>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class QPainter;
 class CUVCircularProgressDelegate;
@@ -31,7 +31,7 @@ protected:
 	CUVCircularProgressDelegate* delegate{ nullptr };
 
 private:
-	UVProgressType::ProgressType progressType{ UVProgressType::DeterminateProgress };
+	ALProgressType::ProgressType progressType{ ALProgressType::DeterminateProgress };
 	QColor color{};
 	QColor disabledColor{};
 	QColor textColor{};

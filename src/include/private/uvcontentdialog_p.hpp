@@ -3,26 +3,26 @@
 #include <QObject>
 
 class QVBoxLayout;
-class CUVPushButton;
-class CUVContentDialog;
+class CALPushButton;
+class CALContentDialog;
 
-class CUVContentDialogPrivate final : public QObject {
+class CALContentDialogPrivate final : public QObject {
 	Q_OBJECT
-	Q_DISABLE_COPY(CUVContentDialogPrivate)
-	Q_DECLARE_PUBLIC(CUVContentDialog)
+	Q_DISABLE_COPY(CALContentDialogPrivate)
+	Q_DECLARE_PUBLIC(CALContentDialog)
 
 public:
-	explicit CUVContentDialogPrivate(CUVContentDialog* q, QObject* parent = nullptr);
-	~CUVContentDialogPrivate() override;
+	explicit CALContentDialogPrivate(CALContentDialog* q, QObject* parent = nullptr);
+	~CALContentDialogPrivate() override;
 
 protected:
-	CUVContentDialog* const q_ptr{ nullptr };
+	CALContentDialog* const q_ptr{ nullptr };
 
 private:
 	/// interface
 	QWidget* centerWidget{ nullptr };
 	QWidget* buttonWidget{ nullptr };
 	QVBoxLayout* mainVLayout{ nullptr };
-	CUVPushButton* closeButton{ nullptr };
-	CUVPushButton* cancelButton{ nullptr };
+	CALPushButton* closeButton{ nullptr };
+	CALPushButton* cancelButton{ nullptr };
 };

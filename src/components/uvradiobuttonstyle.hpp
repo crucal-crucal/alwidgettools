@@ -2,7 +2,7 @@
 
 #include <QProxyStyle>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class CUVRadioButtonStyle final : public QProxyStyle {
 	Q_OBJECT
@@ -15,5 +15,5 @@ public:
 	int pixelMetric(PixelMetric metric, const QStyleOption* option, const QWidget* widget) const override;
 
 private:
-	UVThemeType::ThemeMode m_themeMode{};
+	ALThemeType::ThemeMode m_themeMode{};
 };

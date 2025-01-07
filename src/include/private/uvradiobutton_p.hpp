@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class CUVRadioButton;
 class CUVRadioButtonStyle;
@@ -14,12 +14,12 @@ public:
 	explicit CUVRadioButtonPrivate(CUVRadioButton* q, QObject* parent = nullptr);
 	~CUVRadioButtonPrivate() override;
 
-	Q_SLOT void slotThemeModeChanged(const UVThemeType::ThemeMode& mode);
+	Q_SLOT void slotThemeModeChanged(const ALThemeType::ThemeMode& mode);
 
 protected:
 	CUVRadioButton* const q_ptr{ nullptr };
 
 private:
-	UVThemeType::ThemeMode themeMode{};
+	ALThemeType::ThemeMode themeMode{};
 	CUVRadioButtonStyle* style{ nullptr };
 };

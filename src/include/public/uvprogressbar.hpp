@@ -2,11 +2,11 @@
 
 #include <QProgressBar>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class CUVProgressBarPrivate;
 
-class CUVWIDGETTOOLS_EXPORT CUVProgressBar : public QProgressBar {
+class CALWIDGETTOOLS_EXPORT CUVProgressBar : public QProgressBar {
 	Q_OBJECT
 	Q_DECLARE_PRIVATE(CUVProgressBar)
 	Q_PROPERTY(QColor progressColor WRITE setProgressColor READ getProgressColor)
@@ -20,15 +20,15 @@ public:
 	 * @brief 设置进度条类型
 	 * @param type \see \enum UVProgressType::ProgressType
 	 */
-	void setProgressType(const UVProgressType::ProgressType& type);
-	[[nodiscard]] UVProgressType::ProgressType getProgressType() const;
+	void setProgressType(const ALProgressType::ProgressType& type);
+	[[nodiscard]] ALProgressType::ProgressType getProgressType() const;
 
 	/**
 	 * @brief 设置文本显示位置
 	 * @param position \see \enum UVProgressType::ProgressTextPosition
 	 */
-	void setProgressTextPosition(const UVProgressType::ProgressTextPosition& position);
-	[[nodiscard]] UVProgressType::ProgressTextPosition getProgressTextPosition() const;
+	void setProgressTextPosition(const ALProgressType::ProgressTextPosition& position);
+	[[nodiscard]] ALProgressType::ProgressTextPosition getProgressTextPosition() const;
 
 	/**
 	 * @brief 设置已滑过的进度颜色

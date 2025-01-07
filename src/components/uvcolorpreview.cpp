@@ -2,7 +2,7 @@
 
 #include <QPainter>
 
-#include "uvthememanager.hpp"
+#include "althememanager.hpp"
 
 /**
  * @brief \class CUVColorPreview
@@ -23,11 +23,11 @@ QColor CUVColorPreview::getBaseColor() const {
 	return m_baseColor;
 }
 
-void CUVColorPreview::setThemeMode(const UVThemeType::ThemeMode& mode) {
+void CUVColorPreview::setThemeMode(const ALThemeType::ThemeMode& mode) {
 	m_themeMode = mode;
 }
 
-UVThemeType::ThemeMode CUVColorPreview::getThemeMode() const {
+ALThemeType::ThemeMode CUVColorPreview::getThemeMode() const {
 	return m_themeMode;
 }
 
@@ -40,7 +40,7 @@ void CUVColorPreview::paintEvent(QPaintEvent* event) {
 	painter.setRenderHint(QPainter::Antialiasing);
 	QRect viewRect = rect();
 	viewRect.adjust(penWidth, penWidth, -penWidth, -penWidth);
-	painter.setPen(QPen(UVThemeColor(m_themeMode, UVThemeType::BasicBorder), penWidth));
+	painter.setPen(QPen(UVThemeColor(m_themeMode, ALThemeType::BasicBorder), penWidth));
 	painter.setBrush(m_baseColor);
 	painter.drawRoundedRect(viewRect, borderRadius, borderRadius);
 	painter.restore();

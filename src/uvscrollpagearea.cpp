@@ -3,7 +3,7 @@
 #include <QPainter>
 
 #include "uvscrollpagearea_p.hpp"
-#include "uvthememanager.hpp"
+#include "althememanager.hpp"
 
 /**
  * @brief \class CUVScrollPageAreaPrivate
@@ -27,7 +27,7 @@ CUVScrollPageArea::CUVScrollPageArea(QWidget* parent): QWidget(parent), d_ptr(ne
 	d->borderRadius = 6;
 	setFixedHeight(75);
 	d->themeMode = UVTheme->getThemeMode();
-	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const UVThemeType::ThemeMode& mode) { d->themeMode = mode; });
+	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { d->themeMode = mode; });
 }
 
 CUVScrollPageArea::~CUVScrollPageArea() = default;
@@ -47,8 +47,8 @@ void CUVScrollPageArea::paintEvent(QPaintEvent* event) {
 	QPainter painter(this);
 	painter.save();
 	painter.setRenderHint(QPainter::Antialiasing);
-	painter.setPen(UVThemeColor(d->themeMode, UVThemeType::BasicBorder));
-	painter.setBrush(UVThemeColor(d->themeMode, UVThemeType::BasicBaseAlpha));
+	painter.setPen(UVThemeColor(d->themeMode, ALThemeType::BasicBorder));
+	painter.setBrush(UVThemeColor(d->themeMode, ALThemeType::BasicBaseAlpha));
 	const QRect foregroundRect(1, 1, width() - 2, height() - 2);
 	painter.drawRoundedRect(foregroundRect, d->borderRadius, d->borderRadius);
 	painter.restore();

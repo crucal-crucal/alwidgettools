@@ -4,7 +4,7 @@
 #include <QPalette>
 
 #include "uvtext_p.hpp"
-#include "uvthememanager.hpp"
+#include "althememanager.hpp"
 
 /**
  * @brief \class CUVTextPrivate
@@ -17,12 +17,12 @@ CUVTextPrivate::CUVTextPrivate(CUVText* q, QObject* parent): QObject(parent), q_
 
 CUVTextPrivate::~CUVTextPrivate() = default;
 
-void CUVTextPrivate::slotThemeChanged(const UVThemeType::ThemeMode& mode) {
+void CUVTextPrivate::slotThemeChanged(const ALThemeType::ThemeMode& mode) {
 	Q_Q(CUVText);
 
 	themeMode = mode;
 	QPalette palette = q->palette();
-	palette.setColor(QPalette::WindowText, themeMode == UVThemeType::Light ? Qt::black : Qt::white);
+	palette.setColor(QPalette::WindowText, themeMode == ALThemeType::Light ? Qt::black : Qt::white);
 	q->setPalette(palette);
 }
 
@@ -86,44 +86,44 @@ int CUVText::getTextPointSize() const {
 	return this->font().pointSize();
 }
 
-void CUVText::setTextStyle(const UVTextType::TextStyle& textStyle) {
+void CUVText::setTextStyle(const ALTextType::TextStyle& textStyle) {
 	Q_D(CUVText);
 
 	QFont textFont = font();
 	d->textStyle = textStyle;
 	switch (textStyle) {
-		case UVTextType::NoStyle: {
+		case ALTextType::NoStyle: {
 			break;
 		}
-		case UVTextType::Caption: {
+		case ALTextType::Caption: {
 			textFont.setPixelSize(12);
 			break;
 		}
-		case UVTextType::Body: {
+		case ALTextType::Body: {
 			textFont.setPixelSize(13);
 			break;
 		}
-		case UVTextType::BodyStrong: {
+		case ALTextType::BodyStrong: {
 			textFont.setPixelSize(13);
 			textFont.setWeight(QFont::DemiBold);
 			break;
 		}
-		case UVTextType::Subtitle: {
+		case ALTextType::Subtitle: {
 			textFont.setPixelSize(20);
 			textFont.setWeight(QFont::DemiBold);
 			break;
 		}
-		case UVTextType::Title: {
+		case ALTextType::Title: {
 			textFont.setPixelSize(28);
 			textFont.setWeight(QFont::DemiBold);
 			break;
 		}
-		case UVTextType::TitleLarge: {
+		case ALTextType::TitleLarge: {
 			textFont.setPixelSize(40);
 			textFont.setWeight(QFont::DemiBold);
 			break;
 		}
-		case UVTextType::Display: {
+		case ALTextType::Display: {
 			textFont.setPixelSize(48);
 			textFont.setWeight(QFont::DemiBold);
 			break;
@@ -132,7 +132,7 @@ void CUVText::setTextStyle(const UVTextType::TextStyle& textStyle) {
 	setFont(textFont);
 }
 
-UVTextType::TextStyle CUVText::getTextStyle() const {
+ALTextType::TextStyle CUVText::getTextStyle() const {
 	return d_func()->textStyle;
 }
 
@@ -143,7 +143,7 @@ void CUVText::paintEvent(QPaintEvent* event) {
 		QPainter painter(this);
 		painter.save();
 		painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);
-		painter.setPen(UVThemeColor(d->themeMode, UVThemeType::BasicText));
+		painter.setPen(UVThemeColor(d->themeMode, ALThemeType::BasicText));
 		painter.drawText(rect(), this->alignment(), text());
 		painter.restore();
 	} else {

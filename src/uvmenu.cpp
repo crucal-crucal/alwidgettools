@@ -81,9 +81,9 @@ QAction* CUVMenu::addAction(const QString& text) {
 	return QMenu::addAction(text);
 }
 
-QAction* CUVMenu::addAction(const UVIcon::CUVAweSomeIcon& icon, const QString& text) {
+QAction* CUVMenu::addAction(const ALIcon::AweSomeIcon& icon, const QString& text) {
 	const auto action = new QAction(text, this);
-	if (icon != UVIcon::CUVAweSomeIcon::None) {
+	if (icon != ALIcon::AweSomeIcon::None) {
 		action->setProperty("CUVIconType", QChar(static_cast<unsigned short>(icon)));
 	}
 	QMenu::addAction(action);
@@ -94,7 +94,7 @@ QAction* CUVMenu::addAction(const QIcon& icon, const QString& text) {
 	return QMenu::addAction(icon, text);
 }
 
-QAction* CUVMenu::addAction(const UVIcon::CUVAweSomeIcon& icon, const QString& text, const QKeySequence& shortcut) {
+QAction* CUVMenu::addAction(const ALIcon::AweSomeIcon& icon, const QString& text, const QKeySequence& shortcut) {
 	const auto action = new QAction(text, this);
 	action->setProperty("CUVIconType", QChar(static_cast<unsigned short>(icon)));
 	action->setShortcut(shortcut);
@@ -110,7 +110,7 @@ QAction* CUVMenu::addAction(const QIcon& icon, const QString& text, const QKeySe
 	return action;
 }
 
-QAction* CUVMenu::addAction(const UVIcon::CUVAweSomeIcon& icon, const QString& text, const QObject* receiver, const char* member, const QKeySequence& shortcut) {
+QAction* CUVMenu::addAction(const ALIcon::AweSomeIcon& icon, const QString& text, const QObject* receiver, const char* member, const QKeySequence& shortcut) {
 	const auto action = new QAction(text, this);
 	action->setProperty("CUVIconType", QChar(static_cast<unsigned short>(icon)));
 	action->setShortcut(shortcut);

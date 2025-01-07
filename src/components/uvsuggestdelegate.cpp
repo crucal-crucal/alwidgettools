@@ -5,7 +5,7 @@
 
 #include "uvsuggestbox_p.hpp"
 #include "uvsuggestmodel.hpp"
-#include "uvthememanager.hpp"
+#include "althememanager.hpp"
 
 /**
  * @brief \class CUVSuggestDelegate
@@ -13,7 +13,7 @@
  */
 CUVSuggestDelegate::CUVSuggestDelegate(QObject* parent): QStyledItemDelegate(parent) {
 	themeMode = UVTheme->getThemeMode();
-	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const UVThemeType::ThemeMode& mode) { themeMode = mode; });
+	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { themeMode = mode; });
 }
 
 CUVSuggestDelegate::~CUVSuggestDelegate() = default;
@@ -35,17 +35,17 @@ void CUVSuggestDelegate::paint(QPainter* painter, const QStyleOptionViewItem& op
 	optionRect.adjust(margin * 2, margin, -margin * 2, -margin);
 	path.addRoundedRect(optionRect, 8, 8);
 	if (option.state.testFlag(QStyle::State_Selected)) { // 选中
-		painter->fillPath(path, option.state.testFlag(QStyle::State_MouseOver) ? UVThemeColor(themeMode, UVThemeType::BasicSelectedHoverAlpha) : UVThemeColor(themeMode, UVThemeType::BasicSelectedAlpha));
+		painter->fillPath(path, option.state.testFlag(QStyle::State_MouseOver) ? UVThemeColor(themeMode, ALThemeType::BasicSelectedHoverAlpha) : UVThemeColor(themeMode, ALThemeType::BasicSelectedAlpha));
 	} else {
 		if (option.state.testFlag(QStyle::State_MouseOver)) { // 覆盖时颜色
-			painter->fillPath(path, UVThemeColor(themeMode, UVThemeType::BasicHoverAlpha));
+			painter->fillPath(path, UVThemeColor(themeMode, ALThemeType::BasicHoverAlpha));
 		}
 	}
 	/// 文字
-	painter->setPen(UVThemeColor(themeMode, UVThemeType::BasicText));
+	painter->setPen(UVThemeColor(themeMode, ALThemeType::BasicText));
 	painter->drawText(option.rect.x() + 57, option.rect.y() + 25, suggest->getSuggestText());
 	/// 图标
-	if (suggest->getAwesomeIcon() != UVIcon::CUVAweSomeIcon::None) {
+	if (suggest->getAwesomeIcon() != ALIcon::AweSomeIcon::None) {
 		auto iconFont = QFont("CUVAwesome");
 		iconFont.setPixelSize(17);
 		painter->setFont(iconFont);

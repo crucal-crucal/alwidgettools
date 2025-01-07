@@ -1,4 +1,4 @@
-﻿#include "uvawesometoolbutton.hpp"
+﻿#include "alawesometoolbutton.hpp"
 
 #include <QApplication>
 #include <QEvent>
@@ -76,7 +76,7 @@ void CUVAwesomeToolButton::setMenu(CUVMenu* menu) {
 	menu->installEventFilter(this);
 }
 
-void CUVAwesomeToolButton::setAweSomeIcon(const UVIcon::CUVAweSomeIcon& icon) {
+void CUVAwesomeToolButton::setAweSomeIcon(const ALIcon::AweSomeIcon& icon) {
 	setProperty("CUVIconType", QChar(static_cast<unsigned short>(icon)));
 	constexpr int pixelSize = 1;
 	auto iconFont = QFont("CUVAwesome");

@@ -2,10 +2,10 @@
 
 #include <QHBoxLayout>
 
-#include "uvawesometoolbutton.hpp"
+#include "alawesometoolbutton.hpp"
 #include "uvmenu.hpp"
 #include "uvtext.hpp"
-#include "uvthememanager.hpp"
+#include "althememanager.hpp"
 
 E_BasePage::E_BasePage(QWidget* parent): CUVScrollPage(parent) {
 	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=]() {
@@ -30,10 +30,10 @@ void E_BasePage::createCustomWidget(const QString& desText) {
 	documentationButton->setIsTransparent(false);
 	documentationButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	documentationButton->setText(tr("Documentation"));
-	documentationButton->setAweSomeIcon(UVIcon::CUVAweSomeIcon::FileDoc);
+	documentationButton->setAweSomeIcon(ALIcon::AweSomeIcon::FileDoc);
 	const auto documentationMenu = new CUVMenu(this);
-	documentationMenu->addAction(UVIcon::CUVAweSomeIcon::CardsBlank, tr("CardsBlank"));
-	documentationMenu->addAction(UVIcon::CUVAweSomeIcon::EarthAmericas, tr("EarthAmericas"));
+	documentationMenu->addAction(ALIcon::AweSomeIcon::CardsBlank, tr("CardsBlank"));
+	documentationMenu->addAction(ALIcon::AweSomeIcon::EarthAmericas, tr("EarthAmericas"));
 	documentationButton->setMenu(documentationMenu);
 
 	const auto sourceButton = new CUVAwesomeToolButton(this);
@@ -41,17 +41,17 @@ void E_BasePage::createCustomWidget(const QString& desText) {
 	sourceButton->setIsTransparent(false);
 	sourceButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	sourceButton->setText(tr("Source"));
-	sourceButton->setAweSomeIcon(UVIcon::CUVAweSomeIcon::NfcSymbol);
+	sourceButton->setAweSomeIcon(ALIcon::AweSomeIcon::NfcSymbol);
 	const auto sourceMenu = new CUVMenu(this);
-	sourceMenu->addAction(UVIcon::CUVAweSomeIcon::FireBurner, tr("FireBurner"));
-	sourceMenu->addAction(UVIcon::CUVAweSomeIcon::Galaxy, tr("Galaxy"));
+	sourceMenu->addAction(ALIcon::AweSomeIcon::FireBurner, tr("FireBurner"));
+	sourceMenu->addAction(ALIcon::AweSomeIcon::Galaxy, tr("Galaxy"));
 	sourceButton->setMenu(sourceMenu);
 
 	const auto themeButton = new CUVAwesomeToolButton(this);
 	themeButton->setFixedSize(35, 35);
 	themeButton->setIsTransparent(false);
-	themeButton->setAweSomeIcon(UVIcon::CUVAweSomeIcon::MoonStars);
-	connect(themeButton, &CUVAwesomeToolButton::clicked, this, [=]() { UVTheme->setThemeMode(UVTheme->getThemeMode() == UVThemeType::Light ? UVThemeType::Dark : UVThemeType::Light); });
+	themeButton->setAweSomeIcon(ALIcon::AweSomeIcon::MoonStars);
+	connect(themeButton, &CUVAwesomeToolButton::clicked, this, [=]() { UVTheme->setThemeMode(UVTheme->getThemeMode() == ALThemeType::Light ? ALThemeType::Dark : ALThemeType::Light); });
 
 	const auto buttonLayout = new QHBoxLayout;
 	buttonLayout->addWidget(documentationButton);

@@ -2,11 +2,11 @@
 
 #include <QSlider>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class CUVSliderPrivate;
 
-class CUVWIDGETTOOLS_EXPORT CUVSlider : public QSlider {
+class CALWIDGETTOOLS_EXPORT CUVSlider : public QSlider {
 	Q_OBJECT
 	Q_DECLARE_PRIVATE(CUVSlider)
 

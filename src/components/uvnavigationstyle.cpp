@@ -7,7 +7,7 @@
 #include "uvnavigationmodel.hpp"
 #include "uvnavigationnode.hpp"
 #include "uvnavigationview.hpp"
-#include "uvthememanager.hpp"
+#include "althememanager.hpp"
 
 /**
  * @brief \class CUVNavigationStyle
@@ -58,7 +58,7 @@ CUVNavigationStyle::CUVNavigationStyle(QStyle* style) {
 	});
 
 	m_themeMode = UVTheme->getThemeMode();
-	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const UVThemeType::ThemeMode& mode) { m_themeMode = mode; });
+	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { m_themeMode = mode; });
 }
 
 CUVNavigationStyle::~CUVNavigationStyle() = default;
@@ -160,16 +160,16 @@ void CUVNavigationStyle::drawPrimitive(const PrimitiveElement pe, const QStyleOp
 				path.addRoundedRect(itemRect, 8, 8);
 				if (vopt->state.testFlag(QStyle::State_Selected)) {
 					if (index == m_pressIndex) { // 选中时点击
-						p->fillPath(path, UVThemeColor(m_themeMode, UVThemeType::BasicHoverAlpha));
+						p->fillPath(path, UVThemeColor(m_themeMode, ALThemeType::BasicHoverAlpha));
 					} else {
-						p->fillPath(path, UVThemeColor(m_themeMode, vopt->state.testFlag(QStyle::State_MouseOver) ? UVThemeType::BasicSelectedHoverAlpha : UVThemeType::BasicSelectedAlpha));
+						p->fillPath(path, UVThemeColor(m_themeMode, vopt->state.testFlag(QStyle::State_MouseOver) ? ALThemeType::BasicSelectedHoverAlpha : ALThemeType::BasicSelectedAlpha));
 					}
 				} else {
 					if (index == m_pressIndex) { // 未选中时点击
-						p->fillPath(path, UVThemeColor(m_themeMode, UVThemeType::BasicSelectedHoverAlpha));
+						p->fillPath(path, UVThemeColor(m_themeMode, ALThemeType::BasicSelectedHoverAlpha));
 					} else {
 						if (vopt->state.testFlag(QStyle::State_MouseOver)) { // 覆盖时颜色
-							p->fillPath(path, UVThemeColor(m_themeMode, UVThemeType::BasicHoverAlpha));
+							p->fillPath(path, UVThemeColor(m_themeMode, ALThemeType::BasicHoverAlpha));
 						}
 					}
 				}
@@ -209,19 +209,19 @@ void CUVNavigationStyle::drawControl(const ControlElement element, const QStyleO
 				// 选中特效
 				if (m_isSelectedMarkDisplay && (node == model->getSelectedNode() || node == model->getSelectedExpandedNode())) {
 					p->setPen(Qt::NoPen);
-					p->setBrush(UVThemeColor(m_themeMode, UVThemeType::PrimaryNormal));
+					p->setBrush(UVThemeColor(m_themeMode, ALThemeType::PrimaryNormal));
 					p->drawRoundedRect(QRectF(itemRect.x() + 3, itemRect.y() + m_selectMarkTop, 3, itemRect.height() - m_selectMarkTop - m_selectMarkBottom), 3, 3);
 				}
 
 				if (node == m_lastSelectedNode) {
 					p->setPen(Qt::NoPen);
-					p->setBrush(UVThemeColor(m_themeMode, UVThemeType::PrimaryNormal));
+					p->setBrush(UVThemeColor(m_themeMode, ALThemeType::PrimaryNormal));
 					p->drawRoundedRect(QRectF(itemRect.x() + 3, itemRect.y() + m_lastSelectMarkTop, 3, itemRect.height() - m_lastSelectMarkTop - m_lastSelectMarkBottom), 3, 3);
 				}
 
 				// 图标绘制
-				p->setPen(UVThemeColor(m_themeMode, vopt->index == m_pressIndex ? UVThemeType::BasicTextPress : UVThemeType::BasicText));
-				if (node->getAwesomeIcon() != UVIcon::CUVAweSomeIcon::None) {
+				p->setPen(UVThemeColor(m_themeMode, vopt->index == m_pressIndex ? ALThemeType::BasicTextPress : ALThemeType::BasicText));
+				if (node->getAwesomeIcon() != ALIcon::AweSomeIcon::None) {
 					auto iconFont = QFont("CUVAwesome");
 					iconFont.setPixelSize(17);
 					p->setFont(iconFont);
@@ -230,8 +230,8 @@ void CUVNavigationStyle::drawControl(const ControlElement element, const QStyleO
 
 				const int viewWidth = w->width();
 				// 文字绘制
-				p->setPen(vopt->index == m_pressIndex ? UVThemeColor(m_themeMode, UVThemeType::BasicTextPress) : UVThemeColor(m_themeMode, UVThemeType::BasicText));
-				const int leftPadding = node->getAwesomeIcon() != UVIcon::CUVAweSomeIcon::None ? m_iconAreaWidth : m_leftPadding;
+				p->setPen(vopt->index == m_pressIndex ? UVThemeColor(m_themeMode, ALThemeType::BasicTextPress) : UVThemeColor(m_themeMode, ALThemeType::BasicText));
+				const int leftPadding = node->getAwesomeIcon() != ALIcon::AweSomeIcon::None ? m_iconAreaWidth : m_leftPadding;
 				const auto textRect = QRect(itemRect.x() + leftPadding, itemRect.y(), itemRect.width() - m_textRightSapcing - m_indicatorIconAreaWidth - leftPadding, itemRect.height());
 				const QString text = p->fontMetrics().elidedText(node->getNodeTitle(), Qt::ElideRight, textRect.width());
 				p->drawText(textRect, Qt::AlignVCenter | Qt::AlignLeft, text);
@@ -248,12 +248,12 @@ void CUVNavigationStyle::drawControl(const ControlElement element, const QStyleO
 							p->translate(expandIconRect.x() + expandIconRect.width() / 2.0, expandIconRect.y() + expandIconRect.height() / 2.0);
 							p->rotate(node == m_expandAnimationTargetNode ? m_rotate : node->getIsExpanded() ? -180 : 0);
 							p->translate(-expandIconRect.x() - expandIconRect.width() / 2.0 + 1, -expandIconRect.y() - expandIconRect.height() / 2.0);
-							p->drawText(expandIconRect, Qt::AlignVCenter, QChar(static_cast<unsigned short>(UVIcon::CUVAweSomeIcon::AngleDown)));
+							p->drawText(expandIconRect, Qt::AlignVCenter, QChar(static_cast<unsigned short>(ALIcon::AweSomeIcon::AngleDown)));
 						}
 
 						if (node->getIsChildHasKeyPoints()) {
 							p->setPen(Qt::NoPen);
-							p->setBrush(UVThemeColor(m_themeMode, UVThemeType::PrimaryNormal));
+							p->setBrush(UVThemeColor(m_themeMode, ALThemeType::PrimaryNormal));
 							p->drawEllipse(QPoint(itemRect.right() - 17, itemRect.y() + 12), 3, 3);
 						}
 					} else {
@@ -262,7 +262,7 @@ void CUVNavigationStyle::drawControl(const ControlElement element, const QStyleO
 							p->setPen(Qt::NoPen);
 							p->setBrush(Qt::white);
 							p->drawEllipse(QPoint(itemRect.right() - 26, itemRect.y() + itemRect.height() / 2), 10, 10);
-							p->setBrush(UVThemeColor(m_themeMode, UVThemeType::StatusDanger));
+							p->setBrush(UVThemeColor(m_themeMode, ALThemeType::StatusDanger));
 							p->drawEllipse(QPoint(itemRect.right() - 26, itemRect.y() + itemRect.height() / 2), 9, 9);
 							p->setPen(QPen(Qt::white, 2));
 							QFont font = p->font();

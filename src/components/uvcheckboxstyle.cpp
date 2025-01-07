@@ -3,7 +3,7 @@
 #include <QPainter>
 #include <QStyleOptionButton>
 
-#include "uvthememanager.hpp"
+#include "althememanager.hpp"
 
 /**
  * @brief \class CUVCheckBoxStyle
@@ -13,7 +13,7 @@ CUVCheckBoxStyle::CUVCheckBoxStyle(QStyle* style) {
 	m_borderRadius = 6;
 	m_checkIndicatorWidth = 21;
 	m_themeMode = UVTheme->getThemeMode();
-	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const UVThemeType::ThemeMode& mode) { m_themeMode = mode; });
+	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { m_themeMode = mode; });
 }
 
 CUVCheckBoxStyle::~CUVCheckBoxStyle() = default;
@@ -33,33 +33,33 @@ void CUVCheckBoxStyle::drawControl(const ControlElement element, const QStyleOpt
 				if (bopt->state.testFlag(QStyle::State_On) || bopt->state.testFlag(QStyle::State_NoChange)) {
 					p->setPen(Qt::NoPen);
 					if (bopt->state.testFlag(QStyle::State_Sunken)) {
-						p->setBrush(UVThemeColor(m_themeMode, UVThemeType::PrimaryNormal));
+						p->setBrush(UVThemeColor(m_themeMode, ALThemeType::PrimaryNormal));
 					} else {
-						p->setBrush(UVThemeColor(m_themeMode, bopt->state.testFlag(QStyle::State_MouseOver) ? UVThemeType::PrimaryHover : UVThemeType::PrimaryNormal));
+						p->setBrush(UVThemeColor(m_themeMode, bopt->state.testFlag(QStyle::State_MouseOver) ? ALThemeType::PrimaryHover : ALThemeType::PrimaryNormal));
 					}
 				} else {
 					if (bopt->state.testFlag(QStyle::State_Sunken)) {
-						p->setBrush(UVThemeColor(m_themeMode, UVThemeType::BasicBorderDeep));
+						p->setBrush(UVThemeColor(m_themeMode, ALThemeType::BasicBorderDeep));
 					} else {
-						p->setPen(UVThemeColor(m_themeMode, UVThemeType::BasicBorderDeep));
-						p->setBrush(UVThemeColor(m_themeMode, bopt->state.testFlag(QStyle::State_MouseOver) ? UVThemeType::BasicHover : UVThemeType::BasicBase));
+						p->setPen(UVThemeColor(m_themeMode, ALThemeType::BasicBorderDeep));
+						p->setBrush(UVThemeColor(m_themeMode, bopt->state.testFlag(QStyle::State_MouseOver) ? ALThemeType::BasicHover : ALThemeType::BasicBase));
 					}
 				}
 				p->drawRoundedRect(checkRect, m_borderRadius, m_borderRadius);
 				// 图标绘制
-				p->setPen(UVThemeColor(m_themeMode, UVThemeType::BasicText));
+				p->setPen(UVThemeColor(m_themeMode, ALThemeType::BasicText));
 				if (bopt->state.testFlag(QStyle::State_On)) {
 					p->save();
 					QFont iconFont("CUVAwesome");
 					iconFont.setPixelSize(m_checkIndicatorWidth * 0.75); // NOLINT
 					p->setFont(iconFont);
-					p->drawText(checkRect, Qt::AlignCenter, QChar(static_cast<unsigned short>(UVIcon::CUVAweSomeIcon::Check)));
+					p->drawText(checkRect, Qt::AlignCenter, QChar(static_cast<unsigned short>(ALIcon::AweSomeIcon::Check)));
 					p->restore();
 				} else if (bopt->state.testFlag(QStyle::State_NoChange)) {
 					p->drawLine(checkRect.x() + 3, checkRect.center().y(), checkRect.right() - 3, checkRect.center().y());
 				}
 				// 文字绘制
-				p->setPen(UVThemeColor(m_themeMode, isEnable ? UVThemeType::BasicText : UVThemeType::BasicTextDisable));
+				p->setPen(UVThemeColor(m_themeMode, isEnable ? ALThemeType::BasicText : ALThemeType::BasicTextDisable));
 				const QRect textRect(checkRect.right() + 10, checkBoxRect.y(), checkBoxRect.width(), checkBoxRect.height());
 				p->drawText(textRect, Qt::AlignLeft | Qt::AlignVCenter, bopt->text);
 				p->restore();

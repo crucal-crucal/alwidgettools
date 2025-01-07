@@ -1,4 +1,4 @@
-﻿#include "uvappbar.hpp"
+﻿#include "alappbar.hpp"
 
 #ifdef Q_OS_WIN
 #include <Windows.h>
@@ -16,13 +16,13 @@
 #include <QVBoxLayout>
 
 #include "uvappbar_p.hpp"
-#include "uvapplication.hpp"
-#include "uvawesometoolbutton.hpp"
+#include "alapplication.hpp"
+#include "alawesometoolbutton.hpp"
 #include "uveventbus.hpp"
 #include "uviconbutton.hpp"
 #include "uvnavigationbar.hpp"
 #include "uvtext.hpp"
-#include "uvthememanager.hpp"
+#include "althememanager.hpp"
 #include "uvwinshadowhelper.hpp"
 
 /**
@@ -31,7 +31,7 @@
  * @param q pointer to the public class
  * @param parent pointer to the parent class
  */
-CUVAppBarPrivate::CUVAppBarPrivate(CUVAppBar* q, QObject* parent): QObject(parent), q_ptr(q) {
+CUVAppBarPrivate::CUVAppBarPrivate(CALAppBar* q, QObject* parent): QObject(parent), q_ptr(q) {
 }
 
 CUVAppBarPrivate::~CUVAppBarPrivate() = default;
@@ -41,13 +41,13 @@ void CUVAppBarPrivate::slotMinButtonClicked() {
 }
 
 void CUVAppBarPrivate::slotMaxButtonClicked() {
-	Q_Q(CUVAppBar);
+	Q_Q(CALAppBar);
 
 	q->window()->isMaximized() ? q->window()->showNormal() : q->window()->showMaximized();
 }
 
 void CUVAppBarPrivate::slotCloseButtonClicked() {
-	Q_Q(CUVAppBar);
+	Q_Q(CALAppBar);
 
 	isDefaultClosed ? q->window()->close() : Q_EMIT q->sigCloseButtonClicked();
 }
@@ -68,17 +68,17 @@ void CUVAppBarPrivate::slotStayTopButtonClicked() const {
 	stayTopButton->update();
 }
 
-void CUVAppBarPrivate::slotThemeModeChanged(const UVThemeType::ThemeMode& mode) const {
-	themeChangeButton->setAweSomeIcon(mode == UVThemeType::Light ? UVIcon::CUVAweSomeIcon::MoonStars : UVIcon::CUVAweSomeIcon::SunBright);
-	themeChangeButton->setToolTip(mode == UVThemeType::Light ? tr("Switch to dark theme") : tr("Switch to light theme"));
+void CUVAppBarPrivate::slotThemeModeChanged(const ALThemeType::ThemeMode& mode) const {
+	themeChangeButton->setAweSomeIcon(mode == ALThemeType::Light ? ALIcon::AweSomeIcon::MoonStars : ALIcon::AweSomeIcon::SunBright);
+	themeChangeButton->setToolTip(mode == ALThemeType::Light ? tr("Switch to dark theme") : tr("Switch to light theme"));
 }
 
 void CUVAppBarPrivate::changeMaxButtonAwesome(const bool isMaximized) const {
-	maxButton->setAweSomeIcon(isMaximized ? UVIcon::CUVAweSomeIcon::WindowRestore : UVIcon::CUVAweSomeIcon::Square);
+	maxButton->setAweSomeIcon(isMaximized ? ALIcon::AweSomeIcon::WindowRestore : ALIcon::AweSomeIcon::Square);
 }
 
 void CUVAppBarPrivate::showSystemMenu(const QPoint& point) {
-	Q_Q(CUVAppBar);
+	Q_Q(CALAppBar);
 
 #ifdef Q_OS_WIN
 	const QScreen* screen = QApplication::screenAt(QCursor::pos());
@@ -116,7 +116,7 @@ void CUVAppBarPrivate::showSystemMenu(const QPoint& point) {
 }
 
 void CUVAppBarPrivate::updateCursor(const int edges) {
-	Q_Q(CUVAppBar);
+	Q_Q(CALAppBar);
 
 	switch (edges) {
 		case 0: {
@@ -148,7 +148,7 @@ void CUVAppBarPrivate::updateCursor(const int edges) {
 }
 
 bool CUVAppBarPrivate::containsCursorToItem(QWidget* item) { // NOLINT
-	Q_Q(CUVAppBar);
+	Q_Q(CALAppBar);
 
 	if (!item || !item->isVisible()) {
 		return false;
@@ -170,7 +170,7 @@ bool CUVAppBarPrivate::containsCursorToItem(QWidget* item) { // NOLINT
 }
 
 int CUVAppBarPrivate::calculateMinimumWidth() {
-	Q_Q(CUVAppBar);
+	Q_Q(CALAppBar);
 	int width = 0;
 	if (titleLabel->isVisible()) {
 		width += titleLabel->width();
@@ -181,7 +181,7 @@ int CUVAppBarPrivate::calculateMinimumWidth() {
 		width += 10;
 	}
 	bool isHasNavigationBar = false;
-	if (q->parentWidget()->findChild<CUVNavigationBar*>()) {
+	if (q->parentWidget()->findChild<CALNavigationBar*>()) {
 		isHasNavigationBar = true;
 		width += 305;
 	} else {
@@ -221,16 +221,16 @@ QVBoxLayout* CUVAppBarPrivate::createVLayout(QWidget* widget) const {
 	return vLayout;
 }
 
-QAbstractButton* CUVAppBarPrivate::getButtonByAppBarFlag(const UVAppBarType::ButtonFlag& flag) const {
+QAbstractButton* CUVAppBarPrivate::getButtonByAppBarFlag(const ALAppBarType::ButtonFlag& flag) const {
 	return buttonMap.value(flag, nullptr);
 }
 
 
 /**
- * @brief \class CUVAppBar
+ * @brief \class CALAppBar
  * @param parent pointer to the parent class
  */
-CUVAppBar::CUVAppBar(QWidget* parent): QWidget(parent), d_ptr(new CUVAppBarPrivate(this, this)) {
+CALAppBar::CALAppBar(QWidget* parent): QWidget(parent), d_ptr(new CUVAppBarPrivate(this, this)) {
 	Q_ASSERT(parent);
 
 	Q_D(CUVAppBar);
@@ -258,29 +258,29 @@ CUVAppBar::CUVAppBar(QWidget* parent): QWidget(parent), d_ptr(new CUVAppBarPriva
 	setStyleSheet("#CUVAppBar { background-color: transparent; }");
 	// 路由跳转
 	d->routeBackButton = new CUVAwesomeToolButton(this);
-	d->routeBackButton->setAweSomeIcon(UVIcon::CUVAweSomeIcon::ArrowLeft);
+	d->routeBackButton->setAweSomeIcon(ALIcon::AweSomeIcon::ArrowLeft);
 	d->routeBackButton->setFixedSize(d->appBarHeight, d->appBarHeight);
 	d->routeBackButton->setEnabled(false);
 	d->routeBackButton->setToolTip(tr("Back"));
-	connect(d->routeBackButton, &CUVAwesomeToolButton::clicked, this, &CUVAppBar::sigRouteBackButtonClicked);
+	connect(d->routeBackButton, &CUVAwesomeToolButton::clicked, this, &CALAppBar::sigRouteBackButtonClicked);
 
 	// 导航栏展开
 	d->navigationButton = new CUVAwesomeToolButton(this);
-	d->navigationButton->setAweSomeIcon(UVIcon::CUVAweSomeIcon::Bars);
+	d->navigationButton->setAweSomeIcon(ALIcon::AweSomeIcon::Bars);
 	d->navigationButton->setFixedSize(40, 30);
 	d->navigationButton->setObjectName("CUVNavigationButton");
 	d->navigationButton->setToolTip(tr("Navigation"));
-	connect(d->navigationButton, &CUVAwesomeToolButton::clicked, this, &CUVAppBar::sigNavigationButtonClicked);
+	connect(d->navigationButton, &CUVAwesomeToolButton::clicked, this, &CALAppBar::sigNavigationButtonClicked);
 
 	// 置顶
 	d->stayTopButton = new CUVAwesomeToolButton(this);
-	d->stayTopButton->setAweSomeIcon(UVIcon::CUVAweSomeIcon::ArrowUpToArc);
+	d->stayTopButton->setAweSomeIcon(ALIcon::AweSomeIcon::ArrowUpToArc);
 	d->stayTopButton->setFixedSize(d->appBarHeight, d->appBarHeight);
 	d->stayTopButton->setToolTip(tr("Stay Top"));
-	d->buttonMap[UVAppBarType::StayTopButtonHint] = d->stayTopButton;
+	d->buttonMap[ALAppBarType::StayTopButtonHint] = d->stayTopButton;
 	connect(d->stayTopButton, &CUVAwesomeToolButton::clicked, this, [=]() { this->setIsStayTop(!this->getIsStayTop()); });
 	connect(d->stayTopButton, &CUVAwesomeToolButton::sigSelectedChanged, this, [=]() { d->stayTopButton->setToolTip(d->stayTopButton->getIsSelected() ? tr("Cancel Stay Top") : tr("Stay Top")); });
-	connect(this, &CUVAppBar::sigIsStayTopChanged, d, &CUVAppBarPrivate::slotStayTopButtonClicked);
+	connect(this, &CALAppBar::sigIsStayTopChanged, d, &CUVAppBarPrivate::slotStayTopButtonClicked);
 
 	// 图标
 	d->iconLabel = new QLabel(this);
@@ -310,37 +310,37 @@ CUVAppBar::CUVAppBar(QWidget* parent): QWidget(parent), d_ptr(new CUVAppBarPriva
 
 	// 主题
 	d->themeChangeButton = new CUVAwesomeToolButton(this);
-	d->themeChangeButton->setAweSomeIcon(UVIcon::CUVAweSomeIcon::SunBright);
+	d->themeChangeButton->setAweSomeIcon(ALIcon::AweSomeIcon::SunBright);
 	d->themeChangeButton->setFixedSize(d->appBarHeight, d->appBarHeight);
-	d->themeChangeButton->setToolTip(UVTheme->getThemeMode() == UVThemeType::Light ? tr("Switch to dark theme") : tr("Switch to light theme"));
-	d->buttonMap[UVAppBarType::ThemeChangeButtonHint] = d->themeChangeButton;
-	connect(d->themeChangeButton, &CUVAwesomeToolButton::clicked, this, &CUVAppBar::sigThemeChangeButtonClicked);
-	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const UVThemeType::ThemeMode& mode) { d->slotThemeModeChanged(mode); });
+	d->themeChangeButton->setToolTip(UVTheme->getThemeMode() == ALThemeType::Light ? tr("Switch to dark theme") : tr("Switch to light theme"));
+	d->buttonMap[ALAppBarType::ThemeChangeButtonHint] = d->themeChangeButton;
+	connect(d->themeChangeButton, &CUVAwesomeToolButton::clicked, this, &CALAppBar::sigThemeChangeButtonClicked);
+	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { d->slotThemeModeChanged(mode); });
 
 	// 最小化
 	d->minButton = new CUVAwesomeToolButton(this);
-	d->minButton->setAweSomeIcon(UVIcon::CUVAweSomeIcon::Dash);
+	d->minButton->setAweSomeIcon(ALIcon::AweSomeIcon::Dash);
 	d->minButton->setFixedSize(d->appBarHeight, d->appBarHeight);
 	d->minButton->setToolTip(tr("Minimize"));
-	d->buttonMap[UVAppBarType::MinimizeButtonHint] = d->minButton;
+	d->buttonMap[ALAppBarType::MinimizeButtonHint] = d->minButton;
 	connect(d->minButton, &CUVAwesomeToolButton::clicked, d, &CUVAppBarPrivate::slotMinButtonClicked);
 
 	// 最大化 & 还原
 	d->maxButton = new CUVAwesomeToolButton(this);
 	d->maxButton->setIconSize({ 18, 18 });
-	d->maxButton->setAweSomeIcon(UVIcon::CUVAweSomeIcon::Square);
+	d->maxButton->setAweSomeIcon(ALIcon::AweSomeIcon::Square);
 	d->maxButton->setFixedSize(d->appBarHeight, d->appBarHeight);
-	d->buttonMap[UVAppBarType::MaximizeButtonHint] = d->maxButton;
+	d->buttonMap[ALAppBarType::MaximizeButtonHint] = d->maxButton;
 	connect(d->maxButton, &CUVAwesomeToolButton::clicked, d, &CUVAppBarPrivate::slotMaxButtonClicked);
 
 	// 关闭
-	d->closeButton = new CUVIconButton(UVIcon::CUVAweSomeIcon::Close, 18, d->appBarHeight, d->appBarHeight, this);
+	d->closeButton = new CUVIconButton(ALIcon::AweSomeIcon::Close, 18, d->appBarHeight, d->appBarHeight, this);
 	d->closeButton->setLightHoverColor(QColor(0xE8, 0x11, 0x23));
 	d->closeButton->setDarkHoverColor(QColor(0xE8, 0x11, 0x23));
 	d->closeButton->setLightHoverIconColor(Qt::white);
 	d->closeButton->setDarkHoverIconColor(Qt::white);
 	d->closeButton->setToolTip(tr("Close"));
-	d->buttonMap[UVAppBarType::CloseButtonHint] = d->closeButton;
+	d->buttonMap[ALAppBarType::CloseButtonHint] = d->closeButton;
 	connect(d->closeButton, &CUVIconButton::clicked, d, &CUVAppBarPrivate::slotCloseButtonClicked);
 
 	d->mainHLayout = new QHBoxLayout(this);
@@ -375,21 +375,21 @@ CUVAppBar::CUVAppBar(QWidget* parent): QWidget(parent), d_ptr(new CUVAppBarPriva
 	});
 	d->lastScreen = QApplication::screenAt(window()->geometry().center());
 #endif
-	setWindowButtonFlags(UVAppBarType::RouteBackButtonHint | UVAppBarType::StayTopButtonHint | UVAppBarType::ThemeChangeButtonHint | UVAppBarType::MinimizeButtonHint | UVAppBarType::MaximizeButtonHint | UVAppBarType::CloseButtonHint);
+	setWindowButtonFlags(ALAppBarType::RouteBackButtonHint | ALAppBarType::StayTopButtonHint | ALAppBarType::ThemeChangeButtonHint | ALAppBarType::MinimizeButtonHint | ALAppBarType::MaximizeButtonHint | ALAppBarType::CloseButtonHint);
 }
 
-CUVAppBar::~CUVAppBar() = default;
+CALAppBar::~CALAppBar() = default;
 
-void CUVAppBar::setIsStayTop(const bool isStayTop) {
+void CALAppBar::setIsStayTop(const bool isStayTop) {
 	d_func()->isStayTop = isStayTop;
 	Q_EMIT sigIsStayTopChanged();
 }
 
-bool CUVAppBar::getIsStayTop() const {
+bool CALAppBar::getIsStayTop() const {
 	return d_func()->isStayTop;
 }
 
-void CUVAppBar::setIsFixedSize(const bool isFixedSize) {
+void CALAppBar::setIsFixedSize(const bool isFixedSize) {
 	Q_D(CUVAppBar);
 
 	d->isFixedSize = isFixedSize;
@@ -416,29 +416,29 @@ void CUVAppBar::setIsFixedSize(const bool isFixedSize) {
 	Q_EMIT sigIsFixedSizeChanged();
 }
 
-bool CUVAppBar::getIsFixedSize() const {
+bool CALAppBar::getIsFixedSize() const {
 	return d_func()->isFixedSize;
 }
 
-void CUVAppBar::setIsDefaultClosed(const bool isDefaultClosed) {
+void CALAppBar::setIsDefaultClosed(const bool isDefaultClosed) {
 	d_func()->isDefaultClosed = isDefaultClosed;
 	Q_EMIT sigIsDefaultClosedChanged();
 }
 
-bool CUVAppBar::getIsDefaultClosed() const {
+bool CALAppBar::getIsDefaultClosed() const {
 	return d_func()->isDefaultClosed;
 }
 
-void CUVAppBar::setIsOnlyAllowMinAndClose(const bool isOnlyAllowMinAndClose) {
+void CALAppBar::setIsOnlyAllowMinAndClose(const bool isOnlyAllowMinAndClose) {
 	d_func()->isOnlyAllowMinAndClose = isOnlyAllowMinAndClose;
 	Q_EMIT sigIsOnlyAllowMinAndCloseChanged();
 }
 
-bool CUVAppBar::getIsOnlyAllowMinAndClose() const {
+bool CALAppBar::getIsOnlyAllowMinAndClose() const {
 	return d_func()->isOnlyAllowMinAndClose;
 }
 
-void CUVAppBar::setAppBarHeight(const int appBarHeight) {
+void CALAppBar::setAppBarHeight(const int appBarHeight) {
 	Q_D(CUVAppBar);
 
 	d->appBarHeight = appBarHeight;
@@ -454,11 +454,11 @@ void CUVAppBar::setAppBarHeight(const int appBarHeight) {
 	Q_EMIT sigAppBarHeightChanged();
 }
 
-int CUVAppBar::getAppBarHeight() const {
+int CALAppBar::getAppBarHeight() const {
 	return d_func()->appBarHeight;
 }
 
-void CUVAppBar::setCustomWidgetMaximumWidth(const int customWidgetMaximumWidth) {
+void CALAppBar::setCustomWidgetMaximumWidth(const int customWidgetMaximumWidth) {
 	Q_D(CUVAppBar);
 
 	d->customWidgetMaximumWidth = customWidgetMaximumWidth;
@@ -468,16 +468,16 @@ void CUVAppBar::setCustomWidgetMaximumWidth(const int customWidgetMaximumWidth) 
 	Q_EMIT sigCustomWidgetMaximumWidthChanged();
 }
 
-int CUVAppBar::getCustomWidgetMaximumWidth() const {
+int CALAppBar::getCustomWidgetMaximumWidth() const {
 	return d_func()->customWidgetMaximumWidth;
 }
 
-void CUVAppBar::setBackgroundColor(const QColor& color) {
+void CALAppBar::setBackgroundColor(const QColor& color) {
 	d_func()->backgroundColor = color;
 	update();
 }
 
-QColor CUVAppBar::getBackgroundColor() const {
+QColor CALAppBar::getBackgroundColor() const {
 	Q_D(const CUVAppBar);
 
 	if (const QColor& backgroundColor = d_func()->backgroundColor; backgroundColor.isValid()) {
@@ -489,10 +489,10 @@ QColor CUVAppBar::getBackgroundColor() const {
 		return {};
 	}
 
-	return UVThemeColor(UVTheme->getThemeMode(), UVThemeType::WindowBase);
+	return UVThemeColor(UVTheme->getThemeMode(), ALThemeType::WindowBase);
 }
 
-void CUVAppBar::setCustomWidget(const UVAppBarType::CustomArea& customArea, QWidget* widget) {
+void CALAppBar::setCustomWidget(const ALAppBarType::CustomArea& customArea, QWidget* widget) {
 	Q_D(CUVAppBar);
 
 	if (!widget || widget == this) {
@@ -509,15 +509,15 @@ void CUVAppBar::setCustomWidget(const UVAppBarType::CustomArea& customArea, QWid
 	}
 
 	switch (customArea) {
-		case UVAppBarType::LeftArea: {
+		case ALAppBarType::LeftArea: {
 			d->mainHLayout->insertWidget(4, widget);
 			break;
 		}
-		case UVAppBarType::MiddleArea: {
+		case ALAppBarType::MiddleArea: {
 			d->mainHLayout->insertWidget(5, widget);
 			break;
 		}
-		case UVAppBarType::RightArea: {
+		case ALAppBarType::RightArea: {
 			d->mainHLayout->insertWidget(6, widget);
 			break;
 		}
@@ -528,32 +528,32 @@ void CUVAppBar::setCustomWidget(const UVAppBarType::CustomArea& customArea, QWid
 	Q_EMIT sigCustomWidgetChanged();
 }
 
-QWidget* CUVAppBar::getCustomWidget() const {
+QWidget* CALAppBar::getCustomWidget() const {
 	return d_func()->customWidget;
 }
 
-void CUVAppBar::setWindowButtonFlag(const UVAppBarType::ButtonFlag& buttonFlag, const bool isEnable) {
+void CALAppBar::setWindowButtonFlag(const ALAppBarType::ButtonFlag& buttonFlag, const bool isEnable) {
 	setWindowButtonFlags(isEnable ? d_func()->buttonFlags | buttonFlag : d_func()->buttonFlags & ~buttonFlag);
 }
 
-void CUVAppBar::setWindowButtonFlags(const UVAppBarType::ButtonFlags& buttonFlags) {
+void CALAppBar::setWindowButtonFlags(const ALAppBarType::ButtonFlags& buttonFlags) {
 	Q_D(CUVAppBar);
 
 	d->buttonFlags = buttonFlags;
-	d->routeBackButton->setVisible(d->buttonFlags.testFlag(UVAppBarType::RouteBackButtonHint));
-	d->navigationButton->setVisible(d->buttonFlags.testFlag(UVAppBarType::NavigationButtonHint));
-	d->stayTopButton->setVisible(d->buttonFlags.testFlag(UVAppBarType::StayTopButtonHint));
-	d->themeChangeButton->setVisible(d->buttonFlags.testFlag(UVAppBarType::ThemeChangeButtonHint));
-	d->minButton->setVisible(d->buttonFlags.testFlag(UVAppBarType::MinimizeButtonHint));
-	d->maxButton->setVisible(d->buttonFlags.testFlag(UVAppBarType::MaximizeButtonHint));
-	d->closeButton->setVisible(d->buttonFlags.testFlag(UVAppBarType::CloseButtonHint));
+	d->routeBackButton->setVisible(d->buttonFlags.testFlag(ALAppBarType::RouteBackButtonHint));
+	d->navigationButton->setVisible(d->buttonFlags.testFlag(ALAppBarType::NavigationButtonHint));
+	d->stayTopButton->setVisible(d->buttonFlags.testFlag(ALAppBarType::StayTopButtonHint));
+	d->themeChangeButton->setVisible(d->buttonFlags.testFlag(ALAppBarType::ThemeChangeButtonHint));
+	d->minButton->setVisible(d->buttonFlags.testFlag(ALAppBarType::MinimizeButtonHint));
+	d->maxButton->setVisible(d->buttonFlags.testFlag(ALAppBarType::MaximizeButtonHint));
+	d->closeButton->setVisible(d->buttonFlags.testFlag(ALAppBarType::CloseButtonHint));
 }
 
-UVAppBarType::ButtonFlags CUVAppBar::getWindowButtonFlags() const {
+ALAppBarType::ButtonFlags CALAppBar::getWindowButtonFlags() const {
 	return d_func()->buttonFlags;
 }
 
-bool CUVAppBar::insertWidgetBeforeButton(QWidget* widget, const UVAppBarType::ButtonFlag& flag) {
+bool CALAppBar::insertWidgetBeforeButton(QWidget* widget, const ALAppBarType::ButtonFlag& flag) {
 	bool bRet{ false };
 
 	Q_D(CUVAppBar);
@@ -575,7 +575,7 @@ bool CUVAppBar::insertWidgetBeforeButton(QWidget* widget, const UVAppBarType::Bu
 	return bRet;
 }
 
-bool CUVAppBar::insertWidgetBeforeWidget(QWidget* widget, QWidget* targetWidget) {
+bool CALAppBar::insertWidgetBeforeWidget(QWidget* widget, QWidget* targetWidget) {
 	bool bRet{ false };
 
 	Q_D(CUVAppBar);
@@ -591,7 +591,7 @@ bool CUVAppBar::insertWidgetBeforeWidget(QWidget* widget, QWidget* targetWidget)
 	return bRet;
 }
 
-bool CUVAppBar::insertWidgetBeforeLayout(QWidget* widget, QLayout* targetLayout) {
+bool CALAppBar::insertWidgetBeforeLayout(QWidget* widget, QLayout* targetLayout) {
 	bool bRet{ false };
 
 	Q_D(CUVAppBar);
@@ -607,7 +607,7 @@ bool CUVAppBar::insertWidgetBeforeLayout(QWidget* widget, QLayout* targetLayout)
 	return bRet;
 }
 
-bool CUVAppBar::insertLayoutBeforeButton(QLayout* layout, const UVAppBarType::ButtonFlag& flag) {
+bool CALAppBar::insertLayoutBeforeButton(QLayout* layout, const ALAppBarType::ButtonFlag& flag) {
 	bool bRet{ false };
 
 	Q_D(CUVAppBar);
@@ -629,7 +629,7 @@ bool CUVAppBar::insertLayoutBeforeButton(QLayout* layout, const UVAppBarType::Bu
 	return bRet;
 }
 
-bool CUVAppBar::insertLayoutBeforeWidget(QLayout* layout, QWidget* targetWidget) {
+bool CALAppBar::insertLayoutBeforeWidget(QLayout* layout, QWidget* targetWidget) {
 	bool bRet{ false };
 
 	Q_D(CUVAppBar);
@@ -645,7 +645,7 @@ bool CUVAppBar::insertLayoutBeforeWidget(QLayout* layout, QWidget* targetWidget)
 	return bRet;
 }
 
-bool CUVAppBar::insertLayoutBeforeLayout(QLayout* layout, QLayout* targetLayout) {
+bool CALAppBar::insertLayoutBeforeLayout(QLayout* layout, QLayout* targetLayout) {
 	bool bRet{ false };
 
 	Q_D(CUVAppBar);
@@ -661,11 +661,11 @@ bool CUVAppBar::insertLayoutBeforeLayout(QLayout* layout, QLayout* targetLayout)
 	return bRet;
 }
 
-void CUVAppBar::setRouteBackButtonEnable(const bool isEnable) {
+void CALAppBar::setRouteBackButtonEnable(const bool isEnable) {
 	d_func()->routeBackButton->setEnabled(isEnable);
 }
 
-void CUVAppBar::closeWindow() {
+void CALAppBar::closeWindow() {
 	Q_D(CUVAppBar);
 
 	const auto closeOpacityAnimation = new QPropertyAnimation(window(), "windowOpacity");
@@ -691,7 +691,7 @@ void CUVAppBar::closeWindow() {
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 int CUVAppBar::takeOverNativeEvent(const QByteArray& eventType, void* message, qintptr* result)
 #else
-int CUVAppBar::takeOverNativeEvent(const QByteArray& eventType, const void* message, long* result)
+int CALAppBar::takeOverNativeEvent(const QByteArray& eventType, const void* message, long* result)
 #endif
 {
 	Q_D(CUVAppBar);
@@ -859,25 +859,25 @@ int CUVAppBar::takeOverNativeEvent(const QByteArray& eventType, const void* mess
 		}
 		case WM_LBUTTONDBLCLK: {
 			QVariantMap postData;
-			postData.insert("WMClickType", UVAppBarType::WMLBUTTONDBLCLK);
+			postData.insert("WMClickType", ALAppBarType::WMLBUTTONDBLCLK);
 			CUVEventBus::instance()->post("WMWindowClicked", postData);
 			return 0;
 		}
 		case WM_LBUTTONDOWN: {
 			QVariantMap postData;
-			postData.insert("WMClickType", UVAppBarType::WMLBUTTONDOWN);
+			postData.insert("WMClickType", ALAppBarType::WMLBUTTONDOWN);
 			CUVEventBus::instance()->post("WMWindowClicked", postData);
 			return 0;
 		}
 		case WM_LBUTTONUP: {
 			QVariantMap postData;
-			postData.insert("WMClickType", UVAppBarType::WMLBUTTONUP);
+			postData.insert("WMClickType", ALAppBarType::WMLBUTTONUP);
 			CUVEventBus::instance()->post("WMWindowClicked", postData);
 			return 0;
 		}
 		case WM_NCLBUTTONDOWN: {
 			QVariantMap postData;
-			postData.insert("WMClickType", UVAppBarType::WMNCLBUTTONDOWN);
+			postData.insert("WMClickType", ALAppBarType::WMNCLBUTTONDOWN);
 			CUVEventBus::instance()->post("WMWindowClicked", postData);
 			if (d->containsCursorToItem(d->maxButton) || d->isOnlyAllowMinAndClose) {
 				return 1;
@@ -886,7 +886,7 @@ int CUVAppBar::takeOverNativeEvent(const QByteArray& eventType, const void* mess
 		}
 		case WM_NCLBUTTONUP: {
 			QVariantMap postData;
-			postData.insert("WMClickType", UVAppBarType::WMNCLBUTTONDOWN);
+			postData.insert("WMClickType", ALAppBarType::WMNCLBUTTONDOWN);
 			CUVEventBus::instance()->post("WMWindowClicked", postData);
 			if (d->containsCursorToItem(d->maxButton) && !d->isOnlyAllowMinAndClose) {
 				d->slotMaxButtonClicked();
@@ -921,7 +921,7 @@ int CUVAppBar::takeOverNativeEvent(const QByteArray& eventType, const void* mess
 }
 #endif
 
-void CUVAppBar::paintEvent(QPaintEvent* event) {
+void CALAppBar::paintEvent(QPaintEvent* event) {
 	Q_D(CUVAppBar);
 
 	if (d->backgroundColor.isValid()) {
@@ -936,7 +936,7 @@ void CUVAppBar::paintEvent(QPaintEvent* event) {
 	QWidget::paintEvent(event);
 }
 
-bool CUVAppBar::eventFilter(QObject* watched, QEvent* event) {
+bool CALAppBar::eventFilter(QObject* watched, QEvent* event) {
 	Q_D(CUVAppBar);
 
 	switch (event->type()) {

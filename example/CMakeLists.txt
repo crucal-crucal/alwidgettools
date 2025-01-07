@@ -1,4 +1,4 @@
-﻿set(TARGET_NAME uvexample)
+﻿set(TARGET_NAME calexample)
 
 file(GLOB ORIGIN *.hpp *.cpp)
 file(GLOB PAGEORIGIN page/*.hpp page/*.cpp)
@@ -9,11 +9,11 @@ include_directories(${CMAKE_SOURCE_DIR}/src/include/public)
 
 add_executable(${TARGET_NAME} ${EXAMPLE_SOURCE})
 target_link_libraries(${TARGET_NAME} Qt5::Widgets Qt5::Svg)
-target_link_libraries(${TARGET_NAME} uvwidgettools)
+target_link_libraries(${TARGET_NAME} calwidgettools)
 
 add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E echo "Copying uvresource.rcc file from ${CMAKE_SOURCE_DIR}/resource/uvresource.rcc to $<TARGET_FILE_DIR:${TARGET_NAME}>/uvresource.rcc"
+        COMMAND ${CMAKE_COMMAND} -E echo "Copying uvresource.rcc file from ${CMAKE_SOURCE_DIR}/resource/calresource.rcc to $<TARGET_FILE_DIR:${TARGET_NAME}>/calresource.rcc"
         COMMAND ${CMAKE_COMMAND} -E copy
-        ${CMAKE_SOURCE_DIR}/resource/uvresource.rcc
-        $<TARGET_FILE_DIR:${TARGET_NAME}>/uvresource.rcc
+        ${CMAKE_SOURCE_DIR}/resource/calresource.rcc
+        $<TARGET_FILE_DIR:${TARGET_NAME}>/calresource.rcc
 )

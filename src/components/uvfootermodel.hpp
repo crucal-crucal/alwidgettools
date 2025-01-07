@@ -2,7 +2,7 @@
 
 #include <QAbstractListModel>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class CUVNavigationNode;
 
@@ -13,7 +13,7 @@ public:
 	explicit CUVFooterModel(QObject* parent = nullptr);
 	~CUVFooterModel() override;
 
-	UVNavigationType::NodeOperateReturnType addFooterNode(const QString& footerTitle, QString& footerKey, bool isHasFooterPage, int keyPoints = 0, const UVIcon::CUVAweSomeIcon& awesome = UVIcon::CUVAweSomeIcon::None);
+	ALNavigationType::NodeOperateReturnType addFooterNode(const QString& footerTitle, QString& footerKey, bool isHasFooterPage, int keyPoints = 0, const ALIcon::AweSomeIcon& awesome = ALIcon::AweSomeIcon::None);
 	[[nodiscard]] int getFooterNodeCount() const;
 	CUVNavigationNode* getNavigationNode(const QString& footerKey);
 

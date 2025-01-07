@@ -2,7 +2,7 @@
 
 #include <QObject>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class CUVComboBoxStyle;
 class CUVComboBoxView;
@@ -34,7 +34,7 @@ protected:
 	CUVMultiSelectComboBox* const q_ptr{ nullptr };
 
 private:
-	UVThemeType::ThemeMode themeMode{};
+	ALThemeType::ThemeMode themeMode{};
 	int borderRadius{};
 	qreal expandIconRotate{};
 	qreal expandMarkWidth{};

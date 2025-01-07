@@ -1,4 +1,4 @@
-﻿#include "uvcontentdialog.hpp"
+﻿#include "alcontentdialog.hpp"
 
 #include <QDebug>
 #include <QKeyEvent>
@@ -7,25 +7,25 @@
 #include "uvcontentdialog_p.hpp"
 #include "uvpushbutton.hpp"
 #include "uvtext.hpp"
-#include "uvthememanager.hpp"
+#include "althememanager.hpp"
 
 /**
- * @brief \class CUVContentDialogPrivate
+ * @brief \class CALContentDialogPrivate
  * Internal class for CUVContentDialog
  * @param q pointer to the public class
  * @param parent pointer to the parent class
  */
-CUVContentDialogPrivate::CUVContentDialogPrivate(CUVContentDialog* q, QObject* parent): QObject(parent), q_ptr(q) {
+CALContentDialogPrivate::CALContentDialogPrivate(CALContentDialog* q, QObject* parent): QObject(parent), q_ptr(q) {
 }
 
-CUVContentDialogPrivate::~CUVContentDialogPrivate() = default;
+CALContentDialogPrivate::~CALContentDialogPrivate() = default;
 
 /**
- * @brief \class CUVContentDialog
+ * @brief \class CALContentDialog
  * @param parent pointer to the parent class
  */
-CUVContentDialog::CUVContentDialog(QWidget* parent): CUVBaseDialog(parent), d_ptr(new CUVContentDialogPrivate(this, this)) {
-	Q_D(CUVContentDialog);
+CALContentDialog::CALContentDialog(QWidget* parent): CUVBaseDialog(parent), d_ptr(new CALContentDialogPrivate(this, this)) {
+	Q_D(CALContentDialog);
 
 	resize(400, 100);
 	setWindowModality(Qt::ApplicationModal);
@@ -38,31 +38,31 @@ CUVContentDialog::CUVContentDialog(QWidget* parent): CUVBaseDialog(parent), d_pt
 	window()->setWindowFlags((window()->windowFlags()) | Qt::FramelessWindowHint);
 #endif
 
-	d->closeButton = new CUVPushButton(tr("Close"), this);
-	d->closeButton->setLightDefaultColor(UVThemeColor(UVThemeType::Light, UVThemeType::PrimaryNormal));
-	d->closeButton->setDarkDefaultColor(UVThemeColor(UVThemeType::Dark, UVThemeType::PrimaryNormal));
-	d->closeButton->setLightHoverColor(UVThemeColor(UVThemeType::Light, UVThemeType::PrimaryHover));
-	d->closeButton->setDarkHoverColor(UVThemeColor(UVThemeType::Dark, UVThemeType::PrimaryHover));
-	d->closeButton->setLightPressedColor(UVThemeColor(UVThemeType::Light, UVThemeType::PrimaryPress));
-	d->closeButton->setDarkPressedColor(UVThemeColor(UVThemeType::Dark, UVThemeType::PrimaryPress));
+	d->closeButton = new CALPushButton(tr("Close"), this);
+	d->closeButton->setLightDefaultColor(UVThemeColor(ALThemeType::Light, ALThemeType::PrimaryNormal));
+	d->closeButton->setDarkDefaultColor(UVThemeColor(ALThemeType::Dark, ALThemeType::PrimaryNormal));
+	d->closeButton->setLightHoverColor(UVThemeColor(ALThemeType::Light, ALThemeType::PrimaryHover));
+	d->closeButton->setDarkHoverColor(UVThemeColor(ALThemeType::Dark, ALThemeType::PrimaryHover));
+	d->closeButton->setLightPressedColor(UVThemeColor(ALThemeType::Light, ALThemeType::PrimaryPress));
+	d->closeButton->setDarkPressedColor(UVThemeColor(ALThemeType::Dark, ALThemeType::PrimaryPress));
 	d->closeButton->setDarkTextColor(Qt::black);
 	d->closeButton->setLightTextColor(Qt::white);
 	d->closeButton->setMinimumSize(0, 0);
 	d->closeButton->setMaximumSize(QSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX));
 	d->closeButton->setFixedHeight(38);
 	d->closeButton->setBorderRadius(6);
-	connect(d->closeButton, &CUVPushButton::clicked, this, [=]() {
+	connect(d->closeButton, &CALPushButton::clicked, this, [=]() {
 		emit sigCloseButtonClicked();
 		slotCloseButtonClicked();
 		this->close();
 	});
 
-	d->cancelButton = new CUVPushButton(tr("Cancel"), this);
+	d->cancelButton = new CALPushButton(tr("Cancel"), this);
 	d->cancelButton->setMinimumSize(0, 0);
 	d->cancelButton->setMaximumSize(QSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX));
 	d->cancelButton->setFixedHeight(38);
 	d->cancelButton->setBorderRadius(6);
-	connect(d->cancelButton, &CUVPushButton::clicked, this, [=]() {
+	connect(d->cancelButton, &CALPushButton::clicked, this, [=]() {
 		emit sigCancelButtonClicked();
 		slotCancelButtonClicked();
 		this->close();
@@ -71,7 +71,7 @@ CUVContentDialog::CUVContentDialog(QWidget* parent): CUVBaseDialog(parent), d_pt
 	// const auto title = new QLabel(tr("exit"), this);
 	// title->setObjectName("CUVContentDialog_title");
 	const auto subTitle = new CUVText(tr("Are you sure you want to exit?"), this);
-	subTitle->setTextStyle(UVTextType::Body);
+	subTitle->setTextStyle(ALTextType::Body);
 
 	const auto subTitleHLayout = new QHBoxLayout;
 	subTitleHLayout->setContentsMargins(0, 0, 0, 0);
@@ -99,16 +99,16 @@ CUVContentDialog::CUVContentDialog(QWidget* parent): CUVBaseDialog(parent), d_pt
 	d->mainVLayout->addWidget(d->buttonWidget);
 }
 
-CUVContentDialog::~CUVContentDialog() = default;
+CALContentDialog::~CALContentDialog() = default;
 
-void CUVContentDialog::slotCloseButtonClicked() {
+void CALContentDialog::slotCloseButtonClicked() {
 }
 
-void CUVContentDialog::slotCancelButtonClicked() {
+void CALContentDialog::slotCancelButtonClicked() {
 }
 
-void CUVContentDialog::setCenterWidget(QWidget* centerWidget) {
-	Q_D(CUVContentDialog);
+void CALContentDialog::setCenterWidget(QWidget* centerWidget) {
+	Q_D(CALContentDialog);
 
 	d->mainVLayout->takeAt(0);
 	d->mainVLayout->takeAt(0);
@@ -117,14 +117,14 @@ void CUVContentDialog::setCenterWidget(QWidget* centerWidget) {
 	d->mainVLayout->addWidget(d->buttonWidget);
 }
 
-void CUVContentDialog::setCloseButtonText(const QString& text) {
+void CALContentDialog::setCloseButtonText(const QString& text) {
 	d_func()->closeButton->setText(text);
 }
 
-void CUVContentDialog::setCancelButtonText(const QString& text) {
+void CALContentDialog::setCancelButtonText(const QString& text) {
 	d_func()->cancelButton->setText(text);
 }
 
-void CUVContentDialog::keyPressEvent(QKeyEvent* event) {
+void CALContentDialog::keyPressEvent(QKeyEvent* event) {
 	event->accept();
 }

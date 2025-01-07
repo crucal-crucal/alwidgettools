@@ -8,7 +8,7 @@
  * @param q pointer to the public class
  * @param parent pointer to the parent class
  */
-CUVEventPrivate::CUVEventPrivate(CUVEvent* q, QObject* parent): QObject(parent), q_ptr(q) {
+CUVEventPrivate::CUVEventPrivate(CALEvent* q, QObject* parent): QObject(parent), q_ptr(q) {
 }
 
 CUVEventPrivate::~CUVEventPrivate() = default;
@@ -24,34 +24,34 @@ CUVEventBusPrivate::CUVEventBusPrivate(CUVEventBus* q, QObject* parent): QObject
 
 CUVEventBusPrivate::~CUVEventBusPrivate() = default;
 
-UVEventBusType::EventBusReturnType CUVEventBusPrivate::registerEvent(CUVEvent* event) {
+ALEventBusType::EventBusReturnType CUVEventBusPrivate::registerEvent(CALEvent* event) {
 	if (!event) {
-		return UVEventBusType::EventInvalid;
+		return ALEventBusType::EventInvalid;
 	}
 
 	const QString& eventName = event->getEventName();
 	if (eventName.isEmpty()) {
-		return UVEventBusType::EventNameInvalid;
+		return ALEventBusType::EventNameInvalid;
 	}
 
 	auto& eventList = eventMap[eventName];
 	if (eventList.contains(event)) {
-		return UVEventBusType::EventInvalid;
+		return ALEventBusType::EventInvalid;
 	}
 	eventList.append(event);
 
-	return UVEventBusType::Success;
+	return ALEventBusType::Success;
 }
 
 bool CUVEventBusPrivate::unRegisterEvent(const QString& eventName) {
 	return unRegisterEvent(eventName, nullptr);
 }
 
-bool CUVEventBusPrivate::unRegisterEvent(CUVEvent* event) {
+bool CUVEventBusPrivate::unRegisterEvent(CALEvent* event) {
 	return event ? unRegisterEvent(event->getEventName(), event) : false;
 }
 
-bool CUVEventBusPrivate::unRegisterEvent(const QString& eventName, CUVEvent* event) {
+bool CUVEventBusPrivate::unRegisterEvent(const QString& eventName, CALEvent* event) {
 	if (eventName.isEmpty() || !eventMap.contains(eventName)) {
 		return false;
 	}
@@ -67,10 +67,10 @@ bool CUVEventBusPrivate::unRegisterEvent(const QString& eventName, CUVEvent* eve
 }
 
 /**
- * @brief \class CUVEvent
+ * @brief \class CALEvent
  * @param parent pointer to the parent class
  */
-CUVEvent::CUVEvent(QObject* parent): QObject(parent), d_ptr(new CUVEventPrivate(this, this)) {
+CALEvent::CALEvent(QObject* parent): QObject(parent), d_ptr(new CUVEventPrivate(this, this)) {
 	Q_D(CUVEvent);
 
 	d->connectionType = Qt::AutoConnection;
@@ -78,7 +78,7 @@ CUVEvent::CUVEvent(QObject* parent): QObject(parent), d_ptr(new CUVEventPrivate(
 	d->eventName = "";
 }
 
-CUVEvent::CUVEvent(const QString& eventName, const QString& funcName, QObject* parent): QObject(parent), d_ptr(new CUVEventPrivate(this, this)) {
+CALEvent::CALEvent(const QString& eventName, const QString& funcName, QObject* parent): QObject(parent), d_ptr(new CUVEventPrivate(this, this)) {
 	Q_D(CUVEvent);
 
 	d->connectionType = Qt::AutoConnection;
@@ -86,36 +86,36 @@ CUVEvent::CUVEvent(const QString& eventName, const QString& funcName, QObject* p
 	d->funcName = funcName;
 }
 
-CUVEvent::~CUVEvent() = default;
+CALEvent::~CALEvent() = default;
 
-UVEventBusType::EventBusReturnType CUVEvent::registerAndInit() {
+ALEventBusType::EventBusReturnType CALEvent::registerAndInit() {
 	return CUVEventBus::instance()->d_func()->registerEvent(this);
 }
 
-void CUVEvent::setEventName(const QString& eventName) {
+void CALEvent::setEventName(const QString& eventName) {
 	d_func()->eventName = eventName;
 	Q_EMIT sigEventNameChanged();
 }
 
-QString CUVEvent::getEventName() const {
+QString CALEvent::getEventName() const {
 	return d_func()->eventName;
 }
 
-void CUVEvent::setFuncName(const QString& funcName) {
+void CALEvent::setFuncName(const QString& funcName) {
 	d_func()->funcName = funcName;
 	Q_EMIT sigFuncNameChanged();
 }
 
-QString CUVEvent::getFuncName() const {
+QString CALEvent::getFuncName() const {
 	return d_func()->funcName;
 }
 
-void CUVEvent::setConnectionType(const Qt::ConnectionType& connectionType) {
+void CALEvent::setConnectionType(const Qt::ConnectionType& connectionType) {
 	d_func()->connectionType = connectionType;
 	Q_EMIT sigConnectionTypeChanged();
 }
 
-Qt::ConnectionType CUVEvent::getConnectionType() const {
+Qt::ConnectionType CALEvent::getConnectionType() const {
 	return d_func()->connectionType;
 }
 
@@ -127,11 +127,11 @@ CUVEventBus* CUVEventBus::instance() {
 	return CUVSingleton<CUVEventBus>::instance();
 }
 
-UVEventBusType::EventBusReturnType CUVEventBus::post(const QString& eventName, const QVariantMap& data) {
+ALEventBusType::EventBusReturnType CUVEventBus::post(const QString& eventName, const QVariantMap& data) {
 	Q_D(CUVEventBus);
 
 	if (eventName.isEmpty()) {
-		return UVEventBusType::EventNameInvalid;
+		return ALEventBusType::EventNameInvalid;
 	}
 
 	if (d->eventMap.contains(eventName)) {
@@ -143,7 +143,7 @@ UVEventBusType::EventBusReturnType CUVEventBus::post(const QString& eventName, c
 		}
 	}
 
-	return UVEventBusType::Success;
+	return ALEventBusType::Success;
 }
 
 QStringList CUVEventBus::getRegisteredEventsName() const {

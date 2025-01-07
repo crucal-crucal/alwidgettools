@@ -2,7 +2,7 @@
 
 #include <QProxyStyle>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class CUVMenuStyle final : public QProxyStyle {
 	Q_OBJECT
@@ -24,7 +24,7 @@ signals:
 	void sigMenuItemHeightChanged();
 
 private:
-	UVThemeType::ThemeMode m_themeMode{};
+	ALThemeType::ThemeMode m_themeMode{};
 	mutable bool m_isAnyoneItemHasIcon{ false };
 	int m_shadowBorderWidth{};
 	int m_iconWidth{};

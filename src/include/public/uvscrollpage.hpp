@@ -2,11 +2,11 @@
 
 #include <QWidget>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class CUVScrollPagePrivate;
 
-class CUVWIDGETTOOLS_EXPORT CUVScrollPage : public QWidget {
+class CALWIDGETTOOLS_EXPORT CUVScrollPage : public QWidget {
 	Q_OBJECT
 	Q_DECLARE_PRIVATE(CUVScrollPage)
 	Q_PROPERTY(QWidget* customWidget READ getCustomWidget WRITE setCustomWidget NOTIFY sigCustomWidgetChanged)

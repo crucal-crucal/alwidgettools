@@ -5,10 +5,10 @@
 #include <QVector>
 #include <vector>
 
-#ifdef CUVWIDGETTOOLS_LIB
-#define CUVWIDGETTOOLS_EXPORT Q_DECL_EXPORT
+#ifdef CALWIDGETTOOLS_LIB
+#define CALWIDGETTOOLS_EXPORT Q_DECL_EXPORT
 #else
-#define CUVWIDGETTOOLS_EXPORT Q_DECL_IMPORT
+#define CALWIDGETTOOLS_EXPORT Q_DECL_IMPORT
 #endif
 
 /////////////////////////// Delete Macro begin /////////////////////////////////////
@@ -35,10 +35,10 @@
 /////////////////////////// uvwidgettools Namespace begin /////////////////////////////////////
 
 /**
- * @brief \namespace UVConvert
+ * @brief \namespace ALConvert
  */
-namespace UVConvert {
-Q_NAMESPACE_EXPORT(CUVWIDGETTOOLS_EXPORT)
+namespace ALConvert {
+Q_NAMESPACE_EXPORT(CALWIDGETTOOLS_EXPORT)
 
 /**
  * @brief std::vector 转换为 QVector
@@ -62,10 +62,10 @@ QMap<Key, Value> stdMapToQMap(const std::map<Key, Value>& stdMap) {
 }
 
 /**
- * @brief \namespace UVThemeType
+ * @brief \namespace ALThemeType
  */
-namespace UVThemeType {
-Q_NAMESPACE_EXPORT(CUVWIDGETTOOLS_EXPORT)
+namespace ALThemeType {
+Q_NAMESPACE_EXPORT(CALWIDGETTOOLS_EXPORT)
 
 enum ThemeMode {
 	Light = 0x001,
@@ -121,10 +121,10 @@ Q_ENUM_NS(ThemeColor)
 }
 
 /**
- * @brief \namespace UVAppBarType
+ * @brief \namespace ALAppBarType
  */
-namespace UVAppBarType {
-Q_NAMESPACE_EXPORT(CUVWIDGETTOOLS_EXPORT)
+namespace ALAppBarType {
+Q_NAMESPACE_EXPORT(CALWIDGETTOOLS_EXPORT)
 
 enum ButtonFlag {
 	RouteBackButtonHint   = 0x0001,
@@ -156,15 +156,15 @@ enum WMMouseActionType {
 
 Q_ENUM_NS(WMMouseActionType)
 Q_DECLARE_FLAGS(WMMouseActionTypes, WMMouseActionType)
-Q_DECLARE_OPERATORS_FOR_FLAGS(UVAppBarType::ButtonFlags)
-Q_DECLARE_OPERATORS_FOR_FLAGS(UVAppBarType::WMMouseActionTypes)
+Q_DECLARE_OPERATORS_FOR_FLAGS(ALAppBarType::ButtonFlags)
+Q_DECLARE_OPERATORS_FOR_FLAGS(ALAppBarType::WMMouseActionTypes)
 }
 
 /**
- * @brief \namespace UVTextType
+ * @brief \namespace ALTextType
  */
-namespace UVTextType {
-Q_NAMESPACE_EXPORT(CUVWIDGETTOOLS_EXPORT)
+namespace ALTextType {
+Q_NAMESPACE_EXPORT(CALWIDGETTOOLS_EXPORT)
 
 enum TextStyle {
 	NoStyle    = 0x0000,
@@ -181,10 +181,10 @@ Q_ENUM_NS(TextStyle)
 }
 
 /**
- * @brief \namespace UVNavigationType
+ * @brief \namespace ALNavigationType
  */
-namespace UVNavigationType {
-Q_NAMESPACE_EXPORT(CUVWIDGETTOOLS_EXPORT)
+namespace ALNavigationType {
+Q_NAMESPACE_EXPORT(CALWIDGETTOOLS_EXPORT)
 
 enum NodeOperateReturnType {
 	Success              = 0x0000,
@@ -215,10 +215,10 @@ Q_ENUM_NS(NavigationNodeType)
 }
 
 /**
- * @brief \namespace UVNavigationRouterType
+ * @brief \namespace ALNavigationRouterType
  */
-namespace UVNavigationRouterType {
-Q_NAMESPACE_EXPORT(CUVWIDGETTOOLS_EXPORT)
+namespace ALNavigationRouterType {
+Q_NAMESPACE_EXPORT(CALWIDGETTOOLS_EXPORT)
 
 enum NavigationRouteType {
 	Success             = 0x0000,
@@ -230,10 +230,10 @@ Q_ENUM_NS(NavigationRouteType)
 }
 
 /**
- * @brief \namespace UVEventBusType
+ * @brief \namespace ALEventBusType
  */
-namespace UVEventBusType {
-Q_NAMESPACE_EXPORT(CUVWIDGETTOOLS_EXPORT)
+namespace ALEventBusType {
+Q_NAMESPACE_EXPORT(CALWIDGETTOOLS_EXPORT)
 
 enum EventBusReturnType {
 	Success          = 0x0000,
@@ -245,10 +245,10 @@ Q_ENUM_NS(EventBusReturnType)
 }
 
 /**
- * @brief \namespace UVCardPixType
+ * @brief \namespace ALCardPixType
  */
-namespace UVCardPixType {
-Q_NAMESPACE_EXPORT(CUVWIDGETTOOLS_EXPORT)
+namespace ALCardPixType {
+Q_NAMESPACE_EXPORT(CALWIDGETTOOLS_EXPORT)
 
 enum PixMode {
 	Default     = 0x0000,
@@ -260,10 +260,10 @@ Q_ENUM_NS(PixMode)
 }
 
 /**
- * @brief \namespace UVGraphicsSceneType
+ * @brief \namespace ALGraphicsSceneType
  */
-namespace UVGraphicsSceneType {
-Q_NAMESPACE_EXPORT(CUVWIDGETTOOLS_EXPORT)
+namespace ALGraphicsSceneType {
+Q_NAMESPACE_EXPORT(CALWIDGETTOOLS_EXPORT)
 
 enum SceneMode {
 	Default     = 0x0000,
@@ -276,10 +276,10 @@ Q_ENUM_NS(SceneMode)
 }
 
 /**
- * @brief \namespace UVMessageBarType
+ * @brief \namespace ALMessageBarType
  */
-namespace UVMessageBarType {
-Q_NAMESPACE_EXPORT(CUVWIDGETTOOLS_EXPORT)
+namespace ALMessageBarType {
+Q_NAMESPACE_EXPORT(CALWIDGETTOOLS_EXPORT)
 
 enum PositionPolicy {
 	Top         = 0x001,          // 0001
@@ -305,10 +305,10 @@ Q_ENUM_NS(MessageLevel)
 }
 
 /**
- * @brief \namespace UVProgressType
+ * @brief \namespace ALProgressType
  */
-namespace UVProgressType {
-Q_NAMESPACE_EXPORT(CUVWIDGETTOOLS_EXPORT)
+namespace ALProgressType {
+Q_NAMESPACE_EXPORT(CALWIDGETTOOLS_EXPORT)
 
 enum ProgressType {
 	DeterminateProgress   = 0x001, // 进度条值确定
@@ -329,10 +329,10 @@ Q_ENUM_NS(ProgressTextPosition)
 }
 
 /**
- * @brief \namespace UVDialogPolicy
+ * @brief \namespace ALDialogPolicy
  */
-namespace UVDialogPolicy {
-Q_NAMESPACE_EXPORT(CUVWIDGETTOOLS_EXPORT)
+namespace ALDialogPolicy {
+Q_NAMESPACE_EXPORT(CALWIDGETTOOLS_EXPORT)
 
 enum ShowPolicy {
 	Normal          = 0x000,
@@ -345,19 +345,19 @@ Q_ENUM_NS(ShowPolicy)
 
 Q_DECLARE_FLAGS(ShowPolicys, ShowPolicy)
 Q_FLAGS(ShowPolicys)
-Q_DECLARE_OPERATORS_FOR_FLAGS(UVDialogPolicy::ShowPolicys)
+Q_DECLARE_OPERATORS_FOR_FLAGS(ALDialogPolicy::ShowPolicys)
 }
 
 /**
- * @brief \namespace UVIcon
+ * @brief \namespace ALIcon
  */
-namespace UVIcon {
-Q_NAMESPACE_EXPORT(CUVWIDGETTOOLS_EXPORT)
+namespace ALIcon {
+Q_NAMESPACE_EXPORT(CALWIDGETTOOLS_EXPORT)
 
 /**
  * 使用 Awesome 来绘制图标
  */
-enum class CUVAweSomeIcon : int {
+enum class AweSomeIcon : int {
 	None                                   = 0x0,
 	Broom                                  = 0xe800,
 	Number00                               = 0xe801,
@@ -3641,7 +3641,7 @@ enum class CUVAweSomeIcon : int {
 	XmarkLarge                             = 0xf4cf,
 };
 
-Q_ENUM_NS(CUVAweSomeIcon)
+Q_ENUM_NS(AweSomeIcon)
 }
 
 /////////////////////////// uvwidgettools Namespace end /////////////////////////////////////

@@ -1,4 +1,4 @@
-﻿#include "uvbasedialog.hpp"
+﻿#include "albasedialog.hpp"
 
 #include <QAbstractNativeEventFilter>
 #include <QApplication>
@@ -9,7 +9,7 @@
 
 #include "uvbasedialog_p.hpp"
 #include "uvmaskwidget.hpp"
-#include "uvthememanager.hpp"
+#include "althememanager.hpp"
 
 #ifdef Q_OS_WIN
 #include <dwmapi.h>
@@ -27,18 +27,18 @@ CUVBaseDialogPrivate::CUVBaseDialogPrivate(CUVBaseDialog* q, QObject* parent): Q
 
 CUVBaseDialogPrivate::~CUVBaseDialogPrivate() = default;
 
-bool CUVBaseDialogPrivate::hasPolicy(const UVDialogPolicy::ShowPolicy& policy) const {
+bool CUVBaseDialogPrivate::hasPolicy(const ALDialogPolicy::ShowPolicy& policy) const {
 	return showPolicys.testFlag(policy);
 }
 
 void CUVBaseDialogPrivate::_doCloseAnimation() {
 	Q_Q(CUVBaseDialog);
 
-	if (hasPolicy(UVDialogPolicy::ShowMask)) {
+	if (hasPolicy(ALDialogPolicy::ShowMask)) {
 		maskWidget->doMaskAnimation(0);
 	}
 
-	if (hasPolicy(UVDialogPolicy::EnableAnimation)) {
+	if (hasPolicy(ALDialogPolicy::EnableAnimation)) {
 		fadeOutAnimation->start();
 	} else {
 		q->QDialog::close();
@@ -74,7 +74,7 @@ CUVBaseDialog::CUVBaseDialog(QWidget* parent): QDialog(parent), d_ptr(new CUVBas
 	connect(d->fadeOutAnimation, &QPropertyAnimation::finished, this, &QDialog::close);
 
 	d->themeMode = UVTheme->getThemeMode();
-	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const UVThemeType::ThemeMode& mode) { d->themeMode = mode; });
+	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { d->themeMode = mode; });
 }
 
 CUVBaseDialog::~CUVBaseDialog() {
@@ -83,11 +83,11 @@ CUVBaseDialog::~CUVBaseDialog() {
 	d_func()->maskWidget->deleteLater();
 }
 
-void CUVBaseDialog::setShowPolicys(const UVDialogPolicy::ShowPolicys& policys) {
+void CUVBaseDialog::setShowPolicys(const ALDialogPolicy::ShowPolicys& policys) {
 	d_func()->showPolicys = policys;
 }
 
-void CUVBaseDialog::setShowPolicy(const UVDialogPolicy::ShowPolicy& policy, const bool enabled) {
+void CUVBaseDialog::setShowPolicy(const ALDialogPolicy::ShowPolicy& policy, const bool enabled) {
 	if (enabled) {
 		d_func()->showPolicys |= policy;
 	} else {
@@ -95,11 +95,11 @@ void CUVBaseDialog::setShowPolicy(const UVDialogPolicy::ShowPolicy& policy, cons
 	}
 }
 
-UVDialogPolicy::ShowPolicys CUVBaseDialog::showPolicys() const {
+ALDialogPolicy::ShowPolicys CUVBaseDialog::showPolicys() const {
 	return d_func()->showPolicys;
 }
 
-bool CUVBaseDialog::hasPolicy(const UVDialogPolicy::ShowPolicy& policy) const {
+bool CUVBaseDialog::hasPolicy(const ALDialogPolicy::ShowPolicy& policy) const {
 	return d_func()->hasPolicy(policy);
 }
 
@@ -114,9 +114,9 @@ void CUVBaseDialog::paintEvent(QPaintEvent* event) {
 	painter.save();
 	painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);
 	painter.setPen(Qt::NoPen);
-	painter.setBrush(UVThemeColor(d->themeMode, UVThemeType::DialogBase));
+	painter.setBrush(UVThemeColor(d->themeMode, ALThemeType::DialogBase));
 	painter.drawRect(rect());
-	painter.setBrush(UVThemeColor(d->themeMode, UVThemeType::DialogLayoutArea));
+	painter.setBrush(UVThemeColor(d->themeMode, ALThemeType::DialogLayoutArea));
 	painter.drawRoundedRect(QRectF(0, height() - 60, width(), 60), 8, 8);
 	painter.restore();
 }
@@ -124,14 +124,14 @@ void CUVBaseDialog::paintEvent(QPaintEvent* event) {
 void CUVBaseDialog::showEvent(QShowEvent* event) {
 	Q_D(CUVBaseDialog);
 
-	if (hasPolicy(UVDialogPolicy::ShowMask)) {
+	if (hasPolicy(ALDialogPolicy::ShowMask)) {
 		d->maskWidget->setVisible(true);
 		d->maskWidget->raise();
 		d->maskWidget->setFixedSize(parentWidget()->size());
 		d->maskWidget->doMaskAnimation(90);
 	}
 
-	if (hasPolicy(UVDialogPolicy::EnableAnimation)) {
+	if (hasPolicy(ALDialogPolicy::EnableAnimation)) {
 		this->setWindowOpacity(0.0);
 		d->fadeInAnimation->start();
 	}
@@ -224,7 +224,7 @@ bool CUVBaseDialog::nativeEvent(const QByteArray& eventType, void* message, long
 #endif
 		}
 		case WM_NCHITTEST: { // 拖动改变大小
-			if (d->hasPolicy(UVDialogPolicy::EnableResize)) {
+			if (d->hasPolicy(ALDialogPolicy::EnableResize)) {
 				POINT nativeLocalPos{ GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam) };
 				::ScreenToClient(hwnd, &nativeLocalPos);
 				RECT clientRect{ 0, 0, 0, 0 };

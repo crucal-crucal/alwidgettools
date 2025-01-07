@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class QAbstractButton;
 class QLabel;
@@ -11,25 +11,25 @@ class QVBoxLayout;
 class CUVText;
 class CUVIconButton;
 class CUVAwesomeToolButton;
-class CUVAppBar;
+class CALAppBar;
 
 class CUVAppBarPrivate final : public QObject {
 	Q_OBJECT
 	Q_DISABLE_COPY(CUVAppBarPrivate)
-	Q_DECLARE_PUBLIC(CUVAppBar)
+	Q_DECLARE_PUBLIC(CALAppBar)
 
 public:
-	explicit CUVAppBarPrivate(CUVAppBar* q, QObject* parent = nullptr);
+	explicit CUVAppBarPrivate(CALAppBar* q, QObject* parent = nullptr);
 	~CUVAppBarPrivate() override;
 
 	Q_SLOT void slotMinButtonClicked();
 	Q_SLOT void slotMaxButtonClicked();
 	Q_SLOT void slotCloseButtonClicked();
 	Q_SLOT void slotStayTopButtonClicked() const;
-	Q_SLOT void slotThemeModeChanged(const UVThemeType::ThemeMode& mode) const;
+	Q_SLOT void slotThemeModeChanged(const ALThemeType::ThemeMode& mode) const;
 
 protected:
-	CUVAppBar* const q_ptr{ nullptr };
+	CALAppBar* const q_ptr{ nullptr };
 
 private:
 	bool isStayTop{};
@@ -44,8 +44,8 @@ private:
 	quint64 clickTimer{};
 	int edges{};
 	int margins{ 8 };
-	UVAppBarType::ButtonFlags buttonFlags{};
-	QMap<UVAppBarType::ButtonFlag, QAbstractButton*> buttonMap{};
+	ALAppBarType::ButtonFlags buttonFlags{};
+	QMap<ALAppBarType::ButtonFlag, QAbstractButton*> buttonMap{};
 	QColor backgroundColor{};
 
 	QWidget* customWidget{ nullptr };
@@ -69,5 +69,5 @@ private:
 	bool containsCursorToItem(QWidget* item);
 	int calculateMinimumWidth();
 	QVBoxLayout* createVLayout(QWidget* widget) const;
-	[[nodiscard]] QAbstractButton* getButtonByAppBarFlag(const UVAppBarType::ButtonFlag& flag) const;
+	[[nodiscard]] QAbstractButton* getButtonByAppBarFlag(const ALAppBarType::ButtonFlag& flag) const;
 };

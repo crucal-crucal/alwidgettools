@@ -2,7 +2,7 @@
 
 #include <QColor>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class CUVProgressBar;
 class CUVProgressBarDelegate;
@@ -23,14 +23,14 @@ protected:
 	CUVProgressBarDelegate* delegate{ nullptr };
 
 private:
-	UVProgressType::ProgressType progressType{ UVProgressType::IndeterminateProgress };
-	UVProgressType::ProgressTextPosition position{ UVProgressType::Right };
+	ALProgressType::ProgressType progressType{ ALProgressType::IndeterminateProgress };
+	ALProgressType::ProgressTextPosition position{ ALProgressType::Right };
 	bool showProgerssText{ false };
 	QColor progressColor{};
 	QColor backgroundColor{};
 	qreal borderRadius{ 0.0 };
 
-	void calculateRects(QRect& progressRect, QRect& textRect, const UVProgressType::ProgressTextPosition& position) const;
+	void calculateRects(QRect& progressRect, QRect& textRect, const ALProgressType::ProgressTextPosition& position) const;
 };
 
 class CUVProgressBarDelegate final : public QObject {

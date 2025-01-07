@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class CUVBaseDialog;
 class CUVMaskWidget;
@@ -15,15 +15,15 @@ public:
 	explicit CUVBaseDialogPrivate(CUVBaseDialog* q, QObject* parent = nullptr);
 	~CUVBaseDialogPrivate() override;
 
-	[[nodiscard]] bool hasPolicy(const UVDialogPolicy::ShowPolicy& policy) const;
+	[[nodiscard]] bool hasPolicy(const ALDialogPolicy::ShowPolicy& policy) const;
 
 protected:
 	CUVBaseDialog* const q_ptr{ nullptr };
 
 private:
-	UVThemeType::ThemeMode themeMode{};
+	ALThemeType::ThemeMode themeMode{};
 	qint64 currentWinID{ 0 };
-	UVDialogPolicy::ShowPolicys showPolicys{ UVDialogPolicy::Normal };
+	ALDialogPolicy::ShowPolicys showPolicys{ ALDialogPolicy::Normal };
 	CUVMaskWidget* maskWidget{ nullptr };
 
 	/// animation

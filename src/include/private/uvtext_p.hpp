@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class CUVText;
 
@@ -13,14 +13,14 @@ public:
 	explicit CUVTextPrivate(CUVText* q, QObject* parent = nullptr);
 	~CUVTextPrivate() override;
 
-	Q_SLOT void slotThemeChanged(const UVThemeType::ThemeMode& mode);
+	Q_SLOT void slotThemeChanged(const ALThemeType::ThemeMode& mode);
 
 protected:
 	CUVText* const q_ptr{ nullptr };
 
 private:
-	UVThemeType::ThemeMode themeMode{};
+	ALThemeType::ThemeMode themeMode{};
 	bool isWrapAnyWhere{ false };
-	UVTextType::TextStyle textStyle{ UVTextType::NoStyle };
+	ALTextType::TextStyle textStyle{ ALTextType::NoStyle };
 	qreal textSpacing{ 0.5 };
 };

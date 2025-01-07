@@ -4,11 +4,11 @@
 #include <QMenu>
 #include <QWidget>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class CUVMenuPrivate;
 
-class CUVWIDGETTOOLS_EXPORT CUVMenu : public QMenu {
+class CALWIDGETTOOLS_EXPORT CUVMenu : public QMenu {
 	Q_OBJECT
 	Q_DISABLE_COPY(CUVMenu)
 	Q_DECLARE_PRIVATE(CUVMenu)
@@ -24,15 +24,15 @@ public:
 	QAction* addMenu(QMenu* menu);
 	CUVMenu* addMenu(const QString& title);
 	CUVMenu* addMenu(const QIcon& icon, const QString& title);
-	CUVMenu* addMenu(const UVIcon::CUVAweSomeIcon& icon, const QString& title);
+	CUVMenu* addMenu(const ALIcon::AweSomeIcon& icon, const QString& title);
 
 	using QWidget::addAction;
 	QAction* addAction(const QString& text);
-	QAction* addAction(const UVIcon::CUVAweSomeIcon& icon, const QString& text);
+	QAction* addAction(const ALIcon::AweSomeIcon& icon, const QString& text);
 	QAction* addAction(const QIcon& icon, const QString& text);
-	QAction* addAction(const UVIcon::CUVAweSomeIcon& icon, const QString& text, const QKeySequence& shortcut);
+	QAction* addAction(const ALIcon::AweSomeIcon& icon, const QString& text, const QKeySequence& shortcut);
 	QAction* addAction(const QIcon& icon, const QString& text, const QKeySequence& shortcut);
-	QAction* addAction(const UVIcon::CUVAweSomeIcon& icon, const QString& text, const QObject* receiver, const char* member, const QKeySequence& shortcut = 0);
+	QAction* addAction(const ALIcon::AweSomeIcon& icon, const QString& text, const QObject* receiver, const char* member, const QKeySequence& shortcut = 0);
 	QAction* addAction(const QIcon& icon, const QString& text, const QObject* receiver, const char* member, const QKeySequence& shortcut = 0);
 
 

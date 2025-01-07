@@ -5,7 +5,7 @@
 #include <QPainterPath>
 #include <QPropertyAnimation>
 
-#include "uvthememanager.hpp"
+#include "althememanager.hpp"
 #include "uvtoggleswitch_p.hpp"
 
 /**
@@ -73,7 +73,7 @@ CUVToggleSwitch::CUVToggleSwitch(QWidget* parent) : QWidget(parent), d_ptr(new C
 	d->circleCenterX = -1;
 	d->isToggled = false;
 	d->themeMode = UVTheme->getThemeMode();
-	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const UVThemeType::ThemeMode& mode) { d->themeMode = mode; });
+	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { d->themeMode = mode; });
 	setProperty("circleCenterX", 0.01);
 	setProperty("circleRadius", 0.01);
 }
@@ -174,8 +174,8 @@ void CUVToggleSwitch::paintEvent(QPaintEvent* event) {
 	painter.save();
 	painter.setRenderHints(QPainter::SmoothPixmapTransform | QPainter::Antialiasing | QPainter::TextAntialiasing);
 	// 背景绘制
-	painter.setPen(QPen(UVThemeColor(d->themeMode, d->isToggled ? UVThemeType::BasicBorder : UVThemeType::BasicBorderDeep), 1.5));
-	painter.setBrush(UVThemeColor(d->themeMode, isEnabled() ? d->isToggled ? UVThemeType::PrimaryNormal : underMouse() ? UVThemeType::BasicHover : UVThemeType::BasicBase : UVThemeType::BasicDisable));
+	painter.setPen(QPen(UVThemeColor(d->themeMode, d->isToggled ? ALThemeType::BasicBorder : ALThemeType::BasicBorderDeep), 1.5));
+	painter.setBrush(UVThemeColor(d->themeMode, isEnabled() ? d->isToggled ? ALThemeType::PrimaryNormal : underMouse() ? ALThemeType::BasicHover : ALThemeType::BasicBase : ALThemeType::BasicDisable));
 	QPainterPath path;
 	path.moveTo(width() - height() - d->margin, height() - d->margin);
 	path.arcTo(QRectF(QPointF(width() - height() - d->margin, d->margin), QSize(height() - d->margin * 2, height() - d->margin * 2)), -90, 180);
@@ -187,7 +187,7 @@ void CUVToggleSwitch::paintEvent(QPaintEvent* event) {
 
 	// 圆心绘制
 	painter.setPen(Qt::NoPen);
-	painter.setBrush(UVThemeColor(d->themeMode, isEnabled() ? d->isToggled ? UVThemeType::BasicTextInvert : UVThemeType::ToggleSwitchNoToggledCenter : UVThemeType::BasicTextDisable));
+	painter.setBrush(UVThemeColor(d->themeMode, isEnabled() ? d->isToggled ? ALThemeType::BasicTextInvert : ALThemeType::ToggleSwitchNoToggledCenter : ALThemeType::BasicTextDisable));
 	if (d->circleRadius == 0) {
 		d->circleRadius = this->isEnabled() ? (underMouse() ? height() * 0.35 : height() * 0.3) : height() * 0.3;
 	}

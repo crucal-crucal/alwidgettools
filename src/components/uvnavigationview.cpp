@@ -75,7 +75,7 @@ void CUVNavigationView::slotCustomContextMenuRequested(const QPoint& pos) {
 	if (const auto posNode = static_cast<CUVNavigationNode*>(posIndex.internalPointer()); !posNode->getIsExpanderNode()) {
 		CUVMenu menu;
 		menu.setMenuItemHeight(27);
-		const QAction* openAction = menu.addAction(UVIcon::CUVAweSomeIcon::ObjectGroup, tr("Opens in a new window"));
+		const QAction* openAction = menu.addAction(ALIcon::AweSomeIcon::ObjectGroup, tr("Opens in a new window"));
 		connect(openAction, &QAction::triggered, this, [=]() { Q_EMIT sigNavigationOpenNewWindow(posNode->getNodeKey()); });
 		menu.exec(mapToGlobal(pos));
 	}

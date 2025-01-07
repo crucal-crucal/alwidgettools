@@ -2,7 +2,7 @@
 
 #include <QWidget>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class CUVSuggestBoxSearchViewContainer final : public QWidget {
 	Q_OBJECT
@@ -15,5 +15,5 @@ protected:
 	void paintEvent(QPaintEvent* event) override;
 
 private:
-	UVThemeType::ThemeMode themeMode{};
+	ALThemeType::ThemeMode themeMode{};
 };

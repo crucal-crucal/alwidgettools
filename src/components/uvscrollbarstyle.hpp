@@ -2,7 +2,7 @@
 
 #include <QProxyStyle>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class CUVScrollBar;
 
@@ -37,7 +37,7 @@ signals:
 	void sigSliderExtentChanged();
 
 private:
-	UVThemeType::ThemeMode m_themeMode{};
+	ALThemeType::ThemeMode m_themeMode{};
 	bool m_isExpand{};
 	qreal m_opacity{};
 	qreal m_sliderExtent{};

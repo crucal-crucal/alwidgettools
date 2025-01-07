@@ -2,7 +2,7 @@
 
 #include <QProxyStyle>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class CUVComboBoxStyle final : public QProxyStyle {
 	Q_OBJECT
@@ -32,7 +32,7 @@ public:
 	void sigExpandMarkWidthChanged();
 
 private:
-	UVThemeType::ThemeMode m_themeMode{};
+	ALThemeType::ThemeMode m_themeMode{};
 	qreal m_expandIconRotate{};
 	qreal m_expandMarkWidth{};
 	int m_shadowBorderWidth{};

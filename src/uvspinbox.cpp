@@ -8,7 +8,7 @@
 #include "uvmenu.hpp"
 #include "uvspinboxstyle.hpp"
 #include "uvspinbox_p.hpp"
-#include "uvthememanager.hpp"
+#include "althememanager.hpp"
 
 /**
  * \class CUVSpinBoxPrivate
@@ -30,11 +30,11 @@ CUVMenu* CUVSpinBoxPrivate::createStandardContextMenu() {
 	menu->setAttribute(Qt::WA_DeleteOnClose);
 	QAction* action{ nullptr };
 	if (!lineEdit->isReadOnly()) {
-		action = menu->addAction(UVIcon::CUVAweSomeIcon::ArrowRotateLeft, tr("Undo"), QKeySequence::Undo);
+		action = menu->addAction(ALIcon::AweSomeIcon::ArrowRotateLeft, tr("Undo"), QKeySequence::Undo);
 		action->setEnabled(lineEdit->isUndoAvailable());
 		connect(action, &QAction::triggered, lineEdit, &QLineEdit::undo);
 
-		action = menu->addAction(UVIcon::CUVAweSomeIcon::ArrowRotateRight, tr("Redo"), QKeySequence::Redo);
+		action = menu->addAction(ALIcon::AweSomeIcon::ArrowRotateRight, tr("Redo"), QKeySequence::Redo);
 		action->setEnabled(lineEdit->isRedoAvailable());
 		connect(action, &QAction::triggered, lineEdit, &QLineEdit::redo);
 		menu->addSeparator();
@@ -42,23 +42,23 @@ CUVMenu* CUVSpinBoxPrivate::createStandardContextMenu() {
 
 #ifndef QT_NO_CLIPBOARD
 	if (!lineEdit->isReadOnly()) {
-		action = menu->addAction(UVIcon::CUVAweSomeIcon::KnifeKitchen, tr("Cut"), QKeySequence::Cut);
+		action = menu->addAction(ALIcon::AweSomeIcon::KnifeKitchen, tr("Cut"), QKeySequence::Cut);
 		action->setEnabled(!lineEdit->isReadOnly() && lineEdit->hasSelectedText() && lineEdit->echoMode() == QLineEdit::Normal);
 		connect(action, &QAction::triggered, lineEdit, &QLineEdit::cut);
 	}
 
-	action = menu->addAction(UVIcon::CUVAweSomeIcon::Copy, tr("Copy"), QKeySequence::Copy);
+	action = menu->addAction(ALIcon::AweSomeIcon::Copy, tr("Copy"), QKeySequence::Copy);
 	action->setEnabled(lineEdit->hasSelectedText() && lineEdit->echoMode() == QLineEdit::Normal);
 	connect(action, &QAction::triggered, lineEdit, &QLineEdit::copy);
 
 	if (!lineEdit->isReadOnly()) {
-		action = menu->addAction(UVIcon::CUVAweSomeIcon::Paste, tr("Paste"), QKeySequence::Paste);
+		action = menu->addAction(ALIcon::AweSomeIcon::Paste, tr("Paste"), QKeySequence::Paste);
 		action->setEnabled(!lineEdit->isReadOnly() && !QGuiApplication::clipboard()->text().isEmpty());
 		connect(action, &QAction::triggered, lineEdit, &QLineEdit::paste);
 	}
 #endif
 	if (!lineEdit->isReadOnly()) {
-		action = menu->addAction(UVIcon::CUVAweSomeIcon::DeleteLeft, tr("delete"));
+		action = menu->addAction(ALIcon::AweSomeIcon::DeleteLeft, tr("delete"));
 		action->setEnabled(!lineEdit->isReadOnly() && !lineEdit->text().isEmpty() && lineEdit->hasSelectedText());
 		connect(action, &QAction::triggered, this, [=]() {
 			if (lineEdit->hasSelectedText()) {
@@ -88,10 +88,10 @@ CUVSpinBox::CUVSpinBox(QWidget* parent): QSpinBox(parent), d_ptr(new CUVSpinBoxP
 	setFixedSize(120, 30);
 	lineEdit()->setAlignment(Qt::AlignCenter);
 	lineEdit()->setStyleSheet("background-color: transparent;");
-	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const UVThemeType::ThemeMode& mode) {
+	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) {
 		QPalette palette;
 		palette.setColor(QPalette::Base, Qt::transparent);
-		palette.setColor(QPalette::Text, UVThemeColor(mode, UVThemeType::BasicText));
+		palette.setColor(QPalette::Text, UVThemeColor(mode, ALThemeType::BasicText));
 		lineEdit()->setPalette(palette);
 	});
 }
@@ -104,9 +104,9 @@ void CUVSpinBox::contextMenuEvent(QContextMenuEvent* event) {
 	CUVMenu* menu = d->createStandardContextMenu();
 	menu->addSeparator();
 	const uint step = stepEnabled();
-	QAction* up = menu->addAction(UVIcon::CUVAweSomeIcon::Plus, tr("add"));
+	QAction* up = menu->addAction(ALIcon::AweSomeIcon::Plus, tr("add"));
 	up->setEnabled(step & StepUpEnabled);
-	QAction* down = menu->addAction(UVIcon::CUVAweSomeIcon::Minus, tr("subtract"));
+	QAction* down = menu->addAction(ALIcon::AweSomeIcon::Minus, tr("subtract"));
 	down->setEnabled(step & StepDownEnabled);
 	menu->addSeparator();
 

@@ -2,7 +2,7 @@
 
 #include <QPixmap>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class CUVInteractiveCard;
 
@@ -19,8 +19,8 @@ protected:
 	CUVInteractiveCard* const q_ptr{ nullptr };
 
 private:
-	UVThemeType::ThemeMode themeMode{};
-	UVCardPixType::PixMode cardPixMode{};
+	ALThemeType::ThemeMode themeMode{};
+	ALCardPixType::PixMode cardPixMode{};
 	qreal borderRadius{};
 	qreal cardPixmapBorderRadius{};
 	int titlePixelSize{};

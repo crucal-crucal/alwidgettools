@@ -1,4 +1,4 @@
-﻿#include "uvcircularprogress.hpp"
+﻿#include "alcircularprogress.hpp"
 
 #include <QPainter>
 #include <QPainterPath>
@@ -23,7 +23,7 @@ void CUVCircularProgressPrivate::init() {
 	Q_Q(CUVCircularProgress);
 
 	delegate = new CUVCircularProgressDelegate(q);
-	progressType = UVProgressType::IndeterminateProgress;
+	progressType = ALProgressType::IndeterminateProgress;
 	showProgressText = true;
 	color = Qt::green;
 	disabledColor = Qt::gray;
@@ -71,13 +71,13 @@ void CUVCircularProgressPrivate::_updateAnimation() {
 	Q_Q(CUVCircularProgress);
 
 	switch (progressType) {
-		case UVProgressType::DiscontinuousLoading: {
+		case ALProgressType::DiscontinuousLoading: {
 			if (++currentIndex1 >= endIndex1) {
 				currentIndex1 = startIndex1;
 			}
 			break;
 		}
-		case UVProgressType::ContinuousLoading: {
+		case ALProgressType::ContinuousLoading: {
 			if (++currentIndex2 >= endIndex2) {
 				currentIndex2 = startIndex2;
 			}
@@ -228,13 +228,13 @@ CUVCircularProgress::CUVCircularProgress(QWidget* parent): QProgressBar(parent),
 
 CUVCircularProgress::~CUVCircularProgress() = default;
 
-void CUVCircularProgress::setProgressType(const UVProgressType::ProgressType& type) {
+void CUVCircularProgress::setProgressType(const ALProgressType::ProgressType& type) {
 	Q_D(CUVCircularProgress);
 
 	if (this->isVisible()) {
 		switch (type) {
-			case UVProgressType::DiscontinuousLoading:
-			case UVProgressType::ContinuousLoading: {
+			case ALProgressType::DiscontinuousLoading:
+			case ALProgressType::ContinuousLoading: {
 				if (!d->timer->isActive()) {
 					d->timer->start(30);
 				}
@@ -251,7 +251,7 @@ void CUVCircularProgress::setProgressType(const UVProgressType::ProgressType& ty
 	update();
 }
 
-UVProgressType::ProgressType CUVCircularProgress::getProgressType() const {
+ALProgressType::ProgressType CUVCircularProgress::getProgressType() const {
 	return d_func()->progressType;
 }
 
@@ -322,8 +322,8 @@ void CUVCircularProgress::showEvent(QShowEvent* event) {
 	Q_D(CUVCircularProgress);
 
 	switch (d->progressType) {
-		case UVProgressType::DiscontinuousLoading:
-		case UVProgressType::ContinuousLoading: {
+		case ALProgressType::DiscontinuousLoading:
+		case ALProgressType::ContinuousLoading: {
 			if (!d->timer->isActive()) {
 				d->timer->start(30);
 			}
@@ -365,7 +365,7 @@ void CUVCircularProgress::paintEvent(QPaintEvent* event) {
 		return;
 	}
 
-	if (UVProgressType::IndeterminateProgress == d->progressType) {
+	if (ALProgressType::IndeterminateProgress == d->progressType) {
 		painter.translate(static_cast<qreal>(width()) / 2, static_cast<qreal>(height()) / 2);
 		painter.rotate(d->delegate->getAngle());
 	}
@@ -376,19 +376,19 @@ void CUVCircularProgress::paintEvent(QPaintEvent* event) {
 	pen.setColor(d->color);
 
 	switch (d->progressType) {
-		case UVProgressType::IndeterminateProgress: {
+		case ALProgressType::IndeterminateProgress: {
 			d->drawIndeterminate(painter, pen);
 			break;
 		}
-		case UVProgressType::DeterminateProgress: {
+		case ALProgressType::DeterminateProgress: {
 			d->drawDeterminate(painter, pen);
 			break;
 		}
-		case UVProgressType::DiscontinuousLoading: {
+		case ALProgressType::DiscontinuousLoading: {
 			d->drawDiscontinuous(painter, pen);
 			break;
 		}
-		case UVProgressType::ContinuousLoading: {
+		case ALProgressType::ContinuousLoading: {
 			d->drawContinuous(painter, pen);
 			break;
 		}

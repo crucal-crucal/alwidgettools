@@ -2,11 +2,11 @@
 
 #include <QWidget>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class CUVSuggestBoxPrivate;
 
-class CUVWIDGETTOOLS_EXPORT CUVSuggestBox : public QWidget {
+class CALWIDGETTOOLS_EXPORT CUVSuggestBox : public QWidget {
 	Q_OBJECT
 	Q_DECLARE_PRIVATE(CUVSuggestBox)
 	Q_PROPERTY(int borderRadius READ getBorderRadius WRITE setBorderRadius NOTIFY sigBorderRadiusChanged)
@@ -25,7 +25,7 @@ public:
 	void setPlaceholderText(const QString& placaHolderText);
 
 	void addSuggestion(const QString& suggestText, const QVariantMap& suggestData = {});
-	void addSuggestion(const UVIcon::CUVAweSomeIcon& awesomeIcon, const QString& suggestText, const QVariantMap& suggestData = {});
+	void addSuggestion(const ALIcon::AweSomeIcon& awesomeIcon, const QString& suggestText, const QVariantMap& suggestData = {});
 	void removeSuggestion(const QString& suggestText);
 	void removeSuggestion(int index);
 

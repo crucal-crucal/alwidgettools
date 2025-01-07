@@ -2,11 +2,11 @@
 
 #include <QCheckBox>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class CUVCheckBoxPrivate;
 
-class CUVWIDGETTOOLS_EXPORT CUVCheckBox : public QCheckBox {
+class CALWIDGETTOOLS_EXPORT CUVCheckBox : public QCheckBox {
 	Q_OBJECT
 	Q_DECLARE_PRIVATE(CUVCheckBox)
 

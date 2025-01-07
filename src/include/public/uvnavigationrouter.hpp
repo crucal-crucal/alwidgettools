@@ -2,12 +2,12 @@
 
 #include <QVariantMap>
 
-#include "uvwidgettoolsdef.hpp"
-#include "uvsingleton.hpp"
+#include "alwidgettoolsdef.hpp"
+#include "alsingleton.hpp"
 
 class CUVNavigationRouterPrivate;
 
-class CUVWIDGETTOOLS_EXPORT CUVNavigationRouter : public QObject {
+class CALWIDGETTOOLS_EXPORT CUVNavigationRouter : public QObject {
 	Q_OBJECT
 	Q_DECLARE_PRIVATE(CUVNavigationRouter)
 	Q_PROPERTY(int maxRouteCount READ getMaxRouteCount WRITE setMaxRouteCount NOTIFY sigMaxRouteCountChanged)
@@ -15,7 +15,7 @@ class CUVWIDGETTOOLS_EXPORT CUVNavigationRouter : public QObject {
 public:
 	static CUVNavigationRouter* instance();
 
-	UVNavigationRouterType::NavigationRouteType navigationRoute(QObject* routeObject, const QString& routeFuncName, const QVariantMap& routeData = {}, const Qt::ConnectionType& connectionType = Qt::AutoConnection);
+	ALNavigationRouterType::NavigationRouteType navigationRoute(QObject* routeObject, const QString& routeFuncName, const QVariantMap& routeData = {}, const Qt::ConnectionType& connectionType = Qt::AutoConnection);
 	void navigationRouteBack();
 
 	void setMaxRouteCount(int maxRouteCount);

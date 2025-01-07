@@ -2,12 +2,12 @@
 
 #include <QDialog>
 
-#include "uvappbar.hpp"
-#include "uvwidgettoolsdef.hpp"
+#include "alappbar.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class CUVColorDialogPrivate;
 
-class CUVWIDGETTOOLS_EXPORT CUVColorDialog : public QDialog {
+class CALWIDGETTOOLS_EXPORT CUVColorDialog : public QDialog {
 	Q_OBJECT
 	Q_DECLARE_PRIVATE(CUVColorDialog)
 	Q_PROPERTY(QColor currentColor READ getCurrentColor WRITE setCurrentColor NOTIFY sigCurrentColorChanged)

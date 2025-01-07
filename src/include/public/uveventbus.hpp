@@ -2,12 +2,12 @@
 
 #include <QVariantMap>
 
-#include "uvsingleton.hpp"
-#include "uvwidgettoolsdef.hpp"
+#include "alsingleton.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class CUVEventPrivate;
 
-class CUVWIDGETTOOLS_EXPORT CUVEvent : public QObject {
+class CALWIDGETTOOLS_EXPORT CALEvent : public QObject {
 	Q_OBJECT
 	Q_DECLARE_PRIVATE(CUVEvent)
 	Q_PROPERTY(QString eventName READ getEventName WRITE setEventName NOTIFY sigEventNameChanged)
@@ -15,11 +15,11 @@ class CUVWIDGETTOOLS_EXPORT CUVEvent : public QObject {
 	Q_PROPERTY(Qt::ConnectionType connectionType READ getConnectionType WRITE setConnectionType NOTIFY sigConnectionTypeChanged)
 
 public:
-	explicit CUVEvent(QObject* parent = nullptr);
-	explicit CUVEvent(const QString& eventName, const QString& funcName, QObject* parent = nullptr);
-	~CUVEvent() override;
+	explicit CALEvent(QObject* parent = nullptr);
+	explicit CALEvent(const QString& eventName, const QString& funcName, QObject* parent = nullptr);
+	~CALEvent() override;
 
-	UVEventBusType::EventBusReturnType registerAndInit();
+	ALEventBusType::EventBusReturnType registerAndInit();
 
 	void setEventName(const QString& eventName);
 	[[nodiscard]] QString getEventName() const;
@@ -42,21 +42,21 @@ protected:
 
 class CUVEventBusPrivate;
 
-class CUVWIDGETTOOLS_EXPORT CUVEventBus final : public QObject {
+class CALWIDGETTOOLS_EXPORT CUVEventBus final : public QObject {
 	Q_OBJECT
 	Q_DECLARE_PRIVATE(CUVEventBus)
 
 public:
 	static CUVEventBus* instance();
 
-	UVEventBusType::EventBusReturnType post(const QString& eventName, const QVariantMap& data = {});
+	ALEventBusType::EventBusReturnType post(const QString& eventName, const QVariantMap& data = {});
 	[[nodiscard]] QStringList getRegisteredEventsName() const;
 
 protected:
 	const QScopedPointer<CUVEventBusPrivate> d_ptr{ nullptr };
 
 	friend class CUVSingleton<CUVEventBus>;
-	friend class CUVEvent;
+	friend class CALEvent;
 
 private:
 	explicit CUVEventBus(QObject* parent = nullptr);

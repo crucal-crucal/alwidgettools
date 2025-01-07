@@ -2,12 +2,12 @@
 
 #include <QToolButton>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class CUVMenu;
 class CUVAwesomeToolButtonPrivate;
 
-class CUVWIDGETTOOLS_EXPORT CUVAwesomeToolButton : public QToolButton {
+class CALWIDGETTOOLS_EXPORT CUVAwesomeToolButton : public QToolButton {
 	Q_OBJECT
 	Q_DECLARE_PRIVATE(CUVAwesomeToolButton)
 	Q_PROPERTY(int BorderRadius READ getBorderRadius WRITE setBorderRadius NOTIFY sigBorderRadiusChanged)
@@ -27,7 +27,7 @@ public:
 	[[nodiscard]] bool getIsTransparent() const;
 
 	void setMenu(CUVMenu* menu);
-	void setAweSomeIcon(const UVIcon::CUVAweSomeIcon& icon);
+	void setAweSomeIcon(const ALIcon::AweSomeIcon& icon);
 
 	void setToolTip(const QString& tooltip);
 

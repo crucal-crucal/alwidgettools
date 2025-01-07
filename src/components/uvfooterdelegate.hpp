@@ -2,7 +2,7 @@
 
 #include <QStyledItemDelegate>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class QPropertyAnimation;
 
@@ -37,7 +37,7 @@ private:
 	QPropertyAnimation* m_selectMarkBottomAnimation{ nullptr };
 	QModelIndex m_pressIndex{};
 
-	UVThemeType::ThemeMode themeMode{};
+	ALThemeType::ThemeMode themeMode{};
 	int m_leftPadding{ 11 };
 	int m_iconAreaWidth{ 40 };
 	int m_textRightSpacing{ 3 };

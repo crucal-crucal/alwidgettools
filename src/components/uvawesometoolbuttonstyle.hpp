@@ -2,7 +2,7 @@
 
 #include <QProxyStyle>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class QStyleOptionToolButton;
 
@@ -33,7 +33,7 @@ signals:
 	void sigExpandIconRotateChanged();
 
 private:
-	UVThemeType::ThemeMode m_themeMode{};
+	ALThemeType::ThemeMode m_themeMode{};
 	bool m_isTransparent{};
 	int m_borderRadius{};
 	qreal m_expandIconRotate{};

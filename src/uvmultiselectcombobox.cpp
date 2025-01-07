@@ -12,7 +12,7 @@
 #include "uvcomboboxview.hpp"
 #include "uvmultiselectcombobox_p.hpp"
 #include "uvscrollbar.hpp"
-#include "uvthememanager.hpp"
+#include "althememanager.hpp"
 
 /**
  * @brief \class CUVMultiSelectComboBoxPrivate
@@ -145,7 +145,7 @@ CUVMultiSelectComboBox::CUVMultiSelectComboBox(QWidget* parent): QComboBox(paren
 	d->expandIconRotate = 0;
 	d->expandMarkWidth = 0;
 	d->themeMode = UVTheme->getThemeMode();
-	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const UVThemeType::ThemeMode& mode) { d->themeMode = mode; });
+	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { d->themeMode = mode; });
 	setFixedHeight(35);
 
 	d->comboBoxStyle = new CUVComboBoxStyle(style());
@@ -315,33 +315,33 @@ void CUVMultiSelectComboBox::paintEvent(QPaintEvent* event) {
 	QPainter painter(this);
 	painter.save();
 	painter.setRenderHints(QPainter::SmoothPixmapTransform | QPainter::Antialiasing | QPainter::TextAntialiasing);
-	painter.setPen(UVThemeColor(d->themeMode, UVThemeType::BasicBorder));
-	painter.setBrush(isEnabled() ? UVThemeColor(d->themeMode, underMouse() ? UVThemeType::BasicHover : UVThemeType::BasicBase) : Qt::transparent);
+	painter.setPen(UVThemeColor(d->themeMode, ALThemeType::BasicBorder));
+	painter.setBrush(isEnabled() ? UVThemeColor(d->themeMode, underMouse() ? ALThemeType::BasicHover : ALThemeType::BasicBase) : Qt::transparent);
 	QRect foregroundRect = rect();
 	foregroundRect.adjust(6, 1, -6, -1); // 上下左右内部边距
 	painter.drawRoundedRect(foregroundRect, d->borderRadius, d->borderRadius);
 	// 底边线绘制
-	painter.setPen(UVThemeColor(d->themeMode, UVThemeType::BasicBaseLine));
+	painter.setPen(UVThemeColor(d->themeMode, ALThemeType::BasicBaseLine));
 	painter.drawLine(foregroundRect.x() + d->borderRadius, foregroundRect.y() + foregroundRect.height(), foregroundRect.x() + foregroundRect.width() - d->borderRadius, foregroundRect.y() + foregroundRect.height());
 	// 文字绘制
-	painter.setPen(UVThemeColor(d->themeMode, isEnabled() ? UVThemeType::BasicText : UVThemeType::BasicTextDisable));
+	painter.setPen(UVThemeColor(d->themeMode, isEnabled() ? ALThemeType::BasicText : ALThemeType::BasicTextDisable));
 	const QString currentText = painter.fontMetrics().elidedText(d->currentText, Qt::ElideRight, foregroundRect.width() - 27 - static_cast<int>(width() * 0.05));
 	painter.drawText(15, height() / 2 + painter.fontMetrics().ascent() / 2 - 1, currentText);
 	// 展开指示器绘制
 	painter.setPen(Qt::NoPen);
-	painter.setBrush(d->themeMode == UVThemeType::Light ? QColor(0x0E, 0x6F, 0xC3) : QColor(0x4C, 0xA0, 0xE0));
+	painter.setBrush(d->themeMode == ALThemeType::Light ? QColor(0x0E, 0x6F, 0xC3) : QColor(0x4C, 0xA0, 0xE0));
 	painter.drawRoundedRect(QRectF(width() / 2.0 - d->expandMarkWidth, height() - 3, d->expandMarkWidth * 2, 3), 2, 2);
 	// 展开图标绘制
 	if (count() > 0) {
 		QFont iconFont("CUVAwesome");
 		iconFont.setPixelSize(17);
 		painter.setFont(iconFont);
-		painter.setPen(UVThemeColor(d->themeMode, isEnabled() ? UVThemeType::BasicText : UVThemeType::BasicTextDisable));
+		painter.setPen(UVThemeColor(d->themeMode, isEnabled() ? ALThemeType::BasicText : ALThemeType::BasicTextDisable));
 		const QRectF expandIconRect(width() - 25, 0, 20, height());
 		painter.translate(expandIconRect.x() + expandIconRect.width() / 2.0 - 2.0, expandIconRect.y() + expandIconRect.height() / 2.0);
 		painter.rotate(d->expandIconRotate);
 		painter.translate(-expandIconRect.x() - expandIconRect.width() / 2.0 + 2.0, expandIconRect.y() - expandIconRect.height() / 2.0);
-		painter.drawText(expandIconRect, Qt::AlignVCenter, QChar(static_cast<unsigned short>(UVIcon::CUVAweSomeIcon::AngleDown)));
+		painter.drawText(expandIconRect, Qt::AlignVCenter, QChar(static_cast<unsigned short>(ALIcon::AweSomeIcon::AngleDown)));
 	}
 	painter.restore();
 }

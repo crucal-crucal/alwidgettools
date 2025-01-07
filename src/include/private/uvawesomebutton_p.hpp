@@ -4,9 +4,9 @@
 #include <QObject>
 #include <QFont>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
-using namespace UVIcon;
+using namespace ALIcon;
 
 class CUVToolTip;
 class CUVAwesomeButton;
@@ -30,7 +30,7 @@ private:
 	int borderRaius{};
 	qreal opacity{};
 	QFont iconFont{};
-	CUVAweSomeIcon iconType{};
+	AweSomeIcon iconType{};
 	QColor ligntSelectedColor{};
 	QColor darkSelectedColor{};
 	QColor lightHoverColor{};

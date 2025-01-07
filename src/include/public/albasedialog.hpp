@@ -2,11 +2,11 @@
 
 #include <QDialog>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class CUVBaseDialogPrivate;
 
-class CUVWIDGETTOOLS_EXPORT CUVBaseDialog : public QDialog {
+class CALWIDGETTOOLS_EXPORT CUVBaseDialog : public QDialog {
 	Q_OBJECT
 	Q_DECLARE_PRIVATE(CUVBaseDialog)
 
@@ -18,27 +18,27 @@ public:
 	 * @brief 设置弹窗显示策略
 	 * @param policys \see \enum UVDialogPolicy::ShowPolicys
 	 */
-	void setShowPolicys(const UVDialogPolicy::ShowPolicys& policys);
+	void setShowPolicys(const ALDialogPolicy::ShowPolicys& policys);
 
 	/**
 	 * @brief 设置弹窗显示策略
 	 * @param policy \see \enum UVDialogPolicy::ShowPolicy
 	 * @param enabled 是否开启
 	 */
-	void setShowPolicy(const UVDialogPolicy::ShowPolicy& policy, bool enabled);
+	void setShowPolicy(const ALDialogPolicy::ShowPolicy& policy, bool enabled);
 
 	/**
 	 * @brief 当前弹窗显示策略
 	 * @return \see \enum UVDialogPolicy::ShowPolicys
 	 */
-	[[nodiscard]] UVDialogPolicy::ShowPolicys showPolicys() const;
+	[[nodiscard]] ALDialogPolicy::ShowPolicys showPolicys() const;
 
 	/**
 	 * @brief 是否有指定策略
 	 * @param policy \see \enum UVDialogPolicy::ShowPolicy
 	 * @return 是否含有
 	 */
-	[[nodiscard]] bool hasPolicy(const UVDialogPolicy::ShowPolicy& policy) const;
+	[[nodiscard]] bool hasPolicy(const ALDialogPolicy::ShowPolicy& policy) const;
 
 	void close();
 

@@ -11,7 +11,7 @@
 #include "uvsuggestbox_p.hpp"
 #include "uvsuggestdelegate.hpp"
 #include "uvsuggestmodel.hpp"
-#include "uvthememanager.hpp"
+#include "althememanager.hpp"
 
 /**
  * @brief \class CUVSuggestion
@@ -19,19 +19,19 @@
  * @param parent pointer to the parent class
  */
 CUVSuggestion::CUVSuggestion(QObject* parent): QObject(parent) {
-	awesomeIcon = UVIcon::CUVAweSomeIcon::None;
+	awesomeIcon = ALIcon::AweSomeIcon::None;
 	suggestText = "";
 	suggestData = QVariantMap();
 }
 
 CUVSuggestion::~CUVSuggestion() = default;
 
-void CUVSuggestion::setAwesomeIcon(const UVIcon::CUVAweSomeIcon& icon) {
+void CUVSuggestion::setAwesomeIcon(const ALIcon::AweSomeIcon& icon) {
 	awesomeIcon = icon;
 	Q_EMIT sigAwesomeIconChanged();
 }
 
-UVIcon::CUVAweSomeIcon CUVSuggestion::getAwesomeIcon() const {
+ALIcon::AweSomeIcon CUVSuggestion::getAwesomeIcon() const {
 	return awesomeIcon;
 }
 
@@ -66,10 +66,10 @@ CUVSuggestBoxPrivate::CUVSuggestBoxPrivate(CUVSuggestBox* q, QObject* parent): Q
 
 CUVSuggestBoxPrivate::~CUVSuggestBoxPrivate() = default;
 
-void CUVSuggestBoxPrivate::slotThemeModeChanged(const UVThemeType::ThemeMode& mode) {
+void CUVSuggestBoxPrivate::slotThemeModeChanged(const ALThemeType::ThemeMode& mode) {
 	themeMode = mode;
-	searchLineEdit->removeAction(themeMode == UVThemeType::Light ? darkSearchAction : lightSearchAction);
-	searchLineEdit->addAction(themeMode == UVThemeType::Light ? lightSearchAction : darkSearchAction, QLineEdit::TrailingPosition);
+	searchLineEdit->removeAction(themeMode == ALThemeType::Light ? darkSearchAction : lightSearchAction);
+	searchLineEdit->addAction(themeMode == ALThemeType::Light ? lightSearchAction : darkSearchAction, QLineEdit::TrailingPosition);
 	searchLineEdit->update();
 }
 
@@ -199,14 +199,14 @@ CUVSuggestBox::CUVSuggestBox(QWidget* parent): QWidget(parent), d_ptr(new CUVSug
 	d->themeMode = UVTheme->getThemeMode();
 	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, d, &CUVSuggestBoxPrivate::slotThemeModeChanged);
 
-	d->lightSearchAction = new QAction(CUVIcon::getQIconFromAwesomeIcon(UVIcon::CUVAweSomeIcon::MagnifyingGlass), tr("search"), this);
-	d->darkSearchAction = new QAction(CUVIcon::getQIconFromAwesomeIcon(UVIcon::CUVAweSomeIcon::MagnifyingGlass, QColor(0xFF, 0xFF, 0xFF)), tr("search"), this);
+	d->lightSearchAction = new QAction(CUVIcon::getQIconFromAwesomeIcon(ALIcon::AweSomeIcon::MagnifyingGlass), tr("search"), this);
+	d->darkSearchAction = new QAction(CUVIcon::getQIconFromAwesomeIcon(ALIcon::AweSomeIcon::MagnifyingGlass, QColor(0xFF, 0xFF, 0xFF)), tr("search"), this);
 
 	d->searchLineEdit = new CUVLineEdit(this);
 	d->searchLineEdit->setFixedHeight(35);
 	d->searchLineEdit->setPlaceholderText(tr("search Feature"));
 	d->searchLineEdit->setClearButtonEnabled(true);
-	d->searchLineEdit->addAction(d->themeMode == UVThemeType::Light ? d->lightSearchAction : d->darkSearchAction, QLineEdit::TrailingPosition);
+	d->searchLineEdit->addAction(d->themeMode == ALThemeType::Light ? d->lightSearchAction : d->darkSearchAction, QLineEdit::TrailingPosition);
 	connect(d->searchLineEdit, &CUVLineEdit::textChanged, d, &CUVSuggestBoxPrivate::slotSearchEditTextEdit);
 	connect(d->searchLineEdit, &CUVLineEdit::sigFocusIn, d, &CUVSuggestBoxPrivate::slotSearchEditTextEdit);
 	connect(d->searchLineEdit, &CUVLineEdit::sigWmFocusOut, this, [d]() { d->startCloseAnimation(); });
@@ -267,7 +267,7 @@ void CUVSuggestBox::addSuggestion(const QString& suggestText, const QVariantMap&
 	d_func()->suggestionVector.append(suggest);
 }
 
-void CUVSuggestBox::addSuggestion(const UVIcon::CUVAweSomeIcon& awesomeIcon, const QString& suggestText, const QVariantMap& suggestData) {
+void CUVSuggestBox::addSuggestion(const ALIcon::AweSomeIcon& awesomeIcon, const QString& suggestText, const QVariantMap& suggestData) {
 	const auto suggest = new CUVSuggestion(this);
 	suggest->setAwesomeIcon(awesomeIcon);
 	suggest->setSuggestText(suggestText);

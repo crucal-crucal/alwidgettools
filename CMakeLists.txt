@@ -1,8 +1,8 @@
 ﻿cmake_minimum_required(VERSION 3.16)
-project(uvwidgettools VERSION 0.1 LANGUAGES CXX)
+project(cruwidgettools VERSION 0.1 LANGUAGES CXX)
 
-include(${CMAKE_SOURCE_DIR}/cmake/uvsetup.cmake)
-include(${CMAKE_SOURCE_DIR}/cmake/uvconfigmacros.cmake)
+include(${CMAKE_SOURCE_DIR}/cmake/crusetup.cmake)
+include(${CMAKE_SOURCE_DIR}/cmake/cruconfigmacros.cmake)
 
 uv_initialize_build_flags()
 uv_setup_Qt()

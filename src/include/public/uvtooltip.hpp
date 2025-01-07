@@ -2,13 +2,13 @@
 
 #include <QWidget>
 
-#include "uvsingleton.hpp"
-#include "uvwidgettoolsdef.hpp"
+#include "alsingleton.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class CUVToolTipHelper;
 class CUVToolTipPrivate;
 
-class CUVWIDGETTOOLS_EXPORT CUVToolTip : public QWidget {
+class CALWIDGETTOOLS_EXPORT CUVToolTip : public QWidget {
 	Q_OBJECT
 	Q_DISABLE_COPY(CUVToolTip)
 	Q_DECLARE_PRIVATE(CUVToolTip)
@@ -56,7 +56,7 @@ protected:
 	void paintEvent(QPaintEvent* event) override;
 };
 
-class CUVWIDGETTOOLS_EXPORT CUVToolTipHelper : public QObject {
+class CALWIDGETTOOLS_EXPORT CUVToolTipHelper : public QObject {
 	Q_OBJECT
 
 public:

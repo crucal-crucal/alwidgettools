@@ -2,11 +2,11 @@
 
 #include <QSpinBox>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class CUVSpinBoxPrivate;
 
-class CUVWIDGETTOOLS_EXPORT CUVSpinBox : public QSpinBox {
+class CALWIDGETTOOLS_EXPORT CUVSpinBox : public QSpinBox {
 	Q_OBJECT
 	Q_DECLARE_PRIVATE(CUVSpinBox)
 

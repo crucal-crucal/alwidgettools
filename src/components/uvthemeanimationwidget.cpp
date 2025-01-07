@@ -5,16 +5,16 @@
 #include <QPropertyAnimation>
 
 /**
- * @brief \class CUVThemeAnimationWidget
+ * @brief \class CALThemeAnimationWidget
  * @param parent pointer to the parent class
  */
-CUVThemeAnimationWidget::CUVThemeAnimationWidget(QWidget* parent): QWidget(parent) {
+CALThemeAnimationWidget::CALThemeAnimationWidget(QWidget* parent): QWidget(parent) {
 	m_endRadius = 0.01;
 }
 
-CUVThemeAnimationWidget::~CUVThemeAnimationWidget() = default;
+CALThemeAnimationWidget::~CALThemeAnimationWidget() = default;
 
-void CUVThemeAnimationWidget::startAnimation(const int mesc) {
+void CALThemeAnimationWidget::startAnimation(const int mesc) {
 	const auto themeChangeAnimation = new QPropertyAnimation(this, "radius");
 	themeChangeAnimation->setDuration(mesc);
 	themeChangeAnimation->setEasingCurve(QEasingCurve::InOutSine);
@@ -28,52 +28,52 @@ void CUVThemeAnimationWidget::startAnimation(const int mesc) {
 	themeChangeAnimation->start(QAbstractAnimation::DeleteWhenStopped);
 }
 
-void CUVThemeAnimationWidget::setRadius(const qreal radius) {
+void CALThemeAnimationWidget::setRadius(const qreal radius) {
 	m_radius = radius;
 	Q_EMIT sigRadiusChanged();
 }
 
-qreal CUVThemeAnimationWidget::getRadius() const {
+qreal CALThemeAnimationWidget::getRadius() const {
 	return m_radius;
 }
 
-void CUVThemeAnimationWidget::setEndRadius(const qreal endRadius) {
+void CALThemeAnimationWidget::setEndRadius(const qreal endRadius) {
 	m_endRadius = endRadius;
 	Q_EMIT sigEndRadiusChanged();
 }
 
-qreal CUVThemeAnimationWidget::getEndRadius() const {
+qreal CALThemeAnimationWidget::getEndRadius() const {
 	return m_endRadius;
 }
 
-void CUVThemeAnimationWidget::setCenter(const QPoint& center) {
+void CALThemeAnimationWidget::setCenter(const QPoint& center) {
 	m_center = center;
 	Q_EMIT sigCenterChanged();
 }
 
-QPoint CUVThemeAnimationWidget::getCenter() const {
+QPoint CALThemeAnimationWidget::getCenter() const {
 	return m_center;
 }
 
-void CUVThemeAnimationWidget::setOldWindowImage(const QImage& oldWindowImage) {
+void CALThemeAnimationWidget::setOldWindowImage(const QImage& oldWindowImage) {
 	m_oldWindowImage = oldWindowImage;
 	Q_EMIT sigOldWindowImageChanged();
 }
 
-QImage CUVThemeAnimationWidget::getOldWindowImage() const {
+QImage CALThemeAnimationWidget::getOldWindowImage() const {
 	return m_oldWindowImage;
 }
 
-void CUVThemeAnimationWidget::setNewWindowImage(const QImage& newWindowImage) {
+void CALThemeAnimationWidget::setNewWindowImage(const QImage& newWindowImage) {
 	m_newWindowImage = newWindowImage;
 	Q_EMIT sigNewWindowImageChanged();
 }
 
-QImage CUVThemeAnimationWidget::getNewWindowImage() const {
+QImage CALThemeAnimationWidget::getNewWindowImage() const {
 	return m_newWindowImage;
 }
 
-void CUVThemeAnimationWidget::paintEvent(QPaintEvent* event) {
+void CALThemeAnimationWidget::paintEvent(QPaintEvent* event) {
 	QPainter painter(this);
 	painter.save();
 	painter.setRenderHint(QPainter::Antialiasing);

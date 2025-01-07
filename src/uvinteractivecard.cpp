@@ -4,7 +4,7 @@
 #include <QPainterPath>
 
 #include "uvinteractivecard_p.hpp"
-#include "uvthememanager.hpp"
+#include "althememanager.hpp"
 
 /**
  * @brief \class CUVInteractiveCardPrivate
@@ -30,11 +30,11 @@ CUVInteractiveCard::CUVInteractiveCard(QWidget* parent): QPushButton(parent), d_
 	d->cardPixmapSize = { 64, 64 };
 	d->titleSpacing = 2;
 	d->cardPixmapBorderRadius = 6;
-	d->cardPixMode = UVCardPixType::Ellipse;
+	d->cardPixMode = ALCardPixType::Ellipse;
 	setMinimumSize(270, 80);
 	setMouseTracking(true);
 	d->themeMode = UVTheme->getThemeMode();
-	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const UVThemeType::ThemeMode& mode) { d->themeMode = mode; });
+	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { d->themeMode = mode; });
 }
 
 CUVInteractiveCard::~CUVInteractiveCard() = default;
@@ -44,12 +44,12 @@ void CUVInteractiveCard::setCardPixmapSize(int width, int height) {
 	Q_EMIT sigCardPixmapSizeChanged();
 }
 
-void CUVInteractiveCard::setCardPixMode(const UVCardPixType::PixMode& mode) {
+void CUVInteractiveCard::setCardPixMode(const ALCardPixType::PixMode& mode) {
 	d_func()->cardPixMode = mode;
 	Q_EMIT sigCardPixModeChanged();
 }
 
-UVCardPixType::PixMode CUVInteractiveCard::getCardPixMode() const {
+ALCardPixType::PixMode CUVInteractiveCard::getCardPixMode() const {
 	return d_func()->cardPixMode;
 }
 
@@ -141,23 +141,23 @@ void CUVInteractiveCard::paintEvent(QPaintEvent* event) {
 	painter.save();
 	painter.setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform | QPainter::TextAntialiasing);
 	painter.setPen(Qt::NoPen);
-	painter.setBrush(underMouse() ? UVThemeColor(d->themeMode, UVThemeType::BasicHoverAlpha) : Qt::transparent);
+	painter.setBrush(underMouse() ? UVThemeColor(d->themeMode, ALThemeType::BasicHoverAlpha) : Qt::transparent);
 	painter.drawRoundedRect(rect(), d->borderRadius, d->borderRadius);
 
 	/// 图片
 	if (!d->cardPixmap.isNull()) {
 		QPainterPath path;
-		if (d->cardPixMode == UVCardPixType::Ellipse) {
+		if (d->cardPixMode == ALCardPixType::Ellipse) {
 			path.addEllipse(QPointF(d->cardPixmapSize.width() / 2.0 + 10, height() / 2.0), d->cardPixmapSize.width() / 2.0, d->cardPixmapSize.height() / 2.0);
 			painter.setClipPath(path);
-		} else if (d->cardPixMode == UVCardPixType::RoundedRect) {
+		} else if (d->cardPixMode == ALCardPixType::RoundedRect) {
 			path.addRoundedRect(10, (height() - d->cardPixmapSize.height()) / 2.0, d->cardPixmapSize.width(), d->cardPixmapSize.height(), d->cardPixmapBorderRadius, d->cardPixmapBorderRadius);
 		}
 		painter.drawPixmap(10, (height() - d->cardPixmapSize.height()) / 2, d->cardPixmapSize.width(), d->cardPixmapSize.height(), d->cardPixmap);
 	}
 
 	/// 文字
-	painter.setPen(UVThemeColor(d->themeMode, UVThemeType::BasicText));
+	painter.setPen(UVThemeColor(d->themeMode, ALThemeType::BasicText));
 	QFont font = this->font();
 	font.setWeight(QFont::Bold);
 	font.setPixelSize(d->titlePixelSize);

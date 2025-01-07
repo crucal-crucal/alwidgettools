@@ -2,7 +2,7 @@
 
 #include <QObject>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class CUVComboBox;
 class CUVComboBoxStyle;
@@ -20,7 +20,7 @@ protected:
 	CUVComboBox* const q_ptr{ nullptr };
 
 private:
-	UVThemeType::ThemeMode themeMode{};
+	ALThemeType::ThemeMode themeMode{};
 	int borderRadius{};
 	CUVComboBoxStyle* comboBoxStyle{ nullptr };
 	bool isAllowHidePopup{ false };

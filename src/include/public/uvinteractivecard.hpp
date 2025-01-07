@@ -6,7 +6,7 @@
 
 class CUVInteractiveCardPrivate;
 
-class CUVWIDGETTOOLS_EXPORT CUVInteractiveCard : public QPushButton {
+class CALWIDGETTOOLS_EXPORT CUVInteractiveCard : public QPushButton {
 	Q_OBJECT
 	Q_DECLARE_PRIVATE(CUVInteractiveCard)
 	Q_PROPERTY(UVCardPixType::PixMode cardPixMode READ getCardPixMode WRITE setCardPixMode NOTIFY sigCardPixModeChanged)
@@ -26,8 +26,8 @@ public:
 
 	void setCardPixmapSize(int width, int height);
 
-	void setCardPixMode(const UVCardPixType::PixMode& mode);
-	[[nodiscard]] UVCardPixType::PixMode getCardPixMode() const;
+	void setCardPixMode(const ALCardPixType::PixMode& mode);
+	[[nodiscard]] ALCardPixType::PixMode getCardPixMode() const;
 
 	void setBorderRadius(qreal radius);
 	[[nodiscard]] qreal getBorderRadius() const;

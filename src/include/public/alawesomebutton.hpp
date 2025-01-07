@@ -2,13 +2,13 @@
 
 #include <QPushButton>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
-using namespace UVIcon;
+using namespace ALIcon;
 
 class CUVAwesomeButtonPrivate;
 
-class CUVWIDGETTOOLS_EXPORT CUVAwesomeButton : public QPushButton {
+class CALWIDGETTOOLS_EXPORT CUVAwesomeButton : public QPushButton {
 	Q_OBJECT
 	Q_DISABLE_COPY(CUVAwesomeButton)
 	Q_DECLARE_PRIVATE(CUVAwesomeButton)
@@ -24,13 +24,13 @@ class CUVWIDGETTOOLS_EXPORT CUVAwesomeButton : public QPushButton {
 	Q_PROPERTY(qreal opacity READ getOpacity WRITE setOpacity NOTIFY sigOpacityChanged)
 
 public:
-	explicit CUVAwesomeButton(const CUVAweSomeIcon& iconType, QWidget* parent = nullptr);
-	explicit CUVAwesomeButton(const CUVAweSomeIcon& iconType, int pixelSize, QWidget* parent = nullptr);
-	explicit CUVAwesomeButton(const CUVAweSomeIcon& iconType, int pixelSize, int fixedWidth, int fixedHeight, QWidget* parent = nullptr);
+	explicit CUVAwesomeButton(const AweSomeIcon& iconType, QWidget* parent = nullptr);
+	explicit CUVAwesomeButton(const AweSomeIcon& iconType, int pixelSize, QWidget* parent = nullptr);
+	explicit CUVAwesomeButton(const AweSomeIcon& iconType, int pixelSize, int fixedWidth, int fixedHeight, QWidget* parent = nullptr);
 	~CUVAwesomeButton() override;
 
-	void setAwesomeIcon(const CUVAweSomeIcon& iconType);
-	[[nodiscard]] CUVAweSomeIcon getAwesomeIcon() const;
+	void setAwesomeIcon(const AweSomeIcon& iconType);
+	[[nodiscard]] AweSomeIcon getAwesomeIcon() const;
 
 	void setBorderRadius(int radius);
 	[[nodiscard]] int getBorderRadius() const;

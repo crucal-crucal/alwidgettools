@@ -2,8 +2,8 @@
 
 #include <QDialog>
 
-#include "uvappbar.hpp"
-#include "uvwidgettoolsdef.hpp"
+#include "alappbar.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class QVBoxLayout;
 
@@ -21,10 +21,10 @@ protected:
 	void paintEvent(QPaintEvent* event) override;
 
 	QVBoxLayout* m_mainVLayout{ nullptr };
-	CUVAppBar* m_appBar{ nullptr };
+	CALAppBar* m_appBar{ nullptr };
 	QWidget* m_centerWidget{ nullptr };
 
 private:
-	UVThemeType::ThemeMode m_themeMode{};
+	ALThemeType::ThemeMode m_themeMode{};
 	bool m_isEnableMica{};
 };

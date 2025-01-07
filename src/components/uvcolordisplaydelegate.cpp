@@ -2,7 +2,7 @@
 
 #include <QPainter>
 
-#include "uvthememanager.hpp"
+#include "althememanager.hpp"
 
 /**
  * @brief \class CUVColorDisplayDelegate
@@ -14,11 +14,11 @@ CUVColorDisplayDelegate::CUVColorDisplayDelegate(QObject* parent): QStyledItemDe
 
 CUVColorDisplayDelegate::~CUVColorDisplayDelegate() = default;
 
-void CUVColorDisplayDelegate::setThemeMode(const UVThemeType::ThemeMode& mode) {
+void CUVColorDisplayDelegate::setThemeMode(const ALThemeType::ThemeMode& mode) {
 	m_themeMode = mode;
 }
 
-UVThemeType::ThemeMode CUVColorDisplayDelegate::getThemeMode() const {
+ALThemeType::ThemeMode CUVColorDisplayDelegate::getThemeMode() const {
 	return m_themeMode;
 }
 
@@ -28,10 +28,10 @@ void CUVColorDisplayDelegate::paint(QPainter* painter, const QStyleOptionViewIte
 	const QRectF itemRect = option.rect;
 	// 颜色球绘制
 	if (const auto displayColor = index.data(Qt::UserRole).value<QColor>(); displayColor.isValid()) {
-		painter->setPen(UVThemeColor(m_themeMode, UVThemeType::PopupBorderHover));
+		painter->setPen(UVThemeColor(m_themeMode, ALThemeType::PopupBorderHover));
 		painter->setBrush(displayColor);
 	} else {
-		QPen pen(UVThemeColor(m_themeMode, UVThemeType::PopupBorderHover));
+		QPen pen(UVThemeColor(m_themeMode, ALThemeType::PopupBorderHover));
 		pen.setStyle(Qt::DashLine);
 		painter->setPen(pen);
 	}

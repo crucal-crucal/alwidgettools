@@ -2,7 +2,7 @@
 
 #include <QPainter>
 
-#include "uvthememanager.hpp"
+#include "althememanager.hpp"
 
 /**
  * @brief \class CUVBreadcrumbBarDelegate
@@ -10,7 +10,7 @@
  */
 CUVBreadcrumbBarDelegate::CUVBreadcrumbBarDelegate(QObject* parent): QStyledItemDelegate(parent) {
 	m_themeMode = UVTheme->getThemeMode();
-	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const UVThemeType::ThemeMode& mode) { m_themeMode = mode; });
+	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { m_themeMode = mode; });
 }
 
 CUVBreadcrumbBarDelegate::~CUVBreadcrumbBarDelegate() = default;
@@ -26,16 +26,16 @@ QModelIndex CUVBreadcrumbBarDelegate::getPressIndex() const {
 void CUVBreadcrumbBarDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const {
 	painter->save();
 	painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
-	painter->setPen(UVThemeColor(m_themeMode, UVThemeType::BasicText));
+	painter->setPen(UVThemeColor(m_themeMode, ALThemeType::BasicText));
 	QRect itemRect = option.rect;
 	const QString breadcrumbDisplayData = index.data(Qt::DisplayRole).toString();
 	const QString breadcrumbUserData = index.data(Qt::UserRole).toString();
 	if (breadcrumbUserData != "LastBreadcrumb") {
 		if (m_pressIndex == index) {
-			painter->setPen(UVThemeColor(m_themeMode, UVThemeType::BasicTextPress));
+			painter->setPen(UVThemeColor(m_themeMode, ALThemeType::BasicTextPress));
 		} else {
 			if (!option.state.testFlag(QStyle::State_MouseOver)) {
-				painter->setPen(UVThemeColor(m_themeMode, UVThemeType::BasicTextNoFocus));
+				painter->setPen(UVThemeColor(m_themeMode, ALThemeType::BasicTextNoFocus));
 			}
 		}
 	}
@@ -47,7 +47,7 @@ void CUVBreadcrumbBarDelegate::paint(QPainter* painter, const QStyleOptionViewIt
 		iconFont.setPixelSize(painter->font().pixelSize() * 0.785); // NOLINT
 		painter->setFont(iconFont);
 		itemRect.setX(itemRect.x() - itemRect.width() * 0.36); // NOLINT
-		painter->drawText(itemRect, Qt::AlignCenter, QChar(static_cast<unsigned short>(UVIcon::CUVAweSomeIcon::AngleRight)));
+		painter->drawText(itemRect, Qt::AlignCenter, QChar(static_cast<unsigned short>(ALIcon::AweSomeIcon::AngleRight)));
 	}
 	painter->restore();
 }

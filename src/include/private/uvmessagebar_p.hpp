@@ -2,7 +2,7 @@
 
 #include <QObject>
 
-#include "uvsingleton.hpp"
+#include "alsingleton.hpp"
 
 class CUVMessageBar;
 class CUVIconButton;
@@ -89,7 +89,7 @@ public:
 	void setOpacity(qreal opacity);
 	[[nodiscard]] qreal getOpacity() const;
 
-	static void showMessageBar(const UVMessageBarType::PositionPolicy& positionPolicy, const UVMessageBarType::MessageLevel& messageLevel,
+	static void showMessageBar(const ALMessageBarType::PositionPolicy& positionPolicy, const ALMessageBarType::MessageLevel& messageLevel,
 	                           const QString& title, const QString& message, int displayMsec, QWidget* parent = nullptr);
 
 
@@ -102,9 +102,9 @@ protected:
 	CUVMessageBar* const q_ptr{ nullptr };
 
 private:
-	UVThemeType::ThemeMode themeMode{};
-	UVMessageBarType::PositionPolicy policy{};
-	UVMessageBarType::MessageLevel messageMode{};
+	ALThemeType::ThemeMode themeMode{};
+	ALMessageBarType::PositionPolicy policy{};
+	ALMessageBarType::MessageLevel messageMode{};
 	qint64 currentWinID{};
 	int borderRadius{};
 	qreal opacity{};

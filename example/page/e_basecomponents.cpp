@@ -5,11 +5,11 @@
 #include <QMetaEnum>
 #include <QMouseEvent>
 
-#include "uvcheckbox.hpp"
-#include "uvcircularprogress.hpp"
-#include "uvcolordialog.hpp"
-#include "uvcombobox.hpp"
-#include "uvdoublespinbox.hpp"
+#include "alcheckbox.hpp"
+#include "alcircularprogress.hpp"
+#include "alcolordialog.hpp"
+#include "alcombobox.hpp"
+#include "aldoublespinbox.hpp"
 #include "uvmessagebar.hpp"
 #include "uvmultiselectcombobox.hpp"
 #include "uvprogressbar.hpp"
@@ -117,22 +117,22 @@ void E_BaseComponents::initToggleSwitchArea() {
 }
 
 void E_BaseComponents::initMessageBarArea() {
-	const auto successButton = new CUVPushButton("Success", this);
+	const auto successButton = new CALPushButton("Success", this);
 	successButton->setFixedSize(80, 38);
-	successButton->setButtonStyles(CUVPushButton::Shadow | CUVPushButton::Border);
-	connect(successButton, &CUVPushButton::clicked, this, [=]() { CUVMessageBar::success("Success", "This is a success message"); });
-	const auto warningButton = new CUVPushButton("Warning", this);
+	successButton->setButtonStyles(CALPushButton::Shadow | CALPushButton::Border);
+	connect(successButton, &CALPushButton::clicked, this, [=]() { CUVMessageBar::success("Success", "This is a success message"); });
+	const auto warningButton = new CALPushButton("Warning", this);
 	warningButton->setFixedSize(80, 38);
-	warningButton->setButtonStyles(CUVPushButton::Shadow | CUVPushButton::Border);
-	connect(warningButton, &CUVPushButton::clicked, this, [=]() { CUVMessageBar::warning("Warning", "This is a warning message"); });
-	const auto errorButton = new CUVPushButton("Error", this);
+	warningButton->setButtonStyles(CALPushButton::Shadow | CALPushButton::Border);
+	connect(warningButton, &CALPushButton::clicked, this, [=]() { CUVMessageBar::warning("Warning", "This is a warning message"); });
+	const auto errorButton = new CALPushButton("Error", this);
 	errorButton->setFixedSize(80, 38);
-	errorButton->setButtonStyles(CUVPushButton::Shadow | CUVPushButton::Border);
-	connect(errorButton, &CUVPushButton::clicked, this, [=]() { CUVMessageBar::error("Error", "This is an error message"); });
-	const auto infoButton = new CUVPushButton("Info", this);
+	errorButton->setButtonStyles(CALPushButton::Shadow | CALPushButton::Border);
+	connect(errorButton, &CALPushButton::clicked, this, [=]() { CUVMessageBar::error("Error", "This is an error message"); });
+	const auto infoButton = new CALPushButton("Info", this);
 	infoButton->setFixedSize(80, 38);
-	infoButton->setButtonStyles(CUVPushButton::Shadow | CUVPushButton::Border);
-	connect(infoButton, &CUVPushButton::clicked, this, [=]() { CUVMessageBar::information("Info", "This is an info message"); });
+	infoButton->setButtonStyles(CALPushButton::Shadow | CALPushButton::Border);
+	connect(infoButton, &CALPushButton::clicked, this, [=]() { CUVMessageBar::information("Info", "This is an info message"); });
 	const auto messageBarArea = new CUVScrollPageArea(this);
 	const auto messageBarAreaHLayout = new QHBoxLayout(messageBarArea);
 	const auto messageBarText = new CUVText("CUVMessageBar", this);
@@ -160,7 +160,7 @@ void E_BaseComponents::initMessageBarArea() {
 }
 
 void E_BaseComponents::initCircularProgressArea() {
-	const QMetaObject& metaObject = UVProgressType::staticMetaObject;
+	const QMetaObject& metaObject = ALProgressType::staticMetaObject;
 	const QMetaEnum metaEnum = metaObject.enumerator(metaObject.indexOfEnumerator("ProgressType"));
 	if (!metaEnum.isValid()) {
 		qWarning() << "Invalid ProgressType meta enum";
@@ -182,7 +182,7 @@ void E_BaseComponents::initCircularProgressArea() {
 	connect(circularProgressType, &CUVComboBox::currentTextChanged, this, [=](const QString& type) {
 		if (metaEnum.isValid()) {
 			if (const int value = metaEnum.keyToValue(type.toLocal8Bit().constData()); value != -1) {
-				circularProgress->setProgressType(static_cast<UVProgressType::ProgressType>(value));
+				circularProgress->setProgressType(static_cast<ALProgressType::ProgressType>(value));
 			} else {
 				qWarning() << "Invalid progress type: " << type;
 			}
@@ -192,10 +192,10 @@ void E_BaseComponents::initCircularProgressArea() {
 	const auto circularProgressHLayout = new QHBoxLayout(circularProgressArea);
 	const auto circularProgressText = new CUVText("CUVCircularProgress", this);
 	circularProgressText->setTextPixelSize(15);
-	const auto circularProgerssColorButton = new CUVPushButton("Color", this);
+	const auto circularProgerssColorButton = new CALPushButton("Color", this);
 	circularProgerssColorButton->setFixedSize(80, 38);
-	circularProgerssColorButton->setButtonStyles(CUVPushButton::Shadow | CUVPushButton::Border);
-	connect(circularProgerssColorButton, &CUVPushButton::clicked, colorDialog, &CUVColorDialog::exec);
+	circularProgerssColorButton->setButtonStyles(CALPushButton::Shadow | CALPushButton::Border);
+	connect(circularProgerssColorButton, &CALPushButton::clicked, colorDialog, &CUVColorDialog::exec);
 	circularProgressHLayout->addWidget(circularProgressText);
 	circularProgressHLayout->addWidget(circularProgress);
 	circularProgressHLayout->addWidget(circularProgerssColorButton);
@@ -259,7 +259,7 @@ void E_BaseComponents::initSliderArea() {
 }
 
 void E_BaseComponents::initProgressBarArea() {
-	const QMetaObject& metaObject = UVProgressType::staticMetaObject;
+	const QMetaObject& metaObject = ALProgressType::staticMetaObject;
 	const QMetaEnum metaEnum = metaObject.enumerator(metaObject.indexOfEnumerator("ProgressType"));
 	if (!metaEnum.isValid()) {
 		qWarning() << "Invalid ProgressType meta enum";
@@ -277,7 +277,7 @@ void E_BaseComponents::initProgressBarArea() {
 	connect(progressBarType, &CUVComboBox::currentTextChanged, this, [=](const QString& type) {
 		if (metaEnum.isValid()) {
 			if (const int value = metaEnum.keyToValue(type.toLocal8Bit().constData()); value != -1) {
-				progressBar->setProgressType(static_cast<UVProgressType::ProgressType>(value));
+				progressBar->setProgressType(static_cast<ALProgressType::ProgressType>(value));
 			} else {
 				qWarning() << "Invalid progress type: " << type;
 			}
@@ -287,10 +287,10 @@ void E_BaseComponents::initProgressBarArea() {
 	const auto progressBarHLayout = new QHBoxLayout(progressBarArea);
 	const auto progressBarText = new CUVText("CUVProgressBar", this);
 	progressBarText->setTextPixelSize(15);
-	const auto progressBarProgerssColorButton = new CUVPushButton("progress Color", this);
+	const auto progressBarProgerssColorButton = new CALPushButton("progress Color", this);
 	progressBarProgerssColorButton->setFixedSize(120, 38);
-	progressBarProgerssColorButton->setButtonStyles(CUVPushButton::Shadow | CUVPushButton::Border);
-	connect(progressBarProgerssColorButton, &CUVPushButton::clicked, colorDialog, &CUVColorDialog::exec);
+	progressBarProgerssColorButton->setButtonStyles(CALPushButton::Shadow | CALPushButton::Border);
+	connect(progressBarProgerssColorButton, &CALPushButton::clicked, colorDialog, &CUVColorDialog::exec);
 	progressBarHLayout->addWidget(progressBarText);
 	progressBarHLayout->addWidget(progressBar);
 	progressBarHLayout->addWidget(progressBarProgerssColorButton);

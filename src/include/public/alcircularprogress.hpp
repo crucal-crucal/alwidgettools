@@ -2,14 +2,14 @@
 
 #include <QProgressBar>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class CUVCircularProgressPrivate;
 
 /**
  * @brief 圆环形状进度控件
  */
-class CUVWIDGETTOOLS_EXPORT CUVCircularProgress : public QProgressBar {
+class CALWIDGETTOOLS_EXPORT CUVCircularProgress : public QProgressBar {
 	Q_OBJECT
 	Q_DECLARE_PRIVATE(CUVCircularProgress)
 	Q_PROPERTY(qreal lineWidth WRITE setLineWidth READ getLineWidth)
@@ -24,8 +24,8 @@ public:
 	 * @brief 设置进度条类型
 	 * @param type \see \enum UVProgressType::ProgressType
 	 */
-	void setProgressType(const UVProgressType::ProgressType& type);
-	[[nodiscard]] UVProgressType::ProgressType getProgressType() const;
+	void setProgressType(const ALProgressType::ProgressType& type);
+	[[nodiscard]] ALProgressType::ProgressType getProgressType() const;
 
 	/**
 	 * @brief 设置进度条进度宽度(画笔宽度), 仅对圆环有效

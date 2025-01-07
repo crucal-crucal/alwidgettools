@@ -5,7 +5,7 @@
 #include <QStyledItemDelegate>
 #include <QStyleOptionSlider>
 
-#include "uvthememanager.hpp"
+#include "althememanager.hpp"
 
 /**
  * @brief \class CUVColorValueSliderStyle
@@ -15,7 +15,7 @@ CUVColorValueSliderStyle::CUVColorValueSliderStyle(QStyle* style) {
 	m_baseGradient = new QLinearGradient(0, 0, 100, 100);
 	setProperty("circleRadius", 0.01);
 	m_themeMode = UVTheme->getThemeMode();
-	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const UVThemeType::ThemeMode& mode) { m_themeMode = mode; });
+	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { m_themeMode = mode; });
 }
 
 CUVColorValueSliderStyle::~CUVColorValueSliderStyle() = default;
@@ -52,12 +52,12 @@ void CUVColorValueSliderStyle::drawComplexControl(const ComplexControl cc, const
 				p->drawRoundedRect(QRectF(sliderRact.x(), sliderRact.y() + sliderRact.width() / 8, sliderRact.width(), sliderRact.height() - sliderRact.width() / 4), sliderRact.width() / 2, sliderRact.width() / 2);
 				/// 滑块
 				// 外圆
-				p->setPen(UVThemeColor(m_themeMode, UVThemeType::BasicBorder));
-				p->setBrush(UVThemeColor(m_themeMode, UVThemeType::BasicBase));
+				p->setPen(UVThemeColor(m_themeMode, ALThemeType::BasicBorder));
+				p->setBrush(UVThemeColor(m_themeMode, ALThemeType::BasicBase));
 				p->drawEllipse(QPointF(sliderHandleRect.center().x() + 1, sliderHandleRect.center().y() + 1), static_cast<int>(sliderHandleRect.width() / 2), static_cast<int>(sliderHandleRect.height() / 2));
 				// 内圆
 				p->setPen(Qt::NoPen);
-				p->setBrush(UVThemeColor(m_themeMode, UVThemeType::PrimaryNormal));
+				p->setBrush(UVThemeColor(m_themeMode, ALThemeType::PrimaryNormal));
 				if (m_lastState == 0) {
 					m_lastState = sopt->state;
 				}

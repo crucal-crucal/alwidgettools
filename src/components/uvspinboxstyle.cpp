@@ -4,11 +4,11 @@
 #include <QPainterPath>
 #include <QStyleOptionSpinBox>
 
-#include "uvthememanager.hpp"
+#include "althememanager.hpp"
 
 CUVSpinBoxStyle::CUVSpinBoxStyle(QStyle* style) {
 	m_themeMode = UVTheme->getThemeMode();
-	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const UVThemeType::ThemeMode& mode) { m_themeMode = mode; });
+	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { m_themeMode = mode; });
 }
 
 CUVSpinBoxStyle::~CUVSpinBoxStyle() = default;
@@ -21,23 +21,23 @@ void CUVSpinBoxStyle::drawComplexControl(const ComplexControl cc, const QStyleOp
 				p->save();
 				p->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
 				// background
-				p->setPen(UVThemeColor(m_themeMode, UVThemeType::BasicBorder));
-				p->setBrush(UVThemeColor(m_themeMode, isEnable? UVThemeType::BasicBase : UVThemeType::BasicDisable));
+				p->setPen(UVThemeColor(m_themeMode, ALThemeType::BasicBorder));
+				p->setBrush(UVThemeColor(m_themeMode, isEnable? ALThemeType::BasicBase : ALThemeType::BasicDisable));
 				p->drawRoundedRect(sopt->rect, 4, 4);
 				// add button
 				const QRect addLineRect = subControlRect(cc, sopt, SC_ScrollBarAddLine, widget);
 				if (isEnable) {
 					if (sopt->activeSubControls == SC_ScrollBarAddLine) {
 						if (sopt->state.testFlag(State_Sunken) && sopt->state.testFlag(State_MouseOver)) {
-							p->setBrush(UVThemeColor(m_themeMode, UVThemeType::BasicPressAlpha));
+							p->setBrush(UVThemeColor(m_themeMode, ALThemeType::BasicPressAlpha));
 						} else {
-							p->setBrush(UVThemeColor(m_themeMode, sopt->state.testFlag(QStyle::State_MouseOver) ? UVThemeType::BasicHoverAlpha : UVThemeType::BasicBaseDeep));
+							p->setBrush(UVThemeColor(m_themeMode, sopt->state.testFlag(QStyle::State_MouseOver) ? ALThemeType::BasicHoverAlpha : ALThemeType::BasicBaseDeep));
 						}
 					} else {
-						p->setBrush(UVThemeColor(m_themeMode, UVThemeType::BasicBaseDeep));
+						p->setBrush(UVThemeColor(m_themeMode, ALThemeType::BasicBaseDeep));
 					}
 				} else {
-					p->setBrush(UVThemeColor(m_themeMode, UVThemeType::BasicDisable));
+					p->setBrush(UVThemeColor(m_themeMode, ALThemeType::BasicDisable));
 				}
 				QPainterPath addLinePath;
 				addLinePath.moveTo(addLineRect.topLeft());
@@ -53,15 +53,15 @@ void CUVSpinBoxStyle::drawComplexControl(const ComplexControl cc, const QStyleOp
 				if (isEnable) {
 					if (sopt->activeSubControls == SC_ScrollBarSubLine) {
 						if (sopt->state.testFlag(State_Sunken) && sopt->state.testFlag(State_MouseOver)) {
-							p->setBrush(UVThemeColor(m_themeMode, UVThemeType::BasicPressAlpha));
+							p->setBrush(UVThemeColor(m_themeMode, ALThemeType::BasicPressAlpha));
 						} else {
-							p->setBrush(UVThemeColor(m_themeMode, sopt->state.testFlag(State_MouseOver) ? UVThemeType::BasicHoverAlpha : UVThemeType::BasicBaseDeep));
+							p->setBrush(UVThemeColor(m_themeMode, sopt->state.testFlag(State_MouseOver) ? ALThemeType::BasicHoverAlpha : ALThemeType::BasicBaseDeep));
 						}
 					} else {
-						p->setBrush(UVThemeColor(m_themeMode, UVThemeType::BasicBaseDeep));
+						p->setBrush(UVThemeColor(m_themeMode, ALThemeType::BasicBaseDeep));
 					}
 				} else {
-					p->setBrush(UVThemeColor(m_themeMode, UVThemeType::BasicDisable));
+					p->setBrush(UVThemeColor(m_themeMode, ALThemeType::BasicDisable));
 				}
 				QPainterPath subLinePath;
 				subLinePath.moveTo(subLineRect.topLeft());
@@ -74,20 +74,20 @@ void CUVSpinBoxStyle::drawComplexControl(const ComplexControl cc, const QStyleOp
 				p->drawPath(subLinePath);
 				// bottom line
 				if (sopt->state.testFlag(State_HasFocus)) {
-					p->setPen(QPen(UVThemeColor(m_themeMode, UVThemeType::PrimaryNormal), 2));
+					p->setPen(QPen(UVThemeColor(m_themeMode, ALThemeType::PrimaryNormal), 2));
 					p->drawLine(subLineRect.right() + 1, subLineRect.y() + subLineRect.height() - 2, addLineRect.left() - 1, subLineRect.y() + subLineRect.height() - 2);
 				} else {
-					p->setPen(UVThemeColor(m_themeMode, UVThemeType::BasicHemline));
+					p->setPen(UVThemeColor(m_themeMode, ALThemeType::BasicHemline));
 					p->drawLine(subLineRect.right() + 1, subLineRect.y() + subLineRect.height() - 1, addLineRect.left() - 1, subLineRect.y() + subLineRect.height() - 1);
 				}
 				// add icon
 				QFont iconFont("CUVAwesome");
 				iconFont.setPixelSize(17);
 				p->setFont(iconFont);
-				p->setPen(UVThemeColor(m_themeMode, isEnable ? UVThemeType::BasicText : UVThemeType::BasicTextDisable));
-				p->drawText(addLineRect, Qt::AlignCenter, QChar(static_cast<unsigned short>(UVIcon::CUVAweSomeIcon::Plus)));
+				p->setPen(UVThemeColor(m_themeMode, isEnable ? ALThemeType::BasicText : ALThemeType::BasicTextDisable));
+				p->drawText(addLineRect, Qt::AlignCenter, QChar(static_cast<unsigned short>(ALIcon::AweSomeIcon::Plus)));
 				// sub icon
-				p->drawText(subLineRect, Qt::AlignCenter, QChar(static_cast<unsigned short>(UVIcon::CUVAweSomeIcon::Minus)));
+				p->drawText(subLineRect, Qt::AlignCenter, QChar(static_cast<unsigned short>(ALIcon::AweSomeIcon::Minus)));
 				p->restore();
 			}
 			return;

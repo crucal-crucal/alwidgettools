@@ -5,7 +5,7 @@
 #include <QStyleOption>
 #include <QWidget>
 
-#include "uvthememanager.hpp"
+#include "althememanager.hpp"
 
 /**
  * @brief \class CUVComboBoxStyle
@@ -16,7 +16,7 @@ CUVComboBoxStyle::CUVComboBoxStyle(QStyle* style): QProxyStyle(style) {
 	m_expandMarkWidth = 0;
 	m_shadowBorderWidth = 6;
 	m_themeMode = UVTheme->getThemeMode();
-	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const UVThemeType::ThemeMode& mode) { m_themeMode = mode; });
+	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { m_themeMode = mode; });
 }
 
 CUVComboBoxStyle::~CUVComboBoxStyle() = default;
@@ -56,8 +56,8 @@ void CUVComboBoxStyle::drawControl(const ControlElement element, const QStyleOpt
 				painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);
 				UVTheme->drawEffectShadow(painter, viewRect, m_shadowBorderWidth, 6);
 				const QRect foregroundRect(viewRect.x() + m_shadowBorderWidth, viewRect.y(), viewRect.width() - 2 * m_shadowBorderWidth, viewRect.height() - m_shadowBorderWidth);
-				painter->setPen(UVThemeColor(m_themeMode, UVThemeType::PopupBorder));
-				painter->setBrush(UVThemeColor(m_themeMode, UVThemeType::PopupBase));
+				painter->setPen(UVThemeColor(m_themeMode, ALThemeType::PopupBorder));
+				painter->setBrush(UVThemeColor(m_themeMode, ALThemeType::PopupBase));
 				painter->drawRoundedRect(foregroundRect, 6, 6);
 				painter->restore();
 			}
@@ -77,20 +77,20 @@ void CUVComboBoxStyle::drawControl(const ControlElement element, const QStyleOpt
 				if (option->state.testFlag(QStyle::State_Selected)) {
 					if (option->state.testFlag(QStyle::State_MouseOver)) {
 						// 选中且鼠标悬停时
-						painter->setBrush(UVThemeColor(m_themeMode, UVThemeType::BasicSelectedHoverAlpha));
+						painter->setBrush(UVThemeColor(m_themeMode, ALThemeType::BasicSelectedHoverAlpha));
 						painter->drawPath(path);
 					} else {
 						// 选中但鼠标未悬停
-						painter->setBrush(UVThemeColor(m_themeMode, UVThemeType::BasicSelectedAlpha));
+						painter->setBrush(UVThemeColor(m_themeMode, ALThemeType::BasicSelectedAlpha));
 						painter->drawPath(path);
 					}
 					painter->setPen(Qt::NoPen);
-					painter->setBrush(UVThemeColor(m_themeMode, UVThemeType::PrimaryNormal));
+					painter->setBrush(UVThemeColor(m_themeMode, ALThemeType::PrimaryNormal));
 					painter->drawRoundedRect(QRectF(optionRect.x() + 3, optionRect.y() + optionRect.height() * 0.2, 3, optionRect.height() - optionRect.height() * 0.4), 2, 2);
 				} else {
 					if (option->state.testFlag(QStyle::State_MouseOver)) {
 						// 未选中但鼠标悬停时
-						painter->setBrush(UVThemeColor(m_themeMode, UVThemeType::BasicHoverAlpha));
+						painter->setBrush(UVThemeColor(m_themeMode, ALThemeType::BasicHoverAlpha));
 						painter->drawPath(path);
 					}
 				}
@@ -110,7 +110,7 @@ void CUVComboBoxStyle::drawControl(const ControlElement element, const QStyleOpt
 				painter->drawPath(checkPath);
 #endif
 				// 文字绘制
-				painter->setPen(UVThemeColor(m_themeMode, UVThemeType::BasicText));
+				painter->setPen(UVThemeColor(m_themeMode, ALThemeType::BasicText));
 				painter->drawText(QRect(option->rect.x() + 25, option->rect.y(), option->rect.width() - 25, option->rect.height()), Qt::AlignVCenter, vopt->text);
 				painter->restore();
 			}
@@ -132,32 +132,32 @@ void CUVComboBoxStyle::drawComplexControl(const ComplexControl control, const QS
 				painter->setRenderHints(QPainter::SmoothPixmapTransform | QPainter::Antialiasing | QPainter::TextAntialiasing);
 				// 背景绘制
 				const bool isEnabled = copt->state.testFlag(QStyle::State_Enabled);
-				painter->setPen(UVThemeColor(m_themeMode, UVThemeType::BasicBorder));
-				painter->setBrush(UVThemeColor(m_themeMode, isEnabled ? copt->state.testFlag(QStyle::State_MouseOver) ? UVThemeType::BasicHover : UVThemeType::BasicBase : UVThemeType::BasicDisable));
+				painter->setPen(UVThemeColor(m_themeMode, ALThemeType::BasicBorder));
+				painter->setBrush(UVThemeColor(m_themeMode, isEnabled ? copt->state.testFlag(QStyle::State_MouseOver) ? ALThemeType::BasicHover : ALThemeType::BasicBase : ALThemeType::BasicDisable));
 				QRect comboBoxRect = copt->rect;
 				comboBoxRect.adjust(m_shadowBorderWidth, 1, -m_shadowBorderWidth, -1);
 				painter->drawRoundedRect(comboBoxRect, 3, 3);
 				// 底边线绘制
-				painter->setPen(UVThemeColor(m_themeMode, UVThemeType::BasicBaseLine));
+				painter->setPen(UVThemeColor(m_themeMode, ALThemeType::BasicBaseLine));
 				painter->drawLine(comboBoxRect.x() + 3, comboBoxRect.y() + comboBoxRect.height(), comboBoxRect.x() + comboBoxRect.width() - 3, comboBoxRect.y() + comboBoxRect.height());
 				// 文字绘制
 				const QRect textRect = subControlRect(QStyle::CC_ComboBox, copt, QStyle::SC_ScrollBarSubLine, widget);
-				painter->setPen(UVThemeColor(m_themeMode, isEnabled ? UVThemeType::BasicText : UVThemeType::BasicTextDisable));
+				painter->setPen(UVThemeColor(m_themeMode, isEnabled ? ALThemeType::BasicText : ALThemeType::BasicTextDisable));
 				painter->drawText(textRect, Qt::AlignVCenter | Qt::AlignLeft, copt->currentText);
 				// 展开指示器绘制
 				painter->setPen(Qt::NoPen);
-				painter->setBrush(UVThemeColor(m_themeMode, UVThemeType::PrimaryNormal));
+				painter->setBrush(UVThemeColor(m_themeMode, ALThemeType::PrimaryNormal));
 				painter->drawRoundedRect(QRectF(comboBoxRect.center().x() - m_expandMarkWidth, comboBoxRect.height() - 3, m_expandMarkWidth * 2, 3), 2, 2);
 				// 展开图标绘制
 				if (const QRect expandIconRect = subControlRect(QStyle::CC_ComboBox, copt, QStyle::SC_ScrollBarAddPage, widget); expandIconRect.isValid()) {
 					QFont iconFont("CUVAwesome");
 					iconFont.setPixelSize(17);
 					painter->setFont(iconFont);
-					painter->setPen(UVThemeColor(m_themeMode, isEnabled ? UVThemeType::BasicText : UVThemeType::BasicTextDisable));
+					painter->setPen(UVThemeColor(m_themeMode, isEnabled ? ALThemeType::BasicText : ALThemeType::BasicTextDisable));
 					painter->translate(expandIconRect.x() + expandIconRect.width() / 2.0, expandIconRect.y() + expandIconRect.height() / 2.0);
 					painter->rotate(m_expandIconRotate);
 					painter->translate(-expandIconRect.x() - expandIconRect.width() / 2.0, -expandIconRect.y() - expandIconRect.height() / 2.0);
-					painter->drawText(expandIconRect, Qt::AlignCenter, QChar(static_cast<unsigned short>(UVIcon::CUVAweSomeIcon::AngleDown)));
+					painter->drawText(expandIconRect, Qt::AlignCenter, QChar(static_cast<unsigned short>(ALIcon::AweSomeIcon::AngleDown)));
 				}
 				painter->restore();
 			}

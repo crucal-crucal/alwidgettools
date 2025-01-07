@@ -2,11 +2,11 @@
 
 #include <QPushButton>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class CUVIconButtonPrivate;
 
-class CUVWIDGETTOOLS_EXPORT CUVIconButton : public QPushButton {
+class CALWIDGETTOOLS_EXPORT CUVIconButton : public QPushButton {
 	Q_OBJECT
 	Q_DECLARE_PRIVATE(CUVIconButton)
 	Q_PROPERTY(qreal borderRadius READ getBorderRadius WRITE setBorderRadius NOTIFY sigBorderRadiusChanged)
@@ -21,13 +21,13 @@ class CUVWIDGETTOOLS_EXPORT CUVIconButton : public QPushButton {
 
 public:
 	explicit CUVIconButton(const QPixmap& pix, QWidget* parent = nullptr);
-	explicit CUVIconButton(const UVIcon::CUVAweSomeIcon& icon, QWidget* parent = nullptr);
-	explicit CUVIconButton(const UVIcon::CUVAweSomeIcon& icon, const int& pixelSize, QWidget* parent = nullptr);
-	explicit CUVIconButton(const UVIcon::CUVAweSomeIcon& icon, const int& pixelSize, const int& fixedWidth, const int& fixedHeight, QWidget* parent = nullptr);
+	explicit CUVIconButton(const ALIcon::AweSomeIcon& icon, QWidget* parent = nullptr);
+	explicit CUVIconButton(const ALIcon::AweSomeIcon& icon, const int& pixelSize, QWidget* parent = nullptr);
+	explicit CUVIconButton(const ALIcon::AweSomeIcon& icon, const int& pixelSize, const int& fixedWidth, const int& fixedHeight, QWidget* parent = nullptr);
 	~CUVIconButton() override;
 
-	void setCUVIcon(const UVIcon::CUVAweSomeIcon& icon);
-	[[nodiscard]] UVIcon::CUVAweSomeIcon getCUVIcon() const;
+	void setCUVIcon(const ALIcon::AweSomeIcon& icon);
+	[[nodiscard]] ALIcon::AweSomeIcon getCUVIcon() const;
 
 	void setPixmap(const QPixmap& pix);
 

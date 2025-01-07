@@ -2,7 +2,7 @@
 
 #include <QStyledItemDelegate>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class CUVBreadcrumbBarDelegate final : public QStyledItemDelegate {
 	Q_OBJECT
@@ -18,7 +18,7 @@ protected:
 	void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
 
 private:
-	UVThemeType::ThemeMode m_themeMode{};
+	ALThemeType::ThemeMode m_themeMode{};
 
 	QModelIndex m_pressIndex{};
 };

@@ -11,19 +11,19 @@
 #include <QTimer>
 #include <QVariant>
 
-#include "uvawesomebutton.hpp"
+#include "alawesomebutton.hpp"
 #include "uviconbutton.hpp"
 #include "uvmessagebar_p.hpp"
-#include "uvthememanager.hpp"
+#include "althememanager.hpp"
 
 #ifdef Q_OS_WIN
 #include <dwmapi.h>
 #include <windowsx.h>
 #endif
 
-using namespace UVIcon;
+using namespace ALIcon;
 
-QMap<UVMessageBarType::PositionPolicy, QList<CUVMessageBar*>*> mapMessageBarActive;
+QMap<ALMessageBarType::PositionPolicy, QList<CUVMessageBar*>*> mapMessageBarActive;
 
 /**
  * @brief \class CUVMessageBarManager
@@ -76,7 +76,7 @@ void CUVMessageBarManager::postMessageBarEndEvent(CUVMessageBar* messageBar) {
 
 	updateActionMap(messageBar, false);
 	// Other MessageBar 事件入栈, 记录同一策略事件
-	const UVMessageBarType::PositionPolicy policy = messageBar->d_func()->policy;
+	const ALMessageBarType::PositionPolicy policy = messageBar->d_func()->policy;
 	for (const auto& otherMessageBar : *mapMessageBarActive.value(policy)) {
 		if (otherMessageBar->d_func()->judgeCreateDrder(messageBar)) {
 			QList<QVariantMap> eventList = mapMessageBarEvent[otherMessageBar];
@@ -123,7 +123,7 @@ void CUVMessageBarManager::updateActionMap(CUVMessageBar* messageBar, const bool
 		return;
 	}
 
-	const UVMessageBarType::PositionPolicy policy = messageBar->d_func()->policy;
+	const ALMessageBarType::PositionPolicy policy = messageBar->d_func()->policy;
 	if (isActive) {
 		if (mapMessageBarActive.contains(policy)) {
 			mapMessageBarActive[policy]->append(messageBar);
@@ -292,8 +292,8 @@ void CUVMessageBarPrivate::invokableMessageBarCreate(const int displayMsec) {
 		});
 	});
 	switch (policy) {
-		case UVMessageBarType::Top:
-		case UVMessageBarType::Bottom: {
+		case ALMessageBarType::Top:
+		case ALMessageBarType::Bottom: {
 			barPosAnimation->setDuration(250);
 			break;
 		}
@@ -315,7 +315,7 @@ void CUVMessageBarPrivate::calculateInitialPos(int& startX, int& startY, int& en
 	const int minimumHeightTotal = resultList[0];
 	const int indexLessCount = resultList[1];
 	switch (this->policy) {
-		case UVMessageBarType::Top: {
+		case ALMessageBarType::Top: {
 			// 25动画距离
 			startX = q->parentWidget()->width() / 2 - q->minimumWidth() / 2;
 			startY = minimumHeightTotal + messageBarSpacing * indexLessCount + messageBarVerticalTopMargin - 25;
@@ -323,49 +323,49 @@ void CUVMessageBarPrivate::calculateInitialPos(int& startX, int& startY, int& en
 			endY = minimumHeightTotal + messageBarSpacing * indexLessCount + messageBarVerticalTopMargin;
 			break;
 		}
-		case UVMessageBarType::Left: {
+		case ALMessageBarType::Left: {
 			startX = -q->minimumWidth();
 			startY = minimumHeightTotal + messageBarSpacing * indexLessCount + q->parentWidget()->height() / 2;
 			endX = messageBarHorizontalMargin;
 			endY = startY;
 			break;
 		}
-		case UVMessageBarType::Bottom: {
+		case ALMessageBarType::Bottom: {
 			startX = q->parentWidget()->width() / 2 - q->minimumWidth() / 2;
 			startY = q->parentWidget()->height() - q->minimumHeight() - minimumHeightTotal - messageBarSpacing * indexLessCount - messageBarVerticalBottomMargin - 25;
 			endX = startX;
 			endY = q->parentWidget()->height() - q->minimumHeight() - minimumHeightTotal - messageBarSpacing * indexLessCount - messageBarVerticalBottomMargin;
 			break;
 		}
-		case UVMessageBarType::Right: {
+		case ALMessageBarType::Right: {
 			startX = q->parentWidget()->width();
 			startY = minimumHeightTotal + messageBarSpacing * indexLessCount + q->parentWidget()->height() / 2;
 			endX = q->parentWidget()->width() - q->minimumWidth() - messageBarHorizontalMargin;
 			endY = startY;
 			break;
 		}
-		case UVMessageBarType::TopRight: {
+		case ALMessageBarType::TopRight: {
 			startX = q->parentWidget()->width();
 			startY = minimumHeightTotal + messageBarSpacing * indexLessCount + messageBarVerticalTopMargin;
 			endX = q->parentWidget()->width() - q->minimumWidth() - messageBarHorizontalMargin;
 			endY = startY;
 			break;
 		}
-		case UVMessageBarType::TopLeft: {
+		case ALMessageBarType::TopLeft: {
 			startX = -q->minimumWidth();
 			startY = minimumHeightTotal + messageBarSpacing * indexLessCount + messageBarVerticalTopMargin;
 			endX = this->messageBarHorizontalMargin;
 			endY = startY;
 			break;
 		}
-		case UVMessageBarType::BottomRight: {
+		case ALMessageBarType::BottomRight: {
 			startX = q->parentWidget()->width();
 			startY = q->parentWidget()->height() - q->minimumHeight() - minimumHeightTotal - messageBarSpacing * indexLessCount - messageBarVerticalBottomMargin;
 			endX = q->parentWidget()->width() - q->minimumWidth() - this->messageBarHorizontalMargin;
 			endY = startY;
 			break;
 		}
-		case UVMessageBarType::BottomLeft: {
+		case ALMessageBarType::BottomLeft: {
 			startX = -q->minimumWidth();
 			startY = q->parentWidget()->height() - q->minimumHeight() - minimumHeightTotal - messageBarSpacing * indexLessCount - messageBarVerticalBottomMargin;
 			endX = this->messageBarHorizontalMargin;
@@ -411,18 +411,18 @@ qreal CUVMessageBarPrivate::calculateTargetPosY() {
 	const int minimumHeightTotal = resultList.at(0);
 	const int indexLessCount = resultList.at(1);
 	switch (policy) {
-		case UVMessageBarType::Top:
-		case UVMessageBarType::TopRight:
-		case UVMessageBarType::TopLeft: {
+		case ALMessageBarType::Top:
+		case ALMessageBarType::TopRight:
+		case ALMessageBarType::TopLeft: {
 			return minimumHeightTotal + messageBarSpacing * indexLessCount + messageBarVerticalTopMargin;
 		}
-		case UVMessageBarType::Left:
-		case UVMessageBarType::Right: {
+		case ALMessageBarType::Left:
+		case ALMessageBarType::Right: {
 			return minimumHeightTotal + messageBarSpacing * indexLessCount + q->parentWidget()->height() / 2.0;
 		}
-		case UVMessageBarType::Bottom:
-		case UVMessageBarType::BottomLeft:
-		case UVMessageBarType::BottomRight: {
+		case ALMessageBarType::Bottom:
+		case ALMessageBarType::BottomLeft:
+		case ALMessageBarType::BottomRight: {
 			return q->parentWidget()->height() - q->minimumHeight() - minimumHeightTotal - messageBarSpacing * indexLessCount - messageBarVerticalBottomMargin;
 		}
 	}
@@ -457,12 +457,12 @@ void CUVMessageBarPrivate::drawMessage(QPainter* painter, const QColor& backgrou
 }
 
 void CUVMessageBarPrivate::drawSuccess(QPainter* painter) {
-	drawMessage(painter, QColor(0xE0, 0xF6, 0xDD), QColor(0x11, 0x77, 0x10), QChar(static_cast<ushort>(CUVAweSomeIcon::Check)),
+	drawMessage(painter, QColor(0xE0, 0xF6, 0xDD), QColor(0x11, 0x77, 0x10), QChar(static_cast<ushort>(AweSomeIcon::Check)),
 	            Qt::black, 12, leftPadding);
 }
 
 void CUVMessageBarPrivate::drawError(QPainter* painter) {
-	drawMessage(painter, QColor(0xFE, 0xE7, 0xEA), QColor(0xBA, 0x2D, 0x20), QChar(static_cast<ushort>(CUVAweSomeIcon::Close)),
+	drawMessage(painter, QColor(0xFE, 0xE7, 0xEA), QColor(0xBA, 0x2D, 0x20), QChar(static_cast<ushort>(AweSomeIcon::Close)),
 	            Qt::black, 13, leftPadding + 1);
 }
 
@@ -485,7 +485,7 @@ qreal CUVMessageBarPrivate::getOpacity() const {
 	return opacity;
 }
 
-void CUVMessageBarPrivate::showMessageBar(const UVMessageBarType::PositionPolicy& positionPolicy, const UVMessageBarType::MessageLevel& messageLevel, const QString& title, const QString& message, const int displayMsec, QWidget* parent) {
+void CUVMessageBarPrivate::showMessageBar(const ALMessageBarType::PositionPolicy& positionPolicy, const ALMessageBarType::MessageLevel& messageLevel, const QString& title, const QString& message, const int displayMsec, QWidget* parent) {
 	if (!parent) {
 		QList<QWidget*> widgetList = QApplication::topLevelWidgets();
 		for (const auto& widget : widgetList) {
@@ -521,7 +521,7 @@ void CUVMessageBarPrivate::showMessageBar(const UVMessageBarType::PositionPolicy
  * @param displayMsec 显示时间
  * @param parent pointer to the parent class
  */
-CUVMessageBar::CUVMessageBar(const UVMessageBarType::PositionPolicy& policy, const UVMessageBarType::MessageLevel& messageLevel,
+CUVMessageBar::CUVMessageBar(const ALMessageBarType::PositionPolicy& policy, const ALMessageBarType::MessageLevel& messageLevel,
                              const QString& title, const QString& message, const int displayMsec, QWidget* parent)
 : QWidget(parent), d_ptr(new CUVMessageBarPrivate(this)) {
 	Q_D(CUVMessageBar);
@@ -537,28 +537,28 @@ CUVMessageBar::CUVMessageBar(const UVMessageBarType::PositionPolicy& policy, con
 	setMouseTracking(true);
 	setFont(QFont("Source Han Sans SC Normal"));
 	parent->installEventFilter(this);
-	d->closeButton = new CUVIconButton(CUVAweSomeIcon::Close, 17, d->closeButtonWidth, 30, this);
+	d->closeButton = new CUVIconButton(AweSomeIcon::Close, 17, d->closeButtonWidth, 30, this);
 	switch (d->messageMode) {
-		case UVMessageBarType::Success: {
+		case ALMessageBarType::Success: {
 			d->closeButton->setLightHoverColor(QColor(0xE6, 0xFC, 0xE3));
 			d->closeButton->setDarkHoverColor(QColor(0xE6, 0xFC, 0xE3));
 			d->closeButton->setDarkIconColor(Qt::white);
 			break;
 		}
-		case UVMessageBarType::Warning: {
+		case ALMessageBarType::Warning: {
 			d->closeButton->setLightHoverColor(QColor(0x5E, 0x4C, 0x22));
 			d->closeButton->setDarkHoverColor(QColor(0x5E, 0x4C, 0x22));
 			d->closeButton->setLightIconColor(Qt::white);
 			d->closeButton->setDarkIconColor(Qt::white);
 			break;
 		}
-		case UVMessageBarType::Info: {
+		case ALMessageBarType::Info: {
 			d->closeButton->setLightHoverColor(QColor(0xEB, 0xEB, 0xEB));
 			d->closeButton->setDarkHoverColor(QColor(0xEB, 0xEB, 0xEB));
 			d->closeButton->setDarkIconColor(Qt::black);
 			break;
 		}
-		case UVMessageBarType::Error: {
+		case ALMessageBarType::Error: {
 			d->closeButton->setLightHoverColor(QColor(0xF7, 0xE1, 0xE4));
 			d->closeButton->setDarkHoverColor(QColor(0xF7, 0xE1, 0xE4));
 			d->closeButton->setDarkIconColor(Qt::black);
@@ -579,20 +579,20 @@ CUVMessageBar::CUVMessageBar(const UVMessageBarType::PositionPolicy& policy, con
 
 CUVMessageBar::~CUVMessageBar() = default;
 
-void CUVMessageBar::success(const QString& title, const QString& message, const int displayMsec, const UVMessageBarType::PositionPolicy& positionPolicy, QWidget* parent) {
-	CUVMessageBarPrivate::showMessageBar(positionPolicy, UVMessageBarType::Success, title, message, displayMsec, parent);
+void CUVMessageBar::success(const QString& title, const QString& message, const int displayMsec, const ALMessageBarType::PositionPolicy& positionPolicy, QWidget* parent) {
+	CUVMessageBarPrivate::showMessageBar(positionPolicy, ALMessageBarType::Success, title, message, displayMsec, parent);
 }
 
-void CUVMessageBar::warning(const QString& title, const QString& message, const int displayMsec, const UVMessageBarType::PositionPolicy& positionPolicy, QWidget* parent) {
-	CUVMessageBarPrivate::showMessageBar(positionPolicy, UVMessageBarType::Warning, title, message, displayMsec, parent);
+void CUVMessageBar::warning(const QString& title, const QString& message, const int displayMsec, const ALMessageBarType::PositionPolicy& positionPolicy, QWidget* parent) {
+	CUVMessageBarPrivate::showMessageBar(positionPolicy, ALMessageBarType::Warning, title, message, displayMsec, parent);
 }
 
-void CUVMessageBar::information(const QString& title, const QString& message, const int displayMsec, const UVMessageBarType::PositionPolicy& positionPolicy, QWidget* parent) {
-	CUVMessageBarPrivate::showMessageBar(positionPolicy, UVMessageBarType::Info, title, message, displayMsec, parent);
+void CUVMessageBar::information(const QString& title, const QString& message, const int displayMsec, const ALMessageBarType::PositionPolicy& positionPolicy, QWidget* parent) {
+	CUVMessageBarPrivate::showMessageBar(positionPolicy, ALMessageBarType::Info, title, message, displayMsec, parent);
 }
 
-void CUVMessageBar::error(const QString& title, const QString& message, const int displayMsec, const UVMessageBarType::PositionPolicy& positionPolicy, QWidget* parent) {
-	CUVMessageBarPrivate::showMessageBar(positionPolicy, UVMessageBarType::Error, title, message, displayMsec, parent);
+void CUVMessageBar::error(const QString& title, const QString& message, const int displayMsec, const ALMessageBarType::PositionPolicy& positionPolicy, QWidget* parent) {
+	CUVMessageBarPrivate::showMessageBar(positionPolicy, ALMessageBarType::Error, title, message, displayMsec, parent);
 }
 
 void CUVMessageBar::paintEvent(QPaintEvent* event) {
@@ -605,21 +605,21 @@ void CUVMessageBar::paintEvent(QPaintEvent* event) {
 	UVTheme->drawEffectShadow(&painter, rect(), d->shadowBorderWidth, d->borderRadius);
 	// 背景和图标绘制
 	painter.save();
-	painter.setPen(d->themeMode == UVThemeType::Light ? QColor(0xBE, 0xBA, 0xBE) : QColor(0x52, 0x50, 0x52));
+	painter.setPen(d->themeMode == ALThemeType::Light ? QColor(0xBE, 0xBA, 0xBE) : QColor(0x52, 0x50, 0x52));
 	switch (d->messageMode) {
-		case UVMessageBarType::Success: {
+		case ALMessageBarType::Success: {
 			d->drawSuccess(&painter);
 			break;
 		}
-		case UVMessageBarType::Warning: {
+		case ALMessageBarType::Warning: {
 			d->drawWarning(&painter);
 			break;
 		}
-		case UVMessageBarType::Error: {
+		case ALMessageBarType::Error: {
 			d->drawError(&painter);
 			break;
 		}
-		case UVMessageBarType::Info: {
+		case ALMessageBarType::Info: {
 			d->drawInfo(&painter);
 			break;
 		}
@@ -661,29 +661,29 @@ bool CUVMessageBar::eventFilter(QObject* watched, QEvent* event) {
 				if (d->isNormalDisplay) {
 					const int parentWidth = parentWidget()->width();
 					switch (d->policy) {
-						case UVMessageBarType::Top: {
+						case ALMessageBarType::Top: {
 							this->move(parentWidth / 2 - minimumWidth() / 2, this->y());
 							break;
 						}
-						case UVMessageBarType::Bottom: {
+						case ALMessageBarType::Bottom: {
 							this->move(parentWidth / 2 - minimumWidth() / 2, this->pos().y() + offsetSize.height());
 							break;
 						}
-						case UVMessageBarType::Left:
-						case UVMessageBarType::TopLeft: {
+						case ALMessageBarType::Left:
+						case ALMessageBarType::TopLeft: {
 							this->move(d->messageBarHorizontalMargin, this->pos().y());
 							break;
 						}
-						case UVMessageBarType::BottomLeft: {
+						case ALMessageBarType::BottomLeft: {
 							this->move(d->messageBarHorizontalMargin, this->pos().y() + offsetSize.height());
 							break;
 						}
-						case UVMessageBarType::Right:
-						case UVMessageBarType::TopRight: {
+						case ALMessageBarType::Right:
+						case ALMessageBarType::TopRight: {
 							this->move(parentWidth - minimumWidth() - d->messageBarHorizontalMargin, this->y());
 							break;
 						}
-						case UVMessageBarType::BottomRight: {
+						case ALMessageBarType::BottomRight: {
 							this->move(parentWidth - minimumWidth() - d->messageBarHorizontalMargin,
 							           this->pos().y() + offsetSize.height());
 							break;

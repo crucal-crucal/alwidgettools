@@ -6,7 +6,7 @@
 #include <QPainterPath>
 #include <QPropertyAnimation>
 
-#include "uvawesometoolbutton.hpp"
+#include "alawesometoolbutton.hpp"
 #include "uvbaselistview.hpp"
 #include "uvcustomwidget.hpp"
 #include "uvfooterdelegate.hpp"
@@ -20,7 +20,7 @@
 #include "uvnavigationrouter.hpp"
 #include "uvnavigationview.hpp"
 #include "uvsuggestbox.hpp"
-#include "uvthememanager.hpp"
+#include "althememanager.hpp"
 
 /**
  * @brief \class CUVNavigationBarPrivate
@@ -28,9 +28,9 @@
  * @param q pointer to the public class
  * @param parent pointer to the parent class
  */
-CUVNavigationBarPrivate::CUVNavigationBarPrivate(CUVNavigationBar* q, QObject* parent): QObject(parent), q_ptr(q) {
+CUVNavigationBarPrivate::CUVNavigationBarPrivate(CALNavigationBar* q, QObject* parent): QObject(parent), q_ptr(q) {
 	isShowUserCard = true;
-	currentDisplayMode = UVNavigationType::Maximal;
+	currentDisplayMode = ALNavigationType::Maximal;
 }
 
 CUVNavigationBarPrivate::~CUVNavigationBarPrivate() = default;
@@ -45,7 +45,7 @@ int CUVNavigationBarPrivate::getNavigationViewWidth() const {
 }
 
 void CUVNavigationBarPrivate::slotNavigationButtonClicked() {
-	q_func()->setDisplayMode(currentDisplayMode == UVNavigationType::Compact ? UVNavigationType::Maximal : UVNavigationType::Compact);
+	q_func()->setDisplayMode(currentDisplayMode == ALNavigationType::Compact ? ALNavigationType::Maximal : ALNavigationType::Compact);
 }
 
 void CUVNavigationBarPrivate::slotNavigationOpenNewWindow(const QString& nodeKey) {
@@ -68,7 +68,7 @@ void CUVNavigationBarPrivate::invokableNavigationRouteBack(const QVariantMap& ro
 }
 
 void CUVNavigationBarPrivate::slotTreeViewClicked(const QModelIndex& index, const bool isLogRoute) {
-	Q_Q(CUVNavigationBar);
+	Q_Q(CALNavigationBar);
 
 	if (index.isValid()) {
 		const auto node = static_cast<CUVNavigationNode*>(index.internalPointer());
@@ -76,7 +76,7 @@ void CUVNavigationBarPrivate::slotTreeViewClicked(const QModelIndex& index, cons
 			return;
 		}
 		if (node->getIsExpanderNode()) {
-			if (currentDisplayMode == UVNavigationType::Compact) {
+			if (currentDisplayMode == ALNavigationType::Compact) {
 				if (node->getIsHasPageChild()) {
 					// 展开菜单
 					if (CUVMenu* menu = mapCompactMenu.value(node)) {
@@ -113,7 +113,7 @@ void CUVNavigationBarPrivate::slotTreeViewClicked(const QModelIndex& index, cons
 					routeData.insert("CUVPageKey", pageKeyList);
 					CUVNavigationRouter::instance()->navigationRoute(this, "invokableNavigationRouteBack", routeData);
 				}
-				Q_EMIT q->sigNavigationNodeClicked(UVNavigationType::PageNode, node->getNodeKey());
+				Q_EMIT q->sigNavigationNodeClicked(ALNavigationType::PageNode, node->getNodeKey());
 
 				if (footerModel->getSelectedNode()) {
 					footerView->clearSelection();
@@ -127,7 +127,7 @@ void CUVNavigationBarPrivate::slotTreeViewClicked(const QModelIndex& index, cons
 				QVariantMap postData{};
 				postData.insert("SelectMarkChanged", true);
 				postData.insert("LastSelectedNode", QVariant::fromValue(navigationModel->getSelectedExpandedNode() ? navigationModel->getSelectedExpandedNode() : navigationModel->getSelectedNode()));
-				if (currentDisplayMode == UVNavigationType::Compact) {
+				if (currentDisplayMode == ALNavigationType::Compact) {
 					if (CUVNavigationNode* originNode = node->getOriginalNode(); originNode == node) {
 						postData.insert("SelectedNode", QVariant::fromValue(node));
 					} else {
@@ -144,7 +144,7 @@ void CUVNavigationBarPrivate::slotTreeViewClicked(const QModelIndex& index, cons
 				}
 				navigationModel->setSelectedNode(node);
 				navigationView->navigationNodeStateChanged(postData);
-				if (!node->getIsVisible() && currentDisplayMode != UVNavigationType::Compact) {
+				if (!node->getIsVisible() && currentDisplayMode != ALNavigationType::Compact) {
 					expandSelectedNodeParent();
 				}
 			}
@@ -154,7 +154,7 @@ void CUVNavigationBarPrivate::slotTreeViewClicked(const QModelIndex& index, cons
 }
 
 void CUVNavigationBarPrivate::slotFooterViewClicked(const QModelIndex& index, const bool isLogRoute) {
-	Q_Q(CUVNavigationBar);
+	Q_Q(CALNavigationBar);
 
 	const auto node = index.data(Qt::UserRole).value<CUVNavigationNode*>();
 	if (node->getKeyPoints()) {
@@ -176,7 +176,7 @@ void CUVNavigationBarPrivate::slotFooterViewClicked(const QModelIndex& index, co
 			routaData.insert("CUVPageKey", pageKeyList);
 			CUVNavigationRouter::instance()->navigationRoute(this, "invokableNavigationRouteBack", routaData);
 		}
-		Q_EMIT q->sigNavigationNodeClicked(UVNavigationType::FooterNode, node->getNodeKey());
+		Q_EMIT q->sigNavigationNodeClicked(ALNavigationType::FooterNode, node->getNodeKey());
 
 		if (node->getIsHasFooterNode()) {
 			if (navigationModel->getSelectedNode() || navigationModel->getSelectedExpandedNode()) {
@@ -276,12 +276,12 @@ void CUVNavigationBarPrivate::initNodeModelIndex(const QModelIndex& parentIndex)
 }
 
 void CUVNavigationBarPrivate::addStackedPage(QWidget* page, const QString& pageKey) {
-	Q_Q(CUVNavigationBar);
+	Q_Q(CALNavigationBar);
 
 	if (page) {
 		page->setProperty("CUVPageKey", pageKey);
 	}
-	Q_EMIT q->sigNavigationNodeAdded(UVNavigationType::PageNode, pageKey, page);
+	Q_EMIT q->sigNavigationNodeAdded(ALNavigationType::PageNode, pageKey, page);
 	const CUVNavigationNode* node = navigationModel->getNavigationNode(pageKey);
 	QVariantMap suggestData{};
 	suggestData.insert("CUVNodeType", "Stacked");
@@ -290,12 +290,12 @@ void CUVNavigationBarPrivate::addStackedPage(QWidget* page, const QString& pageK
 }
 
 void CUVNavigationBarPrivate::addFooterPage(QWidget* page, const QString& footKey) {
-	Q_Q(CUVNavigationBar);
+	Q_Q(CALNavigationBar);
 
 	if (page) {
 		page->setProperty("CUVPageKey", footKey);
 	}
-	Q_EMIT q->sigNavigationNodeAdded(UVNavigationType::FooterNode, footKey, page);
+	Q_EMIT q->sigNavigationNodeAdded(ALNavigationType::FooterNode, footKey, page);
 	footerView->setFixedHeight(40 * footerModel->getFooterNodeCount());
 	const CUVNavigationNode* node = footerModel->getNavigationNode(footKey);
 	QVariantMap suggestData{};
@@ -308,11 +308,11 @@ void CUVNavigationBarPrivate::raiseNavigationBar() {
 	q_func()->raise();
 }
 
-void CUVNavigationBarPrivate::doComponentAnimation(const UVNavigationType::NavigationDisplayMode& displayMode, const bool isAnimation) {
+void CUVNavigationBarPrivate::doComponentAnimation(const ALNavigationType::NavigationDisplayMode& displayMode, const bool isAnimation) {
 	switch (displayMode) {
-		case UVNavigationType::Minimal: {
+		case ALNavigationType::Minimal: {
 			doNavigationBarWidthAnimation(displayMode, isAnimation);
-			if (currentDisplayMode == UVNavigationType::Maximal) {
+			if (currentDisplayMode == ALNavigationType::Maximal) {
 				searchButton->setVisible(true);
 				userInfoCard->setVisible(false);
 				navigationSuggestBox->setVisible(false);
@@ -322,10 +322,10 @@ void CUVNavigationBarPrivate::doComponentAnimation(const UVNavigationType::Navig
 			currentDisplayMode = displayMode;
 			break;
 		}
-		case UVNavigationType::Compact: {
+		case ALNavigationType::Compact: {
 			doNavigationBarWidthAnimation(displayMode, isAnimation);
 			doNavigationViewWidthAnimation(isAnimation);
-			if (currentDisplayMode != UVNavigationType::Minimal) {
+			if (currentDisplayMode != ALNavigationType::Minimal) {
 				handleMaximalToCompactLayout();
 				doNavigationButtonAnimation(true, isAnimation);
 				doSearchButtonAnimation(true, isAnimation);
@@ -336,7 +336,7 @@ void CUVNavigationBarPrivate::doComponentAnimation(const UVNavigationType::Navig
 			currentDisplayMode = displayMode;
 			break;
 		}
-		case UVNavigationType::Maximal: {
+		case ALNavigationType::Maximal: {
 			resetLayout();
 			handleCompactToMaximalLayout();
 			doNavigationBarWidthAnimation(displayMode, isAnimation);
@@ -420,8 +420,8 @@ void CUVNavigationBarPrivate::resetLayout() const {
 	userButtonVLayout->addWidget(userButton);
 }
 
-void CUVNavigationBarPrivate::doNavigationBarWidthAnimation(const UVNavigationType::NavigationDisplayMode& displayMode, const bool isAnimation) {
-	Q_Q(CUVNavigationBar);
+void CUVNavigationBarPrivate::doNavigationBarWidthAnimation(const ALNavigationType::NavigationDisplayMode& displayMode, const bool isAnimation) {
+	Q_Q(CALNavigationBar);
 
 	const auto navigationBarWidthAnimation = new QPropertyAnimation(q, "maximumWidth");
 	navigationBarWidthAnimation->setEasingCurve(QEasingCurve::OutCubic);
@@ -429,17 +429,17 @@ void CUVNavigationBarPrivate::doNavigationBarWidthAnimation(const UVNavigationTy
 	navigationBarWidthAnimation->setStartValue(q->width());
 
 	switch (displayMode) {
-		case UVNavigationType::Minimal: {
+		case ALNavigationType::Minimal: {
 			connect(navigationBarWidthAnimation, &QPropertyAnimation::valueChanged, this, [=](const QVariant& value) { q->setFixedWidth(value.toInt()); });
 			navigationBarWidthAnimation->setEndValue(0);
 			break;
 		}
-		case UVNavigationType::Compact: {
+		case ALNavigationType::Compact: {
 			connect(navigationBarWidthAnimation, &QPropertyAnimation::valueChanged, this, [=](const QVariant& value) { q->setFixedWidth(value.toInt()); });
 			navigationBarWidthAnimation->setEndValue(47);
 			break;
 		}
-		case UVNavigationType::Maximal: {
+		case ALNavigationType::Maximal: {
 			connect(navigationBarWidthAnimation, &QPropertyAnimation::finished, this, [=]() { resetLayout(); });
 			connect(navigationBarWidthAnimation, &QPropertyAnimation::valueChanged, this, [=](const QVariant& value) { q->setFixedWidth(value.toInt()); });
 			navigationBarWidthAnimation->setEndValue(300);
@@ -526,10 +526,10 @@ void CUVNavigationBarPrivate::doUserButtonAnimation(const bool isCompact, const 
 }
 
 /**
- * @brief \class CUVNavigationBar
+ * @brief \class CALNavigationBar
  * @param parent pointer to the parent class
  */
-CUVNavigationBar::CUVNavigationBar(QWidget* parent): QWidget(parent), d_ptr(new CUVNavigationBarPrivate(this, this)) {
+CALNavigationBar::CALNavigationBar(QWidget* parent): QWidget(parent), d_ptr(new CUVNavigationBarPrivate(this, this)) {
 	Q_D(CUVNavigationBar);
 
 	setFixedWidth(300);
@@ -540,13 +540,13 @@ CUVNavigationBar::CUVNavigationBar(QWidget* parent): QWidget(parent), d_ptr(new 
 	d->userInfoCard->setCardPixmap(QPixmap(":/image/crucal.png"));
 	d->userInfoCard->setTitle("crucal");
 	d->userInfoCard->setSubTitle("uvwidgettools");
-	connect(d->userInfoCard, &CUVInteractiveCard::clicked, this, &CUVNavigationBar::sigUserInfoCardClicked);
+	connect(d->userInfoCard, &CUVInteractiveCard::clicked, this, &CALNavigationBar::sigUserInfoCardClicked);
 	// user button
 	d->userButton = new CUVIconButton(QPixmap(":/image/crucal.png"), this);
 	d->userButton->setFixedSize(36, 36);
 	d->userButton->setVisible(false);
 	d->userButton->setBorderRadius(8);
-	connect(d->userButton, &CUVIconButton::clicked, this, &CUVNavigationBar::sigUserInfoCardClicked);
+	connect(d->userButton, &CUVIconButton::clicked, this, &CALNavigationBar::sigUserInfoCardClicked);
 	// user button layout
 	d->userButtonVLayout = new QVBoxLayout;
 	d->userButtonVLayout->setAlignment(Qt::AlignLeft);
@@ -564,13 +564,13 @@ CUVNavigationBar::CUVNavigationBar(QWidget* parent): QWidget(parent), d_ptr(new 
 	// navigation button
 	d->navigationButton = new CUVAwesomeToolButton(this);
 	d->navigationButton->setFixedSize(40, 38);
-	d->navigationButton->setAweSomeIcon(UVIcon::CUVAweSomeIcon::Bars);
+	d->navigationButton->setAweSomeIcon(ALIcon::AweSomeIcon::Bars);
 	d->navigationButton->setBorderRadius(8);
 	connect(d->navigationButton, &CUVAwesomeToolButton::clicked, d, &CUVNavigationBarPrivate::slotNavigationButtonClicked);
 	// search button
 	d->searchButton = new CUVAwesomeToolButton(this);
 	d->searchButton->setFixedSize(40, 38);
-	d->searchButton->setAweSomeIcon(UVIcon::CUVAweSomeIcon::MagnifyingGlass);
+	d->searchButton->setAweSomeIcon(ALIcon::AweSomeIcon::MagnifyingGlass);
 	d->searchButton->setBorderRadius(8);
 	d->searchButton->setVisible(false);
 	connect(d->searchButton, &CUVAwesomeToolButton::clicked, d, &CUVNavigationBarPrivate::slotNavigationButtonClicked);
@@ -651,12 +651,12 @@ CUVNavigationBar::CUVNavigationBar(QWidget* parent): QWidget(parent), d_ptr(new 
 
 	/// theme
 	d->themeMode = UVTheme->getThemeMode();
-	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const UVThemeType::ThemeMode& mode) { d->themeMode = mode; });
+	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { d->themeMode = mode; });
 }
 
-CUVNavigationBar::~CUVNavigationBar() = default;
+CALNavigationBar::~CALNavigationBar() = default;
 
-void CUVNavigationBar::setUserInfoCardVisible(const bool isVisible) {
+void CALNavigationBar::setUserInfoCardVisible(const bool isVisible) {
 	Q_D(CUVNavigationBar);
 
 	d->isShowUserCard = isVisible;
@@ -664,26 +664,26 @@ void CUVNavigationBar::setUserInfoCardVisible(const bool isVisible) {
 	d->userButton->setVisible(!isVisible);
 }
 
-void CUVNavigationBar::setUserInfoCardPixmap(const QPixmap& pix) {
+void CALNavigationBar::setUserInfoCardPixmap(const QPixmap& pix) {
 	Q_D(CUVNavigationBar);
 
 	d->userInfoCard->setCardPixmap(pix);
 	d->userButton->setPixmap(pix);
 }
 
-void CUVNavigationBar::setUserInfoCardTitle(const QString& title) {
+void CALNavigationBar::setUserInfoCardTitle(const QString& title) {
 	d_func()->userInfoCard->setTitle(title);
 }
 
-void CUVNavigationBar::setUserInfoCardSubTitle(const QString& subTitle) {
+void CALNavigationBar::setUserInfoCardSubTitle(const QString& subTitle) {
 	d_func()->userInfoCard->setSubTitle(subTitle);
 }
 
-UVNavigationType::NodeOperateReturnType CUVNavigationBar::addExpanderNode(const QString& expanderTitle, QString& expanderKey, const UVIcon::CUVAweSomeIcon& awewomeIcon) {
+ALNavigationType::NodeOperateReturnType CALNavigationBar::addExpanderNode(const QString& expanderTitle, QString& expanderKey, const ALIcon::AweSomeIcon& awewomeIcon) {
 	Q_D(CUVNavigationBar);
 
-	const UVNavigationType::NodeOperateReturnType resType = d->navigationModel->addExpanderNode(expanderTitle, expanderKey, awewomeIcon);
-	if (resType == UVNavigationType::Success) {
+	const ALNavigationType::NodeOperateReturnType resType = d->navigationModel->addExpanderNode(expanderTitle, expanderKey, awewomeIcon);
+	if (resType == ALNavigationType::Success) {
 		d->initNodeModelIndex({});
 		d->resetNodeSelected();
 	}
@@ -691,11 +691,11 @@ UVNavigationType::NodeOperateReturnType CUVNavigationBar::addExpanderNode(const 
 	return resType;
 }
 
-UVNavigationType::NodeOperateReturnType CUVNavigationBar::addExpanderNode(const QString& expanderTitle, QString& expanderKey, const QString& targetExpanderKey, const UVIcon::CUVAweSomeIcon& awewomeIcon) {
+ALNavigationType::NodeOperateReturnType CALNavigationBar::addExpanderNode(const QString& expanderTitle, QString& expanderKey, const QString& targetExpanderKey, const ALIcon::AweSomeIcon& awewomeIcon) {
 	Q_D(CUVNavigationBar);
 
-	const UVNavigationType::NodeOperateReturnType resType = d->navigationModel->addExpanderNode(expanderTitle, expanderKey, targetExpanderKey, awewomeIcon);
-	if (resType == UVNavigationType::Success) {
+	const ALNavigationType::NodeOperateReturnType resType = d->navigationModel->addExpanderNode(expanderTitle, expanderKey, targetExpanderKey, awewomeIcon);
+	if (resType == ALNavigationType::Success) {
 		d->initNodeModelIndex({});
 		d->resetNodeSelected();
 	}
@@ -703,15 +703,15 @@ UVNavigationType::NodeOperateReturnType CUVNavigationBar::addExpanderNode(const 
 	return resType;
 }
 
-UVNavigationType::NodeOperateReturnType CUVNavigationBar::addPageNode(const QString& pageTitle, QWidget* page, const UVIcon::CUVAweSomeIcon& awewomeIcon) {
+ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QString& pageTitle, QWidget* page, const ALIcon::AweSomeIcon& awewomeIcon) {
 	Q_D(CUVNavigationBar);
 	if (!page) {
-		return UVNavigationType::PageInvalid;
+		return ALNavigationType::PageInvalid;
 	}
 
 	QString pageKey{};
-	const UVNavigationType::NodeOperateReturnType resType = d->navigationModel->addPageNode(pageTitle, pageKey, awewomeIcon);
-	if (resType == UVNavigationType::Success) {
+	const ALNavigationType::NodeOperateReturnType resType = d->navigationModel->addPageNode(pageTitle, pageKey, awewomeIcon);
+	if (resType == ALNavigationType::Success) {
 		d->mapPageMeta.insert(pageKey, page->metaObject());
 		d->addStackedPage(page, pageKey);
 		d->initNodeModelIndex({});
@@ -721,18 +721,18 @@ UVNavigationType::NodeOperateReturnType CUVNavigationBar::addPageNode(const QStr
 	return resType;
 }
 
-UVNavigationType::NodeOperateReturnType CUVNavigationBar::addPageNode(const QString& pageTitle, QWidget* page, const QString& targetExpanderKey, const UVIcon::CUVAweSomeIcon& awewomeIcon) {
+ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QString& pageTitle, QWidget* page, const QString& targetExpanderKey, const ALIcon::AweSomeIcon& awewomeIcon) {
 	Q_D(CUVNavigationBar);
 	if (!page) {
-		return UVNavigationType::PageInvalid;
+		return ALNavigationType::PageInvalid;
 	}
 	if (targetExpanderKey.isEmpty()) {
-		return UVNavigationType::TargetNodeInvalid;
+		return ALNavigationType::TargetNodeInvalid;
 	}
 
 	QString pageKey{};
-	const UVNavigationType::NodeOperateReturnType resType = d->navigationModel->addPageNode(pageTitle, pageKey, targetExpanderKey, awewomeIcon);
-	if (resType == UVNavigationType::Success) {
+	const ALNavigationType::NodeOperateReturnType resType = d->navigationModel->addPageNode(pageTitle, pageKey, targetExpanderKey, awewomeIcon);
+	if (resType == ALNavigationType::Success) {
 		d->mapPageMeta.insert(pageKey, page->metaObject());
 		CUVNavigationNode* node = d->navigationModel->getNavigationNode(pageKey);
 		if (CUVNavigationNode* originalNode = node->getOriginalNode(); d->mapCompactMenu.contains(originalNode)) {
@@ -740,7 +740,7 @@ UVNavigationType::NodeOperateReturnType CUVNavigationBar::addPageNode(const QStr
 			const QAction* action = menu->addAction(node->getAwesomeIcon(), node->getNodeTitle());
 			connect(action, &QAction::triggered, this, [=]() { d->slotTreeViewClicked(node->getModelIndex()); });
 		} else {
-			const auto menu = new CUVMenu(const_cast<CUVNavigationBar*>(this));
+			const auto menu = new CUVMenu(const_cast<CALNavigationBar*>(this));
 			const QAction* action = menu->addAction(node->getAwesomeIcon(), node->getNodeTitle());
 			connect(action, &QAction::triggered, this, [=]() { d->slotTreeViewClicked(node->getModelIndex()); });
 			d->mapCompactMenu.insert(originalNode, menu);
@@ -753,15 +753,15 @@ UVNavigationType::NodeOperateReturnType CUVNavigationBar::addPageNode(const QStr
 	return resType;
 }
 
-UVNavigationType::NodeOperateReturnType CUVNavigationBar::addPageNode(const QString& pageTitle, QWidget* page, const int keyPoints, const UVIcon::CUVAweSomeIcon& awewomeIcon) {
+ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QString& pageTitle, QWidget* page, const int keyPoints, const ALIcon::AweSomeIcon& awewomeIcon) {
 	Q_D(CUVNavigationBar);
 	if (!page) {
-		return UVNavigationType::PageInvalid;
+		return ALNavigationType::PageInvalid;
 	}
 
 	QString pageKey{};
-	const UVNavigationType::NodeOperateReturnType resType = d->navigationModel->addPageNode(pageTitle, pageKey, keyPoints, awewomeIcon);
-	if (resType == UVNavigationType::Success) {
+	const ALNavigationType::NodeOperateReturnType resType = d->navigationModel->addPageNode(pageTitle, pageKey, keyPoints, awewomeIcon);
+	if (resType == ALNavigationType::Success) {
 		d->mapPageMeta.insert(pageKey, page->metaObject());
 		d->addStackedPage(page, pageKey);
 		d->initNodeModelIndex({});
@@ -771,18 +771,18 @@ UVNavigationType::NodeOperateReturnType CUVNavigationBar::addPageNode(const QStr
 	return resType;
 }
 
-UVNavigationType::NodeOperateReturnType CUVNavigationBar::addPageNode(const QString& pageTitle, QWidget* page, const QString& targetExpanderKey, const int keyPoints, const UVIcon::CUVAweSomeIcon& awewomeIcon) {
+ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QString& pageTitle, QWidget* page, const QString& targetExpanderKey, const int keyPoints, const ALIcon::AweSomeIcon& awewomeIcon) {
 	Q_D(CUVNavigationBar);
 	if (!page) {
-		return UVNavigationType::PageInvalid;
+		return ALNavigationType::PageInvalid;
 	}
 	if (targetExpanderKey.isEmpty()) {
-		return UVNavigationType::TargetNodeInvalid;
+		return ALNavigationType::TargetNodeInvalid;
 	}
 
 	QString pageKey{};
-	const UVNavigationType::NodeOperateReturnType resType = d->navigationModel->addPageNode(pageTitle, pageKey, targetExpanderKey, keyPoints, awewomeIcon);
-	if (resType == UVNavigationType::Success) {
+	const ALNavigationType::NodeOperateReturnType resType = d->navigationModel->addPageNode(pageTitle, pageKey, targetExpanderKey, keyPoints, awewomeIcon);
+	if (resType == ALNavigationType::Success) {
 		d->mapPageMeta.insert(pageKey, page->metaObject());
 		CUVNavigationNode* node = d->navigationModel->getNavigationNode(pageKey);
 		if (CUVNavigationNode* originalNode = node->getOriginalNode(); d->mapCompactMenu.contains(originalNode)) {
@@ -790,7 +790,7 @@ UVNavigationType::NodeOperateReturnType CUVNavigationBar::addPageNode(const QStr
 			const QAction* action = menu->addAction(node->getAwesomeIcon(), node->getNodeTitle());
 			connect(action, &QAction::triggered, this, [=]() { d->slotTreeViewClicked(node->getModelIndex()); });
 		} else {
-			const auto menu = new CUVMenu(const_cast<CUVNavigationBar*>(this));
+			const auto menu = new CUVMenu(const_cast<CALNavigationBar*>(this));
 			const QAction* action = menu->addAction(node->getAwesomeIcon(), node->getNodeTitle());
 			connect(action, &QAction::triggered, this, [=]() { d->slotTreeViewClicked(node->getModelIndex()); });
 			d->mapCompactMenu.insert(originalNode, menu);
@@ -803,31 +803,31 @@ UVNavigationType::NodeOperateReturnType CUVNavigationBar::addPageNode(const QStr
 	return resType;
 }
 
-UVNavigationType::NodeOperateReturnType CUVNavigationBar::addFooterNode(const QString& footerTitle, QString& footerKey, const int keyPoints, const UVIcon::CUVAweSomeIcon& awewomeIcon) {
+ALNavigationType::NodeOperateReturnType CALNavigationBar::addFooterNode(const QString& footerTitle, QString& footerKey, const int keyPoints, const ALIcon::AweSomeIcon& awewomeIcon) {
 	return addFooterNode(footerTitle, nullptr, footerKey, keyPoints, awewomeIcon);
 }
 
-UVNavigationType::NodeOperateReturnType CUVNavigationBar::addFooterNode(const QString& footerTitle, QWidget* page, QString& footerKey, const int keyPoints, const UVIcon::CUVAweSomeIcon& awewomeIcon) {
+ALNavigationType::NodeOperateReturnType CALNavigationBar::addFooterNode(const QString& footerTitle, QWidget* page, QString& footerKey, const int keyPoints, const ALIcon::AweSomeIcon& awewomeIcon) {
 	Q_D(CUVNavigationBar);
 
 	const auto resType = d->footerModel->addFooterNode(footerTitle, footerKey, page ? true : false, keyPoints, awewomeIcon);
-	if (resType == UVNavigationType::Success) {
+	if (resType == ALNavigationType::Success) {
 		d->addFooterPage(page, footerKey);
 	}
 
 	return resType;
 }
 
-void CUVNavigationBar::setIsTransparent(const bool isTransparent) {
+void CALNavigationBar::setIsTransparent(const bool isTransparent) {
 	d_func()->isTransparent = isTransparent;
 	Q_EMIT sigIsTransparentChanged();
 }
 
-bool CUVNavigationBar::getIsTransparent() const {
+bool CALNavigationBar::getIsTransparent() const {
 	return d_func()->isTransparent;
 }
 
-void CUVNavigationBar::setNodeKeyPoints(const QString& nodeKey, const int keyPoints) {
+void CALNavigationBar::setNodeKeyPoints(const QString& nodeKey, const int keyPoints) {
 	Q_D(CUVNavigationBar);
 
 	CUVNavigationNode* node = d->navigationModel->getNavigationNode(nodeKey);
@@ -839,7 +839,7 @@ void CUVNavigationBar::setNodeKeyPoints(const QString& nodeKey, const int keyPoi
 	node->getIsFooterNode() ? d->footerView->viewport()->update() : d->navigationView->viewport()->update();
 }
 
-int CUVNavigationBar::getNodeKeyPoints(const QString& nodeKey) const {
+int CALNavigationBar::getNodeKeyPoints(const QString& nodeKey) const {
 	const CUVNavigationNode* node = d_func()->navigationModel->getNavigationNode(nodeKey);
 	if (!node || node->getIsExpanderNode()) {
 		return -1;
@@ -848,7 +848,7 @@ int CUVNavigationBar::getNodeKeyPoints(const QString& nodeKey) const {
 	return node->getKeyPoints();
 }
 
-void CUVNavigationBar::navigation(const QString& pageKey, const bool isLogClicked) {
+void CALNavigationBar::navigation(const QString& pageKey, const bool isLogClicked) {
 	Q_D(CUVNavigationBar);
 
 	const CUVNavigationNode* node = d->navigationModel->getNavigationNode(pageKey);
@@ -866,10 +866,10 @@ void CUVNavigationBar::navigation(const QString& pageKey, const bool isLogClicke
 	}
 }
 
-void CUVNavigationBar::setDisplayMode(const UVNavigationType::NavigationDisplayMode& displayMode, const bool isAnimation) {
+void CALNavigationBar::setDisplayMode(const ALNavigationType::NavigationDisplayMode& displayMode, const bool isAnimation) {
 	Q_D(CUVNavigationBar);
 
-	if (d->currentDisplayMode == displayMode || displayMode == UVNavigationType::Auto) {
+	if (d->currentDisplayMode == displayMode || displayMode == ALNavigationType::Auto) {
 		return;
 	}
 
@@ -877,14 +877,14 @@ void CUVNavigationBar::setDisplayMode(const UVNavigationType::NavigationDisplayM
 	d->raiseNavigationBar();
 }
 
-void CUVNavigationBar::paintEvent(QPaintEvent* event) {
+void CALNavigationBar::paintEvent(QPaintEvent* event) {
 	Q_D(CUVNavigationBar);
 
 	if (!d->isTransparent) {
 		QPainter painter(this);
 		painter.save();
-		painter.setPen(UVThemeColor(d->themeMode, UVThemeType::PopupBorder));
-		painter.setBrush(UVThemeColor(d->themeMode, UVThemeType::PopupBase));
+		painter.setPen(UVThemeColor(d->themeMode, ALThemeType::PopupBorder));
+		painter.setBrush(UVThemeColor(d->themeMode, ALThemeType::PopupBase));
 		QRect baseRect = this->rect();
 		baseRect.adjust(-1, 0, -1, 0);
 		QPainterPath path;

@@ -2,7 +2,7 @@
 
 #include <QObject>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class QVBoxLayout;
 class CUVText;
@@ -33,7 +33,7 @@ private:
 	CUVText* toolTipText{ nullptr };
 	QVBoxLayout* mainVLayout{ nullptr };
 	QWidget* customWidget{ nullptr };
-	UVThemeType::ThemeMode themeMode{};
+	ALThemeType::ThemeMode themeMode{};
 	int shadowBorderWidth{ 6 };
 	int borderRadius{};
 	int displayMsec{};

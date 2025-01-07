@@ -1,9 +1,9 @@
-﻿#include "uvcolordialog.hpp"
+﻿#include "alcolordialog.hpp"
 
 #include <QHBoxLayout>
 #include <QPainter>
 
-#include "uvawesometoolbutton.hpp"
+#include "alawesometoolbutton.hpp"
 #include "uvbaselistview.hpp"
 #include "uvcolordialog_p.hpp"
 #include "uvcolordisplaydelegate.hpp"
@@ -11,12 +11,12 @@
 #include "uvcolorpicker.hpp"
 #include "uvcolorpreview.hpp"
 #include "uvcolorvaluesliderstyle.hpp"
-#include "uvcombobox.hpp"
+#include "alcombobox.hpp"
 #include "uvintvalidator.hpp"
 #include "uvlineedit.hpp"
 #include "uvpushbutton.hpp"
 #include "uvtext.hpp"
-#include "uvthememanager.hpp"
+#include "althememanager.hpp"
 
 /**
  * @brief \class CUVColorDialogPrivate
@@ -241,12 +241,12 @@ CUVColorDialog::CUVColorDialog(QWidget* parent): QDialog(parent), d_ptr(new CUVC
 	setWindowModality(Qt::ApplicationModal);
 
 	/// appBar
-	d->appBar = new CUVAppBar(this);
+	d->appBar = new CALAppBar(this);
 	d->appBar->setAppBarHeight(30);
 	d->appBar->setIsStayTop(true);
-	d->appBar->setWindowButtonFlags(UVAppBarType::CloseButtonHint);
+	d->appBar->setWindowButtonFlags(ALAppBarType::CloseButtonHint);
 	d->appBar->setIsDefaultClosed(false);
-	connect(d->appBar, &CUVAppBar::sigCloseButtonClicked, this, &CUVColorDialog::close);
+	connect(d->appBar, &CALAppBar::sigCloseButtonClicked, this, &CUVColorDialog::close);
 	/// color picker
 	const auto colorPickerText = new CUVText("edit color", this);
 	colorPickerText->setTextPixelSize(17);
@@ -400,11 +400,11 @@ CUVColorDialog::CUVColorDialog(QWidget* parent): QDialog(parent), d_ptr(new CUVC
 	/// add & remove button
 	d->addCustomColorButton = new CUVAwesomeToolButton(this);
 	d->addCustomColorButton->setIsTransparent(false);
-	d->addCustomColorButton->setAweSomeIcon(UVIcon::CUVAweSomeIcon::Plus);
+	d->addCustomColorButton->setAweSomeIcon(ALIcon::AweSomeIcon::Plus);
 	connect(d->addCustomColorButton, &CUVAwesomeToolButton::clicked, d, &CUVColorDialogPrivate::slotAddCustomColorButtonClicked);
 	d->removeCustomColorButton = new CUVAwesomeToolButton(this);
 	d->removeCustomColorButton->setIsTransparent(false);
-	d->removeCustomColorButton->setAweSomeIcon(UVIcon::CUVAweSomeIcon::Minus);
+	d->removeCustomColorButton->setAweSomeIcon(ALIcon::AweSomeIcon::Minus);
 	connect(d->removeCustomColorButton, &CUVAwesomeToolButton::clicked, d, &CUVColorDialogPrivate::slotRemoveCustomColorButtonClicked);
 	const auto customColorViewText = new CUVText(tr("custom color"), this);
 	customColorViewText->setTextPixelSize(14);
@@ -427,23 +427,23 @@ CUVColorDialog::CUVColorDialog(QWidget* parent): QDialog(parent), d_ptr(new CUVC
 	colorDisplayHLayout->addLayout(customColorVLayout);
 	colorDisplayHLayout->addStretch();
 	/// ok & cancel button
-	d->overButton = new CUVPushButton(tr("ok"), this);
+	d->overButton = new CALPushButton(tr("ok"), this);
 	d->overButton->setBorderRadius(6);
-	d->overButton->setLightDefaultColor(UVThemeColor(UVThemeType::Light, UVThemeType::PrimaryNormal));
-	d->overButton->setLightHoverColor(UVThemeColor(UVThemeType::Light, UVThemeType::PrimaryHover));
-	d->overButton->setLightPressedColor(UVThemeColor(UVThemeType::Light, UVThemeType::PrimaryPress));
+	d->overButton->setLightDefaultColor(UVThemeColor(ALThemeType::Light, ALThemeType::PrimaryNormal));
+	d->overButton->setLightHoverColor(UVThemeColor(ALThemeType::Light, ALThemeType::PrimaryHover));
+	d->overButton->setLightPressedColor(UVThemeColor(ALThemeType::Light, ALThemeType::PrimaryPress));
 	d->overButton->setLightTextColor(Qt::white);
-	d->overButton->setDarkDefaultColor(UVThemeColor(UVThemeType::Dark, UVThemeType::PrimaryNormal));
-	d->overButton->setDarkHoverColor(UVThemeColor(UVThemeType::Dark, UVThemeType::PrimaryHover));
-	d->overButton->setDarkPressedColor(UVThemeColor(UVThemeType::Dark, UVThemeType::PrimaryPress));
+	d->overButton->setDarkDefaultColor(UVThemeColor(ALThemeType::Dark, ALThemeType::PrimaryNormal));
+	d->overButton->setDarkHoverColor(UVThemeColor(ALThemeType::Dark, ALThemeType::PrimaryHover));
+	d->overButton->setDarkPressedColor(UVThemeColor(ALThemeType::Dark, ALThemeType::PrimaryPress));
 	d->overButton->setDarkTextColor(Qt::white);
-	connect(d->overButton, &CUVPushButton::clicked, this, [=]() {
+	connect(d->overButton, &CALPushButton::clicked, this, [=]() {
 		Q_EMIT sigColorSelected(d->currentColor);
 		close();
 	});
-	d->cancelButton = new CUVPushButton(tr("cancel"), this);
+	d->cancelButton = new CALPushButton(tr("cancel"), this);
 	d->cancelButton->setBorderRadius(6);
-	connect(d->cancelButton, &CUVPushButton::clicked, this, &CUVColorDialog::close);
+	connect(d->cancelButton, &CALPushButton::clicked, this, &CUVColorDialog::close);
 	const auto buttonHLayout = new QHBoxLayout;
 	buttonHLayout->setContentsMargins(0, 0, 0, 0);
 	buttonHLayout->addWidget(d->overButton);
@@ -460,7 +460,7 @@ CUVColorDialog::CUVColorDialog(QWidget* parent): QDialog(parent), d_ptr(new CUVC
 	mainVLayout->addStretch();
 	/// theme
 	d->themeMode = UVTheme->getThemeMode();
-	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const UVThemeType::ThemeMode& mode) { d->themeMode = mode; });
+	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { d->themeMode = mode; });
 	setCurrentColor(QColor(0x80, 0xFF, 0xEF));
 }
 
@@ -502,10 +502,10 @@ void CUVColorDialog::paintEvent(QPaintEvent* event) {
 	painter.setRenderHint(QPainter::Antialiasing);
 	painter.setPen(Qt::NoPen);
 	// 背景绘制
-	painter.setBrush(UVThemeColor(d->themeMode, UVThemeType::DialogBase));
+	painter.setBrush(UVThemeColor(d->themeMode, ALThemeType::DialogBase));
 	painter.drawRect(rect());
 	// 按钮背景绘制
-	painter.setBrush(UVThemeColor(d->themeMode, UVThemeType::DialogLayoutArea));
+	painter.setBrush(UVThemeColor(d->themeMode, ALThemeType::DialogLayoutArea));
 	painter.drawRect(QRect(0, height() - 78, width(), 78));
 	painter.restore();
 

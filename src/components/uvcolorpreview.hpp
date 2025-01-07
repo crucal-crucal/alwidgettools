@@ -2,7 +2,7 @@
 
 #include <QWidget>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class CUVColorPreview final : public QWidget {
 	Q_OBJECT
@@ -14,13 +14,13 @@ public:
 	void setBaseColor(const QColor& color);
 	[[nodiscard]] QColor getBaseColor() const;
 
-	void setThemeMode(const UVThemeType::ThemeMode& mode);
-	[[nodiscard]] UVThemeType::ThemeMode getThemeMode() const;
+	void setThemeMode(const ALThemeType::ThemeMode& mode);
+	[[nodiscard]] ALThemeType::ThemeMode getThemeMode() const;
 
 protected:
 	void paintEvent(QPaintEvent* event) override;
 
 private:
 	QColor m_baseColor{};
-	UVThemeType::ThemeMode m_themeMode{};
+	ALThemeType::ThemeMode m_themeMode{};
 };

@@ -2,11 +2,11 @@
 
 #include <QDoubleSpinBox>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class CUVDoubleSpinBoxPrivate;
 
-class CUVWIDGETTOOLS_EXPORT CUVDoubleSpinBox : public QDoubleSpinBox {
+class CALWIDGETTOOLS_EXPORT CUVDoubleSpinBox : public QDoubleSpinBox {
 	Q_OBJECT
 	Q_DECLARE_PRIVATE(CUVDoubleSpinBox)
 

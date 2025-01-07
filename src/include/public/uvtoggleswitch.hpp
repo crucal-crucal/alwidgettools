@@ -2,11 +2,11 @@
 
 #include <QWidget>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class CUVToggleSwitchPrivate;
 
-class CUVWIDGETTOOLS_EXPORT CUVToggleSwitch : public QWidget {
+class CALWIDGETTOOLS_EXPORT CUVToggleSwitch : public QWidget {
 	Q_OBJECT
 	Q_DISABLE_COPY(CUVToggleSwitch)
 	Q_DECLARE_PRIVATE(CUVToggleSwitch)

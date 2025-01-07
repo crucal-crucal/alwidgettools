@@ -2,7 +2,7 @@
 
 #include <QWidget>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class CUVColorPicker final : public QWidget {
 	Q_OBJECT
@@ -11,8 +11,8 @@ public:
 	explicit CUVColorPicker(QWidget* parent = nullptr);
 	~CUVColorPicker() override;
 
-	void setThemeMode(const UVThemeType::ThemeMode& mode);
-	[[nodiscard]] UVThemeType::ThemeMode getThemeMode() const;
+	void setThemeMode(const ALThemeType::ThemeMode& mode);
+	[[nodiscard]] ALThemeType::ThemeMode getThemeMode() const;
 
 	void setSelectedColor(const QColor& color);
 	[[nodiscard]] QColor getSelectedColor() const;
@@ -27,7 +27,7 @@ protected:
 	void paintEvent(QPaintEvent* event) override;
 
 private:
-	UVThemeType::ThemeMode m_themeMode{};
+	ALThemeType::ThemeMode m_themeMode{};
 
 	QImage m_colorPickerImage{};
 	QPoint m_selectedPoint{};

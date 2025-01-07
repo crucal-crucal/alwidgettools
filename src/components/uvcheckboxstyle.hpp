@@ -2,7 +2,7 @@
 
 #include <QProxyStyle>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class CUVCheckBoxStyle final : public QProxyStyle {
 	Q_OBJECT
@@ -18,7 +18,7 @@ public:
 	[[nodiscard]] int getCheckIndicatorWidth() const;
 
 private:
-	UVThemeType::ThemeMode m_themeMode{};
+	ALThemeType::ThemeMode m_themeMode{};
 	int m_checkIndicatorWidth{};
 	qreal m_borderRadius{};
 };

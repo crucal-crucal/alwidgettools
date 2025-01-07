@@ -21,8 +21,8 @@ void CUVProgressBarPrivate::init() {
 	Q_Q(CUVProgressBar);
 
 	delegate = new CUVProgressBarDelegate(q);
-	progressType = UVProgressType::IndeterminateProgress;
-	position = UVProgressType::Right;
+	progressType = ALProgressType::IndeterminateProgress;
+	position = ALProgressType::Right;
 	progressColor = Qt::green;
 	backgroundColor = Qt::gray;
 	borderRadius = 5.0;
@@ -38,7 +38,7 @@ void CUVProgressBarPrivate::init() {
 	animation->start();
 }
 
-void CUVProgressBarPrivate::calculateRects(QRect& progressRect, QRect& textRect, const UVProgressType::ProgressTextPosition& position) const {
+void CUVProgressBarPrivate::calculateRects(QRect& progressRect, QRect& textRect, const ALProgressType::ProgressTextPosition& position) const {
 	Q_Q(const CUVProgressBar);
 
 	const int progressWidth = q->width();
@@ -53,17 +53,17 @@ void CUVProgressBarPrivate::calculateRects(QRect& progressRect, QRect& textRect,
 	constexpr int textReservedSize = 40; // 预留文本宽度
 
 	switch (position) {
-		case UVProgressType::Center: {
+		case ALProgressType::Center: {
 			progressRect = QRect(0, 0, progressWidth, progressHeight);
 			textRect = QRect(0, 0, progressWidth, progressHeight);
 			break;
 		}
-		case UVProgressType::Left: {
+		case ALProgressType::Left: {
 			progressRect = QRect(textReservedSize, 0, progressWidth - textReservedSize, progressHeight);
 			textRect = QRect(0, 0, textReservedSize, progressHeight);
 			break;
 		}
-		case UVProgressType::Right: {
+		case ALProgressType::Right: {
 			progressRect = QRect(0, 0, progressWidth - textReservedSize, progressHeight);
 			textRect = QRect(progressWidth - textReservedSize, 0, textReservedSize, progressHeight);
 			break;
@@ -106,21 +106,21 @@ CUVProgressBar::CUVProgressBar(QWidget* parent): QProgressBar(parent), d_ptr(new
 
 CUVProgressBar::~CUVProgressBar() = default;
 
-void CUVProgressBar::setProgressType(const UVProgressType::ProgressType& type) {
+void CUVProgressBar::setProgressType(const ALProgressType::ProgressType& type) {
 	d_func()->progressType = type;
 	update();
 }
 
-UVProgressType::ProgressType CUVProgressBar::getProgressType() const {
+ALProgressType::ProgressType CUVProgressBar::getProgressType() const {
 	return d_func()->progressType;
 }
 
-void CUVProgressBar::setProgressTextPosition(const UVProgressType::ProgressTextPosition& position) {
+void CUVProgressBar::setProgressTextPosition(const ALProgressType::ProgressTextPosition& position) {
 	d_func()->position = position;
 	update();
 }
 
-UVProgressType::ProgressTextPosition CUVProgressBar::getProgressTextPosition() const {
+ALProgressType::ProgressTextPosition CUVProgressBar::getProgressTextPosition() const {
 	return d_func()->position;
 }
 
@@ -188,7 +188,7 @@ void CUVProgressBar::paintEvent(QPaintEvent* event) {
 		brush.setColor(d->progressColor);
 		painter.setBrush(brush);
 
-		if (UVProgressType::IndeterminateProgress == d->progressType) {
+		if (ALProgressType::IndeterminateProgress == d->progressType) {
 			painter.drawRect(static_cast<int>(d->delegate->getOffset() * progressRect.width() * 2 - progressRect.width()), progressRect.top(), progressRect.width(), progressRect.height());
 		} else {
 			const qreal p = static_cast<qreal>(progressRect.width()) * (value() - minimum()) / (maximum() - minimum());

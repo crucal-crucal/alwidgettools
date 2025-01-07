@@ -7,7 +7,7 @@
 #include "uvbaselistview.hpp"
 #include "uvfootermodel.hpp"
 #include "uvnavigationnode.hpp"
-#include "uvthememanager.hpp"
+#include "althememanager.hpp"
 
 /**
  * @brief \class CUVFooterDelegate
@@ -15,7 +15,7 @@
  */
 CUVFooterDelegate::CUVFooterDelegate(QObject* parent): QStyledItemDelegate(parent) {
 	themeMode = UVTheme->getThemeMode();
-	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const UVThemeType::ThemeMode& mode) { themeMode = mode; });
+	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { themeMode = mode; });
 	setProperty("lastSelectMarkTop", 10.0);
 	setProperty("lastSelectMarkBottom", 10.0);
 	setProperty("selectMarkTop", 10.0);
@@ -127,15 +127,15 @@ void CUVFooterDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opt
 	path.addRoundedRect(itemRect, 8, 8);
 	if (option.state.testFlag(QStyle::State_Selected)) {
 		if (index == m_pressIndex) {
-			painter->fillPath(path, UVThemeColor(themeMode, UVThemeType::BasicHoverAlpha));
+			painter->fillPath(path, UVThemeColor(themeMode, ALThemeType::BasicHoverAlpha));
 		} else {
-			painter->fillPath(path, UVThemeColor(themeMode, option.state.testFlag(QStyle::State_MouseOver) ? UVThemeType::BasicSelectedHoverAlpha : UVThemeType::BasicSelectedAlpha));
+			painter->fillPath(path, UVThemeColor(themeMode, option.state.testFlag(QStyle::State_MouseOver) ? ALThemeType::BasicSelectedHoverAlpha : ALThemeType::BasicSelectedAlpha));
 		}
 	} else {
 		if (index == m_pressIndex) {
-			painter->fillPath(path, UVThemeColor(themeMode, UVThemeType::BasicSelectedHoverAlpha));
+			painter->fillPath(path, UVThemeColor(themeMode, ALThemeType::BasicSelectedHoverAlpha));
 		} else if (option.state.testFlag(QStyle::State_MouseOver)) {
-			painter->fillPath(path, UVThemeColor(themeMode, UVThemeType::BasicHoverAlpha));
+			painter->fillPath(path, UVThemeColor(themeMode, ALThemeType::BasicHoverAlpha));
 		}
 	}
 
@@ -144,13 +144,13 @@ void CUVFooterDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opt
 
 	// top
 	if (index.row() == 0) {
-		painter->setPen(UVThemeColor(themeMode, UVThemeType::BasicBaseLine));
+		painter->setPen(UVThemeColor(themeMode, ALThemeType::BasicBaseLine));
 		painter->drawLine(itemRect.x(), itemRect.y() + 1, itemRect.x() + itemRect.width(), itemRect.y() + 1);
 	}
 
 	// iocn
-	painter->setPen(index == m_pressIndex ? UVThemeColor(themeMode, UVThemeType::BasicTextPress) : UVThemeColor(themeMode, UVThemeType::BasicText));
-	if (node->getAwesomeIcon() != UVIcon::CUVAweSomeIcon::None) {
+	painter->setPen(index == m_pressIndex ? UVThemeColor(themeMode, ALThemeType::BasicTextPress) : UVThemeColor(themeMode, ALThemeType::BasicText));
+	if (node->getAwesomeIcon() != ALIcon::AweSomeIcon::None) {
 		QFont iconFont("CUVAwesome");
 		iconFont.setPixelSize(17);
 		painter->setFont(iconFont);
@@ -162,7 +162,7 @@ void CUVFooterDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opt
 		painter->setPen(Qt::NoPen);
 		painter->setBrush(Qt::white);
 		painter->drawEllipse(QPoint(255, itemRect.y() + itemRect.height() / 2), 10, 10);
-		painter->setBrush(UVThemeColor(themeMode, UVThemeType::StatusDanger));
+		painter->setBrush(UVThemeColor(themeMode, ALThemeType::StatusDanger));
 		painter->drawEllipse(QPoint(255, itemRect.y() + itemRect.height() / 2), 9, 9);
 		painter->setPen(QPen(Qt::white, 2));
 		QFont font = painter->font();
@@ -174,14 +174,14 @@ void CUVFooterDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opt
 	}
 
 	// text
-	painter->setPen(UVThemeColor(themeMode, index == m_pressIndex ? UVThemeType::BasicTextPress : UVThemeType::BasicText));
-	const int padding = node->getAwesomeIcon() != UVIcon::CUVAweSomeIcon::None ? m_iconAreaWidth : m_leftPadding;
+	painter->setPen(UVThemeColor(themeMode, index == m_pressIndex ? ALThemeType::BasicTextPress : ALThemeType::BasicText));
+	const int padding = node->getAwesomeIcon() != ALIcon::AweSomeIcon::None ? m_iconAreaWidth : m_leftPadding;
 	const QRect textRect{ itemRect.x() + padding, itemRect.y(), itemRect.width() - m_textRightSpacing - m_indicatorIconAreaWidth - padding, itemRect.height() };
 	const QString text = painter->fontMetrics().elidedText(node->getNodeTitle(), Qt::ElideRight, textRect.width());
 	painter->drawText(textRect, Qt::AlignVCenter | Qt::AlignLeft, text);
 	// indicator
 	painter->setPen(Qt::NoPen);
-	painter->setBrush(UVThemeColor(themeMode, UVThemeType::PrimaryNormal));
+	painter->setBrush(UVThemeColor(themeMode, ALThemeType::PrimaryNormal));
 	if (m_isSelectMarkDisplay && (node == model->getSelectedNode())) {
 		painter->drawRoundedRect(QRectF(itemRect.x() + 3, itemRect.y() + m_selectMarkTop, 3, itemRect.height() - m_selectMarkTop - m_selectMarkBottom), 3, 3);
 	}

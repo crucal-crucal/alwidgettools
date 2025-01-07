@@ -2,11 +2,11 @@
 
 #include <QWidget>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class CUVBreadcrumbBarPrivate;
 
-class CUVWIDGETTOOLS_EXPORT CUVBreadcrumbBar : public QWidget {
+class CALWIDGETTOOLS_EXPORT CUVBreadcrumbBar : public QWidget {
 	Q_OBJECT
 	Q_DECLARE_PRIVATE(CUVBreadcrumbBar)
 	Q_PROPERTY(int textPixelSize READ getTextPixelSize WRITE setTextPixelSize NOTIFY sigTextPixelSizeChanged)

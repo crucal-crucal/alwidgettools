@@ -2,7 +2,7 @@
 
 #include <QAbstractListModel>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class CUVSuggestion;
 

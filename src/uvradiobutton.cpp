@@ -2,7 +2,7 @@
 
 #include "uvradiobutton_p.hpp"
 #include "uvradiobuttonstyle.hpp"
-#include "uvthememanager.hpp"
+#include "althememanager.hpp"
 
 /**
  * \class CUVRadioButtonPrivate
@@ -15,11 +15,11 @@ CUVRadioButtonPrivate::CUVRadioButtonPrivate(CUVRadioButton* q, QObject* parent)
 
 CUVRadioButtonPrivate::~CUVRadioButtonPrivate() = default;
 
-void CUVRadioButtonPrivate::slotThemeModeChanged(const UVThemeType::ThemeMode& mode) {
+void CUVRadioButtonPrivate::slotThemeModeChanged(const ALThemeType::ThemeMode& mode) {
 	Q_Q(CUVRadioButton);
 
 	QPalette palette = q->palette();
-	palette.setColor(QPalette::WindowText, UVThemeColor(mode, UVThemeType::BasicText));
+	palette.setColor(QPalette::WindowText, UVThemeColor(mode, ALThemeType::BasicText));
 	q->setPalette(palette);
 }
 

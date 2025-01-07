@@ -15,9 +15,9 @@ CUVFooterModel::~CUVFooterModel() {
 	qDeleteAll(m_listFooterNodes);
 }
 
-UVNavigationType::NodeOperateReturnType CUVFooterModel::addFooterNode(const QString& footerTitle, QString& footerKey, const bool isHasFooterPage, const int keyPoints, const UVIcon::CUVAweSomeIcon& awesome) {
+ALNavigationType::NodeOperateReturnType CUVFooterModel::addFooterNode(const QString& footerTitle, QString& footerKey, const bool isHasFooterPage, const int keyPoints, const ALIcon::AweSomeIcon& awesome) {
 	if (m_listFooterNodes.count() >= FOOTER_NODE_LIMIT) {
-		return UVNavigationType::FooterUpperLimit;
+		return ALNavigationType::FooterUpperLimit;
 	}
 
 	const auto node = new CUVNavigationNode(footerTitle);
@@ -31,7 +31,7 @@ UVNavigationType::NodeOperateReturnType CUVFooterModel::addFooterNode(const QStr
 	footerKey = node->getNodeKey();
 	node->setModelIndex(this->index(m_listFooterNodes.count() - 1));
 
-	return UVNavigationType::Success;
+	return ALNavigationType::Success;
 }
 
 int CUVFooterModel::getFooterNodeCount() const {

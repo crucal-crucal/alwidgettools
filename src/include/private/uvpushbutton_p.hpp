@@ -4,28 +4,28 @@
 #include <QObject>
 
 #include "uvpushbutton.hpp"
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
-class CUVPushButton;
+class CALPushButton;
 class CUVToolTip;
 
 class CUVPushButtonPrivate final : public QObject {
 	Q_OBJECT
 	Q_DISABLE_COPY(CUVPushButtonPrivate)
-	Q_DECLARE_PUBLIC(CUVPushButton)
+	Q_DECLARE_PUBLIC(CALPushButton)
 
 public:
-	explicit CUVPushButtonPrivate(CUVPushButton* q, QObject* parent = nullptr);
+	explicit CUVPushButtonPrivate(CALPushButton* q, QObject* parent = nullptr);
 	~CUVPushButtonPrivate() override;
 
 protected:
-	CUVPushButton* const q_ptr{ nullptr };
+	CALPushButton* const q_ptr{ nullptr };
 
 private:
-	UVThemeType::ThemeMode themeMode{};
+	ALThemeType::ThemeMode themeMode{};
 	CUVToolTip* toolTip{ nullptr };
 	bool isPressed{ false };
-	CUVPushButton::ButtonStyles customButtonStyles{ CUVPushButton::ButtonStyle::Normal };
+	CALPushButton::ButtonStyles customButtonStyles{ CALPushButton::ButtonStyle::Normal };
 	int shadowBorderWidth{ 3 };
 	int borderRadius{};
 	qreal borderWidth{};

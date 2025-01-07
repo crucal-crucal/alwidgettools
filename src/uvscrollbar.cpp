@@ -13,7 +13,7 @@
 #include "uvscrollbarstyle.hpp"
 #include "uvscrollbar_p.hpp"
 
-using namespace UVIcon;
+using namespace ALIcon;
 
 /**
  * @brief \class CUVScrollBarPrivate
@@ -285,16 +285,16 @@ void CUVScrollBar::contextMenuEvent(QContextMenuEvent* event) {
 	const bool horiz = this->orientation() == Qt::Horizontal;
 	QPointer<CUVMenu> menu = new CUVMenu(this);
 	menu->setMenuItemHeight(27);
-	const QAction* actScrollHere = menu->addAction(hasFlag(CUVScrollBar::HasIcon) ? CUVAweSomeIcon::UpDownLeftRight : CUVAweSomeIcon::None, tr("Scroll here"));
+	const QAction* actScrollHere = menu->addAction(hasFlag(CUVScrollBar::HasIcon) ? AweSomeIcon::UpDownLeftRight : AweSomeIcon::None, tr("Scroll here"));
 	menu->addSeparator();
-	const QAction* actScrollTop = menu->addAction(hasFlag(CUVScrollBar::HasIcon) ? horiz ? CUVAweSomeIcon::ArrowLeftToLine : CUVAweSomeIcon::ArrowUpToLine : CUVAweSomeIcon::None, horiz ? tr("Left edge") : tr("Top"));
-	const QAction* actScrollBottom = menu->addAction(hasFlag(CUVScrollBar::HasIcon) ? horiz ? CUVAweSomeIcon::ArrowRightToLine : CUVAweSomeIcon::ArrowDownToLine : CUVAweSomeIcon::None, horiz ? tr("Right edge") : tr("Bottom"));
+	const QAction* actScrollTop = menu->addAction(hasFlag(CUVScrollBar::HasIcon) ? horiz ? AweSomeIcon::ArrowLeftToLine : AweSomeIcon::ArrowUpToLine : AweSomeIcon::None, horiz ? tr("Left edge") : tr("Top"));
+	const QAction* actScrollBottom = menu->addAction(hasFlag(CUVScrollBar::HasIcon) ? horiz ? AweSomeIcon::ArrowRightToLine : AweSomeIcon::ArrowDownToLine : AweSomeIcon::None, horiz ? tr("Right edge") : tr("Bottom"));
 	menu->addSeparator();
-	const QAction* actPageUp = menu->addAction(hasFlag(CUVScrollBar::HasIcon) ? horiz ? CUVAweSomeIcon::AnglesLeft : CUVAweSomeIcon::AnglesUp : CUVAweSomeIcon::None, horiz ? tr("Page left") : tr("Page up"));
-	const QAction* actPageDn = menu->addAction(hasFlag(CUVScrollBar::HasIcon) ? horiz ? CUVAweSomeIcon::AnglesRight : CUVAweSomeIcon::AnglesDown : CUVAweSomeIcon::None, horiz ? tr("Page right") : tr("Page down"));
+	const QAction* actPageUp = menu->addAction(hasFlag(CUVScrollBar::HasIcon) ? horiz ? AweSomeIcon::AnglesLeft : AweSomeIcon::AnglesUp : AweSomeIcon::None, horiz ? tr("Page left") : tr("Page up"));
+	const QAction* actPageDn = menu->addAction(hasFlag(CUVScrollBar::HasIcon) ? horiz ? AweSomeIcon::AnglesRight : AweSomeIcon::AnglesDown : AweSomeIcon::None, horiz ? tr("Page right") : tr("Page down"));
 	menu->addSeparator();
-	const QAction* actScrollUp = menu->addAction(hasFlag(CUVScrollBar::HasIcon) ? horiz ? CUVAweSomeIcon::AngleLeft : CUVAweSomeIcon::AngleUp : CUVAweSomeIcon::None, horiz ? tr("Scroll left") : tr("Scroll up"));
-	const QAction* actScrollDn = menu->addAction(hasFlag(CUVScrollBar::HasIcon) ? horiz ? CUVAweSomeIcon::AngleRight : CUVAweSomeIcon::AngleDown : CUVAweSomeIcon::None, horiz ? tr("Scroll right") : tr("Scroll down"));
+	const QAction* actScrollUp = menu->addAction(hasFlag(CUVScrollBar::HasIcon) ? horiz ? AweSomeIcon::AngleLeft : AweSomeIcon::AngleUp : AweSomeIcon::None, horiz ? tr("Scroll left") : tr("Scroll up"));
+	const QAction* actScrollDn = menu->addAction(hasFlag(CUVScrollBar::HasIcon) ? horiz ? AweSomeIcon::AngleRight : AweSomeIcon::AngleDown : AweSomeIcon::None, horiz ? tr("Scroll right") : tr("Scroll down"));
 	const QAction* actionSelected = menu->exec(event->globalPos());
 	delete menu;
 	if (!actionSelected) {

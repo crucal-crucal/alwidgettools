@@ -22,14 +22,14 @@ CUVNavigationRouter* CUVNavigationRouter::instance() {
 	return CUVSingleton<CUVNavigationRouter>::instance();
 }
 
-UVNavigationRouterType::NavigationRouteType CUVNavigationRouter::navigationRoute(QObject* routeObject, const QString& routeFuncName, const QVariantMap& routeData, const Qt::ConnectionType& connectionType) {
+ALNavigationRouterType::NavigationRouteType CUVNavigationRouter::navigationRoute(QObject* routeObject, const QString& routeFuncName, const QVariantMap& routeData, const Qt::ConnectionType& connectionType) {
 	Q_D(CUVNavigationRouter);
 
 	if (!routeObject) {
-		return UVNavigationRouterType::ObjectInvalid;
+		return ALNavigationRouterType::ObjectInvalid;
 	}
 	if (routeFuncName.isEmpty()) {
-		return UVNavigationRouterType::FunctionNameInvalid;
+		return ALNavigationRouterType::FunctionNameInvalid;
 	}
 
 	if (d->routeQueue.isEmpty()) {
@@ -46,7 +46,7 @@ UVNavigationRouterType::NavigationRouteType CUVNavigationRouter::navigationRoute
 	savaData.insert("CUVRouteConnectionType", QVariant::fromValue<Qt::ConnectionType>(connectionType));
 	d->routeQueue.enqueue(savaData);
 
-	return UVNavigationRouterType::Success;
+	return ALNavigationRouterType::Success;
 }
 
 void CUVNavigationRouter::navigationRouteBack() {

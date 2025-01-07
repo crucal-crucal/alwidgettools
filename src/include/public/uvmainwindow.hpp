@@ -2,14 +2,14 @@
 
 #include <QMainWindow>
 
-#include "uvappbar.hpp"
-#include "uvwidgettoolsdef.hpp"
+#include "alappbar.hpp"
+#include "alwidgettoolsdef.hpp"
 
-class CUVMainWindowPrivate;
+class CALMainWindowPrivate;
 
-class CUVWIDGETTOOLS_EXPORT CUVMainWindow : public QMainWindow {
+class CALWIDGETTOOLS_EXPORT CALMainWindow : public QMainWindow {
 	Q_OBJECT
-	Q_DECLARE_PRIVATE(CUVMainWindow)
+	Q_DECLARE_PRIVATE(CALMainWindow)
 	Q_PROPERTY(bool isStayTop READ getIsStayTop WRITE setIsStayTop NOTIFY sigIsStayTopChanged)
 	Q_PROPERTY(bool isFixedSize READ getIsFixedSize WRITE setIsFixedSize NOTIFY sigIsFixedSizeChanged)
 	Q_PROPERTY(bool isDefaultClosed READ getIsDefaultClosed WRITE setIsDefaultClosed NOTIFY sigIsDefaultClosedChanged)
@@ -21,12 +21,12 @@ class CUVWIDGETTOOLS_EXPORT CUVMainWindow : public QMainWindow {
 	Q_TAKEOVER_NATIVEEVENT_H
 
 public:
-	explicit CUVMainWindow(QWidget* parent = nullptr);
-	~CUVMainWindow() override;
+	explicit CALMainWindow(QWidget* parent = nullptr);
+	~CALMainWindow() override;
 
 	void moveToCenter();
 
-	void setCustomWidget(const UVAppBarType::CustomArea& customArea, QWidget* customWidget);
+	void setCustomWidget(const ALAppBarType::CustomArea& customArea, QWidget* customWidget);
 	[[nodiscard]] QWidget* getCustomWidget() const;
 
 	void setIsNavigationBarEnable(bool isEnable);
@@ -37,27 +37,27 @@ public:
 	void setUserInfoCardTitle(const QString& title);
 	void setUserInfoCardSubTitle(const QString& subTitle);
 
-	UVNavigationType::NodeOperateReturnType addExpanderNode(const QString& expanderTitle, QString& expanderKey, const UVIcon::CUVAweSomeIcon& awesomeIcon = UVIcon::CUVAweSomeIcon::None) const;
-	UVNavigationType::NodeOperateReturnType addExpanderNode(const QString& expanderTitle, QString& expanderKey, const QString& targetExpanderKey, const UVIcon::CUVAweSomeIcon& awesomeIcon = UVIcon::CUVAweSomeIcon::None) const;
-	UVNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QWidget* page, const UVIcon::CUVAweSomeIcon& awesomeIcon = UVIcon::CUVAweSomeIcon::None) const;
-	UVNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QWidget* page, const QString& targetExpanderKey, const UVIcon::CUVAweSomeIcon& awesomeIcon = UVIcon::CUVAweSomeIcon::None) const;
-	UVNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QWidget* page, int keyPoints = 0, const UVIcon::CUVAweSomeIcon& awesomeIcon = UVIcon::CUVAweSomeIcon::None) const;
-	UVNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QWidget* page, const QString& targetExpanderKey, int keyPoints = 0, const UVIcon::CUVAweSomeIcon& awesomeIcon = UVIcon::CUVAweSomeIcon::None) const;
-	UVNavigationType::NodeOperateReturnType addFooterNode(const QString& footerTitle, QString& footerKey, int keyPoints = 0, const UVIcon::CUVAweSomeIcon& awesomeIcon = UVIcon::CUVAweSomeIcon::None) const;
-	UVNavigationType::NodeOperateReturnType addFooterNode(const QString& footerTitle, QWidget* page, QString& footerKey, int keyPoints = 0, const UVIcon::CUVAweSomeIcon& awesomeIcon = UVIcon::CUVAweSomeIcon::None) const;
+	ALNavigationType::NodeOperateReturnType addExpanderNode(const QString& expanderTitle, QString& expanderKey, const ALIcon::AweSomeIcon& awesomeIcon = ALIcon::AweSomeIcon::None) const;
+	ALNavigationType::NodeOperateReturnType addExpanderNode(const QString& expanderTitle, QString& expanderKey, const QString& targetExpanderKey, const ALIcon::AweSomeIcon& awesomeIcon = ALIcon::AweSomeIcon::None) const;
+	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QWidget* page, const ALIcon::AweSomeIcon& awesomeIcon = ALIcon::AweSomeIcon::None) const;
+	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QWidget* page, const QString& targetExpanderKey, const ALIcon::AweSomeIcon& awesomeIcon = ALIcon::AweSomeIcon::None) const;
+	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QWidget* page, int keyPoints = 0, const ALIcon::AweSomeIcon& awesomeIcon = ALIcon::AweSomeIcon::None) const;
+	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QWidget* page, const QString& targetExpanderKey, int keyPoints = 0, const ALIcon::AweSomeIcon& awesomeIcon = ALIcon::AweSomeIcon::None) const;
+	ALNavigationType::NodeOperateReturnType addFooterNode(const QString& footerTitle, QString& footerKey, int keyPoints = 0, const ALIcon::AweSomeIcon& awesomeIcon = ALIcon::AweSomeIcon::None) const;
+	ALNavigationType::NodeOperateReturnType addFooterNode(const QString& footerTitle, QWidget* page, QString& footerKey, int keyPoints = 0, const ALIcon::AweSomeIcon& awesomeIcon = ALIcon::AweSomeIcon::None) const;
 
 	void setNodeKeyPoints(const QString& nodeKey, int keyPoints);
 	[[nodiscard]] int getNodeKeyPoints(const QString& nodeKey) const;
 
 	void navigation(const QString& pageKey);
-	void setWindowButtonFlag(const UVAppBarType::ButtonFlag& buttonFlag, bool isEnable = true);
-	void setWindowButtonFlags(const UVAppBarType::ButtonFlags& buttonFlags);
-	[[nodiscard]] UVAppBarType::ButtonFlags getWindowButtonFlags() const;
+	void setWindowButtonFlag(const ALAppBarType::ButtonFlag& buttonFlag, bool isEnable = true);
+	void setWindowButtonFlags(const ALAppBarType::ButtonFlags& buttonFlags);
+	[[nodiscard]] ALAppBarType::ButtonFlags getWindowButtonFlags() const;
 
-	bool insertWidgetBeforeButtonInAppBar(QWidget* widget, const UVAppBarType::ButtonFlag& flag);
+	bool insertWidgetBeforeButtonInAppBar(QWidget* widget, const ALAppBarType::ButtonFlag& flag);
 	bool insertWidgetBeforeWidgetInAppBar(QWidget* widget, QWidget* targetWidget);
 	bool insertWidgetBeforeLayoutInAppBar(QWidget* widget, QLayout* targetLayout);
-	bool insertLayoutBeforeButtonInAppBar(QLayout* layout, const UVAppBarType::ButtonFlag& flag);
+	bool insertLayoutBeforeButtonInAppBar(QLayout* layout, const ALAppBarType::ButtonFlag& flag);
 	bool insertLayoutBeforeWidgetInAppBar(QLayout* layout, QWidget* targetWidget);
 	bool insertLayoutBeforeLayoutInAppBar(QLayout* layout, QLayout* targetLayout);
 
@@ -87,13 +87,13 @@ public:
 	void setThemeChangeTime(int time);
 	[[nodiscard]] int getThemeChangeTime() const;
 
-	void setNavigationDisplayMode(const UVNavigationType::NavigationDisplayMode& mode);
-	[[nodiscard]] UVNavigationType::NavigationDisplayMode getNavigationDisplayMode() const;
+	void setNavigationDisplayMode(const ALNavigationType::NavigationDisplayMode& mode);
+	[[nodiscard]] ALNavigationType::NavigationDisplayMode getNavigationDisplayMode() const;
 
 Q_SIGNALS:
 	Q_SIGNAL void sigUserInfoCardClicked();
 	Q_SIGNAL void sigCloseButtonClicked();
-	Q_SIGNAL void sigNavigationNodeClicked(const UVNavigationType::NavigationNodeType& nodeType, const QString& nodeKey);
+	Q_SIGNAL void sigNavigationNodeClicked(const ALNavigationType::NavigationNodeType& nodeType, const QString& nodeKey);
 	Q_SIGNAL void sigCustomWidgetChanged();
 	Q_SIGNAL void sigIsStayTopChanged();
 	Q_SIGNAL void sigIsFixedSizeChanged();
@@ -105,7 +105,7 @@ Q_SIGNALS:
 	Q_SIGNAL void sigNavigationDisplayModeChanged();
 
 protected:
-	const QScopedPointer<CUVMainWindowPrivate> d_ptr{ nullptr };
+	const QScopedPointer<CALMainWindowPrivate> d_ptr{ nullptr };
 
 	bool eventFilter(QObject* watched, QEvent* event) override;
 	QMenu* createPopupMenu() override;

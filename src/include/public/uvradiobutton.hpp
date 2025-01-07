@@ -2,11 +2,11 @@
 
 #include <QRadioButton>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class CUVRadioButtonPrivate;
 
-class CUVWIDGETTOOLS_EXPORT CUVRadioButton : public QRadioButton {
+class CALWIDGETTOOLS_EXPORT CUVRadioButton : public QRadioButton {
 	Q_OBJECT
 	Q_DECLARE_PRIVATE(CUVRadioButton)
 

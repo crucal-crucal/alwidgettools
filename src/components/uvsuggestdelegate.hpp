@@ -2,7 +2,7 @@
 
 #include <QStyledItemDelegate>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class CUVSuggestDelegate final : public QStyledItemDelegate {
 	Q_OBJECT
@@ -16,5 +16,5 @@ protected:
 	[[nodiscard]] QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const override;
 
 private:
-	UVThemeType::ThemeMode themeMode{};
+	ALThemeType::ThemeMode themeMode{};
 };

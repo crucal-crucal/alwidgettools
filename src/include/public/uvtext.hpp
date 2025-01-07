@@ -2,11 +2,11 @@
 
 #include <QLabel>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class CUVTextPrivate;
 
-class CUVWIDGETTOOLS_EXPORT CUVText : public QLabel {
+class CALWIDGETTOOLS_EXPORT CUVText : public QLabel {
 	Q_OBJECT
 	Q_DECLARE_PRIVATE(CUVText)
 
@@ -25,8 +25,8 @@ public:
 	void setTextPointSize(const int& pointSize);
 	[[nodiscard]] int getTextPointSize() const;
 
-	void setTextStyle(const UVTextType::TextStyle& textStyle);
-	[[nodiscard]] UVTextType::TextStyle getTextStyle() const;
+	void setTextStyle(const ALTextType::TextStyle& textStyle);
+	[[nodiscard]] ALTextType::TextStyle getTextStyle() const;
 
 protected:
 	const QScopedPointer<CUVTextPrivate> d_ptr{ nullptr };

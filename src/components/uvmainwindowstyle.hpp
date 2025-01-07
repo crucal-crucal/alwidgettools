@@ -2,7 +2,7 @@
 
 #include <QProxyStyle>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class CUVMainWindowStyle final : public QProxyStyle {
 	Q_OBJECT
@@ -15,5 +15,5 @@ public:
 	void drawControl(ControlElement element, const QStyleOption* opt, QPainter* p, const QWidget* w) const override;
 
 private:
-	UVThemeType::ThemeMode m_themeMode{};
+	ALThemeType::ThemeMode m_themeMode{};
 };

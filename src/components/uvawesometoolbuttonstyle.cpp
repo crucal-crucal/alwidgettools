@@ -5,7 +5,7 @@
 #include <QStyleOption>
 #include <QtMath>
 
-#include "uvthememanager.hpp"
+#include "althememanager.hpp"
 
 /**
  * @brief \class CUVAwesomeToolButtonStyle
@@ -17,7 +17,7 @@ CUVAwesomeToolButtonStyle::CUVAwesomeToolButtonStyle(QStyle* style) {
 	m_expandIconRotate = 0;
 	m_borderRadius = 4;
 	m_themeMode = UVTheme->getThemeMode();
-	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const UVThemeType::ThemeMode& mode) { m_themeMode = mode; });
+	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { m_themeMode = mode; });
 }
 
 CUVAwesomeToolButtonStyle::~CUVAwesomeToolButtonStyle() = default;
@@ -37,25 +37,25 @@ void CUVAwesomeToolButtonStyle::drawComplexControl(const ComplexControl cc, cons
 				}
 				p->save();
 				p->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
-				p->setPen(m_isTransparent ? Qt::transparent : UVThemeColor(m_themeMode, UVThemeType::BasicBorder));
+				p->setPen(m_isTransparent ? Qt::transparent : UVThemeColor(m_themeMode, ALThemeType::BasicBorder));
 				/// 背景绘制
-				if (bopt->state.testFlag(QStyle::State_Enabled)) {                                                                        // 启用状态
-					if (bopt->state.testFlag(QStyle::State_Sunken)) {                                                                     // 按下状态
-						p->setBrush(UVThemeColor(m_themeMode, m_isTransparent ? UVThemeType::BasicPressAlpha : UVThemeType::BasicPress)); // 按下状态颜色
+				if (bopt->state.testFlag(QStyle::State_Enabled)) {                                                                                        // 启用状态
+					if (bopt->state.testFlag(QStyle::State_Sunken)) {                                                                                     // 按下状态
+						p->setBrush(UVThemeColor(m_themeMode, m_isTransparent ? ALThemeType::BasicPressAlpha : ALThemeType::BasicPress)); // 按下状态颜色
 						p->drawRoundedRect(toolButtonRect, m_borderRadius, m_borderRadius);
 					} else {
 						if (m_isSelected) {
-							p->setBrush(UVThemeColor(m_themeMode, m_isTransparent ? UVThemeType::BasicSelectedAlpha : UVThemeType::BasicHover));
+							p->setBrush(UVThemeColor(m_themeMode, m_isTransparent ? ALThemeType::BasicSelectedAlpha : ALThemeType::BasicHover));
 							p->drawRoundedRect(toolButtonRect, m_borderRadius, m_borderRadius);
 						} else {
 							if (bopt->state.testFlag(QStyle::State_MouseOver) || bopt->state.testFlag(QStyle::State_On)) {
-								p->setBrush(UVThemeColor(m_themeMode, m_isTransparent ? UVThemeType::BasicHoverAlpha : UVThemeType::BasicHover)); // 悬停状态颜色
+								p->setBrush(UVThemeColor(m_themeMode, m_isTransparent ? ALThemeType::BasicHoverAlpha : ALThemeType::BasicHover)); // 悬停状态颜色
 								p->drawRoundedRect(toolButtonRect, m_borderRadius, m_borderRadius);
 							} else if (!m_isTransparent) {
-								p->setBrush(UVThemeColor(m_themeMode, UVThemeType::BasicBase)); // 正常状态颜色
+								p->setBrush(UVThemeColor(m_themeMode, ALThemeType::BasicBase)); // 正常状态颜色
 								p->drawRoundedRect(toolButtonRect, m_borderRadius, m_borderRadius);
 								// 底边线绘制
-								p->setPen(UVThemeColor(m_themeMode, UVThemeType::BasicBaseLine));
+								p->setPen(UVThemeColor(m_themeMode, ALThemeType::BasicBaseLine));
 								p->drawLine(toolButtonRect.x() + m_borderRadius, toolButtonRect.y() + toolButtonRect.height(), toolButtonRect.x() + toolButtonRect.width() - m_borderRadius, toolButtonRect.y() + toolButtonRect.height());
 							}
 						}
@@ -101,7 +101,7 @@ void CUVAwesomeToolButtonStyle::drawIndicator(QPainter* painter, const QStyleOpt
 		const QRect indicatorRect = subControlRect(QStyle::CC_ToolButton, bopt, QStyle::SC_ScrollBarSubLine, widget);
 		// 指示器区域
 		if (bopt->state.testFlag(QStyle::State_Enabled) && bopt->activeSubControls.testFlag(QStyle::SC_ScrollBarSubLine)) {
-			painter->setBrush(UVThemeColor(m_themeMode, UVThemeType::BasicIndicator));
+			painter->setBrush(UVThemeColor(m_themeMode, ALThemeType::BasicIndicator));
 			QPainterPath path;
 			path.moveTo(indicatorRect.topLeft());
 			path.lineTo(indicatorRect.right() - 4, indicatorRect.y());
@@ -113,7 +113,7 @@ void CUVAwesomeToolButtonStyle::drawIndicator(QPainter* painter, const QStyleOpt
 			painter->drawPath(path);
 		}
 		// 指示器
-		painter->setBrush(UVThemeColor(m_themeMode, bopt->state.testFlag(QStyle::State_Enabled) ? UVThemeType::BasicText : UVThemeType::BasicTextDisable));
+		painter->setBrush(UVThemeColor(m_themeMode, bopt->state.testFlag(QStyle::State_Enabled) ? ALThemeType::BasicText : ALThemeType::BasicTextDisable));
 		QPainterPath indicatorPath{};
 		const qreal indicatorHeight = qCos(30 * M_PI / 180.0) * indicatorRect.width() * 0.85;
 		indicatorPath.moveTo(indicatorRect.x() + indicatorRect.width() * 0.15, indicatorRect.center().y());
@@ -129,13 +129,13 @@ void CUVAwesomeToolButtonStyle::drawIndicator(QPainter* painter, const QStyleOpt
 		auto iconFont = QFont("CUVAwesome");
 		iconFont.setPixelSize(0.75 * std::min(iconSize.width(), iconSize.height())); // NOLINT
 		painter->setFont(iconFont);
-		const int indicatorWidth = painter->fontMetrics().horizontalAdvance(QChar(static_cast<unsigned short>(UVIcon::CUVAweSomeIcon::AngleDown)));
+		const int indicatorWidth = painter->fontMetrics().horizontalAdvance(QChar(static_cast<unsigned short>(ALIcon::AweSomeIcon::AngleDown)));
 		const QRect expandIconRect(toolButtonRect.right() - m_contentMargin - indicatorWidth, toolButtonRect.y() + 1, indicatorWidth, toolButtonRect.height());
-		painter->setPen(UVThemeColor(m_themeMode, UVThemeType::BasicText));
+		painter->setPen(UVThemeColor(m_themeMode, ALThemeType::BasicText));
 		painter->translate(expandIconRect.center().x(), expandIconRect.y() + static_cast<qreal>(expandIconRect.height()) / 2);
 		painter->rotate(m_expandIconRotate);
 		painter->translate(-expandIconRect.center().x() - 1, -expandIconRect.y() - static_cast<qreal>(expandIconRect.height()) / 2);
-		painter->drawText(expandIconRect, Qt::AlignCenter, QChar(static_cast<unsigned short>(UVIcon::CUVAweSomeIcon::AngleDown)));
+		painter->drawText(expandIconRect, Qt::AlignCenter, QChar(static_cast<unsigned short>(ALIcon::AweSomeIcon::AngleDown)));
 		painter->restore();
 	}
 }
@@ -172,7 +172,7 @@ void CUVAwesomeToolButtonStyle::drawIcon(QPainter* painter, QRect iconRect, cons
 		} else {
 			// 绘制AwesomeIcon
 			painter->save();
-			painter->setPen(UVThemeColor(m_themeMode, bopt->state.testFlag(QStyle::State_Enabled) ? UVThemeType::BasicText : UVThemeType::BasicTextDisable));
+			painter->setPen(UVThemeColor(m_themeMode, bopt->state.testFlag(QStyle::State_Enabled) ? ALThemeType::BasicText : ALThemeType::BasicTextDisable));
 			auto iconFont = QFont("CUVAwesome");
 			switch (bopt->toolButtonStyle) {
 				case Qt::ToolButtonIconOnly: {
@@ -210,7 +210,7 @@ void CUVAwesomeToolButtonStyle::drawIcon(QPainter* painter, QRect iconRect, cons
 
 void CUVAwesomeToolButtonStyle::drawText(QPainter* painter, QRect contentRect, const QStyleOptionToolButton* bopt) const {
 	if (!bopt->text.isEmpty()) {
-		painter->setPen(UVThemeColor(m_themeMode, bopt->state.testFlag(QStyle::State_Enabled) ? UVThemeType::BasicText : UVThemeType::BasicTextDisable));
+		painter->setPen(UVThemeColor(m_themeMode, bopt->state.testFlag(QStyle::State_Enabled) ? ALThemeType::BasicText : ALThemeType::BasicTextDisable));
 		switch (bopt->toolButtonStyle) {
 			case Qt::ToolButtonTextOnly: {
 				contentRect.setLeft(contentRect.left() + m_contentMargin);
@@ -247,7 +247,7 @@ qreal CUVAwesomeToolButtonStyle::calculateExpandIndicatorWidth(const QStyleOptio
 	auto iconFont = QFont("CUVAwesome");
 	iconFont.setPixelSize(0.75 * std::min(iconSize.width(), iconSize.height())); // NOLINT
 	painter->setFont(iconFont);
-	const int indicatorWidth = painter->fontMetrics().horizontalAdvance(QChar(static_cast<unsigned short>(UVIcon::CUVAweSomeIcon::AngleDown)));
+	const int indicatorWidth = painter->fontMetrics().horizontalAdvance(QChar(static_cast<unsigned short>(ALIcon::AweSomeIcon::AngleDown)));
 	painter->restore();
 	return indicatorWidth;
 }

@@ -3,7 +3,7 @@
 #include <QIcon>
 #include <QObject>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class QTranslator;
 
@@ -17,7 +17,7 @@ class CUVApplicationPrivate final : public QObject {
 public:
 	explicit CUVApplicationPrivate(CUVApplication* q, QObject* parent = nullptr);
 	~CUVApplicationPrivate() override;
-	Q_SLOT void slotThemeModeChanged(const UVThemeType::ThemeMode& mode);
+	Q_SLOT void slotThemeModeChanged(const ALThemeType::ThemeMode& mode);
 
 Q_SIGNALS:
 	Q_SIGNAL void sigInitMicaBase(const QImage& img);
@@ -34,7 +34,7 @@ private:
 
 	bool isEnableMica{};
 	QString micaImagePath{};
-	UVThemeType::ThemeMode themeMode{};
+	ALThemeType::ThemeMode themeMode{};
 	QList<QWidget*> micaWidgetList{};
 	QImage lightBaseImage{};
 	QImage darkBaseImage{};

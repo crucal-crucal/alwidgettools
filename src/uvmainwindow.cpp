@@ -9,7 +9,7 @@
 #include <QToolBar>
 #include <QVariant>
 
-#include "uvapplication.hpp"
+#include "alapplication.hpp"
 #include "uvcenterstackedwidget.hpp"
 #include "uveventbus.hpp"
 #include "uvmainwindowstyle.hpp"
@@ -17,16 +17,16 @@
 #include "uvmenu.hpp"
 #include "uvnavigationbar.hpp"
 #include "uvnavigationrouter.hpp"
-#include "uvthememanager.hpp"
+#include "althememanager.hpp"
 #include "uvthemeanimationwidget.hpp"
 
 /**
- * @brief \class CUVMainWindowPrivate
+ * @brief \class CALMainWindowPrivate
  * Internal class for CUVMainWindow
  * @param q pointer to the public class
  * @param parent pointer to the parent class
  */
-CUVMainWindowPrivate::CUVMainWindowPrivate(CUVMainWindow* q, QObject* parent): QObject(parent), q_ptr(q) {
+CALMainWindowPrivate::CALMainWindowPrivate(CALMainWindow* q, QObject* parent): QObject(parent), q_ptr(q) {
 	isWindowClosing = false;
 	isInitFinished = false;
 	isNavigationDisplayModeChanged = false;
@@ -35,17 +35,17 @@ CUVMainWindowPrivate::CUVMainWindowPrivate(CUVMainWindow* q, QObject* parent): Q
 	isWMClickedAnimatinoFinished = true;
 	contentsMargins = 5;
 	navigationTargetIndex = 0;
-	currentNavigationBarDisplayMode = UVNavigationType::Maximal;
+	currentNavigationBarDisplayMode = ALNavigationType::Maximal;
 }
 
-CUVMainWindowPrivate::~CUVMainWindowPrivate() = default;
+CALMainWindowPrivate::~CALMainWindowPrivate() = default;
 
-void CUVMainWindowPrivate::slotNavigationButtonClicked() {
+void CALMainWindowPrivate::slotNavigationButtonClicked() {
 	if (isWMClickedAnimatinoFinished) {
 		isNavigationDisplayModeChanged = false;
 		resetWindowLayout(true);
 		navigationBar->setIsTransparent(false);
-		navigationBar->setDisplayMode(UVNavigationType::Maximal, false);
+		navigationBar->setDisplayMode(ALNavigationType::Maximal, false);
 		navigationBar->move(-navigationBar->width(), navigationBar->pos().y());
 		navigationBar->resize(navigationBar->width(), centerStackedWidget->height() + 1);
 		const auto navigationMoveAnimation = new QPropertyAnimation(navigationBar, "pos");
@@ -59,21 +59,21 @@ void CUVMainWindowPrivate::slotNavigationButtonClicked() {
 	}
 }
 
-void CUVMainWindowPrivate::slotThemeReadyChange() {
-	Q_Q(CUVMainWindow);
+void CALMainWindowPrivate::slotThemeReadyChange() {
+	Q_Q(CALMainWindow);
 
 	// 主题变更绘制窗口
 	appBar->setIsOnlyAllowMinAndClose(true);
 	if (!themeAnimationWidget) {
 		const QPoint centerPos = q->mapFromGlobal(QCursor::pos());
-		themeAnimationWidget = new CUVThemeAnimationWidget(q);
-		connect(themeAnimationWidget, &CUVThemeAnimationWidget::sigAnimationFinished, this, [=]() {
+		themeAnimationWidget = new CALThemeAnimationWidget(q);
+		connect(themeAnimationWidget, &CALThemeAnimationWidget::sigAnimationFinished, this, [=]() {
 			appBar->setIsOnlyAllowMinAndClose(false);
 			themeAnimationWidget = nullptr;
 		});
 		themeAnimationWidget->move(0, 0);
 		themeAnimationWidget->setOldWindowImage(q->grab(q->rect()).toImage());
-		UVTheme->setThemeMode(UVTheme->getThemeMode() == UVThemeType::Light ? UVThemeType::Dark : UVThemeType::Light);
+		UVTheme->setThemeMode(UVTheme->getThemeMode() == ALThemeType::Light ? ALThemeType::Dark : ALThemeType::Light);
 		themeAnimationWidget->setNewWindowImage(q->grab(q->rect()).toImage());
 		themeAnimationWidget->setCenter(centerPos);
 		const qreal topLeftDis = distance(centerPos, QPoint(0, 0));
@@ -89,27 +89,27 @@ void CUVMainWindowPrivate::slotThemeReadyChange() {
 	}
 }
 
-void CUVMainWindowPrivate::slotDisplayModeChanged() {
+void CALMainWindowPrivate::slotDisplayModeChanged() {
 	currentNavigationBarDisplayMode = navigationDisplayMode;
 	switch (currentNavigationBarDisplayMode) {
-		case UVNavigationType::Auto: {
-			appBar->setWindowButtonFlag(UVAppBarType::NavigationButtonHint, false);
+		case ALNavigationType::Auto: {
+			appBar->setWindowButtonFlag(ALAppBarType::NavigationButtonHint, false);
 			doNavigationDisplayModeChange();
 			break;
 		}
-		case UVNavigationType::Minimal: {
-			navigationBar->setDisplayMode(UVNavigationType::Minimal, true);
-			appBar->setWindowButtonFlag(UVAppBarType::NavigationButtonHint);
+		case ALNavigationType::Minimal: {
+			navigationBar->setDisplayMode(ALNavigationType::Minimal, true);
+			appBar->setWindowButtonFlag(ALAppBarType::NavigationButtonHint);
 			break;
 		}
-		case UVNavigationType::Compact: {
-			navigationBar->setDisplayMode(UVNavigationType::Compact, true);
-			appBar->setWindowButtonFlag(UVAppBarType::NavigationButtonHint, false);
+		case ALNavigationType::Compact: {
+			navigationBar->setDisplayMode(ALNavigationType::Compact, true);
+			appBar->setWindowButtonFlag(ALAppBarType::NavigationButtonHint, false);
 			break;
 		}
-		case UVNavigationType::Maximal: {
-			navigationBar->setDisplayMode(UVNavigationType::Maximal, true);
-			appBar->setWindowButtonFlag(UVAppBarType::NavigationButtonHint, false);
+		case ALNavigationType::Maximal: {
+			navigationBar->setDisplayMode(ALNavigationType::Maximal, true);
+			appBar->setWindowButtonFlag(ALAppBarType::NavigationButtonHint, false);
 			break;
 		}
 		default: {
@@ -118,18 +118,18 @@ void CUVMainWindowPrivate::slotDisplayModeChanged() {
 	}
 }
 
-void CUVMainWindowPrivate::slotThemeModeChanged(const UVThemeType::ThemeMode& mode) {
-	Q_Q(CUVMainWindow);
+void CALMainWindowPrivate::slotThemeModeChanged(const ALThemeType::ThemeMode& mode) {
+	Q_Q(CALMainWindow);
 
 	themeMode = mode;
 	if (!uvApp->getIsEnableMica()) {
 		QPalette palette = q->palette();
-		palette.setBrush(QPalette::Window, UVThemeColor(themeMode, UVThemeType::WindowBase));
+		palette.setBrush(QPalette::Window, UVThemeColor(themeMode, ALThemeType::WindowBase));
 		q->setPalette(palette);
 	}
 }
 
-void CUVMainWindowPrivate::slotNavigationNodeClicked(const UVNavigationType::NavigationNodeType& nodeType, const QString& nodeKey) {
+void CALMainWindowPrivate::slotNavigationNodeClicked(const ALNavigationType::NavigationNodeType& nodeType, const QString& nodeKey) {
 	const int nodeIndex = routeMap.value(nodeKey);
 	if (nodeIndex == -1 || (navigationTargetIndex == nodeIndex || centerStackedWidget->count() <= nodeIndex)) {
 		return;
@@ -150,8 +150,8 @@ void CUVMainWindowPrivate::slotNavigationNodeClicked(const UVNavigationType::Nav
 	});
 }
 
-void CUVMainWindowPrivate::slotNavigationNodeAdded(const UVNavigationType::NavigationNodeType& nodeType, const QString& nodeKey, QWidget* page) {
-	if (nodeType == UVNavigationType::PageNode) {
+void CALMainWindowPrivate::slotNavigationNodeAdded(const ALNavigationType::NavigationNodeType& nodeType, const QString& nodeKey, QWidget* page) {
+	if (nodeType == ALNavigationType::PageNode) {
 		routeMap.insert(nodeKey, centerStackedWidget->count());
 		centerStackedWidget->addWidget(page);
 	} else {
@@ -164,9 +164,9 @@ void CUVMainWindowPrivate::slotNavigationNodeAdded(const UVNavigationType::Navig
 	}
 }
 
-void CUVMainWindowPrivate::invokableWMWindowClickedEvent(const QVariantMap& data) {
-	if (const auto actionType = data.value("WMClickType").value<UVAppBarType::WMMouseActionType>();
-		actionType == UVAppBarType::WMLBUTTONDBLCLK || actionType == UVAppBarType::WMLBUTTONUP || actionType == UVAppBarType::WMNCLBUTTONDOWN) {
+void CALMainWindowPrivate::invokableWMWindowClickedEvent(const QVariantMap& data) {
+	if (const auto actionType = data.value("WMClickType").value<ALAppBarType::WMMouseActionType>();
+		actionType == ALAppBarType::WMLBUTTONDBLCLK || actionType == ALAppBarType::WMLBUTTONUP || actionType == ALAppBarType::WMNCLBUTTONDOWN) {
 		if (CUVApplication::containsCursorToItem(navigationBar)) {
 			return;
 		}
@@ -183,7 +183,7 @@ void CUVMainWindowPrivate::invokableWMWindowClickedEvent(const QVariantMap& data
 			connect(navigationMoveAnimation, &QPropertyAnimation::finished, this, [=]() {
 				navigationBar->setIsTransparent(true);
 				if (!isNavigationDisplayModeChanged) {
-					navigationBar->setDisplayMode(UVNavigationType::Minimal, false);
+					navigationBar->setDisplayMode(ALNavigationType::Minimal, false);
 					resetWindowLayout(false);
 				}
 				isWMClickedAnimatinoFinished = true;
@@ -198,49 +198,49 @@ void CUVMainWindowPrivate::invokableWMWindowClickedEvent(const QVariantMap& data
 	}
 }
 
-qreal CUVMainWindowPrivate::distance(const QPoint& point1, const QPoint& point2) {
+qreal CALMainWindowPrivate::distance(const QPoint& point1, const QPoint& point2) {
 	return std::sqrt((point1.x() - point2.x()) * (point1.x() - point2.x()) + (point1.y() - point2.y()) * (point1.y() - point2.y()));
 }
 
-void CUVMainWindowPrivate::resetWindowLayout(const bool isAnimation) const {
+void CALMainWindowPrivate::resetWindowLayout(const bool isAnimation) const {
 	if (isAnimation) {
 		while (centerHLayout->count() > 0) {
 			centerHLayout->takeAt(0);
 		}
 	} else {
 		if (centerHLayout->count() == 0) {
-			navigationBar->setDisplayMode(UVNavigationType::Minimal, false);
+			navigationBar->setDisplayMode(ALNavigationType::Minimal, false);
 			centerHLayout->addWidget(navigationBar);
 			centerHLayout->addWidget(centerStackedWidget);
 		}
 	}
 }
 
-void CUVMainWindowPrivate::doNavigationDisplayModeChange() {
-	Q_Q(CUVMainWindow);
+void CALMainWindowPrivate::doNavigationDisplayModeChange() {
+	Q_Q(CALMainWindow);
 
 	if (isWindowClosing || !isNavigationEnable || !isInitFinished) {
 		return;
 	}
 
-	if (navigationDisplayMode == UVNavigationType::Minimal) {
+	if (navigationDisplayMode == ALNavigationType::Minimal) {
 		resetWindowLayout(false);
 	}
-	if (navigationDisplayMode == UVNavigationType::Auto) {
+	if (navigationDisplayMode == ALNavigationType::Auto) {
 		isNavigationDisplayModeChanged = true;
 		resetWindowLayout(false);
-		if (const int width = q->centralWidget()->width(); width >= 850 && currentNavigationBarDisplayMode != UVNavigationType::Maximal) {
-			navigationBar->setDisplayMode(UVNavigationType::Maximal);
-			currentNavigationBarDisplayMode = UVNavigationType::Maximal;
-			appBar->setWindowButtonFlag(UVAppBarType::NavigationButtonHint, false);
-		} else if (width >= 550 && width < 850 && currentNavigationBarDisplayMode != UVNavigationType::Compact) {
-			navigationBar->setDisplayMode(UVNavigationType::Compact);
-			currentNavigationBarDisplayMode = UVNavigationType::Compact;
-			appBar->setWindowButtonFlag(UVAppBarType::NavigationButtonHint, false);
-		} else if (width < 550 && currentNavigationBarDisplayMode != UVNavigationType::Minimal) {
-			navigationBar->setDisplayMode(UVNavigationType::Minimal);
-			currentNavigationBarDisplayMode = UVNavigationType::Minimal;
-			appBar->setWindowButtonFlag(UVAppBarType::NavigationButtonHint);
+		if (const int width = q->centralWidget()->width(); width >= 850 && currentNavigationBarDisplayMode != ALNavigationType::Maximal) {
+			navigationBar->setDisplayMode(ALNavigationType::Maximal);
+			currentNavigationBarDisplayMode = ALNavigationType::Maximal;
+			appBar->setWindowButtonFlag(ALAppBarType::NavigationButtonHint, false);
+		} else if (width >= 550 && width < 850 && currentNavigationBarDisplayMode != ALNavigationType::Compact) {
+			navigationBar->setDisplayMode(ALNavigationType::Compact);
+			currentNavigationBarDisplayMode = ALNavigationType::Compact;
+			appBar->setWindowButtonFlag(ALAppBarType::NavigationButtonHint, false);
+		} else if (width < 550 && currentNavigationBarDisplayMode != ALNavigationType::Minimal) {
+			navigationBar->setDisplayMode(ALNavigationType::Minimal);
+			currentNavigationBarDisplayMode = ALNavigationType::Minimal;
+			appBar->setWindowButtonFlag(ALAppBarType::NavigationButtonHint);
 		}
 		isNavigationBarExpanded = false;
 	}
@@ -248,41 +248,41 @@ void CUVMainWindowPrivate::doNavigationDisplayModeChange() {
 
 
 /**
- * @brief \class CUVMainWindow
+ * @brief \class CALMainWindow
  */
-Q_TAKEOVER_NATIVEEVENT_CPP(CUVMainWindow, d_func()->appBar)
+Q_TAKEOVER_NATIVEEVENT_CPP(CALMainWindow, d_func()->appBar)
 
-CUVMainWindow::CUVMainWindow(QWidget* parent): QMainWindow(parent), d_ptr(new CUVMainWindowPrivate(this, this)) {
+CALMainWindow::CALMainWindow(QWidget* parent): QMainWindow(parent), d_ptr(new CALMainWindowPrivate(this, this)) {
 	Q_D(CUVMainWindow);
 
 	setProperty("CUVBaseClassName", "CUVMainWindow");
 	resize(1020, 680);
 	d->themeChangeTime = 700;
-	d->navigationDisplayMode = UVNavigationType::Auto;
-	connect(this, &CUVMainWindow::sigNavigationDisplayModeChanged, d, &CUVMainWindowPrivate::slotDisplayModeChanged);
+	d->navigationDisplayMode = ALNavigationType::Auto;
+	connect(this, &CALMainWindow::sigNavigationDisplayModeChanged, d, &CALMainWindowPrivate::slotDisplayModeChanged);
 
 	/// appBar
-	d->appBar = new CUVAppBar(this);
-	connect(d->appBar, &CUVAppBar::sigRouteBackButtonClicked, this, []() { CUVNavigationRouter::instance()->navigationRouteBack(); });
-	connect(d->appBar, &CUVAppBar::sigCloseButtonClicked, this, &CUVMainWindow::sigCloseButtonClicked);
-	connect(d->appBar, &CUVAppBar::sigNavigationButtonClicked, d, &CUVMainWindowPrivate::slotNavigationButtonClicked);
-	connect(d->appBar, &CUVAppBar::sigThemeChangeButtonClicked, d, &CUVMainWindowPrivate::slotThemeReadyChange);
+	d->appBar = new CALAppBar(this);
+	connect(d->appBar, &CALAppBar::sigRouteBackButtonClicked, this, []() { CUVNavigationRouter::instance()->navigationRouteBack(); });
+	connect(d->appBar, &CALAppBar::sigCloseButtonClicked, this, &CALMainWindow::sigCloseButtonClicked);
+	connect(d->appBar, &CALAppBar::sigNavigationButtonClicked, d, &CALMainWindowPrivate::slotNavigationButtonClicked);
+	connect(d->appBar, &CALAppBar::sigThemeChangeButtonClicked, d, &CALMainWindowPrivate::slotThemeReadyChange);
 
 	/// navigationBar
-	d->navigationBar = new CUVNavigationBar(this);
+	d->navigationBar = new CALNavigationBar(this);
 	// 返回按钮状态变更
 	connect(CUVNavigationRouter::instance(), &CUVNavigationRouter::sigNavigationRouterStateChanged, this, [d](const bool isEnable) { d->appBar->setRouteBackButtonEnable(isEnable); });
 	// 转发用户卡片点击信号
-	connect(d->navigationBar, &CUVNavigationBar::sigUserInfoCardClicked, this, &CUVMainWindow::sigUserInfoCardClicked);
+	connect(d->navigationBar, &CALNavigationBar::sigUserInfoCardClicked, this, &CALMainWindow::sigUserInfoCardClicked);
 	// 转发点击信号
-	connect(d->navigationBar, &CUVNavigationBar::sigNavigationNodeClicked, this, &CUVMainWindow::sigNavigationNodeClicked);
+	connect(d->navigationBar, &CALNavigationBar::sigNavigationNodeClicked, this, &CALMainWindow::sigNavigationNodeClicked);
 	// 跳转处理
-	connect(d->navigationBar, &CUVNavigationBar::sigNavigationNodeClicked, d, &CUVMainWindowPrivate::slotNavigationNodeClicked);
+	connect(d->navigationBar, &CALNavigationBar::sigNavigationNodeClicked, d, &CALMainWindowPrivate::slotNavigationNodeClicked);
 	// 新增窗口
-	connect(d->navigationBar, &CUVNavigationBar::sigNavigationNodeAdded, d, &CUVMainWindowPrivate::slotNavigationNodeAdded);
+	connect(d->navigationBar, &CALNavigationBar::sigNavigationNodeAdded, d, &CALMainWindowPrivate::slotNavigationNodeAdded);
 
 	/// center stacked widget
-	d->centerStackedWidget = new CUVCenterStackedWidget(this);
+	d->centerStackedWidget = new CALCenterStackedWidget(this);
 	d->centerStackedWidget->setContentsMargins(0, 0, 0, 0);
 	const auto centralWidget = new QWidget(this);
 	d->centerHLayout = new QHBoxLayout(centralWidget);
@@ -292,12 +292,12 @@ CUVMainWindow::CUVMainWindow(QWidget* parent): QMainWindow(parent), d_ptr(new CU
 	d->centerHLayout->setContentsMargins(d->contentsMargins, 0, 0, 0);
 
 	/// event filter
-	d->focusEvent = new CUVEvent("WMWindowClicked", "invokableWMWindowClickedEvent", d);
+	d->focusEvent = new CALEvent("WMWindowClicked", "invokableWMWindowClickedEvent", d);
 	d->focusEvent->registerAndInit();
 
 	/// theme
 	d->themeMode = UVTheme->getThemeMode();
-	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, d, &CUVMainWindowPrivate::slotThemeModeChanged);
+	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, d, &CALMainWindowPrivate::slotThemeModeChanged);
 	d->isInitFinished = true;
 	setCentralWidget(centralWidget);
 	centralWidget->installEventFilter(this);
@@ -309,16 +309,16 @@ CUVMainWindow::CUVMainWindow(QWidget* parent): QMainWindow(parent), d_ptr(new CU
 	/// Delay rendering
 	QTimer::singleShot(1, this, [=]() {
 		QPalette palette = this->palette();
-		palette.setBrush(QPalette::Window, UVThemeColor(d->themeMode, UVThemeType::WindowBase));
+		palette.setBrush(QPalette::Window, UVThemeColor(d->themeMode, ALThemeType::WindowBase));
 		this->setPalette(palette);
 	});
 	uvApp->syncMica(this);
 	connect(uvApp, &CUVApplication::sigIsEnableMicaChanged, this, [=]() { d->slotThemeModeChanged(d->themeMode); });
 }
 
-CUVMainWindow::~CUVMainWindow() = default;
+CALMainWindow::~CALMainWindow() = default;
 
-void CUVMainWindow::moveToCenter() {
+void CALMainWindow::moveToCenter() {
 	if (isMaximized() || isFullScreen()) {
 		return;
 	}
@@ -330,16 +330,16 @@ void CUVMainWindow::moveToCenter() {
 	setGeometry((geometry.left() + geometry.right() - width()) / 2, (geometry.top() + geometry.bottom() - height()) / 2, width(), height());
 }
 
-void CUVMainWindow::setCustomWidget(const UVAppBarType::CustomArea& customArea, QWidget* customWidget) {
+void CALMainWindow::setCustomWidget(const ALAppBarType::CustomArea& customArea, QWidget* customWidget) {
 	d_func()->appBar->setCustomWidget(customArea, customWidget);
 	Q_EMIT sigCustomWidgetChanged();
 }
 
-QWidget* CUVMainWindow::getCustomWidget() const {
+QWidget* CALMainWindow::getCustomWidget() const {
 	return d_func()->appBar->getCustomWidget();
 }
 
-void CUVMainWindow::setIsNavigationBarEnable(const bool isEnable) {
+void CALMainWindow::setIsNavigationBarEnable(const bool isEnable) {
 	Q_D(CUVMainWindow);
 
 	d->isNavigationEnable = isEnable;
@@ -348,194 +348,194 @@ void CUVMainWindow::setIsNavigationBarEnable(const bool isEnable) {
 	d->centerStackedWidget->setIsHasRadius(isEnable);
 }
 
-bool CUVMainWindow::getIsNavigationBarEnable() const {
+bool CALMainWindow::getIsNavigationBarEnable() const {
 	return d_func()->isNavigationEnable;
 }
 
-void CUVMainWindow::setUserInfoCardVisible(const bool isVisible) {
+void CALMainWindow::setUserInfoCardVisible(const bool isVisible) {
 	d_func()->navigationBar->setUserInfoCardVisible(isVisible);
 }
 
-void CUVMainWindow::setUserInfoCardPixmap(const QPixmap& pix) {
+void CALMainWindow::setUserInfoCardPixmap(const QPixmap& pix) {
 	d_func()->navigationBar->setUserInfoCardPixmap(pix);
 }
 
-void CUVMainWindow::setUserInfoCardTitle(const QString& title) {
+void CALMainWindow::setUserInfoCardTitle(const QString& title) {
 	d_func()->navigationBar->setUserInfoCardTitle(title);
 }
 
-void CUVMainWindow::setUserInfoCardSubTitle(const QString& subTitle) {
+void CALMainWindow::setUserInfoCardSubTitle(const QString& subTitle) {
 	d_func()->navigationBar->setUserInfoCardSubTitle(subTitle);
 }
 
-UVNavigationType::NodeOperateReturnType CUVMainWindow::addExpanderNode(const QString& expanderTitle, QString& expanderKey, const UVIcon::CUVAweSomeIcon& awesomeIcon) const {
+ALNavigationType::NodeOperateReturnType CALMainWindow::addExpanderNode(const QString& expanderTitle, QString& expanderKey, const ALIcon::AweSomeIcon& awesomeIcon) const {
 	return d_func()->navigationBar->addExpanderNode(expanderTitle, expanderKey, awesomeIcon);
 }
 
-UVNavigationType::NodeOperateReturnType CUVMainWindow::addExpanderNode(const QString& expanderTitle, QString& expanderKey, const QString& targetExpanderKey, const UVIcon::CUVAweSomeIcon& awesomeIcon) const {
+ALNavigationType::NodeOperateReturnType CALMainWindow::addExpanderNode(const QString& expanderTitle, QString& expanderKey, const QString& targetExpanderKey, const ALIcon::AweSomeIcon& awesomeIcon) const {
 	return d_func()->navigationBar->addExpanderNode(expanderTitle, expanderKey, targetExpanderKey, awesomeIcon);
 }
 
-UVNavigationType::NodeOperateReturnType CUVMainWindow::addPageNode(const QString& pageTitle, QWidget* page, const UVIcon::CUVAweSomeIcon& awesomeIcon) const {
+ALNavigationType::NodeOperateReturnType CALMainWindow::addPageNode(const QString& pageTitle, QWidget* page, const ALIcon::AweSomeIcon& awesomeIcon) const {
 	return d_func()->navigationBar->addPageNode(pageTitle, page, awesomeIcon);
 }
 
-UVNavigationType::NodeOperateReturnType CUVMainWindow::addPageNode(const QString& pageTitle, QWidget* page, const QString& targetExpanderKey, const UVIcon::CUVAweSomeIcon& awesomeIcon) const {
+ALNavigationType::NodeOperateReturnType CALMainWindow::addPageNode(const QString& pageTitle, QWidget* page, const QString& targetExpanderKey, const ALIcon::AweSomeIcon& awesomeIcon) const {
 	return d_func()->navigationBar->addPageNode(pageTitle, page, targetExpanderKey, awesomeIcon);
 }
 
-UVNavigationType::NodeOperateReturnType CUVMainWindow::addPageNode(const QString& pageTitle, QWidget* page, const int keyPoints, const UVIcon::CUVAweSomeIcon& awesomeIcon) const {
+ALNavigationType::NodeOperateReturnType CALMainWindow::addPageNode(const QString& pageTitle, QWidget* page, const int keyPoints, const ALIcon::AweSomeIcon& awesomeIcon) const {
 	return d_func()->navigationBar->addPageNode(pageTitle, page, keyPoints, awesomeIcon);
 }
 
-UVNavigationType::NodeOperateReturnType CUVMainWindow::addPageNode(const QString& pageTitle, QWidget* page, const QString& targetExpanderKey, const int keyPoints, const UVIcon::CUVAweSomeIcon& awesomeIcon) const {
+ALNavigationType::NodeOperateReturnType CALMainWindow::addPageNode(const QString& pageTitle, QWidget* page, const QString& targetExpanderKey, const int keyPoints, const ALIcon::AweSomeIcon& awesomeIcon) const {
 	return d_func()->navigationBar->addPageNode(pageTitle, page, targetExpanderKey, keyPoints, awesomeIcon);
 }
 
-UVNavigationType::NodeOperateReturnType CUVMainWindow::addFooterNode(const QString& footerTitle, QString& footerKey, const int keyPoints, const UVIcon::CUVAweSomeIcon& awesomeIcon) const {
+ALNavigationType::NodeOperateReturnType CALMainWindow::addFooterNode(const QString& footerTitle, QString& footerKey, const int keyPoints, const ALIcon::AweSomeIcon& awesomeIcon) const {
 	return d_func()->navigationBar->addFooterNode(footerTitle, footerKey, keyPoints, awesomeIcon);
 }
 
-UVNavigationType::NodeOperateReturnType CUVMainWindow::addFooterNode(const QString& footerTitle, QWidget* page, QString& footerKey, const int keyPoints, const UVIcon::CUVAweSomeIcon& awesomeIcon) const {
+ALNavigationType::NodeOperateReturnType CALMainWindow::addFooterNode(const QString& footerTitle, QWidget* page, QString& footerKey, const int keyPoints, const ALIcon::AweSomeIcon& awesomeIcon) const {
 	return d_func()->navigationBar->addFooterNode(footerTitle, page, footerKey, keyPoints, awesomeIcon);
 }
 
-void CUVMainWindow::setNodeKeyPoints(const QString& nodeKey, const int keyPoints) {
+void CALMainWindow::setNodeKeyPoints(const QString& nodeKey, const int keyPoints) {
 	d_func()->navigationBar->setNodeKeyPoints(nodeKey, keyPoints);
 }
 
-int CUVMainWindow::getNodeKeyPoints(const QString& nodeKey) const {
+int CALMainWindow::getNodeKeyPoints(const QString& nodeKey) const {
 	return d_func()->navigationBar->getNodeKeyPoints(nodeKey);
 }
 
-void CUVMainWindow::navigation(const QString& pageKey) {
+void CALMainWindow::navigation(const QString& pageKey) {
 	d_func()->navigationBar->navigation(pageKey);
 }
 
-void CUVMainWindow::setWindowButtonFlag(const UVAppBarType::ButtonFlag& buttonFlag, const bool isEnable) {
+void CALMainWindow::setWindowButtonFlag(const ALAppBarType::ButtonFlag& buttonFlag, const bool isEnable) {
 	d_func()->appBar->setWindowButtonFlag(buttonFlag, isEnable);
 }
 
-void CUVMainWindow::setWindowButtonFlags(const UVAppBarType::ButtonFlags& buttonFlags) {
+void CALMainWindow::setWindowButtonFlags(const ALAppBarType::ButtonFlags& buttonFlags) {
 	d_func()->appBar->setWindowButtonFlags(buttonFlags);
 }
 
-UVAppBarType::ButtonFlags CUVMainWindow::getWindowButtonFlags() const {
+ALAppBarType::ButtonFlags CALMainWindow::getWindowButtonFlags() const {
 	return d_func()->appBar->getWindowButtonFlags();
 }
 
-bool CUVMainWindow::insertWidgetBeforeButtonInAppBar(QWidget* widget, const UVAppBarType::ButtonFlag& flag) {
+bool CALMainWindow::insertWidgetBeforeButtonInAppBar(QWidget* widget, const ALAppBarType::ButtonFlag& flag) {
 	return d_func()->appBar->insertWidgetBeforeButton(widget, flag);
 }
 
-bool CUVMainWindow::insertWidgetBeforeWidgetInAppBar(QWidget* widget, QWidget* targetWidget) {
+bool CALMainWindow::insertWidgetBeforeWidgetInAppBar(QWidget* widget, QWidget* targetWidget) {
 	return d_func()->appBar->insertWidgetBeforeWidget(widget, targetWidget);
 }
 
-bool CUVMainWindow::insertWidgetBeforeLayoutInAppBar(QWidget* widget, QLayout* targetLayout) {
+bool CALMainWindow::insertWidgetBeforeLayoutInAppBar(QWidget* widget, QLayout* targetLayout) {
 	return d_func()->appBar->insertWidgetBeforeLayout(widget, targetLayout);
 }
 
-bool CUVMainWindow::insertLayoutBeforeButtonInAppBar(QLayout* layout, const UVAppBarType::ButtonFlag& flag) {
+bool CALMainWindow::insertLayoutBeforeButtonInAppBar(QLayout* layout, const ALAppBarType::ButtonFlag& flag) {
 	return d_func()->appBar->insertLayoutBeforeButton(layout, flag);
 }
 
-bool CUVMainWindow::insertLayoutBeforeWidgetInAppBar(QLayout* layout, QWidget* targetWidget) {
+bool CALMainWindow::insertLayoutBeforeWidgetInAppBar(QLayout* layout, QWidget* targetWidget) {
 	return d_func()->appBar->insertLayoutBeforeWidget(layout, targetWidget);
 }
 
-bool CUVMainWindow::insertLayoutBeforeLayoutInAppBar(QLayout* layout, QLayout* targetLayout) {
+bool CALMainWindow::insertLayoutBeforeLayoutInAppBar(QLayout* layout, QLayout* targetLayout) {
 	return d_func()->appBar->insertLayoutBeforeLayout(layout, targetLayout);
 }
 
-void CUVMainWindow::closeWindow() {
+void CALMainWindow::closeWindow() {
 	Q_D(CUVMainWindow);
 
 	d->isWindowClosing = true;
 	d->appBar->closeWindow();
 }
 
-void CUVMainWindow::setIsStayTop(const bool isStayTop) {
+void CALMainWindow::setIsStayTop(const bool isStayTop) {
 	d_func()->appBar->setIsStayTop(isStayTop);
 	Q_EMIT sigIsStayTopChanged();
 }
 
-bool CUVMainWindow::getIsStayTop() const {
+bool CALMainWindow::getIsStayTop() const {
 	return d_func()->appBar->getIsStayTop();
 }
 
-void CUVMainWindow::setIsFixedSize(const bool isFixedSize) {
+void CALMainWindow::setIsFixedSize(const bool isFixedSize) {
 	d_func()->appBar->setIsFixedSize(isFixedSize);
 	Q_EMIT sigIsFixedSizeChanged();
 }
 
-bool CUVMainWindow::getIsFixedSize() const {
+bool CALMainWindow::getIsFixedSize() const {
 	return d_func()->appBar->getIsFixedSize();
 }
 
-void CUVMainWindow::setIsDefaultClosed(const bool isDefaultClosed) {
+void CALMainWindow::setIsDefaultClosed(const bool isDefaultClosed) {
 	d_func()->appBar->setIsDefaultClosed(isDefaultClosed);
 	Q_EMIT sigIsDefaultClosedChanged();
 }
 
-bool CUVMainWindow::getIsDefaultClosed() const {
+bool CALMainWindow::getIsDefaultClosed() const {
 	return d_func()->appBar->getIsDefaultClosed();
 }
 
-void CUVMainWindow::setIsCenterStackedWidgetTransparent(const bool isTransparent) {
+void CALMainWindow::setIsCenterStackedWidgetTransparent(const bool isTransparent) {
 	d_func()->centerStackedWidget->setIsTransparent(isTransparent);
 	Q_EMIT sigIsCenterStackedWidgetTransparentChanged();
 }
 
-bool CUVMainWindow::getIsCenterStackedWidgetTransparent() const {
+bool CALMainWindow::getIsCenterStackedWidgetTransparent() const {
 	return d_func()->centerStackedWidget->getIsTransparent();
 }
 
-void CUVMainWindow::setAppBarHeight(const int appBarHeight) {
+void CALMainWindow::setAppBarHeight(const int appBarHeight) {
 	d_func()->appBar->setAppBarHeight(appBarHeight);
 	Q_EMIT sigAppBarHeightChanged();
 }
 
-int CUVMainWindow::getAppBarHeight() const {
+int CALMainWindow::getAppBarHeight() const {
 	return d_func()->appBar->getAppBarHeight();
 }
 
-void CUVMainWindow::setAppBarBackgroundColor(const QColor& appBarBackgroundColor) {
+void CALMainWindow::setAppBarBackgroundColor(const QColor& appBarBackgroundColor) {
 	d_func()->appBar->setBackgroundColor(appBarBackgroundColor);
 }
 
-QColor CUVMainWindow::getAppBarBackgroundColor() const {
+QColor CALMainWindow::getAppBarBackgroundColor() const {
 	return d_func()->appBar->getBackgroundColor();
 }
 
-void CUVMainWindow::setCustomWidgetMaximumWidth(const int width) {
+void CALMainWindow::setCustomWidgetMaximumWidth(const int width) {
 	d_func()->appBar->setCustomWidgetMaximumWidth(width);
 	Q_EMIT sigCustomWidgetMaximumWidthChanged();
 }
 
-int CUVMainWindow::getCustomWidgetMaximumWidth() const {
+int CALMainWindow::getCustomWidgetMaximumWidth() const {
 	return d_func()->appBar->getCustomWidgetMaximumWidth();
 }
 
-void CUVMainWindow::setThemeChangeTime(const int time) {
+void CALMainWindow::setThemeChangeTime(const int time) {
 	d_func()->themeChangeTime = time;
 	Q_EMIT sigThemeChangeTimeChanged();
 }
 
-int CUVMainWindow::getThemeChangeTime() const {
+int CALMainWindow::getThemeChangeTime() const {
 	return d_func()->themeChangeTime;
 }
 
-void CUVMainWindow::setNavigationDisplayMode(const UVNavigationType::NavigationDisplayMode& mode) {
+void CALMainWindow::setNavigationDisplayMode(const ALNavigationType::NavigationDisplayMode& mode) {
 	d_func()->navigationDisplayMode = mode;
 	Q_EMIT sigNavigationDisplayModeChanged();
 }
 
-UVNavigationType::NavigationDisplayMode CUVMainWindow::getNavigationDisplayMode() const {
+ALNavigationType::NavigationDisplayMode CALMainWindow::getNavigationDisplayMode() const {
 	return d_func()->navigationDisplayMode;
 }
 
-bool CUVMainWindow::eventFilter(QObject* watched, QEvent* event) {
+bool CALMainWindow::eventFilter(QObject* watched, QEvent* event) {
 	Q_D(CUVMainWindow);
 
 	switch (event->type()) {
@@ -551,7 +551,7 @@ bool CUVMainWindow::eventFilter(QObject* watched, QEvent* event) {
 	return QMainWindow::eventFilter(watched, event);
 }
 
-QMenu* CUVMainWindow::createPopupMenu() {
+QMenu* CALMainWindow::createPopupMenu() {
 	CUVMenu* menu{ nullptr };
 	if (const QList<QDockWidget*> dockWidgets = this->findChildren<QDockWidget*>(); !dockWidgets.isEmpty()) {
 		menu = new CUVMenu(this);

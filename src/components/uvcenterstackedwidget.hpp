@@ -2,16 +2,16 @@
 
 #include <QStackedWidget>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
-class CUVCenterStackedWidget final : public QStackedWidget {
+class CALCenterStackedWidget final : public QStackedWidget {
 	Q_OBJECT
 
 public:
-	explicit CUVCenterStackedWidget(QWidget* parent = nullptr);
-	~CUVCenterStackedWidget() override;
+	explicit CALCenterStackedWidget(QWidget* parent = nullptr);
+	~CALCenterStackedWidget() override;
 
-	Q_SLOT void slotThemeModeChanged(const UVThemeType::ThemeMode& mode);
+	Q_SLOT void slotThemeModeChanged(const ALThemeType::ThemeMode& mode);
 
 	void setIsTransparent(bool isTransparent);
 	[[nodiscard]] bool getIsTransparent() const;
@@ -22,7 +22,7 @@ protected:
 	void paintEvent(QPaintEvent* event) override;
 
 private:
-	UVThemeType::ThemeMode m_themeMode{};
+	ALThemeType::ThemeMode m_themeMode{};
 	bool m_isTransparent{};
 	bool m_isHasRadius{ true };
 };

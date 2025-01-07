@@ -7,7 +7,7 @@
 #include <QtMath>
 
 #include "uvscrollbar.hpp"
-#include "uvthememanager.hpp"
+#include "althememanager.hpp"
 
 /**
  * @brief \class CUVScrollBarStyle
@@ -18,7 +18,7 @@ CUVScrollBarStyle::CUVScrollBarStyle(QStyle* style): QProxyStyle(style) {
 	m_opacity = 0;
 	m_sliderExtent = 2.4;
 	m_themeMode = UVTheme->getThemeMode();
-	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const UVThemeType::ThemeMode& mode) { m_themeMode = mode; });
+	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { m_themeMode = mode; });
 }
 
 CUVScrollBarStyle::~CUVScrollBarStyle() = default;
@@ -35,11 +35,11 @@ void CUVScrollBarStyle::drawComplexControl(const ComplexControl control, const Q
 					// 背景绘制
 					painter->setOpacity(m_opacity);
 					painter->setPen(Qt::NoPen);
-					painter->setBrush(UVThemeColor(m_themeMode, UVThemeType::BasicBase));
+					painter->setBrush(UVThemeColor(m_themeMode, ALThemeType::BasicBase));
 					painter->drawRoundedRect(scrollBarRect, 6, 6);
 					// 指示器绘制
 					constexpr int sideLength = 8;
-					painter->setBrush(UVThemeColor(m_themeMode, UVThemeType::ScrollBarHandle));
+					painter->setBrush(UVThemeColor(m_themeMode, ALThemeType::ScrollBarHandle));
 					if (sopt->orientation == Qt::Horizontal) {
 						const QRect leftIndicatorRect = subControlRect(control, sopt, QStyle::SC_ScrollBarSubLine, widget);
 						const QRect rightIndicatorRect = subControlRect(control, sopt, QStyle::SC_ScrollBarAddLine, widget);
@@ -89,7 +89,7 @@ void CUVScrollBarStyle::drawComplexControl(const ComplexControl control, const Q
 				painter->setOpacity(1);
 				// 滑块绘制
 				QRectF sliderRect = subControlRect(control, option, SC_ScrollBarSlider, widget);
-				painter->setBrush(UVThemeColor(m_themeMode, UVThemeType::ScrollBarHandle));
+				painter->setBrush(UVThemeColor(m_themeMode, ALThemeType::ScrollBarHandle));
 				if (sopt->orientation == Qt::Horizontal) {
 					sliderRect.setRect(sliderRect.x(), sliderRect.bottom() - m_sliderMargin - m_sliderExtent, sliderRect.width(), m_sliderExtent);
 				} else {

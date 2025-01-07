@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class CUVToggleSwitch;
 
@@ -17,7 +17,7 @@ protected:
 	CUVToggleSwitch* const q_ptr{ nullptr };
 
 private:
-	UVThemeType::ThemeMode themeMode{};
+	ALThemeType::ThemeMode themeMode{};
 	bool isToggled{ false };
 	int margin{ 1 };
 	qreal circleCenterX{ 0 };

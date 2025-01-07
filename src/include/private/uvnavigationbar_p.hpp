@@ -2,7 +2,7 @@
 
 #include <QMap>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class QLayout;
 class QVBoxLayout;
@@ -10,7 +10,7 @@ class QHBoxLayout;
 class QLinearGradient;
 
 class CUVMenu;
-class CUVNavigationBar;
+class CALNavigationBar;
 class CUVNavigationNode;
 class CUVNavigationModel;
 class CUVNavigationView;
@@ -25,11 +25,11 @@ class CUVAwesomeToolButton;
 class CUVNavigationBarPrivate final : public QObject {
 	Q_OBJECT
 	Q_DISABLE_COPY(CUVNavigationBarPrivate);
-	Q_DECLARE_PUBLIC(CUVNavigationBar)
+	Q_DECLARE_PUBLIC(CALNavigationBar)
 	Q_PROPERTY(int navigationViewWidth READ getNavigationViewWidth WRITE setNavigationViewWidth NOTIFY sigNavigationViewWidthChanged)
 
 public:
-	explicit CUVNavigationBarPrivate(CUVNavigationBar* q, QObject* parent = nullptr);
+	explicit CUVNavigationBarPrivate(CALNavigationBar* q, QObject* parent = nullptr);
 	~CUVNavigationBarPrivate() override;
 
 	void setNavigationViewWidth(int width);
@@ -47,15 +47,15 @@ Q_SIGNALS:
 	Q_SIGNAL void sigNavigationViewWidthChanged();
 
 protected:
-	CUVNavigationBar* const q_ptr{ nullptr };
+	CALNavigationBar* const q_ptr{ nullptr };
 
 private:
 	bool isTransparent{};
 	bool isShowUserCard{};
 	int navigationViewWidth{};
 
-	UVThemeType::ThemeMode themeMode{};
-	UVNavigationType::NavigationDisplayMode currentDisplayMode{};
+	ALThemeType::ThemeMode themeMode{};
+	ALNavigationType::NavigationDisplayMode currentDisplayMode{};
 	QMap<QString, const QMetaObject*> mapPageMeta{};
 	QMap<CUVNavigationNode*, CUVMenu*> mapCompactMenu{};
 	QList<CUVNavigationNode*> listLastExpandedNodes{};
@@ -81,12 +81,12 @@ private:
 	void addStackedPage(QWidget* page, const QString& pageKey);
 	void addFooterPage(QWidget* page, const QString& footKey);
 	void raiseNavigationBar();
-	void doComponentAnimation(const UVNavigationType::NavigationDisplayMode& displayMode, bool isAnimation);
+	void doComponentAnimation(const ALNavigationType::NavigationDisplayMode& displayMode, bool isAnimation);
 	void handleNavigationExpandState(bool isSave);
 	void handleMaximalToCompactLayout() const;
 	void handleCompactToMaximalLayout() const;
 	void resetLayout() const;
-	void doNavigationBarWidthAnimation(const UVNavigationType::NavigationDisplayMode& displayMode, bool isAnimation);
+	void doNavigationBarWidthAnimation(const ALNavigationType::NavigationDisplayMode& displayMode, bool isAnimation);
 	void doNavigationViewWidthAnimation(bool isAnimation);
 	void doNavigationButtonAnimation(bool isCompact, bool isAnimation);
 	void doSearchButtonAnimation(bool isCompact, bool isAnimation) const;

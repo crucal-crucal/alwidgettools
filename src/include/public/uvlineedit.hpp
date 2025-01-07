@@ -2,11 +2,11 @@
 
 #include <QLineEdit>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class CUVLineEditPrivate;
 
-class CUVWIDGETTOOLS_EXPORT CUVLineEdit : public QLineEdit {
+class CALWIDGETTOOLS_EXPORT CUVLineEdit : public QLineEdit {
 	Q_OBJECT
 	Q_DECLARE_PRIVATE(CUVLineEdit)
 	Q_PROPERTY(int borderRadius READ getBorderRadius WRITE setBorderRadius NOTIFY sigBorderRadiusChanged)

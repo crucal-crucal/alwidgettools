@@ -4,12 +4,12 @@
 #include <QScrollBar>
 #include <QWheelEvent>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class CUVScrollBar;
 class CUVScrollAreaPrivate;
 
-class CUVWIDGETTOOLS_EXPORT CUVScrollArea : public QScrollArea {
+class CALWIDGETTOOLS_EXPORT CUVScrollArea : public QScrollArea {
 	Q_OBJECT
 	Q_DISABLE_COPY(CUVScrollArea)
 	Q_DECLARE_PRIVATE(CUVScrollArea)

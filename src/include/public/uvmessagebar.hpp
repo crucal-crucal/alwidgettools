@@ -2,18 +2,18 @@
 
 #include <QWidget>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class CUVMessageBarManager;
 class CUVMessageBarPrivate;
 
-class CUVWIDGETTOOLS_EXPORT CUVMessageBar : public QWidget {
+class CALWIDGETTOOLS_EXPORT CUVMessageBar : public QWidget {
 	Q_OBJECT
 	Q_DISABLE_COPY(CUVMessageBar)
 	Q_DECLARE_PRIVATE(CUVMessageBar)
 
 public:
-	explicit CUVMessageBar(const UVMessageBarType::PositionPolicy& policy, const UVMessageBarType::MessageLevel& messageLevel,
+	explicit CUVMessageBar(const ALMessageBarType::PositionPolicy& policy, const ALMessageBarType::MessageLevel& messageLevel,
 	                       const QString& title, const QString& message, int displayMsec, QWidget* parent = nullptr);
 	~CUVMessageBar() override;
 
@@ -26,7 +26,7 @@ public:
 	 * @param parent 父窗口
 	 */
 	static void success(const QString& title, const QString& message, int displayMsec = 2000,
-	                    const UVMessageBarType::PositionPolicy& positionPolicy = UVMessageBarType::TopRight, QWidget* parent = nullptr);
+	                    const ALMessageBarType::PositionPolicy& positionPolicy = ALMessageBarType::TopRight, QWidget* parent = nullptr);
 
 	/**
 	 * waring notification
@@ -37,7 +37,7 @@ public:
 	 * @param parent 父窗口
 	 */
 	static void warning(const QString& title, const QString& message, int displayMsec = 2000,
-	                    const UVMessageBarType::PositionPolicy& positionPolicy = UVMessageBarType::TopLeft, QWidget* parent = nullptr);
+	                    const ALMessageBarType::PositionPolicy& positionPolicy = ALMessageBarType::TopLeft, QWidget* parent = nullptr);
 
 	/**
 	 * information notification
@@ -48,7 +48,7 @@ public:
 	 * @param parent 父窗口
 	 */
 	static void information(const QString& title, const QString& message, int displayMsec = 2000,
-	                       const UVMessageBarType::PositionPolicy& positionPolicy = UVMessageBarType::BottomLeft, QWidget* parent = nullptr);
+	                       const ALMessageBarType::PositionPolicy& positionPolicy = ALMessageBarType::BottomLeft, QWidget* parent = nullptr);
 
 	/**
 	 * error notification
@@ -59,7 +59,7 @@ public:
 	 * @param parent 父窗口
 	 */
 	static void error(const QString& title, const QString& message, int displayMsec = 2000,
-	                  const UVMessageBarType::PositionPolicy& positionPolicy = UVMessageBarType::BottomRight, QWidget* parent = nullptr);
+	                  const ALMessageBarType::PositionPolicy& positionPolicy = ALMessageBarType::BottomRight, QWidget* parent = nullptr);
 
 protected:
 	const QScopedPointer<CUVMessageBarPrivate> d_ptr{ nullptr };

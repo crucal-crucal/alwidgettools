@@ -1,20 +1,20 @@
 ﻿#pragma once
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
-class CUVEvent;
+class CALEvent;
 
 class CUVEventPrivate final : public QObject {
 	Q_OBJECT
 	Q_DISABLE_COPY(CUVEventPrivate)
-	Q_DECLARE_PUBLIC(CUVEvent)
+	Q_DECLARE_PUBLIC(CALEvent)
 
 public:
-	explicit CUVEventPrivate(CUVEvent* q, QObject* parent = nullptr);
+	explicit CUVEventPrivate(CALEvent* q, QObject* parent = nullptr);
 	~CUVEventPrivate() override;
 
 protected:
-	CUVEvent* const q_ptr{ nullptr };
+	CALEvent* const q_ptr{ nullptr };
 
 private:
 	QString eventName{};
@@ -33,14 +33,14 @@ public:
 	explicit CUVEventBusPrivate(CUVEventBus* q, QObject* parent = nullptr);
 	~CUVEventBusPrivate() override;
 
-	[[nodiscard]] UVEventBusType::EventBusReturnType registerEvent(CUVEvent* event);
+	[[nodiscard]] ALEventBusType::EventBusReturnType registerEvent(CALEvent* event);
 	[[nodiscard]] bool unRegisterEvent(const QString& eventName);
-	[[nodiscard]] bool unRegisterEvent(CUVEvent* event);
-	[[nodiscard]] bool unRegisterEvent(const QString& eventName, CUVEvent* event);
+	[[nodiscard]] bool unRegisterEvent(CALEvent* event);
+	[[nodiscard]] bool unRegisterEvent(const QString& eventName, CALEvent* event);
 
 protected:
 	CUVEventBus* const q_ptr{ nullptr };
 
 private:
-	QMap<QString, QList<CUVEvent*>> eventMap{};
+	QMap<QString, QList<CALEvent*>> eventMap{};
 };

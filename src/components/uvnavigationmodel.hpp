@@ -2,7 +2,7 @@
 
 #include <QAbstractItemModel>
 
-#include "uvwidgettoolsdef.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class CUVNavigationNode;
 
@@ -19,12 +19,12 @@ public:
 	int columnCount(const QModelIndex& parent) const override;
 	QVariant data(const QModelIndex& index, int role) const override;
 
-	UVNavigationType::NodeOperateReturnType addExpanderNode(const QString& expanderTitle, QString& expanderKey, const UVIcon::CUVAweSomeIcon& awewomeIcon);
-	UVNavigationType::NodeOperateReturnType addExpanderNode(const QString& expanderTitle, QString& expanderKey, const QString& targetExpanderKey, const UVIcon::CUVAweSomeIcon& awewomeIcon);
-	UVNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QString& pageKey, const UVIcon::CUVAweSomeIcon& awewomeIcon);
-	UVNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QString& pageKey, const QString& targetExpanderKey, const UVIcon::CUVAweSomeIcon& awewomeIcon);
-	UVNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QString& pageKey, int keyPoints, const UVIcon::CUVAweSomeIcon& awewomeIcon);
-	UVNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QString& pageKey, const QString& targetExpanderKey, int keyPoints, const UVIcon::CUVAweSomeIcon& awewomeIcon);
+	ALNavigationType::NodeOperateReturnType addExpanderNode(const QString& expanderTitle, QString& expanderKey, const ALIcon::AweSomeIcon& awewomeIcon);
+	ALNavigationType::NodeOperateReturnType addExpanderNode(const QString& expanderTitle, QString& expanderKey, const QString& targetExpanderKey, const ALIcon::AweSomeIcon& awewomeIcon);
+	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QString& pageKey, const ALIcon::AweSomeIcon& awewomeIcon);
+	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QString& pageKey, const QString& targetExpanderKey, const ALIcon::AweSomeIcon& awewomeIcon);
+	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QString& pageKey, int keyPoints, const ALIcon::AweSomeIcon& awewomeIcon);
+	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QString& pageKey, const QString& targetExpanderKey, int keyPoints, const ALIcon::AweSomeIcon& awewomeIcon);
 
 	CUVNavigationNode* getNavigationNode(const QString& nodeKey) const;
 	QList<CUVNavigationNode*> getRootExpanderNodes() const;

@@ -3,7 +3,7 @@
 #include "e_basepage.hpp"
 
 class QVBoxLayout;
-class CUVMainWindow;
+class CALMainWindow;
 
 class E_Settings final : public E_BasePage {
 	Q_OBJECT
@@ -14,7 +14,7 @@ public:
 
 private:
 	QVBoxLayout* m_mainVLayout{ nullptr };
-	CUVMainWindow* m_mainWindow{ nullptr };
+	CALMainWindow* m_mainWindow{ nullptr };
 
 	void initThemeSwitchArea();
 	void initMicaSwitchArea();

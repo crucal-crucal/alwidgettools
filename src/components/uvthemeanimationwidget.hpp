@@ -3,7 +3,7 @@
 
 #include <QWidget>
 
-class CUVThemeAnimationWidget final : public QWidget {
+class CALThemeAnimationWidget final : public QWidget {
 	Q_OBJECT
 	Q_PROPERTY(qreal radius READ getRadius WRITE setRadius NOTIFY sigRadiusChanged)
 	Q_PROPERTY(qreal endRadius READ getEndRadius WRITE setEndRadius NOTIFY sigEndRadiusChanged)
@@ -12,8 +12,8 @@ class CUVThemeAnimationWidget final : public QWidget {
 	Q_PROPERTY(QImage newWindowImage READ getNewWindowImage WRITE setNewWindowImage NOTIFY sigNewWindowImageChanged)
 
 public:
-	explicit CUVThemeAnimationWidget(QWidget* parent = nullptr);
-	~CUVThemeAnimationWidget() override;
+	explicit CALThemeAnimationWidget(QWidget* parent = nullptr);
+	~CALThemeAnimationWidget() override;
 
 	void startAnimation(int mesc);
 

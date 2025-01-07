@@ -5,9 +5,9 @@
 #include <QStyleOption>
 
 #include "uvmenu.hpp"
-#include "uvthememanager.hpp"
+#include "althememanager.hpp"
 
-using namespace UVIcon;
+using namespace ALIcon;
 
 /**
  * @brief \class CUVMenuStyle
@@ -18,7 +18,7 @@ CUVMenuStyle::CUVMenuStyle(QStyle* style): QProxyStyle(style) {
 	m_shadowBorderWidth = 6;
 	m_menuItemHeight = 32;
 	m_themeMode = UVTheme->getThemeMode();
-	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const UVThemeType::ThemeMode& mode) { m_themeMode = mode; });
+	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { m_themeMode = mode; });
 }
 
 CUVMenuStyle::~CUVMenuStyle() = default;
@@ -32,8 +32,8 @@ void CUVMenuStyle::drawPrimitive(const PrimitiveElement element, const QStyleOpt
 			UVTheme->drawEffectShadow(painter, option->rect, m_shadowBorderWidth, 6);
 			// 背景绘制
 			const QRect foregroundRect(m_shadowBorderWidth, m_shadowBorderWidth, option->rect.width() - 2 * m_shadowBorderWidth, option->rect.height() - 2 * m_shadowBorderWidth);
-			painter->setPen(UVThemeColor(m_themeMode, UVThemeType::PopupBorder));
-			painter->setBrush(UVThemeColor(m_themeMode, UVThemeType::PopupBase));
+			painter->setPen(UVThemeColor(m_themeMode, ALThemeType::PopupBorder));
+			painter->setBrush(UVThemeColor(m_themeMode, ALThemeType::PopupBase));
 			painter->drawRoundedRect(foregroundRect, 6, 6);
 			painter->restore();
 			return;
@@ -58,7 +58,7 @@ void CUVMenuStyle::drawControl(const ControlElement element, const QStyleOption*
 					painter->save();
 					painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);
 					painter->setPen(Qt::NoPen);
-					painter->setBrush(UVThemeColor(m_themeMode, UVThemeType::BasicBaseLine));
+					painter->setBrush(UVThemeColor(m_themeMode, ALThemeType::BasicBaseLine));
 					painter->drawRoundedRect(QRectF(separatorRect.x() + separatorRect.width() * 0.055, separatorRect.center().y(), separatorRect.width() - separatorRect.width() * 0.11, 1.5), 1, 1);
 					painter->restore();
 					return;
@@ -73,7 +73,7 @@ void CUVMenuStyle::drawControl(const ControlElement element, const QStyleOption*
 						QRect hoverRect = menuRect;
 						hoverRect.adjust(0, 2, 0, -2);
 						painter->setPen(Qt::NoPen);
-						painter->setBrush(UVThemeColor(m_themeMode, UVThemeType::PopupHover));
+						painter->setBrush(UVThemeColor(m_themeMode, ALThemeType::PopupHover));
 						painter->drawRoundedRect(hoverRect, 5, 5);
 					}
 					// Icon绘制
@@ -86,7 +86,7 @@ void CUVMenuStyle::drawControl(const ControlElement element, const QStyleOption*
 						iconFont.setPixelSize(m_menuItemHeight * 0.57); // NOLINT
 						painter->setFont(iconFont);
 						painter->drawText(QRectF(menuRect.x() + contentPadding, menuRect.y(), m_iconWidth, menuRect.height()),
-						                  Qt::AlignCenter, mopt->checked ? QChar(static_cast<unsigned short>(CUVAweSomeIcon::Check)) : QChar(static_cast<unsigned short>(CUVAweSomeIcon::None)));
+						                  Qt::AlignCenter, mopt->checked ? QChar(static_cast<unsigned short>(AweSomeIcon::Check)) : QChar(static_cast<unsigned short>(AweSomeIcon::None)));
 						painter->restore();
 					} else {
 						QString iconText{};
@@ -97,7 +97,7 @@ void CUVMenuStyle::drawControl(const ControlElement element, const QStyleOption*
 						}
 						if (!iconText.isEmpty()) {
 							painter->save();
-							painter->setPen(!mopt->state.testFlag(QStyle::State_Enabled) ? Qt::gray : m_themeMode == UVThemeType::Light ? Qt::black : Qt::white);
+							painter->setPen(!mopt->state.testFlag(QStyle::State_Enabled) ? Qt::gray : m_themeMode == ALThemeType::Light ? Qt::black : Qt::white);
 							auto iconFont = QFont("CUVAwesome");
 							iconFont.setPixelSize(m_menuItemHeight * 0.57); // NOLINT
 							painter->setFont(iconFont);
@@ -112,7 +112,7 @@ void CUVMenuStyle::drawControl(const ControlElement element, const QStyleOption*
 					// 文字和快捷键绘制
 					if (!mopt->text.isEmpty()) {
 						QStringList textList = mopt->text.split("\t");
-						painter->setPen(!mopt->state.testFlag(QStyle::State_Enabled) ? Qt::gray : m_themeMode == UVThemeType::Light ? Qt::black : Qt::white);
+						painter->setPen(!mopt->state.testFlag(QStyle::State_Enabled) ? Qt::gray : m_themeMode == ALThemeType::Light ? Qt::black : Qt::white);
 
 						painter->drawText(QRectF(menuRect.x() + (m_isAnyoneItemHasIcon ? contentPadding + textLeftSpacing : 0) + m_iconWidth, menuRect.y(), menuRect.width(), menuRect.height()), Qt::AlignLeft | Qt::AlignVCenter | Qt::TextSingleLine, textList[0]);
 						if (textList.count() > 1) {
@@ -122,11 +122,11 @@ void CUVMenuStyle::drawControl(const ControlElement element, const QStyleOption*
 					// 展开图标
 					if (mopt->menuItemType == QStyleOptionMenuItem::SubMenu) {
 						painter->save();
-						painter->setPen(!mopt->state.testFlag(QStyle::State_Enabled) ? Qt::gray : m_themeMode == UVThemeType::Light ? Qt::black : Qt::white);
+						painter->setPen(!mopt->state.testFlag(QStyle::State_Enabled) ? Qt::gray : m_themeMode == ALThemeType::Light ? Qt::black : Qt::white);
 						auto iconFont = QFont("CUVAwesome");
 						iconFont.setPixelSize(18);
 						painter->setFont(iconFont);
-						painter->drawText(QRect(menuRect.right() - 25, menuRect.y(), 25, menuRect.height()), Qt::AlignVCenter, QChar(static_cast<unsigned short>(CUVAweSomeIcon::AngleRight)));
+						painter->drawText(QRect(menuRect.right() - 25, menuRect.y(), 25, menuRect.height()), Qt::AlignVCenter, QChar(static_cast<unsigned short>(AweSomeIcon::AngleRight)));
 						painter->restore();
 					}
 					painter->restore();

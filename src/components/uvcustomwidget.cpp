@@ -3,8 +3,8 @@
 #include <QPainter>
 #include <QVBoxLayout>
 
-#include "uvapplication.hpp"
-#include "uvthememanager.hpp"
+#include "alapplication.hpp"
+#include "althememanager.hpp"
 
 Q_TAKEOVER_NATIVEEVENT_CPP(CUVCustomWidget, m_appBar)
 
@@ -16,14 +16,14 @@ CUVCustomWidget::CUVCustomWidget(QWidget* parent): QDialog(parent) {
 	resize(500, 500);
 	setObjectName("CUVCustomWidget");
 
-	m_appBar = new CUVAppBar(this);
-	m_appBar->setWindowButtonFlags(UVAppBarType::MinimizeButtonHint | UVAppBarType::MaximizeButtonHint | UVAppBarType::CloseButtonHint);
+	m_appBar = new CALAppBar(this);
+	m_appBar->setWindowButtonFlags(ALAppBarType::MinimizeButtonHint | ALAppBarType::MaximizeButtonHint | ALAppBarType::CloseButtonHint);
 
 	m_mainVLayout = new QVBoxLayout(this);
 	m_mainVLayout->setContentsMargins(0, 0, 0, 0);
 
 	m_themeMode = UVTheme->getThemeMode();
-	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const UVThemeType::ThemeMode& mode) {
+	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) {
 		m_themeMode = mode;
 		update();
 	});
@@ -54,7 +54,7 @@ void CUVCustomWidget::paintEvent(QPaintEvent* event) {
 		QPainter painter(this);
 		painter.save();
 		painter.setRenderHint(QPainter::Antialiasing);
-		painter.setBrush(UVThemeColor(m_themeMode, UVThemeType::WindowBase));
+		painter.setBrush(UVThemeColor(m_themeMode, ALThemeType::WindowBase));
 		painter.drawRect(rect());
 		painter.restore();
 	}

@@ -1,7 +1,7 @@
 ﻿#pragma once
 
-#include "uvsingleton.hpp"
-#include "uvwidgettoolsdef.hpp"
+#include "alsingleton.hpp"
+#include "alwidgettoolsdef.hpp"
 
 #define UVTheme CUVThemeManager::instance()
 #define UVThemeColor(mode, color) UVTheme->getThemeColor(mode, color)
@@ -9,7 +9,7 @@
 class QPainter;
 class CUVThemeManagerPrivate;
 
-class CUVWIDGETTOOLS_EXPORT CUVThemeManager : public QObject {
+class CALWIDGETTOOLS_EXPORT CUVThemeManager : public QObject {
 	Q_OBJECT
 	Q_DISABLE_COPY(CUVThemeManager)
 	Q_DECLARE_PRIVATE(CUVThemeManager)
@@ -17,14 +17,14 @@ class CUVWIDGETTOOLS_EXPORT CUVThemeManager : public QObject {
 public:
 	static CUVThemeManager* instance();
 
-	void setThemeMode(const UVThemeType::ThemeMode& mode);
-	[[nodiscard]] UVThemeType::ThemeMode getThemeMode() const;
+	void setThemeMode(const ALThemeType::ThemeMode& mode);
+	[[nodiscard]] ALThemeType::ThemeMode getThemeMode() const;
 	void drawEffectShadow(QPainter* painter, const QRect& widgetRect, const int& shadowBorderWidth, const int& borderRadius);
-	void setThemeColor(const UVThemeType::ThemeMode& mode, const UVThemeType::ThemeColor& color, const QColor& newColor);
-	[[nodiscard]] const QColor& getThemeColor(const UVThemeType::ThemeMode& mode, const UVThemeType::ThemeColor& color) const;
+	void setThemeColor(const ALThemeType::ThemeMode& mode, const ALThemeType::ThemeColor& color, const QColor& newColor);
+	[[nodiscard]] const QColor& getThemeColor(const ALThemeType::ThemeMode& mode, const ALThemeType::ThemeColor& color) const;
 
 Q_SIGNALS:
-	Q_SIGNAL void sigThemeModeChanged(const UVThemeType::ThemeMode& mode);
+	Q_SIGNAL void sigThemeModeChanged(const ALThemeType::ThemeMode& mode);
 
 protected:
 	const QScopedPointer<CUVThemeManagerPrivate> d_ptr{ nullptr };

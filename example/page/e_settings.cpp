@@ -4,17 +4,17 @@
 #include <QHBoxLayout>
 #include <QMetaEnum>
 
-#include "uvapplication.hpp"
-#include "uvcombobox.hpp"
+#include "alapplication.hpp"
+#include "alcombobox.hpp"
 #include "uvmainwindow.hpp"
 #include "uvradiobutton.hpp"
 #include "uvscrollpagearea.hpp"
 #include "uvtext.hpp"
-#include "uvthememanager.hpp"
+#include "althememanager.hpp"
 #include "uvtoggleswitch.hpp"
 
 E_Settings::E_Settings(QWidget* parent): E_BasePage(parent) {
-	m_mainWindow = qobject_cast<CUVMainWindow*>(parent);
+	m_mainWindow = qobject_cast<CALMainWindow*>(parent);
 	setWindowTitle("Settings");
 
 	const auto centralWidget = new QWidget(this);
@@ -37,7 +37,7 @@ E_Settings::E_Settings(QWidget* parent): E_BasePage(parent) {
 E_Settings::~E_Settings() = default;
 
 void E_Settings::initThemeSwitchArea() {
-	const QMetaObject& metaObject = UVThemeType::staticMetaObject;
+	const QMetaObject& metaObject = ALThemeType::staticMetaObject;
 	const QMetaEnum metaEnum = metaObject.enumerator(metaObject.indexOfEnumerator("ThemeMode"));
 	if (!metaEnum.isValid()) {
 		qWarning() << "Invalid ThemeMode meta enum";
@@ -63,13 +63,13 @@ void E_Settings::initThemeSwitchArea() {
 	connect(themeComboBox, &CUVComboBox::currentTextChanged, this, [=](const QString& type) {
 		if (metaEnum.isValid()) {
 			if (const int value = metaEnum.keyToValue(type.toLocal8Bit().constData()); value != -1) {
-				UVTheme->setThemeMode(static_cast<UVThemeType::ThemeMode>(value));
+				UVTheme->setThemeMode(static_cast<ALThemeType::ThemeMode>(value));
 			} else {
 				qWarning() << "Invalid theme mode: " << type;
 			}
 		}
 	});
-	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const UVThemeType::ThemeMode& mode) {
+	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) {
 		if (metaEnum.isValid()) {
 			if (const char* key = metaEnum.valueToKey(static_cast<int>(mode))) {
 				themeComboBox->blockSignals(true);
@@ -109,7 +109,7 @@ void E_Settings::initMicaSwitchArea() {
 }
 
 void E_Settings::initNavigationDisplayModeArea() {
-	const QMetaObject& metaObject = UVNavigationType::staticMetaObject;
+	const QMetaObject& metaObject = ALNavigationType::staticMetaObject;
 	const QMetaEnum metaEnum = metaObject.enumerator(metaObject.indexOfEnumerator("NavigationDisplayMode"));
 	if (!metaEnum.isValid()) {
 		qWarning() << "Failed to retrieve NavigationDisplayMode meta information.";
@@ -130,10 +130,10 @@ void E_Settings::initNavigationDisplayModeArea() {
 
 		const auto radioButton = new CUVRadioButton(this);
 		radioButton->setText(key);
-		radioButton->setChecked(m_mainWindow->getNavigationDisplayMode() == static_cast<UVNavigationType::NavigationDisplayMode>(value));
+		radioButton->setChecked(m_mainWindow->getNavigationDisplayMode() == static_cast<ALNavigationType::NavigationDisplayMode>(value));
 		connect(radioButton, &CUVRadioButton::toggled, this, [=](const bool checked) {
 			if (checked) {
-				m_mainWindow->setNavigationDisplayMode(static_cast<UVNavigationType::NavigationDisplayMode>(value));
+				m_mainWindow->setNavigationDisplayMode(static_cast<ALNavigationType::NavigationDisplayMode>(value));
 			}
 		});
 

@@ -6,7 +6,7 @@
 #include <QStackedWidget>
 #include <QVariant>
 
-#include "uvbreadcrumbbar.hpp"
+#include "albreadcrumbbar.hpp"
 #include "uvnavigationrouter.hpp"
 #include "uvscrollarea.hpp"
 #include "uvscrollbar.hpp"
