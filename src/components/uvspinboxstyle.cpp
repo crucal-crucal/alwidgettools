@@ -17,22 +17,27 @@ void CUVSpinBoxStyle::drawComplexControl(const ComplexControl cc, const QStyleOp
 	switch (cc) {
 		case CC_SpinBox: {
 			if (const auto sopt = qstyleoption_cast<const QStyleOptionSpinBox*>(opt)) {
+				const bool isEnable = sopt->state.testFlag(State_Enabled);
 				p->save();
 				p->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
 				// background
 				p->setPen(UVThemeColor(m_themeMode, UVThemeType::BasicBorder));
-				p->setBrush(UVThemeColor(m_themeMode, UVThemeType::BasicBase));
+				p->setBrush(UVThemeColor(m_themeMode, isEnable? UVThemeType::BasicBase : UVThemeType::BasicDisable));
 				p->drawRoundedRect(sopt->rect, 4, 4);
 				// add button
 				const QRect addLineRect = subControlRect(cc, sopt, SC_ScrollBarAddLine, widget);
-				if (sopt->activeSubControls == SC_ScrollBarAddLine) {
-					if (sopt->state.testFlag(State_Sunken) && sopt->state.testFlag(State_MouseOver)) {
-						p->setBrush(UVThemeColor(m_themeMode, UVThemeType::BasicPressAlpha));
+				if (isEnable) {
+					if (sopt->activeSubControls == SC_ScrollBarAddLine) {
+						if (sopt->state.testFlag(State_Sunken) && sopt->state.testFlag(State_MouseOver)) {
+							p->setBrush(UVThemeColor(m_themeMode, UVThemeType::BasicPressAlpha));
+						} else {
+							p->setBrush(UVThemeColor(m_themeMode, sopt->state.testFlag(QStyle::State_MouseOver) ? UVThemeType::BasicHoverAlpha : UVThemeType::BasicBaseDeep));
+						}
 					} else {
-						p->setBrush(UVThemeColor(m_themeMode, sopt->state.testFlag(QStyle::State_MouseOver) ? UVThemeType::BasicHoverAlpha : UVThemeType::BasicBaseDeep));
+						p->setBrush(UVThemeColor(m_themeMode, UVThemeType::BasicBaseDeep));
 					}
 				} else {
-					p->setBrush(UVThemeColor(m_themeMode, UVThemeType::BasicBaseDeep));
+					p->setBrush(UVThemeColor(m_themeMode, UVThemeType::BasicDisable));
 				}
 				QPainterPath addLinePath;
 				addLinePath.moveTo(addLineRect.topLeft());
@@ -45,14 +50,18 @@ void CUVSpinBoxStyle::drawComplexControl(const ComplexControl cc, const QStyleOp
 				p->drawPath(addLinePath);
 				// sub button
 				const QRect subLineRect = subControlRect(cc, sopt, SC_ScrollBarSubLine, widget);
-				if (sopt->activeSubControls == SC_ScrollBarSubLine) {
-					if (sopt->state.testFlag(State_Sunken) && sopt->state.testFlag(State_MouseOver)) {
-						p->setBrush(UVThemeColor(m_themeMode, UVThemeType::BasicPressAlpha));
+				if (isEnable) {
+					if (sopt->activeSubControls == SC_ScrollBarSubLine) {
+						if (sopt->state.testFlag(State_Sunken) && sopt->state.testFlag(State_MouseOver)) {
+							p->setBrush(UVThemeColor(m_themeMode, UVThemeType::BasicPressAlpha));
+						} else {
+							p->setBrush(UVThemeColor(m_themeMode, sopt->state.testFlag(State_MouseOver) ? UVThemeType::BasicHoverAlpha : UVThemeType::BasicBaseDeep));
+						}
 					} else {
-						p->setBrush(UVThemeColor(m_themeMode, sopt->state.testFlag(State_MouseOver) ? UVThemeType::BasicHoverAlpha : UVThemeType::BasicBaseDeep));
+						p->setBrush(UVThemeColor(m_themeMode, UVThemeType::BasicBaseDeep));
 					}
 				} else {
-					p->setBrush(UVThemeColor(m_themeMode, UVThemeType::BasicBaseDeep));
+					p->setBrush(UVThemeColor(m_themeMode, UVThemeType::BasicDisable));
 				}
 				QPainterPath subLinePath;
 				subLinePath.moveTo(subLineRect.topLeft());
@@ -75,7 +84,7 @@ void CUVSpinBoxStyle::drawComplexControl(const ComplexControl cc, const QStyleOp
 				QFont iconFont("CUVAwesome");
 				iconFont.setPixelSize(17);
 				p->setFont(iconFont);
-				p->setPen(UVThemeColor(m_themeMode, UVThemeType::BasicText));
+				p->setPen(UVThemeColor(m_themeMode, isEnable ? UVThemeType::BasicText : UVThemeType::BasicTextDisable));
 				p->drawText(addLineRect, Qt::AlignCenter, QChar(static_cast<unsigned short>(UVIcon::CUVAweSomeIcon::Plus)));
 				// sub icon
 				p->drawText(subLineRect, Qt::AlignCenter, QChar(static_cast<unsigned short>(UVIcon::CUVAweSomeIcon::Minus)));

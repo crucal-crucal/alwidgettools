@@ -10,7 +10,7 @@ class CUVBaseListView;
 class CUVNavigationNode;
 
 class CUVFooterDelegate final : public QStyledItemDelegate {
-	QOBJECT_H
+	Q_OBJECT
 
 public:
 	explicit CUVFooterDelegate(QObject* parent = nullptr);

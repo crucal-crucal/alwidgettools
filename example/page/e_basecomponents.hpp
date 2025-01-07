@@ -4,7 +4,7 @@
 
 class QVBoxLayout;
 
-class E_BaseComponents : public E_BasePage {
+class E_BaseComponents final : public E_BasePage {
 	Q_OBJECT
 
 public:

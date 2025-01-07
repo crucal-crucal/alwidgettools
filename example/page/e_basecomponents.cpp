@@ -160,6 +160,13 @@ void E_BaseComponents::initMessageBarArea() {
 }
 
 void E_BaseComponents::initCircularProgressArea() {
+	const QMetaObject& metaObject = UVProgressType::staticMetaObject;
+	const QMetaEnum metaEnum = metaObject.enumerator(metaObject.indexOfEnumerator("ProgressType"));
+	if (!metaEnum.isValid()) {
+		qWarning() << "Invalid ProgressType meta enum";
+		return;
+	}
+
 	const auto colorDialog = new CUVColorDialog(this);
 	const auto circularProgress = new CUVCircularProgress(this);
 	circularProgress->setShowProgressText(false);
@@ -168,20 +175,17 @@ void E_BaseComponents::initCircularProgressArea() {
 	circularProgress->setColor(colorDialog->getCurrentColor());
 	connect(colorDialog, &CUVColorDialog::sigColorSelected, circularProgress, &CUVCircularProgress::setColor);
 	const auto circularProgressType = new CUVComboBox(this);
-	circularProgressType->addItem("DeterminateProgress");
-	circularProgressType->addItem("IndeterminateProgress");
-	circularProgressType->addItem("DiscontinuousLoading");
-	circularProgressType->addItem("ContinuousLoading");
-	const QMetaObject metaObject = UVProgressType::staticMetaObject;
-	const QMetaEnum metaEnum = metaObject.enumerator(metaObject.indexOfEnumerator("ProgressType"));
+	for (int i = 0; i < metaEnum.keyCount(); i++) {
+		circularProgressType->addItem(metaEnum.key(i));
+	}
 	circularProgressType->setCurrentText(QString(metaEnum.valueToKey(circularProgress->getProgressType())));
 	connect(circularProgressType, &CUVComboBox::currentTextChanged, this, [=](const QString& type) {
-		const QMetaObject tmpMetaObject = UVProgressType::staticMetaObject;
-		const QMetaEnum tmpMetaEnum = tmpMetaObject.enumerator(tmpMetaObject.indexOfEnumerator("ProgressType"));
-		if (const int value = tmpMetaEnum.keyToValue(type.toLocal8Bit().constData()); value != -1) {
-			circularProgress->setProgressType(static_cast<UVProgressType::ProgressType>(value));
-		} else {
-			qWarning() << "Invalid progress type: " << type;
+		if (metaEnum.isValid()) {
+			if (const int value = metaEnum.keyToValue(type.toLocal8Bit().constData()); value != -1) {
+				circularProgress->setProgressType(static_cast<UVProgressType::ProgressType>(value));
+			} else {
+				qWarning() << "Invalid progress type: " << type;
+			}
 		}
 	});
 	const auto circularProgressArea = new CUVScrollPageArea(this);
@@ -255,6 +259,13 @@ void E_BaseComponents::initSliderArea() {
 }
 
 void E_BaseComponents::initProgressBarArea() {
+	const QMetaObject& metaObject = UVProgressType::staticMetaObject;
+	const QMetaEnum metaEnum = metaObject.enumerator(metaObject.indexOfEnumerator("ProgressType"));
+	if (!metaEnum.isValid()) {
+		qWarning() << "Invalid ProgressType meta enum";
+		return;
+	}
+
 	const auto colorDialog = new CUVColorDialog(this);
 	const auto progressBar = new CUVProgressBar(this);
 	progressBar->setProgressColor(colorDialog->getCurrentColor());
@@ -262,16 +273,14 @@ void E_BaseComponents::initProgressBarArea() {
 	const auto progressBarType = new CUVComboBox(this);
 	progressBarType->addItem("DeterminateProgress");
 	progressBarType->addItem("IndeterminateProgress");
-	const QMetaObject metaObject = UVProgressType::staticMetaObject;
-	const QMetaEnum metaEnum = metaObject.enumerator(metaObject.indexOfEnumerator("ProgressType"));
 	progressBarType->setCurrentText(QString(metaEnum.valueToKey(progressBar->getProgressType())));
 	connect(progressBarType, &CUVComboBox::currentTextChanged, this, [=](const QString& type) {
-		const QMetaObject tmpMetaObject = UVProgressType::staticMetaObject;
-		const QMetaEnum tmpMetaEnum = tmpMetaObject.enumerator(tmpMetaObject.indexOfEnumerator("ProgressType"));
-		if (const int value = tmpMetaEnum.keyToValue(type.toLocal8Bit().constData()); value != -1) {
-			progressBar->setProgressType(static_cast<UVProgressType::ProgressType>(value));
-		} else {
-			qWarning() << "Invalid progress type: " << type;
+		if (metaEnum.isValid()) {
+			if (const int value = metaEnum.keyToValue(type.toLocal8Bit().constData()); value != -1) {
+				progressBar->setProgressType(static_cast<UVProgressType::ProgressType>(value));
+			} else {
+				qWarning() << "Invalid progress type: " << type;
+			}
 		}
 	});
 	const auto progressBarArea = new CUVScrollPageArea(this);

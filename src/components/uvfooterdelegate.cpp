@@ -148,13 +148,13 @@ void CUVFooterDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opt
 		painter->drawLine(itemRect.x(), itemRect.y() + 1, itemRect.x() + itemRect.width(), itemRect.y() + 1);
 	}
 
-	// ioco
+	// iocn
 	painter->setPen(index == m_pressIndex ? UVThemeColor(themeMode, UVThemeType::BasicTextPress) : UVThemeColor(themeMode, UVThemeType::BasicText));
 	if (node->getAwesomeIcon() != UVIcon::CUVAweSomeIcon::None) {
 		QFont iconFont("CUVAwesome");
 		iconFont.setPixelSize(17);
 		painter->setFont(iconFont);
-		painter->drawText(itemRect.x() + 10, itemRect.y() + 3, 20, 20, Qt::AlignCenter, QChar(static_cast<unsigned short>(node->getAwesomeIcon())));
+		painter->drawText(itemRect.x(), itemRect.y(), m_iconAreaWidth, itemRect.height(), Qt::AlignCenter, QChar(static_cast<unsigned short>(node->getAwesomeIcon())));
 	}
 
 	// keyPoints

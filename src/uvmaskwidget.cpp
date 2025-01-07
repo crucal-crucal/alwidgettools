@@ -3,6 +3,10 @@
 #include <QPainter>
 #include <QPropertyAnimation>
 
+/**
+ * @brief \class CUVMaskWidget
+ * @param parent pointer to the parent class
+ */
 CUVMaskWidget::CUVMaskWidget(QWidget* parent): QWidget(parent) {
 	setObjectName("CUVMaskWidget");
 	setStyleSheet("#CUVMaskWidget { background-color: transparent; }");

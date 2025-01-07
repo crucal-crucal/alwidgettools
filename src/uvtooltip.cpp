@@ -45,7 +45,7 @@ bool CUVToolTipPrivate::eventFilter(QObject* watched, QEvent* event) {
 		// case QEvent::Enter:
 		case QEvent::ToolTip: {
 			QTimer::singleShot(showDelayMsec, this, [=]() {
-				_doShowAnimation();
+				doShowAnimation();
 			});
 			if (displayMsec > -1) {
 				QTimer::singleShot(displayMsec, this, [=]() {
@@ -92,7 +92,7 @@ bool CUVToolTipPrivate::eventFilter(QObject* watched, QEvent* event) {
 	return QObject::eventFilter(watched, event);
 }
 
-void CUVToolTipPrivate::_doShowAnimation() {
+void CUVToolTipPrivate::doShowAnimation() {
 	Q_Q(CUVToolTip);
 
 	const QPoint cursorPoint = QCursor::pos();
@@ -128,7 +128,6 @@ void CUVToolTipPrivate::_doShowAnimation() {
  * @param parent pointer to the parent class
  */
 CUVToolTip::CUVToolTip(QWidget* parent): QWidget(parent), d_ptr(new CUVToolTipPrivate(this, this)) {
-	Q_ASSERT(parent);
 	Q_D(CUVToolTip);
 
 	d->borderRadius = 5;
@@ -137,7 +136,9 @@ CUVToolTip::CUVToolTip(QWidget* parent): QWidget(parent), d_ptr(new CUVToolTipPr
 	d->hideDelayMsec = 0;
 	d->customWidget = nullptr;
 	setObjectName("CUVToolTip");
-	parent->installEventFilter(d);
+	if (parent) {
+		parent->installEventFilter(d);
+	}
 
 	setAttribute(Qt::WA_TransparentForMouseEvents);
 	setAttribute(Qt::WA_TranslucentBackground);
@@ -272,4 +273,46 @@ void CUVToolTip::paintEvent(QPaintEvent* event) {
 	painter.setBrush(UVThemeColor(d->themeMode, UVThemeType::PopupBase));
 	painter.drawRoundedRect(forefroundRect, d->borderRadius, d->borderRadius);
 	painter.restore();
+}
+
+/**
+ * @brief \class CUVToolTipHelper
+ * @return CUVToolTip instance
+ */
+CUVToolTip* CUVToolTipHelper::instance() {
+	return CUVSingleton<CUVToolTip>::instance();
+}
+
+void CUVToolTipHelper::showText(const QPoint& pos, const QString& text, QWidget* w) {
+	CUVToolTip* tooltip = instance();
+	if (text.isEmpty() || pos.isNull()) {
+		tooltip->hide();
+		return;
+	}
+
+	tooltip->setToolTip(text);
+	tooltip->move(pos);
+	if (w) {
+		w->installEventFilter(tooltip->d_func());
+	} else {
+		tooltip->show();
+	}
+}
+
+void CUVToolTipHelper::showText(const QPoint& pos, const QString& text, QWidget* w, const QRect& rect) {
+	showText(pos, text, w);
+}
+
+void CUVToolTipHelper::showText(const QPoint& pos, const QString& text, QWidget* w, const QRect& rect, const int msecShowTime) {
+	CUVToolTip* tooltip = instance();
+	tooltip->setDisplayMsec(msecShowTime);
+	showText(pos, text, w, rect);
+}
+
+bool CUVToolTipHelper::isVisible() {
+	return instance()->isVisible();
+}
+
+QString CUVToolTipHelper::text() {
+	return instance()->getToolTip();
 }

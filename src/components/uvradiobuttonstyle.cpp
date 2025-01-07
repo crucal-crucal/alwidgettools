@@ -5,6 +5,10 @@
 
 #include "uvthememanager.hpp"
 
+/**
+ * @brief \class CUVRadioButtonStyle
+ * @param style pointer to the parent style
+ */
 CUVRadioButtonStyle::CUVRadioButtonStyle(QStyle* style) {
 	m_themeMode = UVTheme->getThemeMode();
 	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const UVThemeType::ThemeMode& mode) { m_themeMode = mode; });

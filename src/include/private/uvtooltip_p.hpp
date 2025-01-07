@@ -42,5 +42,5 @@ private:
 	QString toolTip{};
 	qreal opacity{};
 
-	void _doShowAnimation();
+	void doShowAnimation();
 };

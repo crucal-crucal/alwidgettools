@@ -206,7 +206,7 @@ CUVApplication::CUVApplication(QObject* parent): QObject(parent), d_ptr(new CUVA
 	Q_D(CUVApplication);
 
 	d->isEnableMica = false;
-	d->micaImagePath = ":include/Image/MicaBase.png";
+	d->micaImagePath = ":/image/crucal.png";
 	d->themeMode = UVTheme->getThemeMode();
 	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, d, &CUVApplicationPrivate::slotThemeModeChanged);
 
