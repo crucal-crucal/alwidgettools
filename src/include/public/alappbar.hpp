@@ -15,9 +15,9 @@
 #endif
 
 #ifdef Q_OS_WIN
-#define CUVAPPBAR_HANDLE(CUVAppBar)                                           \
-	if (CUVAppBar) {                                                          \
-		int ret = CUVAppBar->takeOverNativeEvent(eventType, message, result); \
+#define CALAPPBAR_HANDLE(CALAppBar)                                           \
+	if (CALAppBar) {                                                          \
+		int ret = CALAppBar->takeOverNativeEvent(eventType, message, result); \
 		if (ret == -1) {                                                      \
 			return QWidget::nativeEvent(eventType, message, result);          \
 		}                                                                     \
@@ -28,25 +28,25 @@
 
 #ifdef Q_OS_WIN
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-#define Q_TAKEOVER_NATIVEEVENT_CPP(CLASS, CUVAppBar)                                       \
+#define Q_TAKEOVER_NATIVEEVENT_CPP(CLASS, CALAppBar)                                       \
     bool CLASS::nativeEvent(const QByteArray& eventType, void* message, qintptr* result) { \
-        CUVAPPBAR_HANDLE(CUVAppBar)                                                        \
+        CALAPPBAR_HANDLE(CALAppBar)                                                        \
     }
 #else
-#define Q_TAKEOVER_NATIVEEVENT_CPP(CLASS, CUVAppBar)                                    \
+#define Q_TAKEOVER_NATIVEEVENT_CPP(CLASS, CALAppBar)                                    \
     bool CLASS::nativeEvent(const QByteArray& eventType, void* message, long* result) { \
-        CUVAPPBAR_HANDLE(CUVAppBar)                                                     \
+        CALAPPBAR_HANDLE(CALAppBar)                                                     \
     }
 #endif
 #else
-#define Q_TAKEOVER_NATIVEEVENT_CPP(CLASS, CUVAppBar)
+#define Q_TAKEOVER_NATIVEEVENT_CPP(CLASS, CALAppBar)
 #endif
 
-class CUVAppBarPrivate;
+class CALAppBarPrivate;
 
 class CALWIDGETTOOLS_EXPORT CALAppBar : public QWidget {
 	Q_OBJECT
-	Q_DECLARE_PRIVATE(CUVAppBar)
+	Q_DECLARE_PRIVATE(CALAppBar)
 	Q_PROPERTY(bool isStayTop READ getIsStayTop WRITE setIsStayTop NOTIFY sigIsStayTopChanged)
 	Q_PROPERTY(bool isFixedSize READ getIsFixedSize WRITE setIsFixedSize NOTIFY sigIsFixedSizeChanged)
 	Q_PROPERTY(bool iSDefaultClosed READ getIsDefaultClosed WRITE setIsDefaultClosed NOTIFY sigIsDefaultClosedChanged)
@@ -118,7 +118,7 @@ Q_SIGNALS:
 	void sigCustomWidgetChanged();
 
 protected:
-	const QScopedPointer<CUVAppBarPrivate> d_ptr{ nullptr };
+	const QScopedPointer<CALAppBarPrivate> d_ptr{ nullptr };
 
 	void paintEvent(QPaintEvent* event) override;
 	bool eventFilter(QObject* watched, QEvent* event) override;

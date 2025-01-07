@@ -3,12 +3,12 @@
 #include <QHBoxLayout>
 
 #include "alawesometoolbutton.hpp"
-#include "uvmenu.hpp"
-#include "uvtext.hpp"
+#include "almenu.hpp"
+#include "altext.hpp"
 #include "althememanager.hpp"
 
-E_BasePage::E_BasePage(QWidget* parent): CUVScrollPage(parent) {
-	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=]() {
+E_BasePage::E_BasePage(QWidget* parent): CALScrollPage(parent) {
+	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=]() {
 		if (!parent) {
 			update();
 		}
@@ -20,38 +20,38 @@ E_BasePage::~E_BasePage() = default;
 void E_BasePage::createCustomWidget(const QString& desText) {
 	// top
 	const auto customWidget = new QWidget(this);
-	const auto subTitleText = new CUVText(this);
+	const auto subTitleText = new CALText(this);
 	subTitleText->setText("subTitle");
 	subTitleText->setTextInteractionFlags(Qt::TextSelectableByMouse);
 	subTitleText->setTextPixelSize(11);
 
-	const auto documentationButton = new CUVAwesomeToolButton(this);
+	const auto documentationButton = new CALAwesomeToolButton(this);
 	documentationButton->setFixedHeight(35);
 	documentationButton->setIsTransparent(false);
 	documentationButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	documentationButton->setText(tr("Documentation"));
 	documentationButton->setAweSomeIcon(ALIcon::AweSomeIcon::FileDoc);
-	const auto documentationMenu = new CUVMenu(this);
+	const auto documentationMenu = new CALMenu(this);
 	documentationMenu->addAction(ALIcon::AweSomeIcon::CardsBlank, tr("CardsBlank"));
 	documentationMenu->addAction(ALIcon::AweSomeIcon::EarthAmericas, tr("EarthAmericas"));
 	documentationButton->setMenu(documentationMenu);
 
-	const auto sourceButton = new CUVAwesomeToolButton(this);
+	const auto sourceButton = new CALAwesomeToolButton(this);
 	sourceButton->setFixedHeight(35);
 	sourceButton->setIsTransparent(false);
 	sourceButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	sourceButton->setText(tr("Source"));
 	sourceButton->setAweSomeIcon(ALIcon::AweSomeIcon::NfcSymbol);
-	const auto sourceMenu = new CUVMenu(this);
+	const auto sourceMenu = new CALMenu(this);
 	sourceMenu->addAction(ALIcon::AweSomeIcon::FireBurner, tr("FireBurner"));
 	sourceMenu->addAction(ALIcon::AweSomeIcon::Galaxy, tr("Galaxy"));
 	sourceButton->setMenu(sourceMenu);
 
-	const auto themeButton = new CUVAwesomeToolButton(this);
+	const auto themeButton = new CALAwesomeToolButton(this);
 	themeButton->setFixedSize(35, 35);
 	themeButton->setIsTransparent(false);
 	themeButton->setAweSomeIcon(ALIcon::AweSomeIcon::MoonStars);
-	connect(themeButton, &CUVAwesomeToolButton::clicked, this, [=]() { UVTheme->setThemeMode(UVTheme->getThemeMode() == ALThemeType::Light ? ALThemeType::Dark : ALThemeType::Light); });
+	connect(themeButton, &CALAwesomeToolButton::clicked, this, [=]() { ALTheme->setThemeMode(ALTheme->getThemeMode() == ALThemeType::Light ? ALThemeType::Dark : ALThemeType::Light); });
 
 	const auto buttonLayout = new QHBoxLayout;
 	buttonLayout->addWidget(documentationButton);
@@ -61,7 +61,7 @@ void E_BasePage::createCustomWidget(const QString& desText) {
 	buttonLayout->addWidget(themeButton);
 	buttonLayout->addSpacing(15);
 
-	const auto descText = new CUVText(this);
+	const auto descText = new CALText(this);
 	descText->setText(desText);
 	descText->setTextPixelSize(13);
 

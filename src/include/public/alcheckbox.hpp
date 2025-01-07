@@ -4,17 +4,17 @@
 
 #include "alwidgettoolsdef.hpp"
 
-class CUVCheckBoxPrivate;
+class CALCheckBoxPrivate;
 
-class CALWIDGETTOOLS_EXPORT CUVCheckBox : public QCheckBox {
+class CALWIDGETTOOLS_EXPORT CALCheckBox : public QCheckBox {
 	Q_OBJECT
-	Q_DECLARE_PRIVATE(CUVCheckBox)
+	Q_DECLARE_PRIVATE(CALCheckBox)
 
 public:
-	explicit CUVCheckBox(QWidget* parent = nullptr);
-	explicit CUVCheckBox(const QString& text, QWidget* parent = nullptr);
-	~CUVCheckBox() override;
+	explicit CALCheckBox(QWidget* parent = nullptr);
+	explicit CALCheckBox(const QString& text, QWidget* parent = nullptr);
+	~CALCheckBox() override;
 
 protected:
-	const QScopedPointer<CUVCheckBoxPrivate> d_ptr{ nullptr };
+	const QScopedPointer<CALCheckBoxPrivate> d_ptr{ nullptr };
 };

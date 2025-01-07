@@ -23,7 +23,7 @@ MainWindow::~MainWindow() = default;
 
 void MainWindow::initWindow() {
 	resize(1200, 700);
-	setWindowTitle("uvwidgettools");
+	setWindowTitle("alwidgettools");
 	setWindowIcon(QIcon(":/image/crucal.png"));
 }
 

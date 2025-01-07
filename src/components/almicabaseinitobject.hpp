@@ -1,0 +1,22 @@
+﻿#pragma once
+
+#include <QImage>
+#include <QObject>
+
+class CALApplicationPrivate;
+
+class CALMicaBaseInitObject final : public QObject {
+	Q_OBJECT
+
+public:
+	explicit CALMicaBaseInitObject(CALApplicationPrivate* appPrivate, QObject* parent = nullptr);
+	~CALMicaBaseInitObject() override;
+
+	Q_SLOT void slotInitMicaBase(QImage image);
+
+Q_SIGNALS:
+	Q_SIGNAL void sigInitFinished();
+
+private:
+	CALApplicationPrivate* appPrivate{ nullptr };
+};

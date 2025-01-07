@@ -4,18 +4,18 @@
 
 #include "alwidgettoolsdef.hpp"
 
-class CUVComboBoxPrivate;
+class CALComboBoxPrivate;
 
-class CALWIDGETTOOLS_EXPORT CUVComboBox : public QComboBox {
+class CALWIDGETTOOLS_EXPORT CALComboBox : public QComboBox {
 	Q_OBJECT
-	Q_DISABLE_COPY(CUVComboBox)
-	Q_DECLARE_PRIVATE(CUVComboBox)
+	Q_DISABLE_COPY(CALComboBox)
+	Q_DECLARE_PRIVATE(CALComboBox)
 
 	Q_PROPERTY(int borderRadius READ getBorderRadius WRITE setBorderRadius NOTIFY sigBorderRadiusChanged)
 
 public:
-	explicit CUVComboBox(QWidget* parent = nullptr);
-	~CUVComboBox() override;
+	explicit CALComboBox(QWidget* parent = nullptr);
+	~CALComboBox() override;
 
 	void setBorderRadius(int borderRadius);
 	[[nodiscard]] int getBorderRadius() const;
@@ -24,7 +24,7 @@ signals:
 	void sigBorderRadiusChanged();
 
 protected:
-	const QScopedPointer<CUVComboBoxPrivate> d_ptr{ nullptr };
+	const QScopedPointer<CALComboBoxPrivate> d_ptr{ nullptr };
 
 	void showPopup() override;
 	void hidePopup() override;

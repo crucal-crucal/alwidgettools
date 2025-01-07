@@ -4,18 +4,18 @@
 
 #include "alwidgettoolsdef.hpp"
 
-class CUVDoubleSpinBoxPrivate;
+class CALDoubleSpinBoxPrivate;
 
-class CALWIDGETTOOLS_EXPORT CUVDoubleSpinBox : public QDoubleSpinBox {
+class CALWIDGETTOOLS_EXPORT CALDoubleSpinBox : public QDoubleSpinBox {
 	Q_OBJECT
-	Q_DECLARE_PRIVATE(CUVDoubleSpinBox)
+	Q_DECLARE_PRIVATE(CALDoubleSpinBox)
 
 public:
-	explicit CUVDoubleSpinBox(QWidget* parent = nullptr);
-	~CUVDoubleSpinBox() override;
+	explicit CALDoubleSpinBox(QWidget* parent = nullptr);
+	~CALDoubleSpinBox() override;
 
 protected:
-	const QScopedPointer<CUVDoubleSpinBoxPrivate> d_ptr{ nullptr };
+	const QScopedPointer<CALDoubleSpinBoxPrivate> d_ptr{ nullptr };
 
 	void contextMenuEvent(QContextMenuEvent* event) override;
 };

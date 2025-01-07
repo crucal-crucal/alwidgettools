@@ -43,7 +43,7 @@ Q_NAMESPACE_EXPORT(CALWIDGETTOOLS_EXPORT)
 /**
  * @brief std::vector 转换为 QVector
  */
-template <typename T>
+template<typename T>
 QVector<T> stdVectorToQVector(const std::vector<T>& stdVector) {
 	return QVector<T>(stdVector.begin(), stdVector.end());
 }
@@ -51,10 +51,10 @@ QVector<T> stdVectorToQVector(const std::vector<T>& stdVector) {
 /**
  * @brief std::map 转换为 QMap
  */
-template <typename Key, typename Value>
+template<typename Key, typename Value>
 QMap<Key, Value> stdMapToQMap(const std::map<Key, Value>& stdMap) {
 	QMap<Key, Value> qMap{};
-	for (const auto& [key, value] : stdMap) {
+	for (const auto& [key, value]: stdMap) {
 		qMap.insert(key, value);
 	}
 	return qMap;
@@ -137,6 +137,7 @@ enum ButtonFlag {
 };
 
 Q_ENUM_NS(ButtonFlag)
+
 Q_DECLARE_FLAGS(ButtonFlags, ButtonFlag)
 
 enum CustomArea {
@@ -155,8 +156,10 @@ enum WMMouseActionType {
 };
 
 Q_ENUM_NS(WMMouseActionType)
+
 Q_DECLARE_FLAGS(WMMouseActionTypes, WMMouseActionType)
 Q_DECLARE_OPERATORS_FOR_FLAGS(ALAppBarType::ButtonFlags)
+
 Q_DECLARE_OPERATORS_FOR_FLAGS(ALAppBarType::WMMouseActionTypes)
 }
 

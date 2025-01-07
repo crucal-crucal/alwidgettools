@@ -1,0 +1,71 @@
+﻿#include "alradiobuttonstyle.hpp"
+
+#include <QPainter>
+#include <QStyleOptionButton>
+
+#include "althememanager.hpp"
+
+/**
+ * @brief \class CALRadioButtonStyle
+ * @param style pointer to the parent style
+ */
+CALRadioButtonStyle::CALRadioButtonStyle(QStyle* style) {
+	m_themeMode = ALTheme->getThemeMode();
+	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { m_themeMode = mode; });
+}
+
+CALRadioButtonStyle::~CALRadioButtonStyle() = default;
+
+void CALRadioButtonStyle::drawPrimitive(const PrimitiveElement pe, const QStyleOption* opt, QPainter* p, const QWidget* w) const {
+	switch (pe) {
+		case PE_IndicatorRadioButton: {
+			if (const auto bopt = qstyleoption_cast<const QStyleOptionButton*>(opt)) {
+				p->save();
+				p->setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform | QPainter::TextAntialiasing);
+				QRect buttonRect = bopt->rect;
+				buttonRect.adjust(1, 1, -1, -1);
+				if (bopt->state.testFlag(QStyle::State_Off)) {
+					p->setPen(QPen(ALThemeColor(m_themeMode, ALThemeType::BasicBorder), 1.5));
+					p->setBrush(ALThemeColor(m_themeMode, bopt->state.testFlag(QStyle::State_MouseOver) ? ALThemeType::BasicHover : ALThemeType::BasicBase));
+					p->drawEllipse(QPointF(buttonRect.center().x() + 1, buttonRect.center().y() + 1), 8.5, 8.5);
+				} else {
+					p->setPen(Qt::NoPen);
+					// 外圆
+					p->setBrush(ALThemeColor(m_themeMode, ALThemeType::PrimaryNormal));
+					p->drawEllipse(QPointF(buttonRect.center().x() + 1, buttonRect.center().y() + 1), buttonRect.width() / 2.0, buttonRect.width() / 2.0);
+					// 内圆
+					p->setBrush(ALThemeColor(m_themeMode, ALThemeType::BasicTextInvert));
+					if (bopt->state.testFlag(QStyle::State_Sunken)) {
+						if (bopt->state.testFlag(QStyle::State_MouseOver)) {
+							p->drawEllipse(QPointF(buttonRect.center().x() + 1, buttonRect.center().y() + 1), buttonRect.width() / 4.5, buttonRect.width() / 4.5);
+						}
+					} else {
+						const qreal scale = bopt->state.testFlag(QStyle::State_MouseOver) ? 3.5 : 4.0;
+						p->drawEllipse(QPointF(buttonRect.center().x() + 1, buttonRect.center().y() + 1), buttonRect.width() / scale, buttonRect.width() / scale);
+					}
+				}
+				p->restore();
+			}
+			return;
+		}
+		default: {
+			break;
+		}
+	}
+
+	QProxyStyle::drawPrimitive(pe, opt, p, w);
+}
+
+int CALRadioButtonStyle::pixelMetric(const PixelMetric metric, const QStyleOption* option, const QWidget* widget) const {
+	switch (metric) {
+		case QStyle::PM_ExclusiveIndicatorWidth:
+		case QStyle::PM_ExclusiveIndicatorHeight: {
+			return 20;
+		}
+		default: {
+			break;
+		}
+	}
+
+	return QProxyStyle::pixelMetric(metric, option, widget);
+}

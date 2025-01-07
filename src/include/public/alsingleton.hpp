@@ -3,10 +3,10 @@
 #include <mutex>
 
 template<typename T>
-class CUVSingleton {
+class CALSingleton {
 public:
-	CUVSingleton(const CUVSingleton&) = delete;
-	CUVSingleton& operator=(const CUVSingleton&) = delete;
+	CALSingleton(const CALSingleton&) = delete;
+	CALSingleton& operator=(const CALSingleton&) = delete;
 
 	template<typename... Args>
 	static T* instance(Args&&... args) {
@@ -20,4 +20,4 @@ private:
 };
 
 template<typename T>
-T* CUVSingleton<T>::_instance = nullptr;
+T* CALSingleton<T>::_instance = nullptr;

@@ -4,7 +4,7 @@
 
 class CALContentDialogPrivate;
 
-class CALWIDGETTOOLS_EXPORT CALContentDialog : public CUVBaseDialog {
+class CALWIDGETTOOLS_EXPORT CALContentDialog : public CALBaseDialog {
 	Q_OBJECT
 	Q_DECLARE_PRIVATE(CALContentDialog)
 

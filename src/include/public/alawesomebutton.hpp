@@ -6,12 +6,12 @@
 
 using namespace ALIcon;
 
-class CUVAwesomeButtonPrivate;
+class CALAwesomeButtonPrivate;
 
-class CALWIDGETTOOLS_EXPORT CUVAwesomeButton : public QPushButton {
+class CALWIDGETTOOLS_EXPORT CALAwesomeButton : public QPushButton {
 	Q_OBJECT
-	Q_DISABLE_COPY(CUVAwesomeButton)
-	Q_DECLARE_PRIVATE(CUVAwesomeButton)
+	Q_DISABLE_COPY(CALAwesomeButton)
+	Q_DECLARE_PRIVATE(CALAwesomeButton)
 
 	Q_PROPERTY(int borderRadius READ getBorderRadius WRITE setBorderRadius NOTIFY sigBorderRadiusChanged)
 	Q_PROPERTY(QColor lightHoverColor READ getLightHoverColor WRITE setLightHoverColor NOTIFY sigLightHoverColorChanged)
@@ -24,10 +24,10 @@ class CALWIDGETTOOLS_EXPORT CUVAwesomeButton : public QPushButton {
 	Q_PROPERTY(qreal opacity READ getOpacity WRITE setOpacity NOTIFY sigOpacityChanged)
 
 public:
-	explicit CUVAwesomeButton(const AweSomeIcon& iconType, QWidget* parent = nullptr);
-	explicit CUVAwesomeButton(const AweSomeIcon& iconType, int pixelSize, QWidget* parent = nullptr);
-	explicit CUVAwesomeButton(const AweSomeIcon& iconType, int pixelSize, int fixedWidth, int fixedHeight, QWidget* parent = nullptr);
-	~CUVAwesomeButton() override;
+	explicit CALAwesomeButton(const AweSomeIcon& iconType, QWidget* parent = nullptr);
+	explicit CALAwesomeButton(const AweSomeIcon& iconType, int pixelSize, QWidget* parent = nullptr);
+	explicit CALAwesomeButton(const AweSomeIcon& iconType, int pixelSize, int fixedWidth, int fixedHeight, QWidget* parent = nullptr);
+	~CALAwesomeButton() override;
 
 	void setAwesomeIcon(const AweSomeIcon& iconType);
 	[[nodiscard]] AweSomeIcon getAwesomeIcon() const;
@@ -73,7 +73,7 @@ Q_SIGNALS:
 	Q_SIGNAL void sigOpacityChanged(qreal opacity);
 
 protected:
-	const QScopedPointer<CUVAwesomeButtonPrivate> d_ptr{ nullptr };
+	const QScopedPointer<CALAwesomeButtonPrivate> d_ptr{ nullptr };
 
 	void paintEvent(QPaintEvent* event) override;
 };

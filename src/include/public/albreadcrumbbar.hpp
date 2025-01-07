@@ -4,17 +4,17 @@
 
 #include "alwidgettoolsdef.hpp"
 
-class CUVBreadcrumbBarPrivate;
+class CALBreadcrumbBarPrivate;
 
-class CALWIDGETTOOLS_EXPORT CUVBreadcrumbBar : public QWidget {
+class CALWIDGETTOOLS_EXPORT CALBreadcrumbBar : public QWidget {
 	Q_OBJECT
-	Q_DECLARE_PRIVATE(CUVBreadcrumbBar)
+	Q_DECLARE_PRIVATE(CALBreadcrumbBar)
 	Q_PROPERTY(int textPixelSize READ getTextPixelSize WRITE setTextPixelSize NOTIFY sigTextPixelSizeChanged)
 	Q_PROPERTY(bool isAutoRemove READ getIsAutoRemove WRITE setIsAutoRemove NOTIFY sigIsAutoRemoveChanged)
 
 public:
-	explicit CUVBreadcrumbBar(QWidget* parent = nullptr);
-	~CUVBreadcrumbBar() override;
+	explicit CALBreadcrumbBar(QWidget* parent = nullptr);
+	~CALBreadcrumbBar() override;
 
 	void setBreadcrumbList(const QStringList& breadcrumbList);
 	QStringList appendBreadcrumb(const QString& breadCrumb);
@@ -35,5 +35,5 @@ Q_SIGNALS:
 	Q_SIGNAL void sigBreadcrumbClicked(const QString& breadcrumb, const QStringList& lastBreadcrumbList);
 
 protected:
-	const QScopedPointer<CUVBreadcrumbBarPrivate> d_ptr{ nullptr };
+	const QScopedPointer<CALBreadcrumbBarPrivate> d_ptr{ nullptr };
 };

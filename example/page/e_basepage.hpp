@@ -1,8 +1,8 @@
 ﻿#pragma once
 
-#include "uvscrollpage.hpp"
+#include "alscrollpage.hpp"
 
-class E_BasePage : public CUVScrollPage {
+class E_BasePage : public CALScrollPage {
 	Q_OBJECT
 
 public:

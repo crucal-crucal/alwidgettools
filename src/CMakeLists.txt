@@ -1,9 +1,9 @@
-﻿set(TARGET_NAME calwidgettools)
+﻿set(TARGET_NAME alwidgettools)
 
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 uv_initialize_build_flags()
 
-option(CUVWIDGETTOOLS_BUILD_STATIC_LIB "Build static library." OFF)
+option(CALWIDGETTOOLS_BUILD_STATIC_LIB "Build static library." OFF)
 
 file(GLOB ORIGIN *.hpp *.cpp)
 file(GLOB INCLUDE include/public/*.hpp)
@@ -16,7 +16,7 @@ source_group(components FILES ${COMPONENTS})
 
 set(SOURCES ${ORIGIN} ${INCLUDE} ${PRIVATE_INCLUDE} ${COMPONENTS})
 
-if (CUVWIDGETTOOLS_BUILD_STATIC_LIB)
+if (CALWIDGETTOOLS_BUILD_STATIC_LIB)
     set(LIB_TYPE STATIC)
 else ()
     set(LIB_TYPE SHARED)
@@ -27,7 +27,7 @@ include_directories(include/private)
 include_directories(components)
 
 add_library(${TARGET_NAME} ${LIB_TYPE}
-        include/public/uvwidgettoolsdef.hpp ${SOURCES})
+        include/public/alwidgettoolsdef.hpp ${SOURCES})
 
 file(GLOB EXPORT_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/include/public/*.hpp)
 

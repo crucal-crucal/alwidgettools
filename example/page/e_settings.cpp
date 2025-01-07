@@ -6,12 +6,12 @@
 
 #include "alapplication.hpp"
 #include "alcombobox.hpp"
-#include "uvmainwindow.hpp"
-#include "uvradiobutton.hpp"
-#include "uvscrollpagearea.hpp"
-#include "uvtext.hpp"
+#include "almainwindow.hpp"
+#include "alradiobutton.hpp"
+#include "alscrollpagearea.hpp"
+#include "altext.hpp"
 #include "althememanager.hpp"
-#include "uvtoggleswitch.hpp"
+#include "altoggleswitch.hpp"
 
 E_Settings::E_Settings(QWidget* parent): E_BasePage(parent) {
 	m_mainWindow = qobject_cast<CALMainWindow*>(parent);
@@ -44,32 +44,32 @@ void E_Settings::initThemeSwitchArea() {
 		return;
 	}
 
-	const auto themeText = new CUVText("theme", this);
+	const auto themeText = new CALText("theme", this);
 	themeText->setWordWrap(false);
 	themeText->setTextPixelSize(18);
-	const auto themeComboBox = new CUVComboBox(this);
+	const auto themeComboBox = new CALComboBox(this);
 	for (int i = 0; i < metaEnum.keyCount(); i++) {
 		themeComboBox->addItem(metaEnum.key(i));
 	}
 
-	const auto themeSwitchArea = new CUVScrollPageArea(this);
+	const auto themeSwitchArea = new CALScrollPageArea(this);
 	const auto themeSwitchHLayout = new QHBoxLayout(themeSwitchArea);
-	const auto themeSwitchText = new CUVText("themeSwitch", this);
+	const auto themeSwitchText = new CALText("themeSwitch", this);
 	themeSwitchText->setWordWrap(false);
 	themeSwitchText->setTextPixelSize(15);
 	themeSwitchHLayout->addWidget(themeSwitchText);
 	themeSwitchHLayout->addStretch();
 	themeSwitchHLayout->addWidget(themeComboBox);
-	connect(themeComboBox, &CUVComboBox::currentTextChanged, this, [=](const QString& type) {
+	connect(themeComboBox, &CALComboBox::currentTextChanged, this, [=](const QString& type) {
 		if (metaEnum.isValid()) {
 			if (const int value = metaEnum.keyToValue(type.toLocal8Bit().constData()); value != -1) {
-				UVTheme->setThemeMode(static_cast<ALThemeType::ThemeMode>(value));
+				ALTheme->setThemeMode(static_cast<ALThemeType::ThemeMode>(value));
 			} else {
 				qWarning() << "Invalid theme mode: " << type;
 			}
 		}
 	});
-	connect(UVTheme, &CUVThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) {
+	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) {
 		if (metaEnum.isValid()) {
 			if (const char* key = metaEnum.valueToKey(static_cast<int>(mode))) {
 				themeComboBox->blockSignals(true);
@@ -88,19 +88,19 @@ void E_Settings::initThemeSwitchArea() {
 }
 
 void E_Settings::initMicaSwitchArea() {
-	const auto helperText = new CUVText("app settings", this);
+	const auto helperText = new CALText("app settings", this);
 	helperText->setWordWrap(false);
 	helperText->setTextPixelSize(18);
-	const auto micaSwitchButton = new CUVToggleSwitch(this);
-	const auto micaSwitchArea = new CUVScrollPageArea(this);
+	const auto micaSwitchButton = new CALToggleSwitch(this);
+	const auto micaSwitchArea = new CALScrollPageArea(this);
 	const auto micaSwitchHLayout = new QHBoxLayout(micaSwitchArea);
-	const auto micaSwitchText = new CUVText("micaSwitch(cross-platform)", this);
+	const auto micaSwitchText = new CALText("micaSwitch(cross-platform)", this);
 	micaSwitchText->setWordWrap(false);
 	micaSwitchText->setTextPixelSize(15);
 	micaSwitchHLayout->addWidget(micaSwitchText);
 	micaSwitchHLayout->addStretch();
 	micaSwitchHLayout->addWidget(micaSwitchButton);
-	connect(micaSwitchButton, &CUVToggleSwitch::sigToggleChanged, uvApp, &CUVApplication::setIsEnableMica);
+	connect(micaSwitchButton, &CALToggleSwitch::sigToggleChanged, alApp, &CALApplication::setIsEnableMica);
 
 	m_mainVLayout->addSpacing(15);
 	m_mainVLayout->addWidget(helperText);
@@ -116,9 +116,9 @@ void E_Settings::initNavigationDisplayModeArea() {
 		return;
 	}
 
-	const auto navigationDisplayModeArea = new CUVScrollPageArea(this);
+	const auto navigationDisplayModeArea = new CALScrollPageArea(this);
 	const auto navigationDisplayModeHLayout = new QHBoxLayout(navigationDisplayModeArea);
-	const auto navigationDisplayModeText = new CUVText("navigationDisplayMode", this);
+	const auto navigationDisplayModeText = new CALText("navigationDisplayMode", this);
 	navigationDisplayModeText->setWordWrap(false);
 	navigationDisplayModeText->setTextPixelSize(15);
 	navigationDisplayModeHLayout->addWidget(navigationDisplayModeText);
@@ -128,10 +128,10 @@ void E_Settings::initNavigationDisplayModeArea() {
 		const char* key = metaEnum.key(i);
 		const int value = metaEnum.value(i);
 
-		const auto radioButton = new CUVRadioButton(this);
+		const auto radioButton = new CALRadioButton(this);
 		radioButton->setText(key);
 		radioButton->setChecked(m_mainWindow->getNavigationDisplayMode() == static_cast<ALNavigationType::NavigationDisplayMode>(value));
-		connect(radioButton, &CUVRadioButton::toggled, this, [=](const bool checked) {
+		connect(radioButton, &CALRadioButton::toggled, this, [=](const bool checked) {
 			if (checked) {
 				m_mainWindow->setNavigationDisplayMode(static_cast<ALNavigationType::NavigationDisplayMode>(value));
 			}

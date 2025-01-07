@@ -16,7 +16,7 @@ int main(int argc, char* argv[]) {
 #endif
 
 	QApplication a(argc, argv);
-	uvApp->init();
+	alApp->init();
 
 	MainWindow widget;
 	widget.show();

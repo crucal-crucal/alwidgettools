@@ -4,38 +4,38 @@
 
 #include "alwidgettoolsdef.hpp"
 
-class CUVBaseDialogPrivate;
+class CALBaseDialogPrivate;
 
-class CALWIDGETTOOLS_EXPORT CUVBaseDialog : public QDialog {
+class CALWIDGETTOOLS_EXPORT CALBaseDialog : public QDialog {
 	Q_OBJECT
-	Q_DECLARE_PRIVATE(CUVBaseDialog)
+	Q_DECLARE_PRIVATE(CALBaseDialog)
 
 public:
-	explicit CUVBaseDialog(QWidget* parent = nullptr);
-	~CUVBaseDialog() override;
+	explicit CALBaseDialog(QWidget* parent = nullptr);
+	~CALBaseDialog() override;
 
 	/**
 	 * @brief 设置弹窗显示策略
-	 * @param policys \see \enum UVDialogPolicy::ShowPolicys
+	 * @param policys \see \enum ALDialogPolicy::ShowPolicys
 	 */
 	void setShowPolicys(const ALDialogPolicy::ShowPolicys& policys);
 
 	/**
 	 * @brief 设置弹窗显示策略
-	 * @param policy \see \enum UVDialogPolicy::ShowPolicy
+	 * @param policy \see \enum ALDialogPolicy::ShowPolicy
 	 * @param enabled 是否开启
 	 */
 	void setShowPolicy(const ALDialogPolicy::ShowPolicy& policy, bool enabled);
 
 	/**
 	 * @brief 当前弹窗显示策略
-	 * @return \see \enum UVDialogPolicy::ShowPolicys
+	 * @return \see \enum ALDialogPolicy::ShowPolicys
 	 */
 	[[nodiscard]] ALDialogPolicy::ShowPolicys showPolicys() const;
 
 	/**
 	 * @brief 是否有指定策略
-	 * @param policy \see \enum UVDialogPolicy::ShowPolicy
+	 * @param policy \see \enum ALDialogPolicy::ShowPolicy
 	 * @return 是否含有
 	 */
 	[[nodiscard]] bool hasPolicy(const ALDialogPolicy::ShowPolicy& policy) const;
@@ -43,7 +43,7 @@ public:
 	void close();
 
 protected:
-	const QScopedPointer<CUVBaseDialogPrivate> d_ptr{ nullptr };
+	const QScopedPointer<CALBaseDialogPrivate> d_ptr{ nullptr };
 
 	void paintEvent(QPaintEvent* event) override;
 	void showEvent(QShowEvent* event) override;

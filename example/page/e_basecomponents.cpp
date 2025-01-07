@@ -10,23 +10,23 @@
 #include "alcolordialog.hpp"
 #include "alcombobox.hpp"
 #include "aldoublespinbox.hpp"
-#include "uvmessagebar.hpp"
-#include "uvmultiselectcombobox.hpp"
-#include "uvprogressbar.hpp"
-#include "uvpushbutton.hpp"
-#include "uvradiobutton.hpp"
-#include "uvscrollpagearea.hpp"
-#include "uvslider.hpp"
-#include "uvspinbox.hpp"
-#include "uvtext.hpp"
-#include "uvtoggleswitch.hpp"
+#include "almessagebar.hpp"
+#include "almultiselectcombobox.hpp"
+#include "alprogressbar.hpp"
+#include "alpushbutton.hpp"
+#include "alradiobutton.hpp"
+#include "alscrollpagearea.hpp"
+#include "alslider.hpp"
+#include "alspinbox.hpp"
+#include "altext.hpp"
+#include "altoggleswitch.hpp"
 
 E_BaseComponents::E_BaseComponents(QWidget* parent): E_BasePage(parent) {
-	setWindowTitle("CUVBaseComponents");
+	setWindowTitle("CALBaseComponents");
 	createCustomWidget("some thing...");
 
 	const auto centralWidget = new QWidget(this);
-	centralWidget->setWindowTitle("CUVBaseComponents");
+	centralWidget->setWindowTitle("CALBaseComponents");
 	m_mainVLayout = new QVBoxLayout(centralWidget);
 	m_mainVLayout->setContentsMargins(0, 0, 0, 0);
 	m_mainVLayout->setSpacing(5);
@@ -55,14 +55,14 @@ E_BaseComponents::E_BaseComponents(QWidget* parent): E_BasePage(parent) {
 	m_mainVLayout->addStretch();
 	addCentralWidget(centralWidget, true, true, 0);
 
-	const auto homeStack1 = new CUVText("HomeStack1", this);
+	const auto homeStack1 = new CALText("HomeStack1", this);
 	QFont font = homeStack1->font();
 	font.setPixelSize(32);
 	homeStack1->setFont(font);
 	homeStack1->setAlignment(Qt::AlignCenter);
 	homeStack1->setWindowTitle("HomeStack1");
 	addCentralWidget(homeStack1);
-	const auto homeStack2 = new CUVText("HomeStack2", this);
+	const auto homeStack2 = new CALText("HomeStack2", this);
 	homeStack2->setFont(font);
 	homeStack2->setAlignment(Qt::AlignCenter);
 	homeStack2->setWindowTitle("HomeStack2");
@@ -97,18 +97,18 @@ void E_BaseComponents::mouseReleaseEvent(QMouseEvent* event) {
 }
 
 void E_BaseComponents::initToggleSwitchArea() {
-	const auto toggleSwitch = new CUVToggleSwitch(this);
-	const auto toggleSwitchArea = new CUVScrollPageArea(this);
+	const auto toggleSwitch = new CALToggleSwitch(this);
+	const auto toggleSwitchArea = new CALScrollPageArea(this);
 	const auto toggleSwitchHLayout = new QHBoxLayout(toggleSwitchArea);
-	const auto toggleSwitchText = new CUVText("CUVToggleSwitch", this);
+	const auto toggleSwitchText = new CALText("CALToggleSwitch", this);
 	toggleSwitchText->setTextPixelSize(15);
 	toggleSwitchHLayout->addWidget(toggleSwitchText);
 	toggleSwitchHLayout->addWidget(toggleSwitch);
 	toggleSwitchHLayout->addStretch();
-	const auto toggleSwitchDisable = new CUVToggleSwitch(this);
-	const auto toggleSwitchDisableText = new CUVText("Disable", this);
+	const auto toggleSwitchDisable = new CALToggleSwitch(this);
+	const auto toggleSwitchDisableText = new CALText("Disable", this);
 	toggleSwitchDisableText->setTextPixelSize(15);
-	connect(toggleSwitchDisable, &CUVToggleSwitch::sigToggleChanged, toggleSwitch, &CUVToggleSwitch::setDisabled);
+	connect(toggleSwitchDisable, &CALToggleSwitch::sigToggleChanged, toggleSwitch, &CALToggleSwitch::setDisabled);
 	toggleSwitchHLayout->addWidget(toggleSwitchDisableText);
 	toggleSwitchHLayout->addWidget(toggleSwitchDisable);
 	toggleSwitchHLayout->addSpacing(10);
@@ -120,22 +120,22 @@ void E_BaseComponents::initMessageBarArea() {
 	const auto successButton = new CALPushButton("Success", this);
 	successButton->setFixedSize(80, 38);
 	successButton->setButtonStyles(CALPushButton::Shadow | CALPushButton::Border);
-	connect(successButton, &CALPushButton::clicked, this, [=]() { CUVMessageBar::success("Success", "This is a success message"); });
+	connect(successButton, &CALPushButton::clicked, this, [=]() { CALMessageBar::success("Success", "This is a success message"); });
 	const auto warningButton = new CALPushButton("Warning", this);
 	warningButton->setFixedSize(80, 38);
 	warningButton->setButtonStyles(CALPushButton::Shadow | CALPushButton::Border);
-	connect(warningButton, &CALPushButton::clicked, this, [=]() { CUVMessageBar::warning("Warning", "This is a warning message"); });
+	connect(warningButton, &CALPushButton::clicked, this, [=]() { CALMessageBar::warning("Warning", "This is a warning message"); });
 	const auto errorButton = new CALPushButton("Error", this);
 	errorButton->setFixedSize(80, 38);
 	errorButton->setButtonStyles(CALPushButton::Shadow | CALPushButton::Border);
-	connect(errorButton, &CALPushButton::clicked, this, [=]() { CUVMessageBar::error("Error", "This is an error message"); });
+	connect(errorButton, &CALPushButton::clicked, this, [=]() { CALMessageBar::error("Error", "This is an error message"); });
 	const auto infoButton = new CALPushButton("Info", this);
 	infoButton->setFixedSize(80, 38);
 	infoButton->setButtonStyles(CALPushButton::Shadow | CALPushButton::Border);
-	connect(infoButton, &CALPushButton::clicked, this, [=]() { CUVMessageBar::information("Info", "This is an info message"); });
-	const auto messageBarArea = new CUVScrollPageArea(this);
+	connect(infoButton, &CALPushButton::clicked, this, [=]() { CALMessageBar::information("Info", "This is an info message"); });
+	const auto messageBarArea = new CALScrollPageArea(this);
 	const auto messageBarAreaHLayout = new QHBoxLayout(messageBarArea);
-	const auto messageBarText = new CUVText("CUVMessageBar", this);
+	const auto messageBarText = new CALText("CALMessageBar", this);
 	messageBarText->setTextPixelSize(15);
 	messageBarAreaHLayout->addWidget(messageBarText);
 	messageBarAreaHLayout->addWidget(successButton);
@@ -143,10 +143,10 @@ void E_BaseComponents::initMessageBarArea() {
 	messageBarAreaHLayout->addWidget(errorButton);
 	messageBarAreaHLayout->addWidget(infoButton);
 	messageBarAreaHLayout->addStretch();
-	const auto messageBarDisable = new CUVToggleSwitch(this);
-	const auto messageBarDisableText = new CUVText("Disable", this);
+	const auto messageBarDisable = new CALToggleSwitch(this);
+	const auto messageBarDisableText = new CALText("Disable", this);
 	messageBarDisableText->setTextPixelSize(15);
-	connect(messageBarDisable, &CUVToggleSwitch::sigToggleChanged, this, [=](const bool toggled) {
+	connect(messageBarDisable, &CALToggleSwitch::sigToggleChanged, this, [=](const bool toggled) {
 		successButton->setDisabled(toggled);
 		warningButton->setDisabled(toggled);
 		errorButton->setDisabled(toggled);
@@ -167,19 +167,19 @@ void E_BaseComponents::initCircularProgressArea() {
 		return;
 	}
 
-	const auto colorDialog = new CUVColorDialog(this);
-	const auto circularProgress = new CUVCircularProgress(this);
+	const auto colorDialog = new CALColorDialog(this);
+	const auto circularProgress = new CALCircularProgress(this);
 	circularProgress->setShowProgressText(false);
 	circularProgress->setSize(30);
 	circularProgress->setLineWidth(5.0);
 	circularProgress->setColor(colorDialog->getCurrentColor());
-	connect(colorDialog, &CUVColorDialog::sigColorSelected, circularProgress, &CUVCircularProgress::setColor);
-	const auto circularProgressType = new CUVComboBox(this);
+	connect(colorDialog, &CALColorDialog::sigColorSelected, circularProgress, &CALCircularProgress::setColor);
+	const auto circularProgressType = new CALComboBox(this);
 	for (int i = 0; i < metaEnum.keyCount(); i++) {
 		circularProgressType->addItem(metaEnum.key(i));
 	}
 	circularProgressType->setCurrentText(QString(metaEnum.valueToKey(circularProgress->getProgressType())));
-	connect(circularProgressType, &CUVComboBox::currentTextChanged, this, [=](const QString& type) {
+	connect(circularProgressType, &CALComboBox::currentTextChanged, this, [=](const QString& type) {
 		if (metaEnum.isValid()) {
 			if (const int value = metaEnum.keyToValue(type.toLocal8Bit().constData()); value != -1) {
 				circularProgress->setProgressType(static_cast<ALProgressType::ProgressType>(value));
@@ -188,23 +188,23 @@ void E_BaseComponents::initCircularProgressArea() {
 			}
 		}
 	});
-	const auto circularProgressArea = new CUVScrollPageArea(this);
+	const auto circularProgressArea = new CALScrollPageArea(this);
 	const auto circularProgressHLayout = new QHBoxLayout(circularProgressArea);
-	const auto circularProgressText = new CUVText("CUVCircularProgress", this);
+	const auto circularProgressText = new CALText("CALCircularProgress", this);
 	circularProgressText->setTextPixelSize(15);
 	const auto circularProgerssColorButton = new CALPushButton("Color", this);
 	circularProgerssColorButton->setFixedSize(80, 38);
 	circularProgerssColorButton->setButtonStyles(CALPushButton::Shadow | CALPushButton::Border);
-	connect(circularProgerssColorButton, &CALPushButton::clicked, colorDialog, &CUVColorDialog::exec);
+	connect(circularProgerssColorButton, &CALPushButton::clicked, colorDialog, &CALColorDialog::exec);
 	circularProgressHLayout->addWidget(circularProgressText);
 	circularProgressHLayout->addWidget(circularProgress);
 	circularProgressHLayout->addWidget(circularProgerssColorButton);
 	circularProgressHLayout->addWidget(circularProgressType);
 	circularProgressHLayout->addStretch();
-	const auto circularProgressDisable = new CUVToggleSwitch(this);
-	const auto circularProgressDisableText = new CUVText("Disable", this);
+	const auto circularProgressDisable = new CALToggleSwitch(this);
+	const auto circularProgressDisableText = new CALText("Disable", this);
 	circularProgressDisableText->setTextPixelSize(15);
-	connect(circularProgressDisable, &CUVToggleSwitch::sigToggleChanged, circularProgress, &CUVCircularProgress::setDisabled);
+	connect(circularProgressDisable, &CALToggleSwitch::sigToggleChanged, circularProgress, &CALCircularProgress::setDisabled);
 	circularProgressHLayout->addWidget(circularProgressDisableText);
 	circularProgressHLayout->addWidget(circularProgressDisable);
 	circularProgressHLayout->addSpacing(10);
@@ -213,19 +213,19 @@ void E_BaseComponents::initCircularProgressArea() {
 }
 
 void E_BaseComponents::initMultiSelectComboBoxArea() {
-	const auto multiSelectComboBox = new CUVMultiSelectComboBox(this);
+	const auto multiSelectComboBox = new CALMultiSelectComboBox(this);
 	multiSelectComboBox->setFixedWidth(300);
-	const auto multiSelectComboBoxArea = new CUVScrollPageArea(this);
+	const auto multiSelectComboBoxArea = new CALScrollPageArea(this);
 	const auto multiSelectComboBoxHLayout = new QHBoxLayout(multiSelectComboBoxArea);
-	const auto multiSelectComboBoxText = new CUVText("CUVMultiSelectComboBox", this);
+	const auto multiSelectComboBoxText = new CALText("CALMultiSelectComboBox", this);
 	multiSelectComboBoxText->setTextPixelSize(15);
 	multiSelectComboBoxHLayout->addWidget(multiSelectComboBoxText);
 	multiSelectComboBoxHLayout->addWidget(multiSelectComboBox);
 	multiSelectComboBoxHLayout->addStretch();
-	const auto multiSelectComboBoxDisable = new CUVToggleSwitch(this);
-	const auto multiSelectComboBoxDisableText = new CUVText("Disable", this);
+	const auto multiSelectComboBoxDisable = new CALToggleSwitch(this);
+	const auto multiSelectComboBoxDisableText = new CALText("Disable", this);
 	multiSelectComboBoxDisableText->setTextPixelSize(15);
-	connect(multiSelectComboBoxDisable, &CUVToggleSwitch::sigToggleChanged, multiSelectComboBox, &CUVMultiSelectComboBox::setDisabled);
+	connect(multiSelectComboBoxDisable, &CALToggleSwitch::sigToggleChanged, multiSelectComboBox, &CALMultiSelectComboBox::setDisabled);
 	multiSelectComboBoxHLayout->addWidget(multiSelectComboBoxDisableText);
 	multiSelectComboBoxHLayout->addWidget(multiSelectComboBoxDisable);
 	multiSelectComboBoxHLayout->addSpacing(10);
@@ -239,18 +239,18 @@ void E_BaseComponents::initMultiSelectComboBoxArea() {
 }
 
 void E_BaseComponents::initSliderArea() {
-	const auto slider = new CUVSlider(this);
-	const auto sliderArea = new CUVScrollPageArea(this);
+	const auto slider = new CALSlider(this);
+	const auto sliderArea = new CALScrollPageArea(this);
 	const auto sliderHLayout = new QHBoxLayout(sliderArea);
-	const auto sliderText = new CUVText("CUVSlider", this);
+	const auto sliderText = new CALText("CALSlider", this);
 	sliderText->setTextPixelSize(15);
 	sliderHLayout->addWidget(sliderText);
 	sliderHLayout->addWidget(slider);
 	sliderHLayout->addStretch();
-	const auto sliderDisable = new CUVToggleSwitch(this);
-	const auto sliderDisableText = new CUVText("Disable", this);
+	const auto sliderDisable = new CALToggleSwitch(this);
+	const auto sliderDisableText = new CALText("Disable", this);
 	sliderDisableText->setTextPixelSize(15);
-	connect(sliderDisable, &CUVToggleSwitch::sigToggleChanged, slider, &CUVSlider::setDisabled);
+	connect(sliderDisable, &CALToggleSwitch::sigToggleChanged, slider, &CALSlider::setDisabled);
 	sliderHLayout->addWidget(sliderDisableText);
 	sliderHLayout->addWidget(sliderDisable);
 	sliderHLayout->addSpacing(10);
@@ -266,15 +266,15 @@ void E_BaseComponents::initProgressBarArea() {
 		return;
 	}
 
-	const auto colorDialog = new CUVColorDialog(this);
-	const auto progressBar = new CUVProgressBar(this);
+	const auto colorDialog = new CALColorDialog(this);
+	const auto progressBar = new CALProgressBar(this);
 	progressBar->setProgressColor(colorDialog->getCurrentColor());
-	connect(colorDialog, &CUVColorDialog::sigColorSelected, progressBar, &CUVProgressBar::setProgressColor);
-	const auto progressBarType = new CUVComboBox(this);
+	connect(colorDialog, &CALColorDialog::sigColorSelected, progressBar, &CALProgressBar::setProgressColor);
+	const auto progressBarType = new CALComboBox(this);
 	progressBarType->addItem("DeterminateProgress");
 	progressBarType->addItem("IndeterminateProgress");
 	progressBarType->setCurrentText(QString(metaEnum.valueToKey(progressBar->getProgressType())));
-	connect(progressBarType, &CUVComboBox::currentTextChanged, this, [=](const QString& type) {
+	connect(progressBarType, &CALComboBox::currentTextChanged, this, [=](const QString& type) {
 		if (metaEnum.isValid()) {
 			if (const int value = metaEnum.keyToValue(type.toLocal8Bit().constData()); value != -1) {
 				progressBar->setProgressType(static_cast<ALProgressType::ProgressType>(value));
@@ -283,23 +283,23 @@ void E_BaseComponents::initProgressBarArea() {
 			}
 		}
 	});
-	const auto progressBarArea = new CUVScrollPageArea(this);
+	const auto progressBarArea = new CALScrollPageArea(this);
 	const auto progressBarHLayout = new QHBoxLayout(progressBarArea);
-	const auto progressBarText = new CUVText("CUVProgressBar", this);
+	const auto progressBarText = new CALText("CALProgressBar", this);
 	progressBarText->setTextPixelSize(15);
 	const auto progressBarProgerssColorButton = new CALPushButton("progress Color", this);
 	progressBarProgerssColorButton->setFixedSize(120, 38);
 	progressBarProgerssColorButton->setButtonStyles(CALPushButton::Shadow | CALPushButton::Border);
-	connect(progressBarProgerssColorButton, &CALPushButton::clicked, colorDialog, &CUVColorDialog::exec);
+	connect(progressBarProgerssColorButton, &CALPushButton::clicked, colorDialog, &CALColorDialog::exec);
 	progressBarHLayout->addWidget(progressBarText);
 	progressBarHLayout->addWidget(progressBar);
 	progressBarHLayout->addWidget(progressBarProgerssColorButton);
 	progressBarHLayout->addWidget(progressBarType);
 	progressBarHLayout->addStretch();
-	const auto progressBarDisable = new CUVToggleSwitch(this);
-	const auto progressBarDisableText = new CUVText("Disable", this);
+	const auto progressBarDisable = new CALToggleSwitch(this);
+	const auto progressBarDisableText = new CALText("Disable", this);
 	progressBarDisableText->setTextPixelSize(15);
-	connect(progressBarDisable, &CUVToggleSwitch::sigToggleChanged, progressBar, &CUVProgressBar::setDisabled);
+	connect(progressBarDisable, &CALToggleSwitch::sigToggleChanged, progressBar, &CALProgressBar::setDisabled);
 	progressBarHLayout->addWidget(progressBarDisableText);
 	progressBarHLayout->addWidget(progressBarDisable);
 	progressBarHLayout->addSpacing(10);
@@ -308,18 +308,18 @@ void E_BaseComponents::initProgressBarArea() {
 }
 
 void E_BaseComponents::initCheckBoxArea() {
-	const auto checkBox = new CUVCheckBox("checkBox", this);
-	const auto checkBoxArea = new CUVScrollPageArea(this);
+	const auto checkBox = new CALCheckBox("checkBox", this);
+	const auto checkBoxArea = new CALScrollPageArea(this);
 	const auto checkBoxHLayout = new QHBoxLayout(checkBoxArea);
-	const auto checkBoxText = new CUVText("CUVCheckBox", this);
+	const auto checkBoxText = new CALText("CALCheckBox", this);
 	checkBoxText->setTextPixelSize(15);
 	checkBoxHLayout->addWidget(checkBoxText);
 	checkBoxHLayout->addWidget(checkBox);
 	checkBoxHLayout->addStretch();
-	const auto checkBoxDisable = new CUVToggleSwitch(this);
-	const auto checkBoxDisableText = new CUVText("Disable", this);
+	const auto checkBoxDisable = new CALToggleSwitch(this);
+	const auto checkBoxDisableText = new CALText("Disable", this);
 	checkBoxDisableText->setTextPixelSize(15);
-	connect(checkBoxDisable, &CUVToggleSwitch::sigToggleChanged, checkBox, &CUVSlider::setDisabled);
+	connect(checkBoxDisable, &CALToggleSwitch::sigToggleChanged, checkBox, &CALSlider::setDisabled);
 	checkBoxHLayout->addWidget(checkBoxDisableText);
 	checkBoxHLayout->addWidget(checkBoxDisable);
 	checkBoxHLayout->addSpacing(10);
@@ -328,18 +328,18 @@ void E_BaseComponents::initCheckBoxArea() {
 }
 
 void E_BaseComponents::initRadioButtonArea() {
-	const auto radioButton = new CUVRadioButton("radioButton", this);
-	const auto radioButtonArea = new CUVScrollPageArea(this);
+	const auto radioButton = new CALRadioButton("radioButton", this);
+	const auto radioButtonArea = new CALScrollPageArea(this);
 	const auto radioButtonHLayout = new QHBoxLayout(radioButtonArea);
-	const auto radioButtonText = new CUVText("CUVRadioButton", this);
+	const auto radioButtonText = new CALText("CALRadioButton", this);
 	radioButtonText->setTextPixelSize(15);
 	radioButtonHLayout->addWidget(radioButtonText);
 	radioButtonHLayout->addWidget(radioButton);
 	radioButtonHLayout->addStretch();
-	const auto radioButtonDisable = new CUVToggleSwitch(this);
-	const auto radioButtonDisableText = new CUVText("Disable", this);
+	const auto radioButtonDisable = new CALToggleSwitch(this);
+	const auto radioButtonDisableText = new CALText("Disable", this);
 	radioButtonDisableText->setTextPixelSize(15);
-	connect(radioButtonDisable, &CUVToggleSwitch::sigToggleChanged, radioButton, &CUVRadioButton::setDisabled);
+	connect(radioButtonDisable, &CALToggleSwitch::sigToggleChanged, radioButton, &CALRadioButton::setDisabled);
 	radioButtonHLayout->addWidget(radioButtonDisableText);
 	radioButtonHLayout->addWidget(radioButtonDisable);
 	radioButtonHLayout->addSpacing(10);
@@ -348,18 +348,18 @@ void E_BaseComponents::initRadioButtonArea() {
 }
 
 void E_BaseComponents::initSpinBoxArea() {
-	const auto spinBox = new CUVSpinBox(this);
-	const auto spinBoxArea = new CUVScrollPageArea(this);
+	const auto spinBox = new CALSpinBox(this);
+	const auto spinBoxArea = new CALScrollPageArea(this);
 	const auto spinBoxHLayout = new QHBoxLayout(spinBoxArea);
-	const auto spinBoxText = new CUVText("CUVSpinBox", this);
+	const auto spinBoxText = new CALText("CALSpinBox", this);
 	spinBoxText->setTextPixelSize(15);
 	spinBoxHLayout->addWidget(spinBoxText);
 	spinBoxHLayout->addWidget(spinBox);
 	spinBoxHLayout->addStretch();
-	const auto spinBoxDisable = new CUVToggleSwitch(this);
-	const auto spinBoxDisableText = new CUVText("Disable", this);
+	const auto spinBoxDisable = new CALToggleSwitch(this);
+	const auto spinBoxDisableText = new CALText("Disable", this);
 	spinBoxDisableText->setTextPixelSize(15);
-	connect(spinBoxDisable, &CUVToggleSwitch::sigToggleChanged, spinBox, &CUVSpinBox::setDisabled);
+	connect(spinBoxDisable, &CALToggleSwitch::sigToggleChanged, spinBox, &CALSpinBox::setDisabled);
 	spinBoxHLayout->addWidget(spinBoxDisableText);
 	spinBoxHLayout->addWidget(spinBoxDisable);
 	spinBoxHLayout->addSpacing(10);
@@ -368,18 +368,18 @@ void E_BaseComponents::initSpinBoxArea() {
 }
 
 void E_BaseComponents::initDoubleSpinBoxArea() {
-	const auto doubleSpinBox = new CUVDoubleSpinBox(this);
-	const auto doubleSpinBoxArea = new CUVScrollPageArea(this);
+	const auto doubleSpinBox = new CALDoubleSpinBox(this);
+	const auto doubleSpinBoxArea = new CALScrollPageArea(this);
 	const auto doubleSpinBoxHLayout = new QHBoxLayout(doubleSpinBoxArea);
-	const auto doubleSpinBoxText = new CUVText("CUVDoubleSpinBox", this);
+	const auto doubleSpinBoxText = new CALText("CALDoubleSpinBox", this);
 	doubleSpinBoxText->setTextPixelSize(15);
 	doubleSpinBoxHLayout->addWidget(doubleSpinBoxText);
 	doubleSpinBoxHLayout->addWidget(doubleSpinBox);
 	doubleSpinBoxHLayout->addStretch();
-	const auto doubleSpinBoxDisable = new CUVToggleSwitch(this);
-	const auto doubleSpinBoxDisableText = new CUVText("Disable", this);
+	const auto doubleSpinBoxDisable = new CALToggleSwitch(this);
+	const auto doubleSpinBoxDisableText = new CALText("Disable", this);
 	doubleSpinBoxDisableText->setTextPixelSize(15);
-	connect(doubleSpinBoxDisable, &CUVToggleSwitch::sigToggleChanged, doubleSpinBox, &CUVDoubleSpinBox::setDisabled);
+	connect(doubleSpinBoxDisable, &CALToggleSwitch::sigToggleChanged, doubleSpinBox, &CALDoubleSpinBox::setDisabled);
 	doubleSpinBoxHLayout->addWidget(doubleSpinBoxDisableText);
 	doubleSpinBoxHLayout->addWidget(doubleSpinBoxDisable);
 	doubleSpinBoxHLayout->addSpacing(10);

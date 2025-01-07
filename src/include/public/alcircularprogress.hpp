@@ -4,25 +4,25 @@
 
 #include "alwidgettoolsdef.hpp"
 
-class CUVCircularProgressPrivate;
+class CALCircularProgressPrivate;
 
 /**
  * @brief 圆环形状进度控件
  */
-class CALWIDGETTOOLS_EXPORT CUVCircularProgress : public QProgressBar {
+class CALWIDGETTOOLS_EXPORT CALCircularProgress : public QProgressBar {
 	Q_OBJECT
-	Q_DECLARE_PRIVATE(CUVCircularProgress)
+	Q_DECLARE_PRIVATE(CALCircularProgress)
 	Q_PROPERTY(qreal lineWidth WRITE setLineWidth READ getLineWidth)
 	Q_PROPERTY(int size WRITE setSize READ getSize)
 	Q_PROPERTY(QColor color WRITE setColor READ getColor)
 
 public:
-	explicit CUVCircularProgress(QWidget* parent = nullptr);
-	~CUVCircularProgress() override;
+	explicit CALCircularProgress(QWidget* parent = nullptr);
+	~CALCircularProgress() override;
 
 	/**
 	 * @brief 设置进度条类型
-	 * @param type \see \enum UVProgressType::ProgressType
+	 * @param type \see \enum ALProgressType::ProgressType
 	 */
 	void setProgressType(const ALProgressType::ProgressType& type);
 	[[nodiscard]] ALProgressType::ProgressType getProgressType() const;
@@ -72,7 +72,7 @@ public:
 	[[nodiscard]] QSize sizeHint() const override;
 
 protected:
-	const QScopedPointer<CUVCircularProgressPrivate> d_ptr{ nullptr };
+	const QScopedPointer<CALCircularProgressPrivate> d_ptr{ nullptr };
 
 	void showEvent(QShowEvent* event) override;
 	void hideEvent(QHideEvent* event) override;

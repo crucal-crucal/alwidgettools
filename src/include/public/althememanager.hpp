@@ -3,19 +3,20 @@
 #include "alsingleton.hpp"
 #include "alwidgettoolsdef.hpp"
 
-#define UVTheme CUVThemeManager::instance()
-#define UVThemeColor(mode, color) UVTheme->getThemeColor(mode, color)
+#define ALTheme CALThemeManager::instance()
+#define ALThemeColor(mode, color) ALTheme->getThemeColor(mode, color)
 
 class QPainter;
-class CUVThemeManagerPrivate;
 
-class CALWIDGETTOOLS_EXPORT CUVThemeManager : public QObject {
+class CALThemeManagerPrivate;
+
+class CALWIDGETTOOLS_EXPORT CALThemeManager : public QObject {
 	Q_OBJECT
-	Q_DISABLE_COPY(CUVThemeManager)
-	Q_DECLARE_PRIVATE(CUVThemeManager)
+	Q_DISABLE_COPY(CALThemeManager)
+	Q_DECLARE_PRIVATE(CALThemeManager)
 
 public:
-	static CUVThemeManager* instance();
+	static CALThemeManager* instance();
 
 	void setThemeMode(const ALThemeType::ThemeMode& mode);
 	[[nodiscard]] ALThemeType::ThemeMode getThemeMode() const;
@@ -27,11 +28,11 @@ Q_SIGNALS:
 	Q_SIGNAL void sigThemeModeChanged(const ALThemeType::ThemeMode& mode);
 
 protected:
-	const QScopedPointer<CUVThemeManagerPrivate> d_ptr{ nullptr };
+	const QScopedPointer<CALThemeManagerPrivate> d_ptr{ nullptr };
 
-	friend class CUVSingleton<CUVThemeManager>;
+	friend class CALSingleton<CALThemeManager>;
 
 private:
-	explicit CUVThemeManager(QObject* parent = nullptr);
-	~CUVThemeManager() override;
+	explicit CALThemeManager(QObject* parent = nullptr);
+	~CALThemeManager() override;
 };
