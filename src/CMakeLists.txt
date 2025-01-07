@@ -1,7 +1,7 @@
 ﻿set(TARGET_NAME alwidgettools)
 
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
-uv_initialize_build_flags()
+al_initialize_build_flags()
 
 option(CALWIDGETTOOLS_BUILD_STATIC_LIB "Build static library." OFF)
 
@@ -27,7 +27,9 @@ include_directories(include/private)
 include_directories(components)
 
 add_library(${TARGET_NAME} ${LIB_TYPE}
-        include/public/alwidgettoolsdef.hpp ${SOURCES})
+        include/public/alwidgettoolsdef.hpp
+        ${SOURCES}
+)
 
 file(GLOB EXPORT_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/include/public/*.hpp)
 
@@ -64,7 +66,10 @@ install(TARGETS ${TARGET_NAME}
         RUNTIME DESTINATION bin
 )
 
-install(FILES ${EXPORT_HEADERS} DESTINATION include)
+install(FILES ${EXPORT_HEADERS}
+        DESTINATION include
+)
+
 install(TARGETS ${TARGET_NAME}
         RUNTIME DESTINATION ${CMAKE_BINARY_DIR}
 )

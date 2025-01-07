@@ -1,7 +1,7 @@
-﻿# uvsetup.cmake
+﻿# alsetup.cmake
 
 # 从环境变量中获取 Qt 路径，查找 qmake
-macro(uv_setup_Qt)
+macro(al_setup_Qt)
     if (WIN32 OR UNIX)
         set(QT_DIR $ENV{QTDIR})
         message(STATUS "QT_DIR=${QT_DIR}")
@@ -36,7 +36,7 @@ macro(uv_setup_Qt)
 endmacro()
 
 # 安装 DLL
-macro(uv_install_dll)
+macro(al_install_dll)
     install(TARGETS ${TARGET_NAME}
             RUNTIME DESTINATION bin
     )

@@ -1,6 +1,6 @@
-﻿# uvconfigmacros.cmake
+﻿# alconfigmacros.cmake
 
-macro(uv_initialize_build_flags)
+macro(al_initialize_build_flags)
     set(CMAKE_CXX_STANDARD 17)
 
     set(CMAKE_AUTOMOC ON)

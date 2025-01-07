@@ -12,7 +12,7 @@ target_link_libraries(${TARGET_NAME} Qt5::Widgets Qt5::Svg)
 target_link_libraries(${TARGET_NAME} alwidgettools)
 
 add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E echo "Copying uvresource.rcc file from ${CMAKE_SOURCE_DIR}/resource/alresource.rcc to $<TARGET_FILE_DIR:${TARGET_NAME}>/alresource.rcc"
+        COMMAND ${CMAKE_COMMAND} -E echo "Copying alresource.rcc file from ${CMAKE_SOURCE_DIR}/resource/alresource.rcc to $<TARGET_FILE_DIR:${TARGET_NAME}>/alresource.rcc"
         COMMAND ${CMAKE_COMMAND} -E copy
         ${CMAKE_SOURCE_DIR}/resource/alresource.rcc
         $<TARGET_FILE_DIR:${TARGET_NAME}>/alresource.rcc

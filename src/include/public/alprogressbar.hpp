@@ -18,14 +18,14 @@ public:
 
 	/**
 	 * @brief 设置进度条类型
-	 * @param type \see \enum UVProgressType::ProgressType
+	 * @param type \see \enum ALProgressType::ProgressType
 	 */
 	void setProgressType(const ALProgressType::ProgressType& type);
 	[[nodiscard]] ALProgressType::ProgressType getProgressType() const;
 
 	/**
 	 * @brief 设置文本显示位置
-	 * @param position \see \enum UVProgressType::ProgressTextPosition
+	 * @param position \see \enum ALProgressType::ProgressTextPosition
 	 */
 	void setProgressTextPosition(const ALProgressType::ProgressTextPosition& position);
 	[[nodiscard]] ALProgressType::ProgressTextPosition getProgressTextPosition() const;

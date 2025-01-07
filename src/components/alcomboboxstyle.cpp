@@ -95,7 +95,7 @@ void CALComboBoxStyle::drawControl(const ControlElement element, const QStyleOpt
 					}
 				}
 #if 0
-				painter->setPen(UVThemeColor(m_themeMode, UVThemeType::BasicText));
+				painter->setPen(ALThemeColor(m_themeMode, ALThemeType::BasicText));
 				// 计算勾选图标的绘制区域
 				const int checkSize = static_cast<int>(qMin(optionRect.width(), optionRect.height()) * 0.5); // 图标大小为项目高度的一半
 				const auto checkRect = QRect(optionRect.x() + 5,

@@ -539,7 +539,7 @@ CALNavigationBar::CALNavigationBar(QWidget* parent): QWidget(parent), d_ptr(new 
 	d->userInfoCard = new CALInteractiveCard(this);
 	d->userInfoCard->setCardPixmap(QPixmap(":/image/crucal.png"));
 	d->userInfoCard->setTitle("crucal");
-	d->userInfoCard->setSubTitle("uvwidgettools");
+	d->userInfoCard->setSubTitle("alwidgettools");
 	connect(d->userInfoCard, &CALInteractiveCard::clicked, this, &CALNavigationBar::sigUserInfoCardClicked);
 	// user button
 	d->userButton = new CALIconButton(QPixmap(":/image/crucal.png"), this);
