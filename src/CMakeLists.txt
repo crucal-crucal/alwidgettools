@@ -32,6 +32,7 @@ add_library(${TARGET_NAME} ${LIB_TYPE}
 )
 
 file(GLOB EXPORT_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/include/public/*.hpp)
+set(EXPORT_RESOURCE_FILE ${CMAKE_SOURCE_DIR}/resource/alwidgettools.rcc)
 
 target_include_directories(${TARGET_NAME} PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -68,6 +69,10 @@ install(TARGETS ${TARGET_NAME}
 
 install(FILES ${EXPORT_HEADERS}
         DESTINATION include
+)
+
+install(FILES ${EXPORT_RESOURCE_FILE}
+        DESTINATION bin
 )
 
 install(TARGETS ${TARGET_NAME}
