@@ -6,8 +6,10 @@
  */
 CALCalendarModel::CALCalendarModel(QObject* parent): QAbstractListModel(parent) {
 	m_displayMode = ALCalendarMode::DayMode;
-	m_minimumDate.setDate(1997, 1, 1);
-	m_maximumDate.setDate(2137, 12, 31);
+	m_offset = 0;
+	m_dayRowCount = 0;
+	m_minimumDate.setDate(1924, 1, 1);
+	m_maximumDate.setDate(2124, 12, 31);
 	initRowCount();
 }
 
@@ -44,14 +46,14 @@ QDate CALCalendarModel::getMaximumDate() const {
 
 QModelIndex CALCalendarModel::getIndexFromDate(const QDate& date) const {
 	switch (m_displayMode) {
-		case ALCalendarMode::DayMode: {
-			return index(static_cast<int>(m_minimumDate.daysTo(date)) + m_offset);
+		case ALCalendarMode::YearMode: {
+			return index(date.year() - m_minimumDate.year());
 		}
 		case ALCalendarMode::MonthMode: {
 			return index((date.year() - m_minimumDate.year()) * 12 + date.month() - 1);
 		}
-		case ALCalendarMode::YearMode: {
-			return index(date.year() - m_minimumDate.year());
+		case ALCalendarMode::DayMode: {
+			return index(static_cast<int>(m_minimumDate.daysTo(date)) + m_offset);
 		}
 		default: {
 			break;
@@ -70,14 +72,18 @@ QVariant CALCalendarModel::data(const QModelIndex& index, const int role) const 
 		switch (m_displayMode) {
 			case ALCalendarMode::DayMode: {
 				if (index.row() >= m_offset) {
-					QDate date = getDateFromIndex(index);
-					return QVariant::fromValue<CALCalendarData>(CALCalendarData(date.year(), date.month(), date.day(), date.day ? QString::number(date.month()) + QObject::tr("month") : QString()));
+					const QDate date = getDateFromIndex(index);
+					return QVariant::fromValue<CALCalendarData>(CALCalendarData(date.year(), date.month(), date.day(), date.day() == 1 ? QString::number(date.month()) + QObject::tr("month") : QString()));
 				}
+				break;
 			}
 			case ALCalendarMode::MonthMode: {
 				const int year = m_minimumDate.year() + index.row() / 12;
 				const int month = index.row() % 12 + 1;
-				return QVariant::fromValue<CALCalendarData>(CALCalendarData(year, month, 1, month == 1 ? QString::number(year) : QString()));
+				if (month == 1) {
+					return QVariant::fromValue<CALCalendarData>(CALCalendarData(year, month, 1, QString::number(year)));
+				}
+				return QVariant::fromValue<CALCalendarData>(CALCalendarData(m_minimumDate.year() + index.row() / 12, month, 1));
 			}
 			case ALCalendarMode::YearMode: {
 				return QVariant::fromValue<CALCalendarData>(CALCalendarData(m_minimumDate.year() + index.row(), 1, 1));

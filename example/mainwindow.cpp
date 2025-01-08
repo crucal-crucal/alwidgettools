@@ -6,6 +6,7 @@
 
 #include "page/e_basecomponents.hpp"
 #include "page/e_card.hpp"
+#include "page/e_popup.hpp"
 #include "page/e_settings.hpp"
 
 MainWindow::MainWindow(QWidget* parent): CALMainWindow(parent) {
@@ -36,6 +37,8 @@ void MainWindow::initContent() {
 	addPageNode(m_baseComponents->windowTitle(), m_baseComponents, ALIcon::AweSomeIcon::CabinetFiling);
 	m_card = new E_Card(this);
 	addPageNode(m_card->windowTitle(), m_card, ALIcon::AweSomeIcon::Cards);
+	m_popup = new E_Popup(this);
+	addPageNode(m_popup->windowTitle(), m_popup, ALIcon::AweSomeIcon::WindowMaximize);
 
 	m_settings = new E_Settings(this);
 	QString settingKey{};

@@ -2,8 +2,6 @@
 
 #include "e_basepage.hpp"
 
-class QVBoxLayout;
-
 class E_BaseComponents final : public E_BasePage {
 	Q_OBJECT
 
@@ -15,8 +13,6 @@ protected:
 	void mouseReleaseEvent(QMouseEvent* event) override;
 
 private:
-	QVBoxLayout* m_mainVLayout{ nullptr };
-
 	void initToggleSwitchArea();
 	void initMessageBarArea();
 	void initCircularProgressArea();

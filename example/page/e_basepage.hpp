@@ -2,6 +2,8 @@
 
 #include "alscrollpage.hpp"
 
+class QVBoxLayout;
+
 class E_BasePage : public CALScrollPage {
 	Q_OBJECT
 
@@ -11,4 +13,5 @@ public:
 
 protected:
 	void createCustomWidget(const QString& desText);
+	QVBoxLayout* mainVLayout{ nullptr };
 };

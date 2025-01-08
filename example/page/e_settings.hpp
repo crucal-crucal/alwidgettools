@@ -2,7 +2,6 @@
 
 #include "e_basepage.hpp"
 
-class QVBoxLayout;
 class CALMainWindow;
 
 class E_Settings final : public E_BasePage {
@@ -13,7 +12,6 @@ public:
 	~E_Settings() override;
 
 private:
-	QVBoxLayout* m_mainVLayout{ nullptr };
 	CALMainWindow* m_mainWindow{ nullptr };
 
 	void initThemeSwitchArea();

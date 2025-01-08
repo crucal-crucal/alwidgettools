@@ -32,9 +32,9 @@ public:
 
 	Q_SLOT void slotSwitchButtonClicked();
 	Q_SLOT void slotCalendarViewClicked(const QModelIndex& index);
-	Q_SLOT void slotUpButtonClicked();
-	Q_SLOT void slotDownButtonClicked();
-	Q_SLOT void slotUpdateSwitchButtonText();
+	Q_SLOT void slotUpButtonClicked() const;
+	Q_SLOT void slotDownButtonClicked() const;
+	Q_SLOT void slotUpdateSwitchButtonText() const;
 
 Q_SIGNALS:
 	Q_SIGNAL void sigZoomRatioChanged();
@@ -53,6 +53,8 @@ private:
 	QDate selectedDate{};
 	qreal borderRadius{};
 	qreal borderWidth{};
+	qreal pixOpacity{};
+	qreal zoomRatio{};
 	ALThemeType::ThemeMode themeMode{};
 	CALBaseListView* calendarView{ nullptr };
 	CALCalendarModel* calendarModel{ nullptr };
@@ -64,6 +66,6 @@ private:
 	CALAwesomeToolButton* upButton{ nullptr };
 	CALAwesomeToolButton* downButton{ nullptr };
 
-	void scrollToDate(const QDate& date);
+	void scrollToDate(const QDate& date) const;
 	void doSwitchAnimation(bool isZoomIn);
 };

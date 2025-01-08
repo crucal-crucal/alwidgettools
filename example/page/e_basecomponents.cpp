@@ -27,9 +27,9 @@ E_BaseComponents::E_BaseComponents(QWidget* parent): E_BasePage(parent) {
 
 	const auto centralWidget = new QWidget(this);
 	centralWidget->setWindowTitle("CALBaseComponents");
-	m_mainVLayout = new QVBoxLayout(centralWidget);
-	m_mainVLayout->setContentsMargins(0, 0, 0, 0);
-	m_mainVLayout->setSpacing(5);
+	mainVLayout = new QVBoxLayout(centralWidget);
+	mainVLayout->setContentsMargins(0, 0, 0, 0);
+	mainVLayout->setSpacing(5);
 
 	/// toggleSwitchArea
 	initToggleSwitchArea();
@@ -52,7 +52,7 @@ E_BaseComponents::E_BaseComponents(QWidget* parent): E_BasePage(parent) {
 	/// doubleSpinBoxArea
 	initDoubleSpinBoxArea();
 
-	m_mainVLayout->addStretch();
+	mainVLayout->addStretch();
 	addCentralWidget(centralWidget, true, true, 0);
 
 	const auto homeStack1 = new CALText("HomeStack1", this);
@@ -113,7 +113,7 @@ void E_BaseComponents::initToggleSwitchArea() {
 	toggleSwitchHLayout->addWidget(toggleSwitchDisable);
 	toggleSwitchHLayout->addSpacing(10);
 
-	m_mainVLayout->addWidget(toggleSwitchArea);
+	mainVLayout->addWidget(toggleSwitchArea);
 }
 
 void E_BaseComponents::initMessageBarArea() {
@@ -156,7 +156,7 @@ void E_BaseComponents::initMessageBarArea() {
 	messageBarAreaHLayout->addWidget(messageBarDisable);
 	messageBarAreaHLayout->addSpacing(10);
 
-	m_mainVLayout->addWidget(messageBarArea);
+	mainVLayout->addWidget(messageBarArea);
 }
 
 void E_BaseComponents::initCircularProgressArea() {
@@ -209,7 +209,7 @@ void E_BaseComponents::initCircularProgressArea() {
 	circularProgressHLayout->addWidget(circularProgressDisable);
 	circularProgressHLayout->addSpacing(10);
 
-	m_mainVLayout->addWidget(circularProgressArea);
+	mainVLayout->addWidget(circularProgressArea);
 }
 
 void E_BaseComponents::initMultiSelectComboBoxArea() {
@@ -235,7 +235,7 @@ void E_BaseComponents::initMultiSelectComboBoxArea() {
 	}
 	multiSelectComboBox->setCurrentSelection(QList<int>{ 1, 2, 3, 4, 5 });
 
-	m_mainVLayout->addWidget(multiSelectComboBoxArea);
+	mainVLayout->addWidget(multiSelectComboBoxArea);
 }
 
 void E_BaseComponents::initSliderArea() {
@@ -255,7 +255,7 @@ void E_BaseComponents::initSliderArea() {
 	sliderHLayout->addWidget(sliderDisable);
 	sliderHLayout->addSpacing(10);
 
-	m_mainVLayout->addWidget(sliderArea);
+	mainVLayout->addWidget(sliderArea);
 }
 
 void E_BaseComponents::initProgressBarArea() {
@@ -304,7 +304,7 @@ void E_BaseComponents::initProgressBarArea() {
 	progressBarHLayout->addWidget(progressBarDisable);
 	progressBarHLayout->addSpacing(10);
 
-	m_mainVLayout->addWidget(progressBarArea);
+	mainVLayout->addWidget(progressBarArea);
 }
 
 void E_BaseComponents::initCheckBoxArea() {
@@ -324,7 +324,7 @@ void E_BaseComponents::initCheckBoxArea() {
 	checkBoxHLayout->addWidget(checkBoxDisable);
 	checkBoxHLayout->addSpacing(10);
 
-	m_mainVLayout->addWidget(checkBoxArea);
+	mainVLayout->addWidget(checkBoxArea);
 }
 
 void E_BaseComponents::initRadioButtonArea() {
@@ -344,7 +344,7 @@ void E_BaseComponents::initRadioButtonArea() {
 	radioButtonHLayout->addWidget(radioButtonDisable);
 	radioButtonHLayout->addSpacing(10);
 
-	m_mainVLayout->addWidget(radioButtonArea);
+	mainVLayout->addWidget(radioButtonArea);
 }
 
 void E_BaseComponents::initSpinBoxArea() {
@@ -364,7 +364,7 @@ void E_BaseComponents::initSpinBoxArea() {
 	spinBoxHLayout->addWidget(spinBoxDisable);
 	spinBoxHLayout->addSpacing(10);
 
-	m_mainVLayout->addWidget(spinBoxArea);
+	mainVLayout->addWidget(spinBoxArea);
 }
 
 void E_BaseComponents::initDoubleSpinBoxArea() {
@@ -384,5 +384,5 @@ void E_BaseComponents::initDoubleSpinBoxArea() {
 	doubleSpinBoxHLayout->addWidget(doubleSpinBoxDisable);
 	doubleSpinBoxHLayout->addSpacing(10);
 
-	m_mainVLayout->addWidget(doubleSpinBoxArea);
+	mainVLayout->addWidget(doubleSpinBoxArea);
 }

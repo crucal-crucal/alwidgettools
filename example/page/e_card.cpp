@@ -10,14 +10,14 @@ E_Card::E_Card(QWidget* parent): E_BasePage(parent) {
 
 	const auto centralWidget = new QWidget(this);
 	centralWidget->setWindowTitle("CALCard");
-	m_mainVLayout = new QVBoxLayout(centralWidget);
-	m_mainVLayout->setContentsMargins(0, 0, 0, 0);
-	m_mainVLayout->setSpacing(5);
+	mainVLayout = new QVBoxLayout(centralWidget);
+	mainVLayout->setContentsMargins(0, 0, 0, 0);
+	mainVLayout->setSpacing(5);
 
 	/// lcdNumberArea
 	initLCDNumberArea();
 
-	m_mainVLayout->addStretch();
+	mainVLayout->addStretch();
 	addCentralWidget(centralWidget, true, true, 0);
 }
 
@@ -29,5 +29,5 @@ void E_Card::initLCDNumberArea() {
 	lcdNumber->setIsTransparent(false);
 	lcdNumber->setFixedHeight(100);
 
-	m_mainVLayout->addWidget(lcdNumber);
+	mainVLayout->addWidget(lcdNumber);
 }

@@ -19,9 +19,9 @@ E_Settings::E_Settings(QWidget* parent): E_BasePage(parent) {
 
 	const auto centralWidget = new QWidget(this);
 	centralWidget->setWindowTitle("Settings");
-	m_mainVLayout = new QVBoxLayout(centralWidget);
-	m_mainVLayout->setContentsMargins(0, 0, 0, 0);
-	m_mainVLayout->setSpacing(5);
+	mainVLayout = new QVBoxLayout(centralWidget);
+	mainVLayout->setContentsMargins(0, 0, 0, 0);
+	mainVLayout->setSpacing(5);
 
 	/// themeSwitchArea
 	initThemeSwitchArea();
@@ -30,7 +30,7 @@ E_Settings::E_Settings(QWidget* parent): E_BasePage(parent) {
 	/// navigationTypeArea
 	initNavigationDisplayModeArea();
 
-	m_mainVLayout->addStretch();
+	mainVLayout->addStretch();
 	addCentralWidget(centralWidget, true, true, 0);
 }
 
@@ -81,10 +81,10 @@ void E_Settings::initThemeSwitchArea() {
 		}
 	});
 
-	m_mainVLayout->addSpacing(30);
-	m_mainVLayout->addWidget(themeText);
-	m_mainVLayout->addSpacing(10);
-	m_mainVLayout->addWidget(themeSwitchArea);
+	mainVLayout->addSpacing(30);
+	mainVLayout->addWidget(themeText);
+	mainVLayout->addSpacing(10);
+	mainVLayout->addWidget(themeSwitchArea);
 }
 
 void E_Settings::initMicaSwitchArea() {
@@ -102,10 +102,10 @@ void E_Settings::initMicaSwitchArea() {
 	micaSwitchHLayout->addWidget(micaSwitchButton);
 	connect(micaSwitchButton, &CALToggleSwitch::sigToggleChanged, alApp, &CALApplication::setIsEnableMica);
 
-	m_mainVLayout->addSpacing(15);
-	m_mainVLayout->addWidget(helperText);
-	m_mainVLayout->addSpacing(10);
-	m_mainVLayout->addWidget(micaSwitchArea);
+	mainVLayout->addSpacing(15);
+	mainVLayout->addWidget(helperText);
+	mainVLayout->addSpacing(10);
+	mainVLayout->addWidget(micaSwitchArea);
 }
 
 void E_Settings::initNavigationDisplayModeArea() {
@@ -141,5 +141,5 @@ void E_Settings::initNavigationDisplayModeArea() {
 	}
 
 
-	m_mainVLayout->addWidget(navigationDisplayModeArea);
+	mainVLayout->addWidget(navigationDisplayModeArea);
 }

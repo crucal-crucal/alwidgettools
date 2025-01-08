@@ -132,7 +132,7 @@ void CALCalendarDelegate::drawDays(QPainter* painter, const QStyleOptionViewItem
 		QRectF itemRect = option.rect;
 		const auto data = variant.value<CALCalendarData>();
 		/// current date
-		const bool bIsNow = data.year == m_nowDate.year() && data.month == m_nowDate.month() && data.day == m_nowDate.day();
+		const bool bIsNow = (data.year == m_nowDate.year() && data.month == m_nowDate.month() && data.day == m_nowDate.day());
 		if (bIsNow) {
 			const QColor drawColor = ALThemeColor(m_themeMode, option.state.testFlag(QStyle::State_MouseOver) ? ALThemeType::PrimaryHover : ALThemeType::PrimaryNormal);
 			if (option.state.testFlag(QStyle::State_Selected)) {
