@@ -17,7 +17,7 @@
 #ifdef Q_OS_WIN
 #define CALAPPBAR_HANDLE(CALAppBar)                                           \
 	if (CALAppBar) {                                                          \
-		int ret = CALAppBar->takeOverNativeEvent(eventType, message, result); \
+		int ret = (CALAppBar)->takeOverNativeEvent(eventType, message, result); \
 		if (ret == -1) {                                                      \
 			return QWidget::nativeEvent(eventType, message, result);          \
 		}                                                                     \

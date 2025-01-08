@@ -5,6 +5,7 @@
 #include "alcontentdialog.hpp"
 
 #include "page/e_basecomponents.hpp"
+#include "page/e_card.hpp"
 #include "page/e_settings.hpp"
 
 MainWindow::MainWindow(QWidget* parent): CALMainWindow(parent) {
@@ -33,6 +34,8 @@ void MainWindow::initEdgeLayout() {
 void MainWindow::initContent() {
 	m_baseComponents = new E_BaseComponents(this);
 	addPageNode(m_baseComponents->windowTitle(), m_baseComponents, ALIcon::AweSomeIcon::CabinetFiling);
+	m_card = new E_Card(this);
+	addPageNode(m_card->windowTitle(), m_card, ALIcon::AweSomeIcon::Cards);
 
 	m_settings = new E_Settings(this);
 	QString settingKey{};

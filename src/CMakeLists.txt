@@ -19,7 +19,23 @@ set(SOURCES ${ORIGIN} ${INCLUDE} ${PRIVATE_INCLUDE} ${COMPONENTS})
 if (CALWIDGETTOOLS_BUILD_STATIC_LIB)
     set(LIB_TYPE STATIC)
 else ()
-    set(LIB_TYPE SHARED)
+    set(LIB_TYPE SHARED
+            components/allcdnumberstyle.cpp
+            components/allcdnumberstyle.hpp
+            include/private/allcdnumber_p.hpp
+            include/public/allcdnumber.hpp
+            allcdnumber.cpp
+            components/alcalendarmodel.cpp
+            components/alcalendarmodel.hpp
+            components/alcalendardelegate.cpp
+            components/alcalendardelegate.hpp
+            include/private/alcalendar_p.hpp
+            include/public/alcalendar.hpp
+            alcalendar.cpp
+            components/alcalendartitlemodel.cpp
+            components/alcalendartitlemodel.hpp
+            components/alcalendartitledelegate.cpp
+            components/alcalendartitledelegate.hpp)
 endif ()
 
 include_directories(include/public)

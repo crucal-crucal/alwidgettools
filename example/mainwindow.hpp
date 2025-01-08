@@ -6,6 +6,7 @@ class CALContentDialog;
 
 class E_BaseComponents;
 class E_Settings;
+class E_Card;
 
 class MainWindow : public CALMainWindow {
 	Q_OBJECT
@@ -23,4 +24,5 @@ private:
 
 	E_BaseComponents* m_baseComponents{ nullptr };
 	E_Settings* m_settings{ nullptr };
+	E_Card* m_card{ nullptr };
 };

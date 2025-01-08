@@ -3,7 +3,9 @@
 file(GLOB ORIGIN *.hpp *.cpp)
 file(GLOB PAGEORIGIN page/*.hpp page/*.cpp)
 
-set(EXAMPLE_SOURCE ${ORIGIN} ${PAGEORIGIN})
+set(EXAMPLE_SOURCE ${ORIGIN} ${PAGEORIGIN}
+        page/e_card.cpp
+        page/e_card.hpp)
 
 include_directories(${CMAKE_SOURCE_DIR}/src/include/public)
 
