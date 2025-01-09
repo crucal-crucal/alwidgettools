@@ -351,6 +351,7 @@ CALAppBar::CALAppBar(QWidget* parent): QWidget(parent), d_ptr(new CALAppBarPriva
 	d->mainHLayout->addLayout(d->iconLabelVLayout);
 	d->mainHLayout->addLayout(d->titleLabelVLayout);
 	d->mainHLayout->addStretch();
+	d->mainHLayout->addStretch();
 	d->mainHLayout->addWidget(d->stayTopButton);
 	d->mainHLayout->addWidget(d->themeChangeButton);
 	d->mainHLayout->addWidget(d->minButton);

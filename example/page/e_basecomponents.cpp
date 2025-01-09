@@ -268,6 +268,7 @@ void E_BaseComponents::initProgressBarArea() {
 
 	const auto colorDialog = new CALColorDialog(this);
 	const auto progressBar = new CALProgressBar(this);
+	progressBar->setShowProgressText(false);
 	progressBar->setProgressColor(colorDialog->getCurrentColor());
 	connect(colorDialog, &CALColorDialog::sigColorSelected, progressBar, &CALProgressBar::setProgressColor);
 	const auto progressBarType = new CALComboBox(this);

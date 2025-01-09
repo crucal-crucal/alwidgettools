@@ -10,5 +10,7 @@ public:
 	~E_Popup() override;
 
 private:
+	void initColorDialogArea();
+	void initCalendarPickerArea();
 	void initCalendarArea();
 };

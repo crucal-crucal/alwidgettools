@@ -2,6 +2,7 @@
 
 #include "almainwindow.hpp"
 
+class E_About;
 class CALContentDialog;
 
 class E_BaseComponents;
@@ -9,7 +10,7 @@ class E_Settings;
 class E_Card;
 class E_Popup;
 
-class MainWindow : public CALMainWindow {
+class MainWindow final : public CALMainWindow {
 	Q_OBJECT
 
 public:
@@ -27,4 +28,5 @@ private:
 	E_Settings* m_settings{ nullptr };
 	E_Card* m_card{ nullptr };
 	E_Popup* m_popup{ nullptr };
+	E_About* m_about{ nullptr };
 };

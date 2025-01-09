@@ -59,6 +59,66 @@
     </message>
 </context>
 <context>
+    <name>CALCalendar</name>
+    <message>
+        <location filename="../../src/alcalendar.cpp" line="276"/>
+        <source>January 1997</source>
+        <translation type="unfinished">1997年1月</translation>
+    </message>
+</context>
+<context>
+    <name>CALCalendarPrivate</name>
+    <message>
+        <location filename="../../src/alcalendar.cpp" line="144"/>
+        <location filename="../../src/alcalendar.cpp" line="148"/>
+        <source>year</source>
+        <translation type="unfinished">年</translation>
+    </message>
+    <message>
+        <location filename="../../src/alcalendar.cpp" line="144"/>
+        <source>month</source>
+        <translation type="unfinished">月</translation>
+    </message>
+</context>
+<context>
+    <name>CALCalendarTitleModel</name>
+    <message>
+        <location filename="../../src/components/alcalendartitlemodel.cpp" line="20"/>
+        <source>Su</source>
+        <translation type="unfinished">日</translation>
+    </message>
+    <message>
+        <location filename="../../src/components/alcalendartitlemodel.cpp" line="23"/>
+        <source>Mo</source>
+        <translation type="unfinished">一</translation>
+    </message>
+    <message>
+        <location filename="../../src/components/alcalendartitlemodel.cpp" line="26"/>
+        <source>Tu</source>
+        <translation type="unfinished">二</translation>
+    </message>
+    <message>
+        <location filename="../../src/components/alcalendartitlemodel.cpp" line="29"/>
+        <source>We</source>
+        <translation type="unfinished">三</translation>
+    </message>
+    <message>
+        <location filename="../../src/components/alcalendartitlemodel.cpp" line="32"/>
+        <source>Th</source>
+        <translation type="unfinished">四</translation>
+    </message>
+    <message>
+        <location filename="../../src/components/alcalendartitlemodel.cpp" line="35"/>
+        <source>Fr</source>
+        <translation type="unfinished">五</translation>
+    </message>
+    <message>
+        <location filename="../../src/components/alcalendartitlemodel.cpp" line="38"/>
+        <source>Sa</source>
+        <translation type="unfinished">六</translation>
+    </message>
+</context>
+<context>
     <name>CALColorDialog</name>
     <message>
         <location filename="../../src/alcolordialog.cpp" line="309"/>
@@ -380,6 +440,14 @@
         <location filename="../../src/alsuggestbox.cpp" line="207"/>
         <source>search Feature</source>
         <translation type="unfinished">查找功能</translation>
+    </message>
+</context>
+<context>
+    <name>QObject</name>
+    <message>
+        <location filename="../../src/components/alcalendarmodel.cpp" line="76"/>
+        <source>month</source>
+        <translation type="unfinished">月</translation>
     </message>
 </context>
 </TS>
