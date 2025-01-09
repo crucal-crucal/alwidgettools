@@ -67,7 +67,11 @@ void CALMenuBarStyle::drawControl(const ControlElement element, const QStyleOpti
 				// background
 				p->setPen(Qt::NoPen);
 				if (mopt->state.testFlag(QStyle::State_Enabled)) {
-					p->setBrush(ALThemeColor(m_themeMode, mopt->state.testFlag(QStyle::State_Sunken) ? ALThemeType::BasicPressAlpha : ALThemeType::BasicSelectedAlpha));
+					if (mopt->state.testFlag(QStyle::State_Sunken)) {
+						p->setBrush(ALThemeColor(m_themeMode, ALThemeType::BasicPressAlpha));
+					} else if (mopt->state.testFlag(QStyle::State_Selected)) {
+						p->setBrush(ALThemeColor(m_themeMode, ALThemeType::BasicSelectedAlpha));
+					}
 					p->drawRoundedRect(menuItemRect, 3, 3);
 				}
 				// icon and text

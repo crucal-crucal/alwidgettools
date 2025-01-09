@@ -5,6 +5,8 @@ file(GLOB PAGEORIGIN page/*.hpp page/*.cpp)
 
 set(EXAMPLE_SOURCE ${ORIGIN} ${PAGEORIGIN})
 
+include_directories(page)
+include_directories(modelview)
 include_directories(${CMAKE_SOURCE_DIR}/src/include/public)
 
 add_executable(${TARGET_NAME} ${EXAMPLE_SOURCE})

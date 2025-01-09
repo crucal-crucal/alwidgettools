@@ -18,6 +18,7 @@ public:
 	CALMenu* addMenu(const QIcon& icon, const QString& title);
 	CALMenu* addMenu(const ALIcon::AweSomeIcon& awesomeicon, const QString& title);
 
+	QAction* addAweSomeIconAction(const ALIcon::AweSomeIcon& awesomeicon);
 	QAction* addAweSomeIconAction(const ALIcon::AweSomeIcon& awesomeicon, const QString& text);
 	QAction* addAweSomeIconAction(const ALIcon::AweSomeIcon& awesomeicon, const QString& text, const QKeySequence& shortcut);
 };

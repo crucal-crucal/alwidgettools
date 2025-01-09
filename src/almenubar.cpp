@@ -6,12 +6,15 @@
 #include "almenu.hpp"
 #include "almenubarstyle.hpp"
 
+/**
+ * \class CALMenuBar
+ * @param parent pointer to the parent class
+ */
 CALMenuBar::CALMenuBar(QWidget* parent): QMenuBar(parent) {
 	setMouseTracking(true);
 	setObjectName("CALMenuBar");
 	setStyle(new CALMenuBarStyle(style()));
-	const auto toolbutton = this->findChild<QToolButton*>();
-	if (toolbutton->objectName() == "qt_menubar_ext_button") {
+	if (const auto toolbutton = this->findChild<QToolButton*>(); toolbutton->objectName() == "qt_menubar_ext_button") {
 		QMenu* oldMenu = toolbutton->menu();
 		const auto menu = new CALMenu(this);
 		menu->setObjectName("CALExtendMenu");
@@ -56,6 +59,14 @@ CALMenu* CALMenuBar::addMenu(const ALIcon::AweSomeIcon& awesomeicon, const QStri
 	return menu;
 }
 
+QAction* CALMenuBar::addAweSomeIconAction(const ALIcon::AweSomeIcon& awesomeicon) {
+	const auto action = new QAction(this);
+	action->setProperty("CALIconType", QChar(static_cast<unsigned short>(awesomeicon)));
+	action->setIcon(CALIcon::getQIconFromAwesomeIcon(ALIcon::AweSomeIcon::Broom, 1));
+	QMenuBar::addAction(action);
+	return action;
+}
+
 QAction* CALMenuBar::addAweSomeIconAction(const ALIcon::AweSomeIcon& awesomeicon, const QString& text) {
 	const auto action = new QAction(text, this);
 	action->setProperty("CALIconType", QChar(static_cast<unsigned short>(awesomeicon)));
@@ -71,5 +82,4 @@ QAction* CALMenuBar::addAweSomeIconAction(const ALIcon::AweSomeIcon& awesomeicon
 	action->setIcon(CALIcon::getQIconFromAwesomeIcon(ALIcon::AweSomeIcon::Broom, 1));
 	QMenuBar::addAction(action);
 	return action;
-
 }

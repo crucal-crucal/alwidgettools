@@ -37,7 +37,7 @@ private:
 	QPropertyAnimation* slideSmoothAnimation{ nullptr };
 	bool isExpand{ false };
 	bool isAnimation{};
-	CALScrollBar::ContextMenuFlags contextMenuFlags{ CALScrollBar::HasIcon };
+	CALScrollBar::ContextMenuFlags contextMenuFlags{};
 	qreal speedLimit{};
 	int targetMaximum{};
 	int scrollValue{ -1 };

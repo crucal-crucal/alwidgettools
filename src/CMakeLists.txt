@@ -34,11 +34,7 @@ set(SOURCES ${ORIGIN} ${INCLUDE} ${PRIVATE_INCLUDE} ${COMPONENTS})
 if (CALWIDGETTOOLS_BUILD_STATIC_LIB)
     set(LIB_TYPE STATIC)
 else ()
-    set(LIB_TYPE SHARED
-            components/almenubarstyle.cpp
-            components/almenubarstyle.hpp
-            include/public/almenubar.hpp
-            almenubar.cpp)
+    set(LIB_TYPE SHARED)
 endif ()
 
 # Add include directories for public, private, and component headers

@@ -1,16 +1,19 @@
 ﻿#include "mainwindow.hpp"
 
-#include <QPushButton>
+#include <QVBoxLayout>
 
 #include "alawesometoolbutton.hpp"
 #include "alcontentdialog.hpp"
+#include "almenu.hpp"
+#include "almenubar.hpp"
 #include "altoolbar.hpp"
 
-#include "page/e_about.hpp"
-#include "page/e_basecomponents.hpp"
-#include "page/e_card.hpp"
-#include "page/e_popup.hpp"
-#include "page/e_settings.hpp"
+#include "e_about.hpp"
+#include "e_basecomponents.hpp"
+#include "e_card.hpp"
+#include "e_icon.hpp"
+#include "e_popup.hpp"
+#include "e_settings.hpp"
 
 MainWindow::MainWindow(QWidget* parent): CALMainWindow(parent) {
 	initWindow();
@@ -33,11 +36,24 @@ void MainWindow::initWindow() {
 }
 
 void MainWindow::initEdgeLayout() {
-	/// customWidget
-	const auto button = new QPushButton("123", this);
-	this->setCustomWidget(ALAppBarType::RightArea, button);
+	/// menuBar
+	const auto menuBar = new CALMenuBar(this);
+	menuBar->setFixedHeight(30);
+	const auto customWidget = new QWidget(this);
+	const auto customWidgetVLayout = new QVBoxLayout(customWidget);
+	customWidgetVLayout->setContentsMargins(0, 0, 0, 0);
+	customWidgetVLayout->setAlignment(Qt::AlignVCenter);
+	customWidgetVLayout->addWidget(menuBar);
+	this->setCustomWidget(ALAppBarType::MiddleArea, customWidget);
 	this->setCustomWidgetMaximumWidth(500);
-	/// toolbar
+
+	menuBar->addAweSomeIconAction(ALIcon::AweSomeIcon::AtomSimple, "action menu");
+	const auto iconMenu = menuBar->addMenu(ALIcon::AweSomeIcon::Aperture, "icon menu");
+	iconMenu->setMenuItemHeight(27);
+	iconMenu->addAction(ALIcon::AweSomeIcon::BoxCheck, "sort", QKeySequence::SelectAll);
+
+
+	/// toolBar
 	const auto toolBar = new CALToolBar(tr("Toolbar"), this);
 	toolBar->setAllowedAreas(Qt::TopToolBarArea | Qt::BottomToolBarArea);
 	toolBar->setToolBarSpacing(3);
@@ -55,7 +71,7 @@ void MainWindow::initEdgeLayout() {
 	toolbutton3->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	toolbutton3->setText("Bluetooth");
 	toolBar->addWidget(toolbutton3);
-	this->addToolBar(Qt::BottomToolBarArea, toolBar);
+	this->addToolBar(Qt::TopToolBarArea, toolBar);
 }
 
 void MainWindow::initContent() {
@@ -65,6 +81,8 @@ void MainWindow::initContent() {
 	addPageNode(m_card->windowTitle(), m_card, ALIcon::AweSomeIcon::Cards);
 	m_popup = new E_Popup(this);
 	addPageNode(m_popup->windowTitle(), m_popup, ALIcon::AweSomeIcon::WindowMaximize);
+	m_icon = new E_Icon(this);
+	addPageNode(m_icon->windowTitle(), m_icon, 99, ALIcon::AweSomeIcon::FontCase);
 
 	m_about = new E_About;
 	QString aboutKey{};

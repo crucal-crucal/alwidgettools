@@ -81,7 +81,7 @@ void CALMenuStyle::drawControl(const ControlElement element, const QStyleOption*
 					// check绘制
 					if (mopt->menuHasCheckableItems) {
 						painter->save();
-						painter->setPen(!mopt->state.testFlag(QStyle::State_Enabled) ? Qt::gray : Qt::white);
+						painter->setPen(!mopt->state.testFlag(QStyle::State_Enabled) ? Qt::gray : m_themeMode == ALThemeType::Light ? Qt::black : Qt::white);
 						QFont iconFont("CALAwesome");
 						iconFont.setPixelSize(m_menuItemHeight * 0.57); // NOLINT
 						painter->setFont(iconFont);

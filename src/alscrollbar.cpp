@@ -153,6 +153,7 @@ CALScrollBar::CALScrollBar(QWidget* parent): QScrollBar(parent), d_ptr(new CALSc
 	d->speedLimit = 20;
 	d->targetMaximum = 0;
 	d->isAnimation = false;
+	d->contextMenuFlags = CALScrollBar::HasIcon;
 	connect(this, &CALScrollBar::rangeChanged, d, &CALScrollBarPrivate::slotRangeChanged);
 	const auto scrollBarStyle = new CALScrollBarStyle(style());
 	scrollBarStyle->setScrollBar(this);

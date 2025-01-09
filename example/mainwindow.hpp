@@ -9,6 +9,7 @@ class E_BaseComponents;
 class E_Settings;
 class E_Card;
 class E_Popup;
+class E_Icon;
 
 class MainWindow final : public CALMainWindow {
 	Q_OBJECT
@@ -29,4 +30,5 @@ private:
 	E_Card* m_card{ nullptr };
 	E_Popup* m_popup{ nullptr };
 	E_About* m_about{ nullptr };
+	E_Icon* m_icon{ nullptr };
 };

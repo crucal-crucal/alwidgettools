@@ -84,7 +84,7 @@ QAction* CALMenu::addAction(const QString& text) {
 QAction* CALMenu::addAction(const ALIcon::AweSomeIcon& icon, const QString& text) {
 	const auto action = new QAction(text, this);
 	if (icon != ALIcon::AweSomeIcon::None) {
-		action->setProperty("CALconType", QChar(static_cast<unsigned short>(icon)));
+		action->setProperty("CALIconType", QChar(static_cast<unsigned short>(icon)));
 	}
 	QMenu::addAction(action);
 	return action;
