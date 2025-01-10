@@ -25,7 +25,7 @@ public:
 	 * @param policy \see \enum ALDialogPolicy::ShowPolicy
 	 * @param enabled 是否开启
 	 */
-	void setShowPolicy(const ALDialogPolicy::ShowPolicy& policy, bool enabled);
+	void setShowPolicy(const ALDialogPolicy::ShowPolicy& policy, bool enabled = true);
 
 	/**
 	 * @brief 当前弹窗显示策略

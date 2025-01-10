@@ -10,8 +10,19 @@ al_initialize_build_flags()
 
 # Gather all source and header files
 # 收集所有源文件和头文件
-file(GLOB ORIGIN *.hpp *.cpp)
-file(GLOB INCLUDE include/public/*.hpp)
+file(GLOB ORIGIN
+        core/*.cpp
+        dialogs/*.cpp
+        theme/*.cpp
+        widgets/*.cpp
+)
+file(GLOB INCLUDE
+        include/public/al/*.hpp
+        include/public/core/*.hpp
+        include/public/dialogs/*.hpp
+        include/public/theme/*.hpp
+        include/public/widgets/*.hpp
+)
 file(GLOB PRIVATE_INCLUDE include/private/*.hpp)
 file(GLOB COMPONENTS components/*.hpp components/*.cpp)
 
@@ -39,14 +50,18 @@ endif ()
 
 # Add include directories for public, private, and component headers
 # 设置包含目录（公共、私有和组件头文件）
-include_directories(include/public)
+include_directories(include/public/al)
+include_directories(include/public/core)
+include_directories(include/public/dialogs)
+include_directories(include/public/theme)
+include_directories(include/public/widgets)
 include_directories(include/private)
 include_directories(components)
 
 # Define the library target (either static or shared based on the LIB_TYPE variable)
 # 定义库目标（根据 LIB_TYPE 选择是静态库还是动态库）
 add_library(${TARGET_NAME} ${LIB_TYPE}
-        include/public/alwidgettoolsdef.hpp
+        include/public/al/alwidgettoolsdef.hpp
         ${SOURCES}
 )
 
@@ -76,7 +91,11 @@ target_compile_definitions(${TARGET_NAME} PRIVATE CALWIDGETTOOLS_LIB)
 
 # Define the export headers and resource file to be installed
 # 定义需要安装的头文件和资源文件
-file(GLOB EXPORT_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/include/public/*.hpp)
+file(GLOB EXPORT_AL_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/include/public/al/*.hpp)
+file(GLOB EXPORT_CORE_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/include/public/core/*.hpp)
+file(GLOB EXPORT_DIALOGS_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/include/public/dialogs/*.hpp)
+file(GLOB EXPORT_THEME_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/include/public/theme/*.hpp)
+file(GLOB EXPORT_WIDGETS_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/include/public/widgets/*.hpp)
 set(EXPORT_RESOURCE_FILE ${CMAKE_SOURCE_DIR}/resource/alwidgettools.rcc)
 
 # Set the include directories for the target, with proper interface handling for build and installation
@@ -98,9 +117,11 @@ install(TARGETS ${TARGET_NAME}
 
 # Install the public headers
 # 安装公共头文件
-install(FILES ${EXPORT_HEADERS}
-        DESTINATION include
-)
+install(FILES ${EXPORT_AL_HEADERS} DESTINATION include/al)
+install(FILES ${EXPORT_CORE_HEADERS} DESTINATION include/core)
+install(FILES ${EXPORT_DIALOGS_HEADERS} DESTINATION include/dialogs)
+install(FILES ${EXPORT_THEME_HEADERS} DESTINATION include/theme)
+install(FILES ${EXPORT_WIDGETS_HEADERS} DESTINATION include/widgets)
 
 # Install the resource file (e.g., Qt .rcc file)
 # 安装资源文件（例如 Qt 的 .rcc 文件

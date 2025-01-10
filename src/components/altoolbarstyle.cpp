@@ -7,7 +7,7 @@
 #include <QToolButton>
 
 #include "althememanager.hpp"
-#include "../include/public/altoolbar.hpp"
+#include "altoolbar.hpp"
 
 /**
  * @brief \class CALToolBarStyle
