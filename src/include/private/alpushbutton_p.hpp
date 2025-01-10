@@ -27,7 +27,7 @@ private:
 	bool isPressed{ false };
 	CALPushButton::ButtonStyles customButtonStyles{ CALPushButton::ButtonStyle::Normal };
 	int shadowBorderWidth{ 3 };
-	int borderRadius{};
+	qreal borderRadius{};
 	qreal borderWidth{};
 	QColor lightTextColor{};
 	QColor darkTextColor{};

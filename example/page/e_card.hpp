@@ -11,4 +11,6 @@ public:
 
 private:
 	void initLCDNumberArea();
+	void initPromotionCardArea();
+	void initPromotionViewArea();
 };

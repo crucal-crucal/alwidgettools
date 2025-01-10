@@ -107,7 +107,7 @@ private:
 	ALMessageBarType::PositionPolicy policy{};
 	ALMessageBarType::MessageLevel messageMode{};
 	qint64 currentWinID{};
-	int borderRadius{};
+	qreal borderRadius{};
 	qreal opacity{};
 	qint64 createTime{};
 	QString title{};

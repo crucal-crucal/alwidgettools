@@ -10,7 +10,7 @@ class CALWIDGETTOOLS_EXPORT CALPushButton : public QPushButton {
 	Q_OBJECT
 	Q_DISABLE_COPY(CALPushButton)
 	Q_DECLARE_PRIVATE(CALPushButton)
-	Q_PROPERTY(int borderRadius READ getBorderRadius WRITE setBorderRadius NOTIFY sigBorderRadiusChanged)
+	Q_PROPERTY(qreal borderRadius READ getBorderRadius WRITE setBorderRadius NOTIFY sigBorderRadiusChanged)
 	Q_PROPERTY(QColor lightDefaultColor READ getLightDefaultColor WRITE setLightDefaultColor NOTIFY sigLightDefaultColorChanged)
 	Q_PROPERTY(QColor darkDefaultColor READ getDarkDefaultColor WRITE setDarkDefaultColor NOTIFY sigDarkDefaultColorChanged)
 	Q_PROPERTY(QColor lightHoverColor READ getLightHoverColor WRITE setLightHoverColor NOTIFY sigLightHoverColorChanged)
@@ -37,8 +37,8 @@ public:
 	void setButtonStyles(const ButtonStyles& buttonStyles);
 	[[nodiscard]] ButtonStyles getButtonStyles() const;
 
-	void setBorderRadius(int borderRadius);
-	[[nodiscard]] int getBorderRadius() const;
+	void setBorderRadius(qreal borderRadius);
+	[[nodiscard]] qreal getBorderRadius() const;
 
 	void setLightDefaultColor(const QColor& defaultColor);
 	[[nodiscard]] QColor getLightDefaultColor() const;

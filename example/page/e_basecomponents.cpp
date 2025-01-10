@@ -26,7 +26,7 @@ E_BaseComponents::E_BaseComponents(QWidget* parent): E_BasePage(parent) {
 	createCustomWidget("some thing...");
 
 	const auto centralWidget = new QWidget(this);
-	centralWidget->setWindowTitle("CALBaseComponents");
+	centralWidget->setWindowTitle(this->windowTitle());
 	mainVLayout = new QVBoxLayout(centralWidget);
 	mainVLayout->setContentsMargins(0, 0, 0, 0);
 	mainVLayout->setSpacing(5);
@@ -106,7 +106,7 @@ void E_BaseComponents::initToggleSwitchArea() {
 	toggleSwitchHLayout->addWidget(toggleSwitch);
 	toggleSwitchHLayout->addStretch();
 	const auto toggleSwitchDisable = new CALToggleSwitch(this);
-	const auto toggleSwitchDisableText = new CALText("Disable", this);
+	const auto toggleSwitchDisableText = new CALText(tr("Disable"), this);
 	toggleSwitchDisableText->setTextPixelSize(15);
 	connect(toggleSwitchDisable, &CALToggleSwitch::sigToggleChanged, toggleSwitch, &CALToggleSwitch::setDisabled);
 	toggleSwitchHLayout->addWidget(toggleSwitchDisableText);
@@ -144,7 +144,7 @@ void E_BaseComponents::initMessageBarArea() {
 	messageBarAreaHLayout->addWidget(infoButton);
 	messageBarAreaHLayout->addStretch();
 	const auto messageBarDisable = new CALToggleSwitch(this);
-	const auto messageBarDisableText = new CALText("Disable", this);
+	const auto messageBarDisableText = new CALText(tr("Disable"), this);
 	messageBarDisableText->setTextPixelSize(15);
 	connect(messageBarDisable, &CALToggleSwitch::sigToggleChanged, this, [=](const bool toggled) {
 		successButton->setDisabled(toggled);
@@ -202,7 +202,7 @@ void E_BaseComponents::initCircularProgressArea() {
 	circularProgressHLayout->addWidget(circularProgressType);
 	circularProgressHLayout->addStretch();
 	const auto circularProgressDisable = new CALToggleSwitch(this);
-	const auto circularProgressDisableText = new CALText("Disable", this);
+	const auto circularProgressDisableText = new CALText(tr("Disable"), this);
 	circularProgressDisableText->setTextPixelSize(15);
 	connect(circularProgressDisable, &CALToggleSwitch::sigToggleChanged, circularProgress, &CALCircularProgress::setDisabled);
 	circularProgressHLayout->addWidget(circularProgressDisableText);
@@ -223,7 +223,7 @@ void E_BaseComponents::initMultiSelectComboBoxArea() {
 	multiSelectComboBoxHLayout->addWidget(multiSelectComboBox);
 	multiSelectComboBoxHLayout->addStretch();
 	const auto multiSelectComboBoxDisable = new CALToggleSwitch(this);
-	const auto multiSelectComboBoxDisableText = new CALText("Disable", this);
+	const auto multiSelectComboBoxDisableText = new CALText(tr("Disable"), this);
 	multiSelectComboBoxDisableText->setTextPixelSize(15);
 	connect(multiSelectComboBoxDisable, &CALToggleSwitch::sigToggleChanged, multiSelectComboBox, &CALMultiSelectComboBox::setDisabled);
 	multiSelectComboBoxHLayout->addWidget(multiSelectComboBoxDisableText);
@@ -248,7 +248,7 @@ void E_BaseComponents::initSliderArea() {
 	sliderHLayout->addWidget(slider);
 	sliderHLayout->addStretch();
 	const auto sliderDisable = new CALToggleSwitch(this);
-	const auto sliderDisableText = new CALText("Disable", this);
+	const auto sliderDisableText = new CALText(tr("Disable"), this);
 	sliderDisableText->setTextPixelSize(15);
 	connect(sliderDisable, &CALToggleSwitch::sigToggleChanged, slider, &CALSlider::setDisabled);
 	sliderHLayout->addWidget(sliderDisableText);
@@ -298,7 +298,7 @@ void E_BaseComponents::initProgressBarArea() {
 	progressBarHLayout->addWidget(progressBarType);
 	progressBarHLayout->addStretch();
 	const auto progressBarDisable = new CALToggleSwitch(this);
-	const auto progressBarDisableText = new CALText("Disable", this);
+	const auto progressBarDisableText = new CALText(tr("Disable"), this);
 	progressBarDisableText->setTextPixelSize(15);
 	connect(progressBarDisable, &CALToggleSwitch::sigToggleChanged, progressBar, &CALProgressBar::setDisabled);
 	progressBarHLayout->addWidget(progressBarDisableText);
@@ -318,7 +318,7 @@ void E_BaseComponents::initCheckBoxArea() {
 	checkBoxHLayout->addWidget(checkBox);
 	checkBoxHLayout->addStretch();
 	const auto checkBoxDisable = new CALToggleSwitch(this);
-	const auto checkBoxDisableText = new CALText("Disable", this);
+	const auto checkBoxDisableText = new CALText(tr("Disable"), this);
 	checkBoxDisableText->setTextPixelSize(15);
 	connect(checkBoxDisable, &CALToggleSwitch::sigToggleChanged, checkBox, &CALSlider::setDisabled);
 	checkBoxHLayout->addWidget(checkBoxDisableText);
@@ -338,7 +338,7 @@ void E_BaseComponents::initRadioButtonArea() {
 	radioButtonHLayout->addWidget(radioButton);
 	radioButtonHLayout->addStretch();
 	const auto radioButtonDisable = new CALToggleSwitch(this);
-	const auto radioButtonDisableText = new CALText("Disable", this);
+	const auto radioButtonDisableText = new CALText(tr("Disable"), this);
 	radioButtonDisableText->setTextPixelSize(15);
 	connect(radioButtonDisable, &CALToggleSwitch::sigToggleChanged, radioButton, &CALRadioButton::setDisabled);
 	radioButtonHLayout->addWidget(radioButtonDisableText);
@@ -358,7 +358,7 @@ void E_BaseComponents::initSpinBoxArea() {
 	spinBoxHLayout->addWidget(spinBox);
 	spinBoxHLayout->addStretch();
 	const auto spinBoxDisable = new CALToggleSwitch(this);
-	const auto spinBoxDisableText = new CALText("Disable", this);
+	const auto spinBoxDisableText = new CALText(tr("Disable"), this);
 	spinBoxDisableText->setTextPixelSize(15);
 	connect(spinBoxDisable, &CALToggleSwitch::sigToggleChanged, spinBox, &CALSpinBox::setDisabled);
 	spinBoxHLayout->addWidget(spinBoxDisableText);
@@ -378,7 +378,7 @@ void E_BaseComponents::initDoubleSpinBoxArea() {
 	doubleSpinBoxHLayout->addWidget(doubleSpinBox);
 	doubleSpinBoxHLayout->addStretch();
 	const auto doubleSpinBoxDisable = new CALToggleSwitch(this);
-	const auto doubleSpinBoxDisableText = new CALText("Disable", this);
+	const auto doubleSpinBoxDisableText = new CALText(tr("Disable"), this);
 	doubleSpinBoxDisableText->setTextPixelSize(15);
 	connect(doubleSpinBoxDisable, &CALToggleSwitch::sigToggleChanged, doubleSpinBox, &CALDoubleSpinBox::setDisabled);
 	doubleSpinBoxHLayout->addWidget(doubleSpinBoxDisableText);

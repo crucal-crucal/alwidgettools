@@ -29,22 +29,22 @@ void E_BasePage::createCustomWidget(const QString& desText) {
 	documentationButton->setFixedHeight(35);
 	documentationButton->setIsTransparent(false);
 	documentationButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-	documentationButton->setText(tr("Documentation"));
+	documentationButton->setText("Documentation");
 	documentationButton->setAweSomeIcon(ALIcon::AweSomeIcon::FileDoc);
 	const auto documentationMenu = new CALMenu(this);
-	documentationMenu->addAction(ALIcon::AweSomeIcon::CardsBlank, tr("CardsBlank"));
-	documentationMenu->addAction(ALIcon::AweSomeIcon::EarthAmericas, tr("EarthAmericas"));
+	documentationMenu->addAction(ALIcon::AweSomeIcon::CardsBlank, "CardsBlank");
+	documentationMenu->addAction(ALIcon::AweSomeIcon::EarthAmericas, "EarthAmericas");
 	documentationButton->setMenu(documentationMenu);
 
 	const auto sourceButton = new CALAwesomeToolButton(this);
 	sourceButton->setFixedHeight(35);
 	sourceButton->setIsTransparent(false);
 	sourceButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-	sourceButton->setText(tr("Source"));
+	sourceButton->setText("Source");
 	sourceButton->setAweSomeIcon(ALIcon::AweSomeIcon::NfcSymbol);
 	const auto sourceMenu = new CALMenu(this);
-	sourceMenu->addAction(ALIcon::AweSomeIcon::FireBurner, tr("FireBurner"));
-	sourceMenu->addAction(ALIcon::AweSomeIcon::Galaxy, tr("Galaxy"));
+	sourceMenu->addAction(ALIcon::AweSomeIcon::FireBurner, "FireBurner");
+	sourceMenu->addAction(ALIcon::AweSomeIcon::Galaxy, "Galaxy");
 	sourceButton->setMenu(sourceMenu);
 
 	const auto themeButton = new CALAwesomeToolButton(this);

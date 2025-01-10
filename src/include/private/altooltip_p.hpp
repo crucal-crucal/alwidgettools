@@ -35,12 +35,12 @@ private:
 	QWidget* customWidget{ nullptr };
 	ALThemeType::ThemeMode themeMode{};
 	int shadowBorderWidth{ 6 };
-	int borderRadius{};
 	int displayMsec{};
 	int showDelayMsec{};
 	int hideDelayMsec{};
 	QString toolTip{};
 	qreal opacity{};
+	qreal borderRadius{};
 
 	void doShowAnimation();
 };

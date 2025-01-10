@@ -7,6 +7,7 @@
 #include "alapplication.hpp"
 #include "alcombobox.hpp"
 #include "almainwindow.hpp"
+#include "almessagebar.hpp"
 #include "alradiobutton.hpp"
 #include "alscrollpagearea.hpp"
 #include "altext.hpp"
@@ -15,10 +16,10 @@
 
 E_Settings::E_Settings(QWidget* parent): E_BasePage(parent) {
 	m_mainWindow = qobject_cast<CALMainWindow*>(parent);
-	setWindowTitle("Settings");
+	setWindowTitle(tr("Settings"));
 
 	const auto centralWidget = new QWidget(this);
-	centralWidget->setWindowTitle("Settings");
+	centralWidget->setWindowTitle(this->windowTitle());
 	mainVLayout = new QVBoxLayout(centralWidget);
 	mainVLayout->setContentsMargins(0, 0, 0, 0);
 	mainVLayout->setSpacing(5);
@@ -44,7 +45,7 @@ void E_Settings::initThemeSwitchArea() {
 		return;
 	}
 
-	const auto themeText = new CALText("theme", this);
+	const auto themeText = new CALText(tr("theme"), this);
 	themeText->setWordWrap(false);
 	themeText->setTextPixelSize(18);
 	const auto themeComboBox = new CALComboBox(this);
@@ -54,7 +55,7 @@ void E_Settings::initThemeSwitchArea() {
 
 	const auto themeSwitchArea = new CALScrollPageArea(this);
 	const auto themeSwitchHLayout = new QHBoxLayout(themeSwitchArea);
-	const auto themeSwitchText = new CALText("themeSwitch", this);
+	const auto themeSwitchText = new CALText(tr("themeSwitch"), this);
 	themeSwitchText->setWordWrap(false);
 	themeSwitchText->setTextPixelSize(15);
 	themeSwitchHLayout->addWidget(themeSwitchText);
@@ -63,9 +64,11 @@ void E_Settings::initThemeSwitchArea() {
 	connect(themeComboBox, &CALComboBox::currentTextChanged, this, [=](const QString& type) {
 		if (metaEnum.isValid()) {
 			if (const int value = metaEnum.keyToValue(type.toLocal8Bit().constData()); value != -1) {
-				ALTheme->setThemeMode(static_cast<ALThemeType::ThemeMode>(value));
+				const auto mode = static_cast<ALThemeType::ThemeMode>(value);
+				ALTheme->setThemeMode(mode);
+				CALMessageBar::success(tr("theme switch"), mode == ALThemeType::Light ? tr("light theme") : tr("black theme"), 2000, ALMessageBarType::Top);
 			} else {
-				qWarning() << "Invalid theme mode: " << type;
+				CALMessageBar::error(tr("theme switch"), tr("Switch error value == -1"), 2000, ALMessageBarType::Top);
 			}
 		}
 	});
@@ -88,19 +91,22 @@ void E_Settings::initThemeSwitchArea() {
 }
 
 void E_Settings::initMicaSwitchArea() {
-	const auto helperText = new CALText("app settings", this);
+	const auto helperText = new CALText(tr("app settings"), this);
 	helperText->setWordWrap(false);
 	helperText->setTextPixelSize(18);
 	const auto micaSwitchButton = new CALToggleSwitch(this);
 	const auto micaSwitchArea = new CALScrollPageArea(this);
 	const auto micaSwitchHLayout = new QHBoxLayout(micaSwitchArea);
-	const auto micaSwitchText = new CALText("micaSwitch(cross-platform)", this);
+	const auto micaSwitchText = new CALText(tr("micaSwitch(cross-platform)"), this);
 	micaSwitchText->setWordWrap(false);
 	micaSwitchText->setTextPixelSize(15);
 	micaSwitchHLayout->addWidget(micaSwitchText);
 	micaSwitchHLayout->addStretch();
 	micaSwitchHLayout->addWidget(micaSwitchButton);
-	connect(micaSwitchButton, &CALToggleSwitch::sigToggleChanged, alApp, &CALApplication::setIsEnableMica);
+	connect(micaSwitchButton, &CALToggleSwitch::sigToggleChanged, this, [=](const bool toggled) {
+		alApp->setIsEnableMica(toggled);
+		CALMessageBar::success(tr("mica switch"), toggled ? tr("open mica mode success") : tr("close mica mode success"), 2000, ALMessageBarType::Top);
+	});
 
 	mainVLayout->addSpacing(15);
 	mainVLayout->addWidget(helperText);
@@ -134,6 +140,7 @@ void E_Settings::initNavigationDisplayModeArea() {
 		connect(radioButton, &CALRadioButton::toggled, this, [=](const bool checked) {
 			if (checked) {
 				m_mainWindow->setNavigationDisplayMode(static_cast<ALNavigationType::NavigationDisplayMode>(value));
+				CALMessageBar::success(tr("Navigation Mode switch"), tr("switch to ") + radioButton->text() + tr(" mode success"), 2000, ALMessageBarType::Top);
 			}
 		});
 

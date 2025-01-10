@@ -162,7 +162,7 @@ CALToolTip::CALToolTip(QWidget* parent): QWidget(parent), d_ptr(new CALToolTipPr
 
 CALToolTip::~CALToolTip() = default;
 
-void CALToolTip::setBorderRadius(const int borderRadius) {
+void CALToolTip::setBorderRadius(const qreal borderRadius) {
 	Q_D(CALToolTip);
 
 	if (d->borderRadius != borderRadius) {
@@ -171,7 +171,7 @@ void CALToolTip::setBorderRadius(const int borderRadius) {
 	}
 }
 
-int CALToolTip::getBorderRadius() const {
+qreal CALToolTip::getBorderRadius() const {
 	Q_D(const CALToolTip);
 
 	return d->borderRadius;

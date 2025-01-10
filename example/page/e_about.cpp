@@ -7,8 +7,8 @@
 #include "altext.hpp"
 
 E_About::E_About(QWidget* parent): CALWidget(parent) {
-	setWindowTitle("about...");
-	setWindowIcon(QIcon(":/image/crucal.png"));
+	setWindowTitle(tr("about..."));
+	setWindowIcon(QIcon(":alwidgettools/image/crucal.png"));
 	setWindowModality(Qt::ApplicationModal);
 	setIsStayTop(true);
 	setWindowButtonFlags(ALAppBarType::CloseButtonHint);
@@ -30,7 +30,7 @@ void E_About::initImageCardArea() {
 	const auto pixCard = new CALImageCard(this);
 	pixCard->setFixedSize(60, 60);
 	pixCard->setIsPreserveAspectCrop(false);
-	pixCard->setCardImage(QImage(":/image/crucal.png"));
+	pixCard->setCardImage(QImage(":alwidgettools/image/crucal.png"));
 	const auto pixCardVLayout = new QVBoxLayout;
 	pixCardVLayout->addWidget(pixCard);
 	pixCardVLayout->addStretch();
@@ -46,10 +46,10 @@ void E_About::initTextArea() {
 	versionText->setWordWrap(false);
 	versionText->setTextPixelSize(18);
 
-	const auto supportText = new CALText("Windows 10/11, Linux, macOS", this);
+	const auto supportText = new CALText(tr("Windows 10/11, Linux, macOS"), this);
 	supportText->setWordWrap(false);
 	supportText->setTextPixelSize(14);
-	const auto contactText = new CALText("author: crucal", this);
+	const auto contactText = new CALText(tr("author: crucal"), this);
 	contactText->setWordWrap(false);
 	contactText->setTextPixelSize(14);
 

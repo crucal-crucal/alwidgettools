@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="example/">
+        <file>control/mica.jpg</file>
+        <file>promotion/promotion1.jpg</file>
+        <file>promotion/promotion2.jpg</file>
+        <file>promotion/promotion3.jpg</file>
+        <file>promotion/promotion4.jpg</file>
+        <file>promotion/promotion5.jpg</file>
+        <file>promotion/promotion6.jpg</file>
+        <file>translation/zh_CN.qm</file>
+    </qresource>
+</RCC>

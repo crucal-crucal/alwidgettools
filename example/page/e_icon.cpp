@@ -27,7 +27,7 @@ E_Icon::E_Icon(QWidget* parent): E_BasePage(parent) {
 		if (iconName.isEmpty()) {
 			return;
 		}
-		qApp->clipboard()->setText(iconName); // NOLINT
+		QApplication::clipboard()->setText(iconName);
 		CALMessageBar::success(tr("copy finish"), iconName + tr("Copied to Clipboard"), 2000, ALMessageBarType::Top, this);
 	});
 	m_iconModel = new E_IconModel(this);
@@ -43,7 +43,7 @@ E_Icon::E_Icon(QWidget* parent): E_BasePage(parent) {
 	connect(m_searchEdit, &CALLineEdit::sigFocusIn, this, &E_Icon::slotSearchEditTextChanged);
 
 	const auto centralWidget = new QWidget(this);
-	centralWidget->setWindowTitle("CALIcon");
+	centralWidget->setWindowTitle(this->windowTitle());
 	const auto centralWidgetVLayout = new QVBoxLayout(centralWidget);
 	centralWidgetVLayout->setContentsMargins(0, 0, 0, 0);
 	centralWidgetVLayout->addSpacing(13);

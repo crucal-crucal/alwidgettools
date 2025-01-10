@@ -20,7 +20,7 @@ public:
 
 	void setThemeMode(const ALThemeType::ThemeMode& mode);
 	[[nodiscard]] ALThemeType::ThemeMode getThemeMode() const;
-	void drawEffectShadow(QPainter* painter, const QRect& widgetRect, const int& shadowBorderWidth, const int& borderRadius);
+	void drawEffectShadow(QPainter* painter, const QRect& widgetRect, const int& shadowBorderWidth, const qreal& borderRadius);
 	void setThemeColor(const ALThemeType::ThemeMode& mode, const ALThemeType::ThemeColor& color, const QColor& newColor);
 	[[nodiscard]] const QColor& getThemeColor(const ALThemeType::ThemeMode& mode, const ALThemeType::ThemeColor& color) const;
 

@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/">
+    <qresource prefix="alwidgettools/">
         <file>font/ALAwesome.ttf</file>
         <file>font/segoe_slboot_EX.ttf</file>
         <file>font/segoen_slboot_EX.ttf</file>

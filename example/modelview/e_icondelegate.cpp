@@ -1,6 +1,7 @@
 ﻿#include "e_icondelegate.hpp"
 
 #include <QPainter>
+#include <QDebug>
 
 #include "althememanager.hpp"
 
@@ -42,15 +43,15 @@ void E_IconDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option
 	textFont.setPixelSize(13);
 	painter->setFont(textFont);
 	const qreal rowTextWidth = option.rect.width() * 0.8;
-	if (const int subTotleRow = static_cast<int>(painter->fontMetrics().horizontalAdvance(iconName) / rowTextWidth); subTotleRow > 0) {
+	if (const int subTitleRow = static_cast<int>(painter->fontMetrics().horizontalAdvance(iconName) / rowTextWidth); subTitleRow > 0) {
 		QString subTitleText = iconName;
-		for (int i = 0; i < subTotleRow + 1; ++i) {
+		for (int i = 0; i < subTitleRow + 1; ++i) {
 			QString text = painter->fontMetrics().elidedText(subTitleText, Qt::ElideRight, static_cast<int>(rowTextWidth));
-			if (text.right(3).contains("…")) {
+			if (text.rightRef(3).contains("…")) {
 				text = text.replace("…", subTitleText.mid(text.length() - 1, 1));
 			}
 			subTitleText.remove(0, text.length());
-			painter->drawText(option.rect.x() + option.rect.width() / 2 - painter->fontMetrics().horizontalAdvance(text) / 2, option.rect.y() + option.rect.height() - 10 * (subTotleRow + 1 - i), text);
+			painter->drawText(option.rect.x() + option.rect.width() / 2 - painter->fontMetrics().horizontalAdvance(text) / 2, option.rect.y() + option.rect.height() - 10 * (subTitleRow + 1 - i), text);
 		}
 	} else {
 		painter->drawText(option.rect.x() + option.rect.width() / 2 - painter->fontMetrics().horizontalAdvance(iconName) / 2, option.rect.y() + option.rect.height() - 20, iconName);

@@ -27,4 +27,8 @@ add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy
         ${CMAKE_SOURCE_DIR}/resource/alwidgettools.rcc
         $<TARGET_FILE_DIR:${TARGET_NAME}>/alwidgettools.rcc
+        COMMAND ${CMAKE_COMMAND} -E echo "Copying example.rcc file from ${CMAKE_SOURCE_DIR}/example/resource/example.rcc to $<TARGET_FILE_DIR:${TARGET_NAME}>/example.rcc"
+        COMMAND ${CMAKE_COMMAND} -E copy
+        ${CMAKE_SOURCE_DIR}/example/resource/example.rcc
+        $<TARGET_FILE_DIR:${TARGET_NAME}>/example.rcc
 )

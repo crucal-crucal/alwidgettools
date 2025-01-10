@@ -67,14 +67,14 @@ CALPushButton::ButtonStyles CALPushButton::getButtonStyles() const {
 	return d_func()->customButtonStyles;
 }
 
-void CALPushButton::setBorderRadius(const int borderRadius) {
+void CALPushButton::setBorderRadius(const qreal borderRadius) {
 	Q_D(CALPushButton);
 
 	d->borderRadius = borderRadius;
 	emit sigBorderRadiusChanged();
 }
 
-int CALPushButton::getBorderRadius() const {
+qreal CALPushButton::getBorderRadius() const {
 	return d_func()->borderRadius;
 }
 

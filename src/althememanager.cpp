@@ -133,7 +133,7 @@ ALThemeType::ThemeMode CALThemeManager::getThemeMode() const {
 	return d_func()->themeMode;
 }
 
-void CALThemeManager::drawEffectShadow(QPainter* painter, const QRect& widgetRect, const int& shadowBorderWidth, const int& borderRadius) {
+void CALThemeManager::drawEffectShadow(QPainter* painter, const QRect& widgetRect, const int& shadowBorderWidth, const qreal& borderRadius) {
 	Q_D(CALThemeManager);
 
 	painter->save();

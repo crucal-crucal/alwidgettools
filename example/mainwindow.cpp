@@ -32,7 +32,7 @@ MainWindow::~MainWindow() = default;
 void MainWindow::initWindow() {
 	resize(1200, 700);
 	setWindowTitle("alwidgettools");
-	setWindowIcon(QIcon(":/image/crucal.png"));
+	setWindowIcon(QIcon(":alwidgettools/image/crucal.png"));
 }
 
 void MainWindow::initEdgeLayout() {
@@ -47,10 +47,10 @@ void MainWindow::initEdgeLayout() {
 	this->setCustomWidget(ALAppBarType::MiddleArea, customWidget);
 	this->setCustomWidgetMaximumWidth(500);
 
-	menuBar->addAweSomeIconAction(ALIcon::AweSomeIcon::AtomSimple, "action menu");
-	const auto iconMenu = menuBar->addMenu(ALIcon::AweSomeIcon::Aperture, "icon menu");
+	menuBar->addAweSomeIconAction(ALIcon::AweSomeIcon::AtomSimple, tr("action menu"));
+	const auto iconMenu = menuBar->addMenu(ALIcon::AweSomeIcon::Aperture, tr("icon menu"));
 	iconMenu->setMenuItemHeight(27);
-	iconMenu->addAction(ALIcon::AweSomeIcon::BoxCheck, "sort", QKeySequence::SelectAll);
+	iconMenu->addAction(ALIcon::AweSomeIcon::BoxCheck, tr("sort"), QKeySequence::SelectAll);
 
 
 	/// toolBar
@@ -69,7 +69,7 @@ void MainWindow::initEdgeLayout() {
 	const auto toolbutton3 = new CALAwesomeToolButton(this);
 	toolbutton3->setAweSomeIcon(ALIcon::AweSomeIcon::Bluetooth);
 	toolbutton3->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-	toolbutton3->setText("Bluetooth");
+	toolbutton3->setText(tr("Bluetooth"));
 	toolBar->addWidget(toolbutton3);
 	this->addToolBar(Qt::TopToolBarArea, toolBar);
 }

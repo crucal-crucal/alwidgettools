@@ -1,4 +1,8 @@
 ﻿#include <QApplication>
+#include <QDir>
+#include <QResource>
+#include <QTranslator>
+#include <QDebug>
 
 #include "alapplication.hpp"
 #include "mainwindow.hpp"
@@ -10,15 +14,30 @@ int main(int argc, char* argv[]) {
 	QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 	QGuiApplication::setHighDpiScaleFactorRoundingPolicy(Qt::HighDpiScaleFactorRoundingPolicy::PassThrough);
 #else
-	//根据实际屏幕缩放比例更改
+	// 根据实际屏幕缩放比例更改
 	qputenv("QT_SCALE_FACTOR", "1.5");
 #endif
 #endif
 
-	QApplication a(argc, argv);
+	QApplication app(argc, argv);
 	alApp->init();
+	/// register rcc
+	const QString applicationDirPath = QApplication::applicationDirPath();
+	QResource::registerResource(applicationDirPath + QDir::separator() + "example.rcc");
+	/// load translation
+	const auto exampleTranslator = new QTranslator;
+	exampleTranslator->load(":example/translation/zh_CN.qm");
+	QApplication::installTranslator(exampleTranslator);
+	/// mica Image
+	alApp->setMicaImagePath(":example/control/mica.jpg");
 
 	MainWindow widget;
+	QObject::connect(&widget, &MainWindow::destroyed, [=]() {
+		if (exampleTranslator) {
+			exampleTranslator->deleteLater();
+		}
+	});
+
 	widget.show();
 
 	return QApplication::exec();

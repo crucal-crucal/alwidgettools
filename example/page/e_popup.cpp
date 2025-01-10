@@ -14,7 +14,7 @@ E_Popup::E_Popup(QWidget* parent): E_BasePage(parent) {
 	createCustomWidget("some thing...");
 
 	const auto centralWidget = new QWidget(this);
-	centralWidget->setWindowTitle("CALPopup");
+	centralWidget->setWindowTitle(this->windowTitle());
 	mainVLayout = new QVBoxLayout(centralWidget);
 	mainVLayout->setContentsMargins(0, 0, 0, 0);
 	mainVLayout->setSpacing(5);

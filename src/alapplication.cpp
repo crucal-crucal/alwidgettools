@@ -132,10 +132,10 @@ void CALApplication::init() {
 	const QString applicationDirPath = QApplication::applicationDirPath();
 	QResource::registerResource(applicationDirPath + QDir::separator() + "alwidgettools.rcc");
 	QApplication::setAttribute(Qt::AA_DontCreateNativeWidgetSiblings);
-	QFontDatabase::addApplicationFont(":/font/ALAwesome.ttf");
-	QFontDatabase::addApplicationFont(":/font/segoe_slboot_EX.ttf");
-	QFontDatabase::addApplicationFont(":/font/segoen_slboot_EX.ttf");
-	d->translator->load(":/translation/zh_CN.qm");
+	QFontDatabase::addApplicationFont(":alwidgettools/font/ALAwesome.ttf");
+	QFontDatabase::addApplicationFont(":alwidgettools/font/segoe_slboot_EX.ttf");
+	QFontDatabase::addApplicationFont(":alwidgettools/font/segoen_slboot_EX.ttf");
+	d->translator->load(":alwidgettools/translation/zh_CN.qm");
 	QApplication::installTranslator(d->translator);
 
 	QFont font = QApplication::font();
@@ -206,7 +206,7 @@ CALApplication::CALApplication(QObject* parent): QObject(parent), d_ptr(new CALA
 	Q_D(CALApplication);
 
 	d->isEnableMica = false;
-	d->micaImagePath = ":/image/crucal.png";
+	d->micaImagePath = ":alwidgettools/image/crucal.png";
 	d->themeMode = ALTheme->getThemeMode();
 	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, d, &CALApplicationPrivate::slotThemeModeChanged);
 

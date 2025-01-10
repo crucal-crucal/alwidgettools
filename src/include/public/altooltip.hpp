@@ -12,10 +12,10 @@ class CALWIDGETTOOLS_EXPORT CALToolTip : public QWidget {
 	Q_OBJECT
 	Q_DISABLE_COPY(CALToolTip)
 	Q_DECLARE_PRIVATE(CALToolTip)
-	Q_PROPERTY(int borderRadius READ getBorderRadius WRITE setBorderRadius NOTIFY sigBorderRadiusChanged)
 	Q_PROPERTY(int displayMsec READ getDisplayMsec WRITE setDisplayMsec NOTIFY sigDisplayMsecChanged)
 	Q_PROPERTY(int showDelayMsec READ getShowDelayMsec WRITE setShowDelayMsec NOTIFY sigShowDelayMsecChanged)
 	Q_PROPERTY(int hideDelayMsec READ getHideDelayMsec WRITE setHideDelayMsec NOTIFY sigHideDelayMsecChanged)
+	Q_PROPERTY(qreal borderRadius READ getBorderRadius WRITE setBorderRadius NOTIFY sigBorderRadiusChanged)
 	Q_PROPERTY(QString toolTip READ getToolTip WRITE setToolTip NOTIFY sigToolTipChanged)
 	Q_PROPERTY(QWidget* customWidget READ getCustomWidget WRITE setCustomWidget NOTIFY sigCustomWidgetChanged)
 
@@ -23,8 +23,8 @@ public:
 	explicit CALToolTip(QWidget* parent = nullptr);
 	~CALToolTip() override;
 
-	void setBorderRadius(int borderRadius);
-	[[nodiscard]] int getBorderRadius() const;
+	void setBorderRadius(qreal borderRadius);
+	[[nodiscard]] qreal getBorderRadius() const;
 
 	void setDisplayMsec(int displayMsec);
 	[[nodiscard]] int getDisplayMsec() const;
