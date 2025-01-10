@@ -1,4 +1,4 @@
-﻿#include "include/public/altoolbar.hpp"
+﻿#include "altoolbar.hpp"
 
 #include <QLayout>
 #include <QPainter>

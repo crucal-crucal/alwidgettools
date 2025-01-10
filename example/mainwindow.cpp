@@ -2,8 +2,8 @@
 
 #include <QVBoxLayout>
 
-#include "alawesometoolbutton.hpp"
 #include "alcontentdialog.hpp"
+#include "alawesometoolbutton.hpp"
 #include "almenu.hpp"
 #include "almenubar.hpp"
 #include "altoolbar.hpp"

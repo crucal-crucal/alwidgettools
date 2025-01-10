@@ -5,9 +5,9 @@
 #include <QMetaEnum>
 #include <QMouseEvent>
 
+#include "alcolordialog.hpp"
 #include "alcheckbox.hpp"
 #include "alcircularprogress.hpp"
-#include "alcolordialog.hpp"
 #include "alcombobox.hpp"
 #include "aldoublespinbox.hpp"
 #include "almessagebar.hpp"

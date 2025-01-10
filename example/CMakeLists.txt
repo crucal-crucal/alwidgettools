@@ -8,7 +8,11 @@ set(EXAMPLE_SOURCE ${ORIGIN} ${PAGEORIGIN} ${MODELVIEWORIGIN})
 
 include_directories(page)
 include_directories(modelview)
-include_directories(${CMAKE_SOURCE_DIR}/src/include/public)
+include_directories(${CMAKE_SOURCE_DIR}/src/include/public/al)
+include_directories(${CMAKE_SOURCE_DIR}/src/include/public/core)
+include_directories(${CMAKE_SOURCE_DIR}/src/include/public/dialogs)
+include_directories(${CMAKE_SOURCE_DIR}/src/include/public/theme)
+include_directories(${CMAKE_SOURCE_DIR}/src/include/public/widgets)
 
 add_executable(${TARGET_NAME} ${EXAMPLE_SOURCE})
 target_link_libraries(${TARGET_NAME} Qt5::Widgets Qt5::Svg)

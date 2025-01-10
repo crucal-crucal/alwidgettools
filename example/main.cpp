@@ -1,11 +1,11 @@
 ﻿#include <QApplication>
+#include <QDebug>
 #include <QDir>
 #include <QResource>
 #include <QTranslator>
-#include <QDebug>
 
-#include "alapplication.hpp"
 #include "mainwindow.hpp"
+#include "alapplication.hpp"
 
 int main(int argc, char* argv[]) {
 #if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))

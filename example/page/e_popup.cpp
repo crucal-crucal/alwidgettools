@@ -2,9 +2,9 @@
 
 #include <QVBoxLayout>
 
+#include "alcolordialog.hpp"
 #include "alcalendar.hpp"
 #include "alcalendarpicker.hpp"
-#include "alcolordialog.hpp"
 #include "alpushbutton.hpp"
 #include "alscrollpagearea.hpp"
 #include "altext.hpp"
