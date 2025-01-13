@@ -4,6 +4,7 @@
 
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALPushButtonPrivate;
 
 class CALWIDGETTOOLS_EXPORT CALPushButton : public QPushButton {
@@ -99,3 +100,4 @@ protected:
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(CALPushButton::ButtonStyles)
+} // namespace AL

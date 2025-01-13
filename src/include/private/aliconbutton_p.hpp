@@ -4,6 +4,7 @@
 
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALIconButton;
 class CALToolTip;
 
@@ -43,3 +44,5 @@ private:
 	bool isAlphaAnimationFinished{ true };
 	ALThemeType::ThemeMode themeMode{};
 };
+
+} // namespace AL

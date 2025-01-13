@@ -4,6 +4,7 @@
 
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALSliderPrivate;
 
 class CALWIDGETTOOLS_EXPORT CALSlider : public QSlider {
@@ -88,3 +89,5 @@ signals:
 protected:
 	const QScopedPointer<CALSliderPrivate> d_ptr{ nullptr };
 };
+
+} // namespace AL

@@ -1,5 +1,6 @@
 ﻿#include "alsuggestmodel.hpp"
 
+namespace AL {
 /**
  * @brief \class CALSuggestModel
  * @param parent pointer to the parent class
@@ -34,3 +35,5 @@ void CALSuggestModel::clearSearchNode() {
 CALSuggestion* CALSuggestModel::getSearchSuggestion(const int row) {
 	return row >= m_suggestionVector.count() ? nullptr : m_suggestionVector[row];
 }
+
+} // namespace AL

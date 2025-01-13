@@ -4,6 +4,7 @@
 
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALScrollBar;
 
 class CALScrollBarStyle final : public QProxyStyle {
@@ -45,3 +46,5 @@ private:
 	qreal m_sliderMargin{ 2.5 };
 	int m_scrollBarExtent{ 10 };
 };
+
+} // namespace AL

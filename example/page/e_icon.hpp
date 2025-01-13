@@ -4,8 +4,10 @@
 
 #include "e_basepage.hpp"
 
+namespace AL {
 class CALLineEdit;
 class CALListView;
+}
 
 class E_IconModel;
 class E_IconDelegate;
@@ -21,8 +23,8 @@ public:
 
 private:
 	QMetaEnum m_metaEnum{};
-	CALLineEdit* m_searchEdit{ nullptr };
-	CALListView* m_iconListView{ nullptr };
+	AL::CALLineEdit* m_searchEdit{ nullptr };
+	AL::CALListView* m_iconListView{ nullptr };
 	E_IconModel* m_iconModel{ nullptr };
 	E_IconDelegate* m_iconDelegate{ nullptr };
 };

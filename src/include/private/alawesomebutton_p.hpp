@@ -1,13 +1,11 @@
 ﻿#pragma once
 
 #include <QColor>
-#include <QObject>
 #include <QFont>
 
 #include "alwidgettoolsdef.hpp"
 
-using namespace ALIcon;
-
+namespace AL {
 class CALToolTip;
 class CALAwesomeButton;
 
@@ -30,7 +28,7 @@ private:
 	int borderRaius{};
 	qreal opacity{};
 	QFont iconFont{};
-	AweSomeIcon iconType{};
+	ALIcon::AweSomeIcon iconType{};
 	QColor ligntSelectedColor{};
 	QColor darkSelectedColor{};
 	QColor lightHoverColor{};
@@ -39,3 +37,5 @@ private:
 	QColor darkIconColor{};
 	bool isSelected{};
 };
+
+} // namespace AL

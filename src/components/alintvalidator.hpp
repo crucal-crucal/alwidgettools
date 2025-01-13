@@ -2,6 +2,9 @@
 
 #include <QIntValidator>
 
+#include "alwidgettoolsdef.hpp"
+
+namespace AL {
 class CALIntValidator final : public QIntValidator {
 	Q_OBJECT
 
@@ -21,3 +24,5 @@ private:
 
 	[[nodiscard]] static QString completeInput(const QString& input, int length);
 };
+
+} // namespace AL

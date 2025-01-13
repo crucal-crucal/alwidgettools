@@ -3,9 +3,11 @@
 #include <QObject>
 
 #include "alsingleton.hpp"
+#include "alwidgettoolsdef.hpp"
 
 class QPainter;
 
+namespace AL {
 class CALMessageBar;
 class CALIconButton;
 
@@ -144,3 +146,5 @@ private:
 	void drawWarning(QPainter* painter);
 	void drawInfo(QPainter* painter);
 };
+
+} // namespace AL

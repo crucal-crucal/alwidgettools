@@ -2,6 +2,7 @@
 
 #include "albasedialog.hpp"
 
+namespace AL {
 class CALContentDialogPrivate;
 
 class CALWIDGETTOOLS_EXPORT CALContentDialog : public CALBaseDialog {
@@ -29,3 +30,4 @@ protected:
 
 	void keyPressEvent(QKeyEvent* event) override;
 };
+}

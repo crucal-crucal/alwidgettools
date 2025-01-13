@@ -4,6 +4,7 @@
 
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALScrollPagePrivate;
 
 class CALWIDGETTOOLS_EXPORT CALScrollPage : public QWidget {
@@ -33,3 +34,5 @@ Q_SIGNALS:
 protected:
 	const QScopedPointer<CALScrollPagePrivate> d_ptr{ nullptr };
 };
+
+} // namespace AL

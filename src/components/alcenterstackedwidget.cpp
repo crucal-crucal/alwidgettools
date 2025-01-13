@@ -5,6 +5,7 @@
 
 #include "althememanager.hpp"
 
+namespace AL {
 /**
  * @brief \class CALCenterStackedWidget
  * @param parent pointer to the parent class
@@ -55,3 +56,5 @@ void CALCenterStackedWidget::paintEvent(QPaintEvent* event) {
 
 	QStackedWidget::paintEvent(event);
 }
+
+} // namespace AL

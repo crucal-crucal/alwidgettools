@@ -5,6 +5,7 @@
 #include "alsingleton.hpp"
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALEventPrivate;
 
 class CALWIDGETTOOLS_EXPORT CALEvent : public QObject {
@@ -62,3 +63,5 @@ private:
 	explicit CALEventBus(QObject* parent = nullptr);
 	~CALEventBus() override;
 };
+
+} // namespace AL

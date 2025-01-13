@@ -2,9 +2,11 @@
 
 #include "alwidgettoolsdef.hpp"
 
+class QPropertyAnimation;
+
+namespace AL {
 class CALBaseDialog;
 class CALMaskWidget;
-class QPropertyAnimation;
 
 class CALBaseDialogPrivate final : public QObject {
 	Q_OBJECT
@@ -27,8 +29,10 @@ private:
 	CALMaskWidget* maskWidget{ nullptr };
 
 	/// animation
-	QPropertyAnimation* fadeInAnimation{ nullptr }; // 淡入动画
+	QPropertyAnimation* fadeInAnimation{ nullptr };  // 淡入动画
 	QPropertyAnimation* fadeOutAnimation{ nullptr }; // 淡出动画
 
 	void _doCloseAnimation();
 };
+
+} // namespace AL

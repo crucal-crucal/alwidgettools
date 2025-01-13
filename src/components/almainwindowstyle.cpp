@@ -7,6 +7,7 @@
 
 #include "althememanager.hpp"
 
+namespace AL {
 /**
  * @brief \class CALMainWindowStyle
  * @param style pointer to the parent style
@@ -155,3 +156,5 @@ void CALMainWindowStyle::drawControl(const ControlElement element, const QStyleO
 
 	QProxyStyle::drawControl(element, opt, p, w);
 }
+
+} // namespace AL

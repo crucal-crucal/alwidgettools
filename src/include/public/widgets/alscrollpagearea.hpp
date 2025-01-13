@@ -4,6 +4,7 @@
 
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALScrollPageAreaPrivate;
 
 class CALWIDGETTOOLS_EXPORT CALScrollPageArea : public QWidget {
@@ -26,3 +27,5 @@ protected:
 
 	void paintEvent(QPaintEvent* event) override;
 };
+
+} // namespace AL

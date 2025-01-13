@@ -7,6 +7,7 @@
 
 #include "althememanager.hpp"
 
+namespace AL {
 /**
  * @brief \class CALLineEditStyle
  * @param style pointer to the parent style
@@ -51,3 +52,5 @@ void CALLineEditStyle::drawPrimitive(const PrimitiveElement pe, const QStyleOpti
 
 	QProxyStyle::drawPrimitive(pe, opt, p, w);
 }
+
+} // namespace AL

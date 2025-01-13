@@ -1,9 +1,11 @@
 ﻿#pragma once
 
-#include <QObject>
 #include <QQueue>
 #include <QVariantMap>
 
+#include "alwidgettoolsdef.hpp"
+
+namespace AL {
 class CALNavigationRouter;
 
 class CALNavigationRouterPrivate final : public QObject {
@@ -22,3 +24,5 @@ private:
 	int maxRouteCount{};
 	QQueue<QVariantMap> routeQueue{};
 };
+
+} // namespace AL

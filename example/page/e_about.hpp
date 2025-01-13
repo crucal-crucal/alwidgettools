@@ -4,7 +4,7 @@
 
 class QHBoxLayout;
 
-class E_About final : public CALWidget {
+class E_About final : public AL::CALWidget {
 	Q_OBJECT
 
 public:

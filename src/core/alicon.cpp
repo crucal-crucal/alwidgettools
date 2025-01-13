@@ -3,6 +3,7 @@
 #include <QPainter>
 #include <QPixmap>
 
+namespace AL {
 /**
  * @brief \class CALIcon
  * @return CALIcon instance
@@ -50,3 +51,4 @@ QIcon CALIcon::getQIconFromAwesomeIcon(const ALIcon::AweSomeIcon& awesomeIcon, c
 CALIcon::CALIcon() = default;
 
 CALIcon::~CALIcon() = default;
+} // namespace AL

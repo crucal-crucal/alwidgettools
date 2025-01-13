@@ -6,6 +6,7 @@
 #include "alinteractivecard_p.hpp"
 #include "althememanager.hpp"
 
+namespace AL {
 /**
  * @brief \class CALInteractiveCardPrivate
  * Internal class for CALInteractiveCard
@@ -171,3 +172,5 @@ void CALInteractiveCard::paintEvent(QPaintEvent* event) {
 	painter.drawText(textStartX, height() / 2 + d->titleSpacing, textWidth, height() / 2 - d->titleSpacing, Qt::AlignTop | Qt::AlignLeft, d->subTitle);
 	painter.restore();
 }
+
+} // namespace AL

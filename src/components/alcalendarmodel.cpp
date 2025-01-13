@@ -1,5 +1,6 @@
 ﻿#include "alcalendarmodel.hpp"
 
+namespace AL {
 /**
  * @brief \class CALCalendarModel
  * @param parent pointer to the parent class
@@ -122,3 +123,5 @@ void CALCalendarModel::initRowCount() {
 int CALCalendarModel::getCurrentDay(const int row) const {
 	return m_minimumDate.addDays(row - m_offset).day();
 }
+
+} // namespace AL

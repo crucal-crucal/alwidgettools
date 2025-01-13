@@ -3,7 +3,6 @@
 #include <QDebug>
 #include <QHBoxLayout>
 #include <QMetaEnum>
-#include <QMouseEvent>
 
 #include "alcolordialog.hpp"
 #include "alcheckbox.hpp"
@@ -12,6 +11,7 @@
 #include "aldoublespinbox.hpp"
 #include "almessagebar.hpp"
 #include "almultiselectcombobox.hpp"
+#include "alplaintextedit.hpp"
 #include "alprogressbar.hpp"
 #include "alpushbutton.hpp"
 #include "alradiobutton.hpp"
@@ -20,6 +20,8 @@
 #include "alspinbox.hpp"
 #include "altext.hpp"
 #include "altoggleswitch.hpp"
+
+using namespace AL;
 
 E_BaseComponents::E_BaseComponents(QWidget* parent): E_BasePage(parent) {
 	setWindowTitle("CALBaseComponents");
@@ -51,6 +53,8 @@ E_BaseComponents::E_BaseComponents(QWidget* parent): E_BasePage(parent) {
 	initSpinBoxArea();
 	/// doubleSpinBoxArea
 	initDoubleSpinBoxArea();
+	/// plainTextEditArea
+	initPlainTextEditArea();
 
 	mainVLayout->addStretch();
 	addCentralWidget(centralWidget, true, true, 0);
@@ -386,4 +390,11 @@ void E_BaseComponents::initDoubleSpinBoxArea() {
 	doubleSpinBoxHLayout->addSpacing(10);
 
 	mainVLayout->addWidget(doubleSpinBoxArea);
+}
+
+void E_BaseComponents::initPlainTextEditArea() {
+	const auto plainTextEdit = new CALPlainTextEdit(this);
+	plainTextEdit->setPlainText("this is test!");
+
+	mainVLayout->addWidget(plainTextEdit);
 }

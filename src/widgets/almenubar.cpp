@@ -1,4 +1,4 @@
-#include "almenubar.hpp"
+﻿#include "almenubar.hpp"
 
 #include <QToolButton>
 
@@ -6,6 +6,7 @@
 #include "almenu.hpp"
 #include "almenubarstyle.hpp"
 
+namespace AL {
 /**
  * \class CALMenuBar
  * @param parent pointer to the parent class
@@ -83,3 +84,5 @@ QAction* CALMenuBar::addAweSomeIconAction(const ALIcon::AweSomeIcon& awesomeicon
 	QMenuBar::addAction(action);
 	return action;
 }
+
+} // namespace AL

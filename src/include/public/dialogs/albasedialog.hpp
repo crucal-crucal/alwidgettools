@@ -4,6 +4,7 @@
 
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALBaseDialogPrivate;
 
 class CALWIDGETTOOLS_EXPORT CALBaseDialog : public QDialog {
@@ -55,3 +56,5 @@ protected:
 #endif
 #endif
 };
+
+} // namespace AL

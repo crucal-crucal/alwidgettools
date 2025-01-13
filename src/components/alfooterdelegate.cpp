@@ -3,12 +3,14 @@
 #include <QPainter>
 #include <QPainterPath>
 #include <QPropertyAnimation>
+#include <QDebug>
 
 #include "albaselistview.hpp"
 #include "alfootermodel.hpp"
 #include "alnavigationnode.hpp"
 #include "althememanager.hpp"
 
+namespace AL {
 /**
  * @brief \class CALFooterDelegate
  * @param parent pointer to the parent class
@@ -138,7 +140,9 @@ void CALFooterDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opt
 			painter->fillPath(path, ALThemeColor(themeMode, ALThemeType::BasicHoverAlpha));
 		}
 	}
+	painter->restore();
 
+	painter->save();
 	painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
 	itemRect = option.rect;
 
@@ -151,14 +155,17 @@ void CALFooterDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opt
 	// iocn
 	painter->setPen(index == m_pressIndex ? ALThemeColor(themeMode, ALThemeType::BasicTextPress) : ALThemeColor(themeMode, ALThemeType::BasicText));
 	if (node->getAwesomeIcon() != ALIcon::AweSomeIcon::None) {
+		painter->save();
 		QFont iconFont("CALAwesome");
 		iconFont.setPixelSize(17);
 		painter->setFont(iconFont);
 		painter->drawText(itemRect.x(), itemRect.y(), m_iconAreaWidth, itemRect.height(), Qt::AlignCenter, QChar(static_cast<unsigned short>(node->getAwesomeIcon())));
+		painter->restore();
 	}
 
 	// keyPoints
 	if (int keyPoints = node->getKeyPoints()) {
+		painter->save();
 		painter->setPen(Qt::NoPen);
 		painter->setBrush(Qt::white);
 		painter->drawEllipse(QPoint(255, itemRect.y() + itemRect.height() / 2), 10, 10);
@@ -171,6 +178,7 @@ void CALFooterDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opt
 		font.setPixelSize(keyPoints > 9 ? 11 : 12);
 		painter->setFont(font);
 		painter->drawText(keyPoints > 9 ? 248 : 251, itemRect.y() + itemRect.height() / 2 + 4, QString::number(keyPoints));
+		painter->restore();
 	}
 
 	// text
@@ -209,3 +217,5 @@ bool CALFooterDelegate::compareItemY(const CALNavigationNode* node1, const CALNa
 
 	return node1->getModelIndex().row() < node2->getModelIndex().row();
 }
+
+} // namespace AL

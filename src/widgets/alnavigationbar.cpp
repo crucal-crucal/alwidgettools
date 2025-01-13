@@ -22,6 +22,7 @@
 #include "alsuggestbox.hpp"
 #include "althememanager.hpp"
 
+namespace AL {
 /**
  * @brief \class CALNavigationBarPrivate
  * Internal class for CALNavigationBar
@@ -901,3 +902,5 @@ void CALNavigationBar::paintEvent(QPaintEvent* event) {
 
 	QWidget::paintEvent(event);
 }
+
+} // namespace AL

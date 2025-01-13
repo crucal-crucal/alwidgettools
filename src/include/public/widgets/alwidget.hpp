@@ -5,6 +5,7 @@
 #include "alappbar.hpp"
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALWidgetPrivate;
 
 class CALWIDGETTOOLS_EXPORT CALWidget : public QWidget {
@@ -15,7 +16,7 @@ class CALWIDGETTOOLS_EXPORT CALWidget : public QWidget {
 	Q_PROPERTY(bool isDefaultClosed READ getIsDefaultClosed WRITE setIsDefaultClosed NOTIFY sigIsDefaultClosedChanged)
 	Q_PROPERTY(int appBarHeight READ getAppBarHeight WRITE setAppBarHeight NOTIFY sigAppBarHeightChanged)
 	Q_PROPERTY(QColor appBarBackground READ getAppBarBackground WRITE setAppBarBackground NOTIFY sigAppBarBackgroundChanged)
-	Q_TAKEOVER_NATIVEEVENT_H
+	AL_TAKEOVER_NATIVEEVENT_H
 
 public:
 	explicit CALWidget(QWidget* parent = nullptr);
@@ -58,3 +59,5 @@ protected:
 
 	void paintEvent(QPaintEvent* event) override;
 };
+
+} // namespace AL

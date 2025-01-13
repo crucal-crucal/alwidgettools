@@ -9,6 +9,7 @@
 #include "altoolbarstyle.hpp"
 #include "altoolbar_p.hpp"
 
+namespace AL {
 /**
  * @brief \class CALToolBarPrivate
  * Internal class for CALToolBar
@@ -111,3 +112,5 @@ void CALToolBar::paintEvent(QPaintEvent* event) {
 	}
 	painter.restore();
 }
+
+} // namespace AL

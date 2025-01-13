@@ -14,6 +14,7 @@
 #include "alscrollbar.hpp"
 #include "althememanager.hpp"
 
+namespace AL {
 /**
  * @brief \class CALMultiSelectComboBoxPrivate
  * internal class for CALMultiSelectComboBox
@@ -333,6 +334,7 @@ void CALMultiSelectComboBox::paintEvent(QPaintEvent* event) {
 	painter.drawRoundedRect(QRectF(width() / 2.0 - d->expandMarkWidth, height() - 3, d->expandMarkWidth * 2, 3), 2, 2);
 	// 展开图标绘制
 	if (count() > 0) {
+		painter.save();
 		QFont iconFont("CALAwesome");
 		iconFont.setPixelSize(17);
 		painter.setFont(iconFont);
@@ -342,6 +344,7 @@ void CALMultiSelectComboBox::paintEvent(QPaintEvent* event) {
 		painter.rotate(d->expandIconRotate);
 		painter.translate(-expandIconRect.x() - expandIconRect.width() / 2.0 + 2.0, expandIconRect.y() - expandIconRect.height() / 2.0);
 		painter.drawText(expandIconRect, Qt::AlignVCenter, QChar(static_cast<unsigned short>(ALIcon::AweSomeIcon::AngleDown)));
+		painter.restore();
 	}
 	painter.restore();
 }
@@ -466,3 +469,5 @@ void CALMultiSelectComboBox::hidePopup() {
 		}
 	}
 }
+
+} // namespace AL

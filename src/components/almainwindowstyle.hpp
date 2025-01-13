@@ -4,6 +4,7 @@
 
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALMainWindowStyle final : public QProxyStyle {
 	Q_OBJECT
 
@@ -17,3 +18,5 @@ public:
 private:
 	ALThemeType::ThemeMode m_themeMode{};
 };
+
+} // namespace AL

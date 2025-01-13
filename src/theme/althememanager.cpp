@@ -5,6 +5,7 @@
 
 #include "althememanager_p.hpp"
 
+namespace AL {
 /**
  * @brief \class CALThemeManagerPrivate
  * Internal class for CALThemeManager
@@ -178,3 +179,5 @@ CALThemeManager::CALThemeManager(QObject* parent): QObject(parent), d_ptr(new CA
 }
 
 CALThemeManager::~CALThemeManager() = default;
+
+} // namespace AL

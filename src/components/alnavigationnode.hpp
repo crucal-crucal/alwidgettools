@@ -4,6 +4,7 @@
 
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALNavigationNode final : public QObject {
 	Q_OBJECT
 	Q_PROPERTY(QList<CALNavigationNode*> childrenNodes READ getChildrenNodes WRITE setChildrenNodes NOTIFY sigChildrenNodesChanged)
@@ -101,3 +102,5 @@ private:
 	QString m_nodeKey{};
 	QString m_nodeTitle{};
 };
+
+} // namespace AL

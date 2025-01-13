@@ -4,6 +4,7 @@
 
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALComboBoxStyle final : public QProxyStyle {
 	Q_OBJECT
 
@@ -27,8 +28,8 @@ public:
 	void setExpandMarkWidth(qreal ExpandMarkWidth);
 	[[nodiscard]] qreal getExpandMarkWidth() const;
 
-	signals:
-		void sigExpandIconRotateChanged();
+signals:
+	void sigExpandIconRotateChanged();
 	void sigExpandMarkWidthChanged();
 
 private:
@@ -37,3 +38,5 @@ private:
 	qreal m_expandMarkWidth{};
 	int m_shadowBorderWidth{};
 };
+
+} // namespace AL

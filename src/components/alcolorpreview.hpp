@@ -4,6 +4,7 @@
 
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALColorPreview final : public QWidget {
 	Q_OBJECT
 
@@ -24,3 +25,5 @@ private:
 	QColor m_baseColor{};
 	ALThemeType::ThemeMode m_themeMode{};
 };
+
+} // namespace AL

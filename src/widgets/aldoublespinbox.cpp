@@ -1,4 +1,4 @@
-#include "aldoublespinbox.hpp"
+﻿#include "aldoublespinbox.hpp"
 
 #include <QClipboard>
 #include <QContextMenuEvent>
@@ -10,6 +10,7 @@
 #include "aldoublespinbox_p.hpp"
 #include "althememanager.hpp"
 
+namespace AL {
 /**
  * \class CALDoubleSpinBoxPrivate
  * Internal class for CALDoubleSpinBox
@@ -122,3 +123,5 @@ void CALDoubleSpinBox::contextMenuEvent(QContextMenuEvent* event) {
 	}
 	event->accept();
 }
+
+} // namespace AL

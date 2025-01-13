@@ -4,11 +4,9 @@
 
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALCircularProgressPrivate;
 
-/**
- * @brief 圆环形状进度控件
- */
 class CALWIDGETTOOLS_EXPORT CALCircularProgress : public QProgressBar {
 	Q_OBJECT
 	Q_DECLARE_PRIVATE(CALCircularProgress)
@@ -78,3 +76,5 @@ protected:
 	void hideEvent(QHideEvent* event) override;
 	void paintEvent(QPaintEvent* event) override;
 };
+
+} // namespace AL

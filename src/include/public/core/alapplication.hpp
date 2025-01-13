@@ -3,8 +3,9 @@
 #include "alwidgettoolsdef.hpp"
 #include "alsingleton.hpp"
 
-#define alApp CALApplication::instance()
+#define alApp AL::CALApplication::instance()
 
+namespace AL {
 class CALApplicationPrivate;
 
 class CALWIDGETTOOLS_EXPORT CALApplication : public QObject {
@@ -33,9 +34,11 @@ Q_SIGNALS:
 protected:
 	const QScopedPointer<CALApplicationPrivate> d_ptr{ nullptr };
 
-	friend class CALSingleton<CALApplication>;
+	friend class AL::CALSingleton<CALApplication>;
 
 private:
 	explicit CALApplication(QObject* parent = nullptr);
 	~CALApplication() override;
 };
+
+} // namespace AL

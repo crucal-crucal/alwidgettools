@@ -3,6 +3,7 @@
 #include <QPainter>
 #include <QPropertyAnimation>
 
+namespace AL {
 /**
  * @brief \class CALMaskWidget
  * @param parent pointer to the parent class
@@ -35,3 +36,5 @@ void CALMaskWidget::paintEvent(QPaintEvent* event) {
 	painter.drawRect(rect());
 	painter.restore();
 }
+
+} // namespace AL

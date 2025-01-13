@@ -91,11 +91,13 @@ target_compile_definitions(${TARGET_NAME} PRIVATE CALWIDGETTOOLS_LIB)
 
 # Define the export headers and resource file to be installed
 # 定义需要安装的头文件和资源文件
-file(GLOB EXPORT_AL_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/include/public/al/*.hpp)
-file(GLOB EXPORT_CORE_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/include/public/core/*.hpp)
-file(GLOB EXPORT_DIALOGS_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/include/public/dialogs/*.hpp)
-file(GLOB EXPORT_THEME_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/include/public/theme/*.hpp)
-file(GLOB EXPORT_WIDGETS_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/include/public/widgets/*.hpp)
+file(GLOB EXPORT_HEADERS
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/public/al/*.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/public/core/*.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/public/dialogs/*.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/public/theme/*.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/public/widgets/*.hpp
+)
 set(EXPORT_RESOURCE_FILE ${CMAKE_SOURCE_DIR}/resource/alwidgettools.rcc)
 
 # Set the include directories for the target, with proper interface handling for build and installation
@@ -109,7 +111,7 @@ target_include_directories(${TARGET_NAME} PUBLIC
 # Install the compiled library and resources
 # 安装编译后的库和资源文件
 install(TARGETS ${TARGET_NAME}
-        EXPORT ${TARGET_NAME}
+        EXPORT ${TARGET_NAME}-targets
         ARCHIVE DESTINATION lib
         LIBRARY DESTINATION lib
         RUNTIME DESTINATION bin
@@ -117,11 +119,7 @@ install(TARGETS ${TARGET_NAME}
 
 # Install the public headers
 # 安装公共头文件
-install(FILES ${EXPORT_AL_HEADERS} DESTINATION include/al)
-install(FILES ${EXPORT_CORE_HEADERS} DESTINATION include/core)
-install(FILES ${EXPORT_DIALOGS_HEADERS} DESTINATION include/dialogs)
-install(FILES ${EXPORT_THEME_HEADERS} DESTINATION include/theme)
-install(FILES ${EXPORT_WIDGETS_HEADERS} DESTINATION include/widgets)
+install(FILES ${EXPORT_HEADERS} DESTINATION include)
 
 # Install the resource file (e.g., Qt .rcc file)
 # 安装资源文件（例如 Qt 的 .rcc 文件
@@ -150,7 +148,7 @@ set(ALWIDGETTOOLS_CMAKE_DIR cmake CACHE PATH "CMake directory")
 # 写入包版本文件
 write_basic_package_version_file(
         ${CMAKE_BINARY_DIR}/${TARGET_NAME}configversion.cmake
-        VERSION 2.0.0
+        VERSION ${PROJECT_VERSION}
         COMPATIBILITY SameMajorVersion
 )
 

@@ -7,6 +7,7 @@
 #include "althememanager.hpp"
 #include "altooltip.hpp"
 
+namespace AL {
 /**
  * @brief \class CALPushButtonPrivate
  * Internal class for CALPushButton
@@ -266,3 +267,5 @@ void CALPushButton::paintEvent(QPaintEvent* event) {
 	painter.drawText(foregroundRect, Qt::AlignCenter, text());
 	painter.restore();
 }
+
+} // namespace AL

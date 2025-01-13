@@ -4,6 +4,7 @@
 
 #include "althememanager.hpp"
 
+namespace AL {
 /**
  * @brief \class CALBreadcrumbBarDelegate
  * @param parent pointer to the parent class
@@ -50,3 +51,5 @@ void CALBreadcrumbBarDelegate::paint(QPainter* painter, const QStyleOptionViewIt
 	}
 	painter->restore();
 }
+
+} // namespace AL

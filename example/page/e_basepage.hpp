@@ -4,7 +4,7 @@
 
 class QVBoxLayout;
 
-class E_BasePage : public CALScrollPage {
+class E_BasePage : public AL::CALScrollPage {
 	Q_OBJECT
 
 public:

@@ -2,6 +2,7 @@
 
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALEvent;
 class CALEventBus;
 
@@ -43,3 +44,5 @@ protected:
 private:
 	QMap<QString, QList<CALEvent*>> eventMap{};
 };
+
+} // namespace AL

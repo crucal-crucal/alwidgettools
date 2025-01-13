@@ -1,4 +1,4 @@
-#include "alpromotionview.hpp"
+ï»¿#include "alpromotionview.hpp"
 
 #include <QPainter>
 #include <QPropertyAnimation>
@@ -9,6 +9,7 @@
 #include "alpromotionview_p.hpp"
 #include "althememanager.hpp"
 
+namespace AL {
 /**
  * @brief \class CALPromotionViewPrivate
  * Internal class for CALPromotionView
@@ -40,7 +41,7 @@ void CALPromotionViewPrivate::onPromationCardClicked(CALPromotionCard* clickedCa
 		geometryAnimation->setDuration(650);
 		geometryAnimation->setStartValue(geometry);
 		if (i == 0) {
-			// ×î×ó²à¿¨Æ¬
+			// æœ€å·¦ä¾§å¡ç‰‡
 			QRect targetGeometry(-cardCollapseWidth + leftPadding, 0, cardCollapseWidth, q->height() - bottomMargin);
 			if (listPromotionCard.count() > 2) {
 				if (!isRightToLeft) {
@@ -53,7 +54,7 @@ void CALPromotionViewPrivate::onPromationCardClicked(CALPromotionCard* clickedCa
 			}
 			startHorizontalCardPixmapRatioAnimation(card, card->getHorizontalCardPixmapRatio(), 0.5);
 		} else if (i == 1) {
-			// Õ¹¿ªµÄ¿¨Æ¬
+			// å±•å¼€çš„å¡ç‰‡
 			geometryAnimation->setEndValue(QRect(leftPadding + cardSpacing, 0, cardExpandWidth, q->height() - bottomMargin));
 			startHorizontalCardPixmapRatioAnimation(card, card->getHorizontalCardPixmapRatio(), 1);
 		} else {
@@ -108,19 +109,19 @@ void CALPromotionViewPrivate::updatePromotionCardGrometry() {
 			listPromotionCard.at(0)->setGeometry(leftPadding + cardSpacing, 0, cardExpandWidth, q->height() - bottomMargin);
 		} else {
 			listPromotionCard.at(0)->setGeometry(leftPadding + cardSpacing, 0, cardExpandWidth, q->height() - bottomMargin);
-			const QRect lastGeomtry = listPromotionCard.at(0)->geometry();
-			listPromotionCard.at(1)->setGeometry(lastGeomtry.right() + cardSpacing, lastGeomtry.y(), cardCollapseWidth, q->height() - bottomMargin);
+			const QRect lastGeometry = listPromotionCard.at(0)->geometry();
+			listPromotionCard.at(1)->setGeometry(lastGeometry.right() + cardSpacing, lastGeometry.y(), cardCollapseWidth, lastGeometry.height());
 			listPromotionCard.at(1)->setHorizontalCardPixmapRatio(0.5);
 		}
 	} else {
 		for (int i = 0; i < count; ++i) {
 			if (i == 0) {
-				// Õ¹¿ªµÄ¿¨Æ¬
+				// å±•å¼€çš„å¡ç‰‡
 				listPromotionCard.at(i)->setGeometry(leftPadding + cardSpacing, 0, cardExpandWidth, q->height() - bottomMargin);
 				listPromotionCard.at(i)->setHorizontalCardPixmapRatio(1);
 			} else if (i == listPromotionCard.count() - 1) {
-				// ×î×ó²à¿¨Æ¬
-				listPromotionCard.at(i)->setGeometry(-cardCollapseWidth + leftPadding, 0, cardExpandWidth, q->height() - bottomMargin);
+				// æœ€å·¦ä¾§å¡ç‰‡
+				listPromotionCard.at(i)->setGeometry(-cardCollapseWidth + leftPadding, 0, cardCollapseWidth, q->height() - bottomMargin);
 				listPromotionCard.at(i)->setHorizontalCardPixmapRatio(0.5);
 			} else {
 				const QRect lastGeometry = listPromotionCard.at(i - 1)->geometry();
@@ -157,6 +158,10 @@ int CALPromotionViewPrivate::getRightLimitX() const {
 CALPromotionView::CALPromotionView(QWidget* parent): QWidget(parent), d_ptr(new CALPromotionViewPrivate(this, this)) {
 	Q_D(CALPromotionView);
 
+	setFixedHeight(300);
+	setObjectName("CALPromotionView");
+	setStyleSheet("#CALPromotionView { background-color: transparent; }");
+
 	d->currentIndex = 0;
 	d->leftPadding = 40;
 	d->cardSpacing = 5;
@@ -175,10 +180,6 @@ CALPromotionView::CALPromotionView(QWidget* parent): QWidget(parent), d_ptr(new 
 			d->onPromationCardClicked(d->listPromotionCard.at(d->getAdjacentIndex(Qt::LeftToRight, d->currentIndex)));
 		}
 	});
-
-	setFixedHeight(300);
-	setObjectName("CALPromotionView");
-	setStyleSheet("#CALPromotionView { background-color: transparent; }");
 }
 
 CALPromotionView::~CALPromotionView() = default;
@@ -283,7 +284,7 @@ void CALPromotionView::wheelEvent(QWheelEvent* event) {
 			d->isAllowSwitch = true;
 			d->autoScrollTimer->start(d->autoScrollInterval);
 		});
-		d->onPromationCardClicked(d->listPromotionCard.at(d->getAdjacentIndex(event->angleDelta().y() < 0 ? Qt::RightToLeft : Qt::LeftToRight, d->currentIndex)));
+		d->onPromationCardClicked(d->listPromotionCard.at(d->getAdjacentIndex(event->angleDelta().y() > 0 ? Qt::RightToLeft : Qt::LeftToRight, d->currentIndex)));
 	}
 	event->accept();
 }
@@ -310,7 +311,7 @@ void CALPromotionView::paintEvent(QPaintEvent* event) {
 	painter.save();
 	painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
 	painter.setPen(Qt::NoPen);
-	// Ò³ÃæÖ¸Ê¾Æ÷»æÖÆ
+	// é¡µæ ‡æŒ‡ç¤ºå™¨ç»˜åˆ¶
 	const int promotionCardCount = d->listPromotionCard.count();
 	const bool isCountOdd = promotionCardCount % 2;
 	const QPoint startPoint = isCountOdd ? QPoint(width() / 2 - promotionCardCount / 2 * d->indicatorSpacing, height() - d->bottomMargin / 2) : QPoint(width() / 2 - promotionCardCount / 2 * d->indicatorSpacing - d->indicatorSpacing / 2, height() - d->bottomMargin / 2);
@@ -324,3 +325,5 @@ void CALPromotionView::paintEvent(QPaintEvent* event) {
 	}
 	painter.restore();
 }
+
+} // namespace AL

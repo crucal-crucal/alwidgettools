@@ -4,6 +4,7 @@
 
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALNavigationNode;
 
 class CALFooterModel final : public QAbstractListModel {
@@ -28,3 +29,5 @@ private:
 	CALNavigationNode* m_selectedNode{ nullptr };
 	QList<CALNavigationNode*> m_listFooterNodes;
 };
+
+} // namespace AL

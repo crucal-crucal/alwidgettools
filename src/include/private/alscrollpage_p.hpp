@@ -1,12 +1,14 @@
 ﻿#pragma once
 
-#include <QObject>
 #include <QMap>
+
+#include "alwidgettoolsdef.hpp"
 
 class QStackedWidget;
 class QVBoxLayout;
 class QHBoxLayout;
 
+namespace AL {
 class CALScrollArea;
 class CALScrollPage;
 class CALText;
@@ -40,3 +42,5 @@ private:
 
 	void switchCentralStackIndex(int targetIndex, int lastIndex);
 };
+
+} // namespace AL

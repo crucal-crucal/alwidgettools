@@ -4,6 +4,7 @@
 
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALThemeManager;
 
 class CALThemeManagerPrivate final : public QObject {
@@ -25,3 +26,5 @@ private:
 
 	void initColorList();
 };
+
+} // namespace AL

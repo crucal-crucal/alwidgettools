@@ -7,6 +7,7 @@
 
 #include "althememanager.hpp"
 
+namespace AL {
 /**
  * @brief \class CALColorValueSliderStyle
  * @param style pointer to the parent style
@@ -142,3 +143,5 @@ void CALColorValueSliderStyle::startRadiusAnimation(const qreal startRadius, con
 	circleRadiusAnimatino->setEndValue(endRadius);
 	circleRadiusAnimatino->start(QAbstractAnimation::DeleteWhenStopped);
 }
+
+} // namespace AL

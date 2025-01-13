@@ -1,8 +1,10 @@
 ﻿#pragma once
 
 #include <QImage>
-#include <QObject>
 
+#include "alwidgettoolsdef.hpp"
+
+namespace AL {
 class CALApplicationPrivate;
 
 class CALMicaBaseInitObject final : public QObject {
@@ -20,3 +22,5 @@ Q_SIGNALS:
 private:
 	CALApplicationPrivate* appPrivate{ nullptr };
 };
+
+} // namespace AL

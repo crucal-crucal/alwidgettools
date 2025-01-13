@@ -4,6 +4,7 @@
 
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALCalendarPickerPrivate;
 
 class CALWIDGETTOOLS_EXPORT CALCalendarPicker : public QPushButton {
@@ -31,3 +32,5 @@ protected:
 	void paintEvent(QPaintEvent* event) override;
 	void showEvent(QShowEvent* event) override;
 };
+
+} // namespace AL

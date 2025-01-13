@@ -2,6 +2,7 @@
 
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALCalendar;
 class CALCalendarPicker;
 class CALCalendarPickerContainer;
@@ -27,3 +28,5 @@ private:
 	CALCalendar* calendar{ nullptr };
 	CALCalendarPickerContainer* calendarPickerContainer{ nullptr };
 };
+
+} // namespace AL

@@ -9,6 +9,7 @@
 #include "alnavigationview.hpp"
 #include "althememanager.hpp"
 
+namespace AL {
 /**
  * @brief \class CALNavigationStyle
  * @param style pointer to the parent style
@@ -222,10 +223,12 @@ void CALNavigationStyle::drawControl(const ControlElement element, const QStyleO
 				// 图标绘制
 				p->setPen(ALThemeColor(m_themeMode, vopt->index == m_pressIndex ? ALThemeType::BasicTextPress : ALThemeType::BasicText));
 				if (node->getAwesomeIcon() != ALIcon::AweSomeIcon::None) {
+					p->save();
 					QFont iconFont("CALAwesome");
 					iconFont.setPixelSize(17);
 					p->setFont(iconFont);
 					p->drawText(QRect(itemRect.x(), itemRect.y(), m_iconAreaWidth, itemRect.height()), Qt::AlignCenter, QChar(static_cast<unsigned short>(node->getAwesomeIcon())));
+					p->restore();
 				}
 
 				const int viewWidth = w->width();
@@ -240,8 +243,8 @@ void CALNavigationStyle::drawControl(const ControlElement element, const QStyleO
 					// 展开图标 keyPoints
 					if (node->getIsExpanderNode()) {
 						if (node->getIsHasChild()) {
+							p->save();
 							const QRectF expandIconRect(itemRect.right() - m_indicatorIconAreaWidth, itemRect.y(), 17, itemRect.height());
-
 							QFont iconFont("CALAwesome");
 							iconFont.setPixelSize(17);
 							p->setFont(iconFont);
@@ -249,6 +252,7 @@ void CALNavigationStyle::drawControl(const ControlElement element, const QStyleO
 							p->rotate(node == m_expandAnimationTargetNode ? m_rotate : node->getIsExpanded() ? -180 : 0);
 							p->translate(-expandIconRect.x() - expandIconRect.width() / 2.0 + 1, -expandIconRect.y() - expandIconRect.height() / 2.0);
 							p->drawText(expandIconRect, Qt::AlignVCenter, QChar(static_cast<unsigned short>(ALIcon::AweSomeIcon::AngleDown)));
+							p->restore();
 						}
 
 						if (node->getIsChildHasKeyPoints()) {
@@ -406,3 +410,5 @@ bool CALNavigationStyle::compareItemY(CALNavigationNode* node1, CALNavigationNod
 		}
 	}
 }
+
+} // namespace AL

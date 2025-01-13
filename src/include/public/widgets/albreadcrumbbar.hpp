@@ -4,6 +4,7 @@
 
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALBreadcrumbBarPrivate;
 
 class CALWIDGETTOOLS_EXPORT CALBreadcrumbBar : public QWidget {
@@ -37,3 +38,5 @@ Q_SIGNALS:
 protected:
 	const QScopedPointer<CALBreadcrumbBarPrivate> d_ptr{ nullptr };
 };
+
+} // namespace AL

@@ -4,6 +4,7 @@
 
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALPromotionCardPrivate;
 
 class CALWIDGETTOOLS_EXPORT CALPromotionCard : public QWidget {
@@ -108,3 +109,5 @@ protected:
 	bool event(QEvent* event) override;
 	void paintEvent(QPaintEvent* event) override;
 };
+
+} // namespace AL

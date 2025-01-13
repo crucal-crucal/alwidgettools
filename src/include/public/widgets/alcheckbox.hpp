@@ -4,6 +4,7 @@
 
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALCheckBoxPrivate;
 
 class CALWIDGETTOOLS_EXPORT CALCheckBox : public QCheckBox {
@@ -18,3 +19,5 @@ public:
 protected:
 	const QScopedPointer<CALCheckBoxPrivate> d_ptr{ nullptr };
 };
+
+} // namespace AL

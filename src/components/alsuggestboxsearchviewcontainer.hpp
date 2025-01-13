@@ -4,11 +4,12 @@
 
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALSuggestBoxSearchViewContainer final : public QWidget {
 	Q_OBJECT
 
 public:
-	explicit CALSuggestBoxSearchViewContainer(QWidget *parent = nullptr);
+	explicit CALSuggestBoxSearchViewContainer(QWidget* parent = nullptr);
 	~CALSuggestBoxSearchViewContainer() override;
 
 protected:
@@ -17,3 +18,5 @@ protected:
 private:
 	ALThemeType::ThemeMode themeMode{};
 };
+
+} // namespace AL

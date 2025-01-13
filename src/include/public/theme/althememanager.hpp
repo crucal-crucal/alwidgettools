@@ -3,11 +3,12 @@
 #include "alsingleton.hpp"
 #include "alwidgettoolsdef.hpp"
 
-#define ALTheme CALThemeManager::instance()
-#define ALThemeColor(mode, color) ALTheme->getThemeColor(mode, color)
-
 class QPainter;
 
+#define ALTheme AL::CALThemeManager::instance()
+#define ALThemeColor(mode, color) ALTheme->getThemeColor(mode, color)
+
+namespace AL {
 class CALThemeManagerPrivate;
 
 class CALWIDGETTOOLS_EXPORT CALThemeManager : public QObject {
@@ -36,3 +37,5 @@ private:
 	explicit CALThemeManager(QObject* parent = nullptr);
 	~CALThemeManager() override;
 };
+
+} // namespace AL

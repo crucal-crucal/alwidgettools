@@ -13,6 +13,7 @@
 #include "alsuggestmodel.hpp"
 #include "althememanager.hpp"
 
+namespace AL {
 /**
  * @brief \class CALSuggestion
  * Internal class for CALSuggestBox
@@ -154,7 +155,7 @@ void CALSuggestBoxPrivate::startExpandAnimation() {
 	expandAnimation->setDuration(300);
 	expandAnimation->setEasingCurve(QEasingCurve::InOutSine);
 	expandAnimation->setStartValue(searchView->pos());
-	expandAnimation->setStartValue(QPoint(8, 8));
+	expandAnimation->setEndValue(QPoint(8, 8));
 	expandAnimation->start(QAbstractAnimation::DeleteWhenStopped);
 }
 
@@ -298,3 +299,5 @@ void CALSuggestBox::removeSuggestion(const int index) {
 	d->suggestionVector.removeOne(suggest);
 	suggest->deleteLater();
 }
+
+} // namespace AL

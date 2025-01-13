@@ -4,6 +4,7 @@
 
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALMessageBarManager;
 class CALMessageBarPrivate;
 
@@ -48,7 +49,7 @@ public:
 	 * @param parent 父窗口
 	 */
 	static void information(const QString& title, const QString& message, int displayMsec = 2000,
-	                       const ALMessageBarType::PositionPolicy& positionPolicy = ALMessageBarType::BottomLeft, QWidget* parent = nullptr);
+	                        const ALMessageBarType::PositionPolicy& positionPolicy = ALMessageBarType::BottomLeft, QWidget* parent = nullptr);
 
 	/**
 	 * error notification
@@ -80,3 +81,5 @@ protected:
 #endif
 #endif
 };
+
+} // namespace AL

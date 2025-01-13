@@ -4,6 +4,7 @@
 
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALNavigationNode;
 
 class CALNavigationModel final : public QAbstractItemModel {
@@ -42,3 +43,5 @@ private:
 	CALNavigationNode* m_selectedNode{ nullptr };
 	CALNavigationNode* m_selectedExpandedNode{ nullptr };
 };
+
+} // namespace AL

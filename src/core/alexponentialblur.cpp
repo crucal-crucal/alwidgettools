@@ -1,4 +1,4 @@
-#include "alexponentialblur.hpp"
+﻿#include "alexponentialblur.hpp"
 
 #include <QPixmap>
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
@@ -7,6 +7,7 @@
 
 #include "alexponentialblur_p.hpp"
 
+namespace AL {
 int CALExponentialBlurPrivate::_aprec = 12;
 int CALExponentialBlurPrivate::_zprec = 7;
 
@@ -111,3 +112,5 @@ CALExponentialBlur::CALExponentialBlur(QObject* parent): QObject(parent), d_ptr(
 }
 
 CALExponentialBlur::~CALExponentialBlur() = default;
+
+} // namespace AL

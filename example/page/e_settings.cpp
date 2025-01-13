@@ -14,6 +14,8 @@
 #include "althememanager.hpp"
 #include "altoggleswitch.hpp"
 
+using namespace AL;
+
 E_Settings::E_Settings(QWidget* parent): E_BasePage(parent) {
 	m_mainWindow = qobject_cast<CALMainWindow*>(parent);
 	setWindowTitle(tr("Settings"));

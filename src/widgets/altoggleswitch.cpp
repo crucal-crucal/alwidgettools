@@ -8,6 +8,7 @@
 #include "althememanager.hpp"
 #include "altoggleswitch_p.hpp"
 
+namespace AL {
 /**
  * @brief \class CALToggleSwitchPrivate
  * Internal class for CALToggleSwitch
@@ -201,3 +202,5 @@ void CALToggleSwitch::paintEvent(QPaintEvent* event) {
 	}
 	painter.restore();
 }
+
+} // namespace AL

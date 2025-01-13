@@ -4,6 +4,7 @@
 #include <QPainterPath>
 #include <QPropertyAnimation>
 
+namespace AL {
 /**
  * @brief \class CALThemeAnimationWidget
  * @param parent pointer to the parent class
@@ -86,3 +87,5 @@ void CALThemeAnimationWidget::paintEvent(QPaintEvent* event) {
 	painter.drawImage(rect(), m_newWindowImage);
 	painter.restore();
 }
+
+} // namespace AL

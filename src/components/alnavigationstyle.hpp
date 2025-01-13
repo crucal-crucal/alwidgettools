@@ -7,6 +7,7 @@
 
 class QPropertyAnimation;
 
+namespace AL {
 class CALNavigationView;
 class CALNavigationNode;
 
@@ -93,3 +94,5 @@ private:
 
 	static bool compareItemY(CALNavigationNode* node1, CALNavigationNode* node2);
 };
+
+} // namespace AL

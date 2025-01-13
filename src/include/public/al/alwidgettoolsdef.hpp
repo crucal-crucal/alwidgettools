@@ -43,7 +43,7 @@ Q_NAMESPACE_EXPORT(CALWIDGETTOOLS_EXPORT)
 /**
  * @brief std::vector 转换为 QVector
  */
-template<typename T>
+template <typename T>
 QVector<T> stdVectorToQVector(const std::vector<T>& stdVector) {
 	return QVector<T>(stdVector.begin(), stdVector.end());
 }
@@ -51,10 +51,10 @@ QVector<T> stdVectorToQVector(const std::vector<T>& stdVector) {
 /**
  * @brief std::map 转换为 QMap
  */
-template<typename Key, typename Value>
+template <typename Key, typename Value>
 QMap<Key, Value> stdMapToQMap(const std::map<Key, Value>& stdMap) {
 	QMap<Key, Value> qMap{};
-	for (const auto& [key, value]: stdMap) {
+	for (const auto& [key, value] : stdMap) {
 		qMap.insert(key, value);
 	}
 	return qMap;
@@ -134,7 +134,7 @@ enum ButtonFlag {
 	MinimizeButtonHint    = 0x00010,
 	MaximizeButtonHint    = 0x0020,
 	CloseButtonHint       = 0x0040,
-	Widget = StayTopButtonHint | MinimizeButtonHint | MaximizeButtonHint | CloseButtonHint,
+	Widget                = StayTopButtonHint | MinimizeButtonHint | MaximizeButtonHint | CloseButtonHint,
 };
 
 Q_ENUM_NS(ButtonFlag)

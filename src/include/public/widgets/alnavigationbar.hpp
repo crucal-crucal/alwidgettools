@@ -4,6 +4,7 @@
 
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALNavigationBarPrivate;
 
 class CALWIDGETTOOLS_EXPORT CALNavigationBar : public QWidget {
@@ -48,3 +49,5 @@ protected:
 
 	void paintEvent(QPaintEvent* event) override;
 };
+
+} // namespace AL

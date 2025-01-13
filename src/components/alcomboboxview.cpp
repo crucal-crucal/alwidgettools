@@ -2,6 +2,7 @@
 
 #include <QMouseEvent>
 
+namespace AL {
 /**
  * @brief \class CALComboBoxView
  * @param parent pointer to the parent class
@@ -18,3 +19,5 @@ void CALComboBoxView::mousePressEvent(QMouseEvent* event) {
 	}
 	event->ignore();
 }
+
+} // namespace AL

@@ -3,6 +3,7 @@
 #include "alapplication_p.hpp"
 #include "alexponentialblur.hpp"
 
+namespace AL {
 /**
  * @brief \class CALMicaBaseInitObject
  * @param appPrivate private data
@@ -57,3 +58,5 @@ void CALMicaBaseInitObject::slotInitMicaBase(QImage image) {
 	appPrivate->darkBaseImage = darkImage.copy();
 	Q_EMIT sigInitFinished();
 }
+
+} // namespace AL

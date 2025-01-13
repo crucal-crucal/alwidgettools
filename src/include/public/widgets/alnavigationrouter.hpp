@@ -5,6 +5,7 @@
 #include "alwidgettoolsdef.hpp"
 #include "alsingleton.hpp"
 
+namespace AL {
 class CALNavigationRouterPrivate;
 
 class CALWIDGETTOOLS_EXPORT CALNavigationRouter : public QObject {
@@ -34,3 +35,5 @@ private:
 	explicit CALNavigationRouter(QObject* parent = nullptr);
 	~CALNavigationRouter() override;
 };
+
+} // namespace AL

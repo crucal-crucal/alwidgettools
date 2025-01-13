@@ -6,6 +6,7 @@
 
 class QLinearGradient;
 
+namespace AL {
 class CALColorValueSliderStyle final : public QProxyStyle {
 	Q_OBJECT
 
@@ -29,3 +30,5 @@ private:
 
 	void startRadiusAnimation(qreal startRadius, qreal endRadius, QWidget* widget) const;
 };
+
+} // namespace AL

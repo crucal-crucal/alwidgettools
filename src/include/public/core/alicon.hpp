@@ -4,6 +4,7 @@
 
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALWIDGETTOOLS_EXPORT CALIcon {
 public:
 	static QIcon getQIconFromAwesomeIcon(const ALIcon::AweSomeIcon& awesomeIcon);
@@ -17,3 +18,5 @@ private:
 	explicit CALIcon();
 	~CALIcon();
 };
+
+} // namespace AL

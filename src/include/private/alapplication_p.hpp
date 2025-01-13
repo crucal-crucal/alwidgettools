@@ -1,12 +1,12 @@
 ﻿#pragma once
 
 #include <QIcon>
-#include <QObject>
 
 #include "alwidgettoolsdef.hpp"
 
 class QTranslator;
 
+namespace AL {
 class CALApplication;
 
 class CALApplicationPrivate final : public QObject {
@@ -44,3 +44,5 @@ private:
 	void updateMica(QWidget* widget, bool isProcessEvent = true) const;
 	void updateAllMicaWidget();
 };
+
+} // namespace AL

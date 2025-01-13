@@ -1,7 +1,8 @@
 ﻿#pragma once
 
-#include <QObject>
+#include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALSliderStyle;
 class CALSlider;
 
@@ -20,3 +21,5 @@ protected:
 private:
 	CALSliderStyle* style{ nullptr };
 };
+
+} // namespace AL

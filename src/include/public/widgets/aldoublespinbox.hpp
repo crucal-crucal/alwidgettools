@@ -4,6 +4,7 @@
 
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALDoubleSpinBoxPrivate;
 
 class CALWIDGETTOOLS_EXPORT CALDoubleSpinBox : public QDoubleSpinBox {
@@ -19,3 +20,5 @@ protected:
 
 	void contextMenuEvent(QContextMenuEvent* event) override;
 };
+
+} // namespace AL

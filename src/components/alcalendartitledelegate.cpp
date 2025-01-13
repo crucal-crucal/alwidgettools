@@ -4,6 +4,7 @@
 
 #include "althememanager.hpp"
 
+namespace AL {
 /**
  * @brief \class CALCalendarTitleDelegate
  * @param parent pointer to the parent class
@@ -35,3 +36,5 @@ void CALCalendarTitleDelegate::paint(QPainter* painter, const QStyleOptionViewIt
 QSize CALCalendarTitleDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const {
 	return { 42, 30 };
 }
+
+} // namespace AL

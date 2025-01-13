@@ -2,6 +2,7 @@
 
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALToolBar;
 class CALToolBarStyle;
 
@@ -22,3 +23,5 @@ private:
 	int shadowBorderWidth{};
 	CALToolBarStyle* style{ nullptr };
 };
+
+} // namespace AL

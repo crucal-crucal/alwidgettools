@@ -4,11 +4,12 @@
 
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALSuggestDelegate final : public QStyledItemDelegate {
 	Q_OBJECT
 
 public:
-	explicit CALSuggestDelegate(QObject *parent = nullptr);
+	explicit CALSuggestDelegate(QObject* parent = nullptr);
 	~CALSuggestDelegate() override;
 
 protected:
@@ -18,3 +19,5 @@ protected:
 private:
 	ALThemeType::ThemeMode themeMode{};
 };
+
+} // namespace AL

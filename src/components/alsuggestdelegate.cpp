@@ -7,6 +7,7 @@
 #include "alsuggestmodel.hpp"
 #include "althememanager.hpp"
 
+namespace AL {
 /**
  * @brief \class CALSuggestDelegate
  * @param parent pointer to the parent class
@@ -59,3 +60,5 @@ QSize CALSuggestDelegate::sizeHint(const QStyleOptionViewItem& option, const QMo
 	size.setHeight(40);
 	return size;
 }
+
+} // namespace AL

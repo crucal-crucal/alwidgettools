@@ -2,7 +2,9 @@
 
 #include "e_basepage.hpp"
 
+namespace AL {
 class CALMainWindow;
+}
 
 class E_Settings final : public E_BasePage {
 	Q_OBJECT
@@ -12,7 +14,7 @@ public:
 	~E_Settings() override;
 
 private:
-	CALMainWindow* m_mainWindow{ nullptr };
+	AL::CALMainWindow* m_mainWindow{ nullptr };
 
 	void initThemeSwitchArea();
 	void initMicaSwitchArea();

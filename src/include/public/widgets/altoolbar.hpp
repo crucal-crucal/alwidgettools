@@ -4,6 +4,7 @@
 
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALToolBarPrivate;
 
 class CALWIDGETTOOLS_EXPORT CALToolBar : public QToolBar {
@@ -26,3 +27,5 @@ protected:
 
 	void paintEvent(QPaintEvent* event) override;
 };
+
+} // namespace AL

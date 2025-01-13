@@ -4,6 +4,7 @@
 
 #define NODE_MAX_DEPTHS 10
 
+namespace AL {
 /**
  * @brief \class CALNavigationModel
  * @param parent pointer to the parent class
@@ -248,7 +249,7 @@ void CALNavigationModel::setSelectedNode(CALNavigationNode* node) {
 }
 
 CALNavigationNode* CALNavigationModel::getSelectedNode() const {
-	return  m_selectedNode;
+	return m_selectedNode;
 }
 
 void CALNavigationModel::setSelectedExpandedNode(CALNavigationNode* node) {
@@ -258,3 +259,5 @@ void CALNavigationModel::setSelectedExpandedNode(CALNavigationNode* node) {
 CALNavigationNode* CALNavigationModel::getSelectedExpandedNode() const {
 	return m_selectedExpandedNode;
 }
+
+} // namespace AL

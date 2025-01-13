@@ -20,6 +20,7 @@
 #include "althememanager.hpp"
 #include "althemeanimationwidget.hpp"
 
+namespace AL {
 /**
  * @brief \class CALMainWindowPrivate
  * Internal class for CALMainWindow
@@ -250,7 +251,7 @@ void CALMainWindowPrivate::doNavigationDisplayModeChange() {
 /**
  * @brief \class CALMainWindow
  */
-Q_TAKEOVER_NATIVEEVENT_CPP(CALMainWindow, d_func()->appBar)
+AL_TAKEOVER_NATIVEEVENT_CPP(CALMainWindow, d_func()->appBar)
 
 CALMainWindow::CALMainWindow(QWidget* parent): QMainWindow(parent), d_ptr(new CALMainWindowPrivate(this, this)) {
 	Q_D(CALMainWindow);
@@ -581,3 +582,5 @@ QMenu* CALMainWindow::createPopupMenu() {
 
 	return menu;
 }
+
+} // namespace AL

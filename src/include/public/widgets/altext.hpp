@@ -4,6 +4,7 @@
 
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALTextPrivate;
 
 class CALWIDGETTOOLS_EXPORT CALText : public QLabel {
@@ -33,3 +34,5 @@ protected:
 
 	void paintEvent(QPaintEvent* event) override;
 };
+
+} // namespace AL

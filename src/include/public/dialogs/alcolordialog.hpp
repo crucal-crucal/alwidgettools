@@ -5,13 +5,14 @@
 #include "alappbar.hpp"
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALColorDialogPrivate;
 
 class CALWIDGETTOOLS_EXPORT CALColorDialog : public QDialog {
 	Q_OBJECT
 	Q_DECLARE_PRIVATE(CALColorDialog)
 	Q_PROPERTY(QColor currentColor READ getCurrentColor WRITE setCurrentColor NOTIFY sigCurrentColorChanged)
-	Q_TAKEOVER_NATIVEEVENT_H
+	AL_TAKEOVER_NATIVEEVENT_H
 
 public:
 	explicit CALColorDialog(QWidget* parent = nullptr);
@@ -33,3 +34,5 @@ protected:
 
 	void paintEvent(QPaintEvent* event) override;
 };
+
+} // namespace AL

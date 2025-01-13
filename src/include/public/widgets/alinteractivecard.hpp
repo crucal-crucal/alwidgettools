@@ -4,6 +4,7 @@
 
 #include "alpushbutton.hpp"
 
+namespace AL {
 class CALInteractiveCardPrivate;
 
 class CALWIDGETTOOLS_EXPORT CALInteractiveCard : public QPushButton {
@@ -73,3 +74,5 @@ protected:
 
 	void paintEvent(QPaintEvent* event) override;
 };
+
+} // namespace AL

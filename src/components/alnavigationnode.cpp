@@ -2,6 +2,7 @@
 
 #include <QUuid>
 
+namespace AL {
 /**
  * @brief \class CALNavigationNode
  * @param nodeTitle title of the node
@@ -195,7 +196,7 @@ CALNavigationNode* CALNavigationNode::getOriginalNode() {
 		return this;
 	}
 
-	CALNavigationNode* originalNode = this->getParentNode();
+	CALNavigationNode * originalNode = this->getParentNode();
 	while (!originalNode->getIsRootNode() && !originalNode->getParentNode()->getIsRootNode()) {
 		originalNode = originalNode->getParentNode();
 	}
@@ -220,3 +221,5 @@ bool CALNavigationNode::getIsChildNode(CALNavigationNode* node) { // NOLINT
 int CALNavigationNode::getRow() const {
 	return m_parentNode ? m_parentNode->getChildrenNodes().indexOf(const_cast<CALNavigationNode*>(this)) : 0;
 }
+
+} // namespace AL

@@ -4,6 +4,7 @@
 
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALListViewStyle final : public QProxyStyle {
 	Q_OBJECT
 	Q_PROPERTY(int itemHeight MEMBER m_itemHeight NOTIFY sigItemHeightChanged)
@@ -33,3 +34,5 @@ private:
 	int m_itemHeight{};
 	bool m_isTransparent{};
 };
+
+} // namespace AL

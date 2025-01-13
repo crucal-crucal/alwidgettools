@@ -5,6 +5,8 @@
 
 #include "althememanager.hpp"
 
+using namespace AL;
+
 E_IconDelegate::E_IconDelegate(QObject* parent): QStyledItemDelegate(parent) {
 	m_themeMode = ALTheme->getThemeMode();
 	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { m_themeMode = mode; });

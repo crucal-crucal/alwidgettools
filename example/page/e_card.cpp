@@ -6,6 +6,8 @@
 #include "alpromotioncard.hpp"
 #include "alpromotionview.hpp"
 
+using namespace AL;
+
 E_Card::E_Card(QWidget* parent): E_BasePage(parent) {
 	setWindowTitle("CALCard");
 	createCustomWidget("some thing...");

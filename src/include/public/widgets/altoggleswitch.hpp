@@ -4,6 +4,7 @@
 
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALToggleSwitchPrivate;
 
 class CALWIDGETTOOLS_EXPORT CALToggleSwitch : public QWidget {
@@ -30,3 +31,5 @@ protected:
 	void mouseMoveEvent(QMouseEvent* event) override;
 	void paintEvent(QPaintEvent* event) override;
 };
+
+} // namespace AL

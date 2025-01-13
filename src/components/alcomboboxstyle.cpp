@@ -7,6 +7,7 @@
 
 #include "althememanager.hpp"
 
+namespace AL {
 /**
  * @brief \class CALComboBoxStyle
  * @param style pointer to the parent style
@@ -238,3 +239,5 @@ void CALComboBoxStyle::setExpandMarkWidth(const qreal ExpandMarkWidth) {
 qreal CALComboBoxStyle::getExpandMarkWidth() const {
 	return m_expandMarkWidth;
 }
+
+} // namespace AL

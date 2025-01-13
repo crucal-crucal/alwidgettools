@@ -2,6 +2,7 @@
 
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALText;
 
 class CALTextPrivate final : public QObject {
@@ -24,3 +25,5 @@ private:
 	ALTextType::TextStyle textStyle{ ALTextType::NoStyle };
 	qreal textSpacing{ 0.5 };
 };
+
+} // namespace AL

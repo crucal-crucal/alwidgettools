@@ -2,6 +2,7 @@
 
 #include "aleventbus_p.hpp"
 
+namespace AL {
 /**
  * @brief \class CALEventPrivate
  * Internal class for CALEvent
@@ -154,3 +155,5 @@ CALEventBus::CALEventBus(QObject* parent): QObject(parent), d_ptr(new CALEventBu
 }
 
 CALEventBus::~CALEventBus() = default;
+
+} // namespace AL

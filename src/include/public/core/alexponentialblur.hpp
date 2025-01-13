@@ -6,6 +6,7 @@
 #include "alwidgettoolsdef.hpp"
 #include "alsingleton.hpp"
 
+namespace AL {
 class CALExponentialBlurPrivate;
 
 class CALWIDGETTOOLS_EXPORT CALExponentialBlur : public QObject {
@@ -19,9 +20,11 @@ public:
 protected:
 	const QScopedPointer<CALExponentialBlurPrivate> d_ptr{ nullptr };
 
-	friend class CALSingleton<CALExponentialBlur>;
+	friend class AL::CALSingleton<CALExponentialBlur>;
 
 private:
 	explicit CALExponentialBlur(QObject* parent = nullptr);
 	~CALExponentialBlur() override;
 };
+
+} // namespace AL

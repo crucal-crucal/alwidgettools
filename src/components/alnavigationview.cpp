@@ -7,6 +7,7 @@
 #include "alnavigationstyle.hpp"
 #include "alscrollbar.hpp"
 
+namespace AL {
 /**
  * @brief \class CALNavigationView
  * @param parent pointer to the parent class
@@ -96,3 +97,5 @@ void CALNavigationView::mouseDoubleClickEvent(QMouseEvent* event) {
 	viewport()->update();
 	QTreeView::mouseDoubleClickEvent(event);
 }
+
+} // namespace AL

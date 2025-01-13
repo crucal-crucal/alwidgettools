@@ -9,6 +9,8 @@
 #include "alscrollpagearea.hpp"
 #include "altext.hpp"
 
+using namespace AL;
+
 E_Popup::E_Popup(QWidget* parent): E_BasePage(parent) {
 	setWindowTitle("CALPopup");
 	createCustomWidget("some thing...");

@@ -1,9 +1,10 @@
-#pragma once
+﻿#pragma once
 
 #include <QWidget>
 
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALPromotionCard;
 class CALPromotionViewPrivate;
 
@@ -51,3 +52,5 @@ protected:
 	void mousePressEvent(QMouseEvent* event) override;
 	void paintEvent(QPaintEvent* event) override;
 };
+
+} // namespace AL

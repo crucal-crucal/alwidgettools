@@ -7,6 +7,7 @@
 
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 enum ALCalendarMode {
 	YearMode  = 0x0001,
 	MonthMode = 0x0002,
@@ -83,3 +84,5 @@ private:
 	void initRowCount();
 	[[nodiscard]] int getCurrentDay(int row) const;
 };
+
+} // namespace AL

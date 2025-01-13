@@ -2,6 +2,7 @@
 
 #include "alnavigationrouter_p.hpp"
 
+namespace AL {
 /**
  * @brief \class CALNavigationRouterPrivate
  * Internal class for CALNavigationRouter
@@ -9,7 +10,6 @@
  * @param parent pointer to the parent class
  */
 CALNavigationRouterPrivate::CALNavigationRouterPrivate(CALNavigationRouter* q, QObject* parent): QObject(parent), q_ptr(q) {
-
 }
 
 CALNavigationRouterPrivate::~CALNavigationRouterPrivate() = default;
@@ -80,3 +80,5 @@ CALNavigationRouter::CALNavigationRouter(QObject* parent): QObject(parent), d_pt
 }
 
 CALNavigationRouter::~CALNavigationRouter() = default;
+
+} // namespace AL

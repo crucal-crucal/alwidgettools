@@ -3,6 +3,9 @@
 #include <QAbstractListModel>
 #include <QColor>
 
+#include "alwidgettoolsdef.hpp"
+
+namespace AL {
 class CALColorDisplayModel final : public QAbstractListModel {
 	Q_OBJECT
 
@@ -25,3 +28,5 @@ protected:
 private:
 	QList<QColor> m_displayColorList{};
 };
+
+} // namespace AL

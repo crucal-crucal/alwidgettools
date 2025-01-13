@@ -4,6 +4,7 @@
 
 #include "alscrollbar.hpp"
 
+namespace AL {
 /**
  * @brief \class CALBaseListView
  * @param parent pointer to the parent class
@@ -45,3 +46,5 @@ void CALBaseListView::mouseDoubleClickEvent(QMouseEvent* event) {
 
 	QListView::mouseDoubleClickEvent(event);
 }
+
+} // namespace AL

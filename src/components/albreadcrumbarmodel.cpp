@@ -1,6 +1,6 @@
 ﻿#include "albreadcrumbarmodel.hpp"
 
-#include <QDebug>
+namespace AL {
 /**
  * @brief \class CALBreadcrumbBarModel
  * @param parent pointer to the parent class
@@ -80,3 +80,5 @@ QVariant CALBreadcrumbBarModel::data(const QModelIndex& index, const int role) c
 	}
 	return {};
 }
+
+} // namespace AL

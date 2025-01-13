@@ -4,6 +4,7 @@
 
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALCalendarPickerContainer final : public QWidget {
 	Q_OBJECT
 
@@ -17,3 +18,5 @@ protected:
 private:
 	ALThemeType::ThemeMode m_themeMode{};
 };
+
+} // namespace AL

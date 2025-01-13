@@ -6,6 +6,7 @@
 #include "allistview.hpp"
 #include "althememanager.hpp"
 
+namespace AL {
 /**
  * \class CALListViewStyle
  * @param style pointer to the parent style
@@ -166,3 +167,5 @@ void CALListViewStyle::setIsTransparent(const bool isTransparent) {
 bool CALListViewStyle::getIsTransparent() const {
 	return m_isTransparent;
 }
+
+} // namespace AL

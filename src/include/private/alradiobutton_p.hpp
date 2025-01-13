@@ -2,6 +2,7 @@
 
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALRadioButton;
 class CALRadioButtonStyle;
 
@@ -23,3 +24,5 @@ private:
 	ALThemeType::ThemeMode themeMode{};
 	CALRadioButtonStyle* style{ nullptr };
 };
+
+} // namespace AL

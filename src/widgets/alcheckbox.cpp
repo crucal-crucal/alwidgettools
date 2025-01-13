@@ -3,6 +3,7 @@
 #include "alcheckboxstyle.hpp"
 #include "alcheckbox_p.hpp"
 
+namespace AL {
 /**
  * @brief \class CALCheckBoxPrivate
  * Internal class for CALCheckBox
@@ -10,7 +11,6 @@
  * @param parent pointer to the parent class
  */
 CALCheckBoxPrivate::CALCheckBoxPrivate(CALCheckBox* q, QObject* parent): QObject(parent), q_ptr(q) {
-
 }
 
 CALCheckBoxPrivate::~CALCheckBoxPrivate() = default;
@@ -37,3 +37,5 @@ CALCheckBox::CALCheckBox(const QString& text, QWidget* parent): CALCheckBox(pare
 }
 
 CALCheckBox::~CALCheckBox() = default;
+
+} // namespace AL

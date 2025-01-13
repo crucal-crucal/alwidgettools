@@ -5,6 +5,7 @@
 #include "alsingleton.hpp"
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALToolTipHelper;
 class CALToolTipPrivate;
 
@@ -74,3 +75,5 @@ protected:
 	friend class CALToolTip;
 	friend class CALSingleton<CALToolTip>;
 };
+
+} // namespace AL

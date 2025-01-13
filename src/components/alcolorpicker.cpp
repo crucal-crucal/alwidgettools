@@ -6,6 +6,7 @@
 
 #include "althememanager.hpp"
 
+namespace AL {
 /**
  * @brief \class CALColorPicker
  * @param parent pointer to the parent class
@@ -108,3 +109,5 @@ QPoint CALColorPicker::adjustPointLimit(QPoint point) const {
 
 	return point;
 }
+
+} // namespace AL

@@ -4,6 +4,7 @@
 
 #define FOOTER_NODE_LIMIT 3
 
+namespace AL {
 /**
  * @brief \class CALFooterModel
  * @param parent pointer to the parent class
@@ -70,3 +71,5 @@ QVariant CALFooterModel::data(const QModelIndex& index, const int role) const {
 
 	return {};
 }
+
+} // namespace AL

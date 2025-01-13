@@ -7,6 +7,8 @@
 #include "altext.hpp"
 #include "althememanager.hpp"
 
+using namespace AL;
+
 E_BasePage::E_BasePage(QWidget* parent): CALScrollPage(parent) {
 	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=]() {
 		if (!parent) {

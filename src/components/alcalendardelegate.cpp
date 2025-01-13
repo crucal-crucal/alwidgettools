@@ -6,6 +6,7 @@
 
 #include "althememanager.hpp"
 
+namespace AL {
 /**
  * @brief \class CALCalendarDelegate
  * @param calendarModel pointer to the calendar model
@@ -171,3 +172,5 @@ void CALCalendarDelegate::drawDays(QPainter* painter, const QStyleOptionViewItem
 		}
 	}
 }
+
+} // namespace AL

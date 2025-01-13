@@ -4,6 +4,7 @@
 
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALProgressBarPrivate;
 
 class CALWIDGETTOOLS_EXPORT CALProgressBar : public QProgressBar {
@@ -63,3 +64,5 @@ protected:
 
 	void paintEvent(QPaintEvent* event) override;
 };
+
+} // namespace AL

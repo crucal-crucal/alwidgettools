@@ -2,16 +2,18 @@
 
 #include "almainwindow.hpp"
 
-class E_About;
+namespace AL {
 class CALContentDialog;
+}
 
+class E_About;
 class E_BaseComponents;
 class E_Settings;
 class E_Card;
 class E_Popup;
 class E_Icon;
 
-class MainWindow final : public CALMainWindow {
+class MainWindow final : public AL::CALMainWindow {
 	Q_OBJECT
 
 public:
@@ -23,7 +25,7 @@ public:
 	void initContent();
 
 private:
-	CALContentDialog* m_closeDialog{ nullptr };
+	AL::CALContentDialog* m_closeDialog{ nullptr };
 
 	E_BaseComponents* m_baseComponents{ nullptr };
 	E_Settings* m_settings{ nullptr };

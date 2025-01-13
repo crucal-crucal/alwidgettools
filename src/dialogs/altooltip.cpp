@@ -15,6 +15,7 @@
 #include "althememanager.hpp"
 #include "altooltip_p.hpp"
 
+namespace AL {
 /**
  * @brief \class CALToolTipPrivate
  * Internal class for CALToolTip
@@ -316,3 +317,5 @@ bool CALToolTipHelper::isVisible() {
 QString CALToolTipHelper::text() {
 	return instance()->getToolTip();
 }
+
+} // namespace AL

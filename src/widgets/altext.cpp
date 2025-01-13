@@ -6,6 +6,7 @@
 #include "altext_p.hpp"
 #include "althememanager.hpp"
 
+namespace AL {
 /**
  * @brief \class CALTextPrivate
  * Internal class for CALText
@@ -150,3 +151,5 @@ void CALText::paintEvent(QPaintEvent* event) {
 		QLabel::paintEvent(event);
 	}
 }
+
+} // namespace AL

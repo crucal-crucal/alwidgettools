@@ -5,6 +5,7 @@
 
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALScrollBarPrivate;
 
 class CALWIDGETTOOLS_EXPORT CALScrollBar : public QScrollBar {
@@ -17,9 +18,10 @@ class CALWIDGETTOOLS_EXPORT CALScrollBar : public QScrollBar {
 
 public:
 	enum ContextMenuFlag {
-		NoFlag = 0x00,
+		NoFlag  = 0x00,
 		HasIcon = 0x01,
 	};
+
 	Q_DECLARE_FLAGS(ContextMenuFlags, ContextMenuFlag)
 	Q_FLAGS(ContextMenuFlags)
 
@@ -56,3 +58,4 @@ protected:
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(CALScrollBar::ContextMenuFlags)
+} // namespace AL

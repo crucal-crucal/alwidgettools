@@ -1,8 +1,10 @@
 ﻿#pragma once
 
-
 #include <QWidget>
 
+#include "alwidgettoolsdef.hpp"
+
+namespace AL {
 class CALThemeAnimationWidget final : public QWidget {
 	Q_OBJECT
 	Q_PROPERTY(qreal radius READ getRadius WRITE setRadius NOTIFY sigRadiusChanged)
@@ -50,3 +52,5 @@ private:
 	QImage m_oldWindowImage{};
 	QImage m_newWindowImage{};
 };
+
+} // namespace AL

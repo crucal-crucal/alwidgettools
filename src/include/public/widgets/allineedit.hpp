@@ -4,6 +4,7 @@
 
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALLineEditPrivate;
 
 class CALWIDGETTOOLS_EXPORT CALLineEdit : public QLineEdit {
@@ -37,3 +38,5 @@ protected:
 	void paintEvent(QPaintEvent* event) override;
 	void contextMenuEvent(QContextMenuEvent* event) override;
 };
+
+} // namespace AL

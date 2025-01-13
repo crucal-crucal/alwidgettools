@@ -5,6 +5,7 @@
 #include "alscrollpagearea_p.hpp"
 #include "althememanager.hpp"
 
+namespace AL {
 /**
  * @brief \class CALScrollPageAreaPrivate
  * Internal class for CALScrollPageArea
@@ -12,7 +13,6 @@
  * @param parent pointer to the parent class
  */
 CALScrollPageAreaPrivate::CALScrollPageAreaPrivate(CALScrollPageArea* q, QObject* parent): QObject(parent), q_ptr(q) {
-
 }
 
 CALScrollPageAreaPrivate::~CALScrollPageAreaPrivate() = default;
@@ -53,3 +53,5 @@ void CALScrollPageArea::paintEvent(QPaintEvent* event) {
 	painter.drawRoundedRect(foregroundRect, d->borderRadius, d->borderRadius);
 	painter.restore();
 }
+
+} // namespace AL

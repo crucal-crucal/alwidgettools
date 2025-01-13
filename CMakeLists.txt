@@ -1,5 +1,5 @@
 ﻿cmake_minimum_required(VERSION 3.16)
-project(alwidgettools VERSION 0.1 LANGUAGES CXX)
+project(alwidgettools VERSION 1.0.0 LANGUAGES CXX)
 
 string(TOUPPER ${PROJECT_NAME} PROJECT_NAME_UPPER)
 

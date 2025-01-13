@@ -10,6 +10,7 @@
 #include "althememanager.hpp"
 #include "altooltip.hpp"
 
+namespace AL {
 /**
  * @brief \class CALIconButtonPrivate
  * Internal class for CALIconButton
@@ -258,3 +259,5 @@ void CALIconButton::paintEvent(QPaintEvent* event) {
 
 	painter.restore();
 }
+
+} // namespace AL

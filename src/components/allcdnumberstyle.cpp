@@ -5,6 +5,7 @@
 
 #include "althememanager.hpp"
 
+namespace AL {
 CALLCDNumberStyle::CALLCDNumberStyle(QStyle* parent) {
 	m_isTransparent = false;
 	m_borderRadius = 6;
@@ -51,3 +52,5 @@ void CALLCDNumberStyle::setIsTransparent(const bool istransparent) {
 bool CALLCDNumberStyle::getIsTransparent() const {
 	return m_isTransparent;
 }
+
+} // namespace AL

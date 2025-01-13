@@ -4,6 +4,9 @@
 
 #include "alwidgettoolsdef.hpp"
 
+class QVBoxLayout;
+
+namespace AL {
 class CALSuggestion final : public QObject {
 	Q_OBJECT
 	Q_PROPERTY(ALIcon::AweSomeIcon awesomeIcon READ getAwesomeIcon WRITE setAwesomeIcon NOTIFY sigAwesomeIconChanged)
@@ -33,8 +36,6 @@ private:
 	QString suggestText{};
 	QVariantMap suggestData{};
 };
-
-class QVBoxLayout;
 
 class CALLineEdit;
 class CALNavigationNode;
@@ -83,3 +84,5 @@ private:
 	void startExpandAnimation();
 	void startCloseAnimation();
 };
+
+} // namespace AL

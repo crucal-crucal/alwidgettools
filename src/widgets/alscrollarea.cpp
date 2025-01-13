@@ -6,6 +6,7 @@
 #include "alscrollarea_p.hpp"
 #include "alscrollbar.hpp"
 
+namespace AL {
 /**
  * @brief \class CALScrollAreaPrivate
  * Internal class for CALScrollArea
@@ -77,3 +78,5 @@ bool CALScrollArea::getIsAnimation(const Qt::Orientation& orientation) const {
 
 CALScrollArea::CALScrollArea(CALScrollAreaPrivate& dd, CALScrollArea* parent): QScrollArea(parent), d_ptr(&dd) {
 }
+
+} // namespace AL

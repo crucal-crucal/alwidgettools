@@ -1,4 +1,4 @@
-#include "alspinbox.hpp"
+﻿#include "alspinbox.hpp"
 
 #include <QClipboard>
 #include <QContextMenuEvent>
@@ -10,6 +10,7 @@
 #include "alspinbox_p.hpp"
 #include "althememanager.hpp"
 
+namespace AL {
 /**
  * \class CALSpinBoxPrivate
  * Internal class for CALSpinBox
@@ -28,7 +29,7 @@ CALMenu* CALSpinBoxPrivate::createStandardContextMenu() {
 	const auto menu = new CALMenu(q);
 	menu->setMenuItemHeight(27);
 	menu->setAttribute(Qt::WA_DeleteOnClose);
-	QAction* action{ nullptr };
+	QAction* action;
 	if (!lineEdit->isReadOnly()) {
 		action = menu->addAction(ALIcon::AweSomeIcon::ArrowRotateLeft, tr("Undo"), QKeySequence::Undo);
 		action->setEnabled(lineEdit->isUndoAvailable());
@@ -83,11 +84,12 @@ CALMenu* CALSpinBoxPrivate::createStandardContextMenu() {
 CALSpinBox::CALSpinBox(QWidget* parent): QSpinBox(parent), d_ptr(new CALSpinBoxPrivate(this, this)) {
 	Q_D(CALSpinBox);
 
+	lineEdit()->setAlignment(Qt::AlignCenter);
+	lineEdit()->setStyleSheet("background-color: transparent;");
+
 	d->style = new CALSpinBoxStyle(style());
 	setStyle(d->style);
 	setFixedSize(120, 30);
-	lineEdit()->setAlignment(Qt::AlignCenter);
-	lineEdit()->setStyleSheet("background-color: transparent;");
 	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) {
 		QPalette palette;
 		palette.setColor(QPalette::Base, Qt::transparent);
@@ -122,3 +124,5 @@ void CALSpinBox::contextMenuEvent(QContextMenuEvent* event) {
 	}
 	event->accept();
 }
+
+} // namespace AL

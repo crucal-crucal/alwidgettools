@@ -4,8 +4,7 @@
 
 #include "alwidgettoolsdef.hpp"
 
-using namespace ALIcon;
-
+namespace AL {
 class CALAwesomeButtonPrivate;
 
 class CALWIDGETTOOLS_EXPORT CALAwesomeButton : public QPushButton {
@@ -24,13 +23,13 @@ class CALWIDGETTOOLS_EXPORT CALAwesomeButton : public QPushButton {
 	Q_PROPERTY(qreal opacity READ getOpacity WRITE setOpacity NOTIFY sigOpacityChanged)
 
 public:
-	explicit CALAwesomeButton(const AweSomeIcon& iconType, QWidget* parent = nullptr);
-	explicit CALAwesomeButton(const AweSomeIcon& iconType, int pixelSize, QWidget* parent = nullptr);
-	explicit CALAwesomeButton(const AweSomeIcon& iconType, int pixelSize, int fixedWidth, int fixedHeight, QWidget* parent = nullptr);
+	explicit CALAwesomeButton(const ALIcon::AweSomeIcon& iconType, QWidget* parent = nullptr);
+	explicit CALAwesomeButton(const ALIcon::AweSomeIcon& iconType, int pixelSize, QWidget* parent = nullptr);
+	explicit CALAwesomeButton(const ALIcon::AweSomeIcon& iconType, int pixelSize, int fixedWidth, int fixedHeight, QWidget* parent = nullptr);
 	~CALAwesomeButton() override;
 
-	void setAwesomeIcon(const AweSomeIcon& iconType);
-	[[nodiscard]] AweSomeIcon getAwesomeIcon() const;
+	void setAwesomeIcon(const ALIcon::AweSomeIcon& iconType);
+	[[nodiscard]] ALIcon::AweSomeIcon getAwesomeIcon() const;
 
 	void setBorderRadius(int radius);
 	[[nodiscard]] int getBorderRadius() const;
@@ -77,3 +76,5 @@ protected:
 
 	void paintEvent(QPaintEvent* event) override;
 };
+
+} // namespace AL

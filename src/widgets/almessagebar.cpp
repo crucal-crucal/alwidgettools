@@ -21,8 +21,7 @@
 #include <windowsx.h>
 #endif
 
-using namespace ALIcon;
-
+namespace AL {
 QMap<ALMessageBarType::PositionPolicy, QList<CALMessageBar*>*> mapMessageBarActive;
 
 /**
@@ -457,12 +456,12 @@ void CALMessageBarPrivate::drawMessage(QPainter* painter, const QColor& backgrou
 }
 
 void CALMessageBarPrivate::drawSuccess(QPainter* painter) {
-	drawMessage(painter, QColor(0xE0, 0xF6, 0xDD), QColor(0x11, 0x77, 0x10), QChar(static_cast<ushort>(AweSomeIcon::Check)),
+	drawMessage(painter, QColor(0xE0, 0xF6, 0xDD), QColor(0x11, 0x77, 0x10), QChar(static_cast<ushort>(ALIcon::AweSomeIcon::Check)),
 	            Qt::black, 12, leftPadding);
 }
 
 void CALMessageBarPrivate::drawError(QPainter* painter) {
-	drawMessage(painter, QColor(0xFE, 0xE7, 0xEA), QColor(0xBA, 0x2D, 0x20), QChar(static_cast<ushort>(AweSomeIcon::Close)),
+	drawMessage(painter, QColor(0xFE, 0xE7, 0xEA), QColor(0xBA, 0x2D, 0x20), QChar(static_cast<ushort>(ALIcon::AweSomeIcon::Close)),
 	            Qt::black, 13, leftPadding + 1);
 }
 
@@ -526,6 +525,9 @@ CALMessageBar::CALMessageBar(const ALMessageBarType::PositionPolicy& policy, con
 : QWidget(parent), d_ptr(new CALMessageBarPrivate(this)) {
 	Q_D(CALMessageBar);
 
+	setObjectName("CALMessageBar");
+	setStyleSheet("#CALMessageBar{ background-color: transparent; }");
+
 	d->init();
 	d->title = title;
 	d->text = message;
@@ -536,7 +538,7 @@ CALMessageBar::CALMessageBar(const ALMessageBarType::PositionPolicy& policy, con
 	setFixedHeight(60);
 	setMouseTracking(true);
 	parent->installEventFilter(this);
-	d->closeButton = new CALIconButton(AweSomeIcon::Close, 17, d->closeButtonWidth, 30, this);
+	d->closeButton = new CALIconButton(ALIcon::AweSomeIcon::Close, 17, d->closeButtonWidth, 30, this);
 	switch (d->messageMode) {
 		case ALMessageBarType::Success: {
 			d->closeButton->setLightHoverColor(QColor(0xE6, 0xFC, 0xE3));
@@ -573,8 +575,6 @@ CALMessageBar::CALMessageBar(const ALMessageBarType::PositionPolicy& policy, con
 	mainLayout->setContentsMargins(0, 0, 10, 0);
 	mainLayout->addStretch();
 	mainLayout->addWidget(d->closeButton);
-	setObjectName("CALMessageBar");
-	setStyleSheet("#CALMessageBar{ background-color: transparent; }");
 
 	d->invokableMessageBarCreate(displayMsec);
 }
@@ -831,3 +831,5 @@ bool CALMessageBar::nativeEvent(const QByteArray& eventType, void* message, long
 }
 #endif
 #endif
+
+} // namespace AL

@@ -1,5 +1,6 @@
-#include "alcalendartitlemodel.hpp"
+﻿#include "alcalendartitlemodel.hpp"
 
+namespace AL {
 /**
  * @brief \class CALCalendarTitleModel
  * @param parent pointer to the parent class
@@ -45,3 +46,5 @@ QVariant CALCalendarTitleModel::data(const QModelIndex& index, const int role) c
 
 	return {};
 }
+
+} // namespace AL

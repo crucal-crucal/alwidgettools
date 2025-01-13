@@ -4,6 +4,7 @@
 
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALCenterStackedWidget final : public QStackedWidget {
 	Q_OBJECT
 
@@ -26,3 +27,5 @@ private:
 	bool m_isTransparent{};
 	bool m_isHasRadius{ true };
 };
+
+} // namespace AL

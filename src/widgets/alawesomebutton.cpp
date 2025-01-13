@@ -6,6 +6,7 @@
 #include "alawesomebutton_p.hpp"
 #include "altooltip.hpp"
 
+namespace AL {
 /**
  * @brief \class CALAwesomeButtonPrivate
  * Internal class for CALAwesomeButton
@@ -37,7 +38,7 @@ void CALAwesomeButtonPrivate::init() {
  * @param iconType Awesome icon type
  * @param parent pointer to the parent class
  */
-CALAwesomeButton::CALAwesomeButton(const AweSomeIcon& iconType, QWidget* parent)
+CALAwesomeButton::CALAwesomeButton(const ALIcon::AweSomeIcon& iconType, QWidget* parent)
 : QPushButton(parent), d_ptr(new CALAwesomeButtonPrivate(this, this)) {
 	Q_D(CALAwesomeButton);
 
@@ -54,7 +55,7 @@ CALAwesomeButton::CALAwesomeButton(const AweSomeIcon& iconType, QWidget* parent)
  * @param pixelSize font pixel size
  * @param parent pointer to the parent class
  */
-CALAwesomeButton::CALAwesomeButton(const AweSomeIcon& iconType, const int pixelSize, QWidget* parent)
+CALAwesomeButton::CALAwesomeButton(const ALIcon::AweSomeIcon& iconType, const int pixelSize, QWidget* parent)
 : QPushButton(parent), d_ptr(new CALAwesomeButtonPrivate(this, this)) {
 	Q_D(CALAwesomeButton);
 
@@ -73,7 +74,7 @@ CALAwesomeButton::CALAwesomeButton(const AweSomeIcon& iconType, const int pixelS
  * @param fixedHeight fixed button height
  * @param parent pointer to the parent class
  */
-CALAwesomeButton::CALAwesomeButton(const AweSomeIcon& iconType, const int pixelSize, const int fixedWidth, const int fixedHeight, QWidget* parent)
+CALAwesomeButton::CALAwesomeButton(const ALIcon::AweSomeIcon& iconType, const int pixelSize, const int fixedWidth, const int fixedHeight, QWidget* parent)
 : CALAwesomeButton(iconType, pixelSize, parent) {
 	this->setFixedSize(fixedWidth, fixedHeight);
 }
@@ -82,7 +83,7 @@ CALAwesomeButton::~CALAwesomeButton() {
 	SAFE_DELETE(d_func()->tooltip)
 }
 
-void CALAwesomeButton::setAwesomeIcon(const AweSomeIcon& iconType) {
+void CALAwesomeButton::setAwesomeIcon(const ALIcon::AweSomeIcon& iconType) {
 	Q_D(CALAwesomeButton);
 
 	if (d->iconType != iconType) {
@@ -91,7 +92,7 @@ void CALAwesomeButton::setAwesomeIcon(const AweSomeIcon& iconType) {
 	}
 }
 
-AweSomeIcon CALAwesomeButton::getAwesomeIcon() const {
+ALIcon::AweSomeIcon CALAwesomeButton::getAwesomeIcon() const {
 	return d_func()->iconType;
 }
 
@@ -244,3 +245,5 @@ void CALAwesomeButton::paintEvent(QPaintEvent* event) {
 	painter.drawText(0, 0, width(), height(), Qt::AlignCenter, QChar(static_cast<unsigned short>(d->iconType)));
 	painter.restore();
 }
+
+} // namespace AL

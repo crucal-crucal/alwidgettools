@@ -1,9 +1,10 @@
-#pragma once
+﻿#pragma once
 
 #include <QPushButton>
 
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALIconButtonPrivate;
 
 class CALWIDGETTOOLS_EXPORT CALIconButton : public QPushButton {
@@ -77,3 +78,5 @@ protected:
 	bool event(QEvent* event) override;
 	void paintEvent(QPaintEvent* event) override;
 };
+
+} // namespace AL

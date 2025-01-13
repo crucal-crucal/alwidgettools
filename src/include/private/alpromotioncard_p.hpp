@@ -6,6 +6,7 @@
 
 class QRadialGradient;
 
+namespace AL {
 class CALPromotionCard;
 
 class CALPromotionCardPrivate final : public QObject {
@@ -67,3 +68,5 @@ private:
 	static qreal distance(const QPoint& point1, const QPoint& point2);
 	void startHoverOpacityAnimation(bool isVisiable);
 };
+
+} // namespace AL

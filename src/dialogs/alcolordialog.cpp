@@ -18,6 +18,7 @@
 #include "altext.hpp"
 #include "althememanager.hpp"
 
+namespace AL {
 /**
  * @brief \class CALColorDialogPrivate
  * Internal class for CALColorDialog
@@ -227,7 +228,7 @@ QColor CALColorDialogPrivate::getColorFromEdit() const {
 }
 
 
-Q_TAKEOVER_NATIVEEVENT_CPP(CALColorDialog, d_func()->appBar)
+AL_TAKEOVER_NATIVEEVENT_CPP(CALColorDialog, d_func()->appBar)
 /**
  * @brief \class CALColorDialog
  * @param parent pointer to the parent class
@@ -511,3 +512,5 @@ void CALColorDialog::paintEvent(QPaintEvent* event) {
 
 	QDialog::paintEvent(event);
 }
+
+} // namespace AL

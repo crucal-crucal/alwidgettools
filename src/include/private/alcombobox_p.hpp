@@ -1,9 +1,8 @@
 ﻿#pragma once
 
-#include <QObject>
-
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALComboBox;
 class CALComboBoxStyle;
 
@@ -25,3 +24,5 @@ private:
 	CALComboBoxStyle* comboBoxStyle{ nullptr };
 	bool isAllowHidePopup{ false };
 };
+
+} // namespace AL

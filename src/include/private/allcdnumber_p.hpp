@@ -4,6 +4,7 @@
 
 class QTimer;
 
+namespace AL {
 class CALLCDNumber;
 class CALLCDNumberStyle;
 
@@ -28,3 +29,5 @@ private:
 	QTimer* clockTimer{ nullptr };
 	CALLCDNumberStyle* lcdNumberStyle{ nullptr };
 };
+
+} // namespace AL

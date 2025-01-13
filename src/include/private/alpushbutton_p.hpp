@@ -6,6 +6,7 @@
 #include "alpushbutton.hpp"
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALPushButton;
 class CALToolTip;
 
@@ -40,3 +41,5 @@ private:
 	QColor lightBorderColor{};
 	QColor darkBorderColor{};
 };
+
+} // namespace AL

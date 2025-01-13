@@ -9,6 +9,7 @@
 class QTimer;
 class QPropertyAnimation;
 
+namespace AL {
 class CALScrollBarPrivate final : public QObject {
 	Q_OBJECT
 	Q_DISABLE_COPY(CALScrollBarPrivate)
@@ -50,3 +51,5 @@ private:
 	void handleScrollBarRangeChanged(int min, int max);
 	void handleScrollBarGeometry();
 };
+
+} // namespace AL

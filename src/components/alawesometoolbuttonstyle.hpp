@@ -6,6 +6,7 @@
 
 class QStyleOptionToolButton;
 
+namespace AL {
 class CALAwesomeToolButtonStyle final : public QProxyStyle {
 	Q_OBJECT
 	Q_PROPERTY(qreal expandIconRotate MEMBER m_expandIconRotate NOTIFY sigExpandIconRotateChanged)
@@ -46,3 +47,4 @@ private:
 	void drawText(QPainter* painter, QRect contentRect, const QStyleOptionToolButton* bopt) const;
 	static qreal calculateExpandIndicatorWidth(const QStyleOptionToolButton* bopt, QPainter* painter);
 };
+} // namespace AL

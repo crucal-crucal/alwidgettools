@@ -4,6 +4,7 @@
 
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALSuggestBoxPrivate;
 
 class CALWIDGETTOOLS_EXPORT CALSuggestBox : public QWidget {
@@ -37,3 +38,5 @@ Q_SIGNALS:
 protected:
 	const QScopedPointer<CALSuggestBoxPrivate> d_ptr{ nullptr };
 };
+
+} // namespace AL

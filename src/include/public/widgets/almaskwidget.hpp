@@ -4,6 +4,7 @@
 
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALWIDGETTOOLS_EXPORT CALMaskWidget : public QWidget {
 	Q_OBJECT
 	Q_PROPERTY(int maskAlpha READ getMaskAlpha WRITE setMaskAlpha NOTIFY sigMaskAlphaChanged)
@@ -27,3 +28,5 @@ protected:
 private:
 	int m_MaskAlpha{};
 };
+
+} // namespace AL

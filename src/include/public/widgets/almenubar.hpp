@@ -4,6 +4,7 @@
 
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALMenu;
 
 class CALWIDGETTOOLS_EXPORT CALMenuBar : public QMenuBar {
@@ -22,3 +23,5 @@ public:
 	QAction* addAweSomeIconAction(const ALIcon::AweSomeIcon& awesomeicon, const QString& text);
 	QAction* addAweSomeIconAction(const ALIcon::AweSomeIcon& awesomeicon, const QString& text, const QKeySequence& shortcut);
 };
+
+} // namespace AL

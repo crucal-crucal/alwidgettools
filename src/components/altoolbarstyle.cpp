@@ -9,6 +9,7 @@
 #include "althememanager.hpp"
 #include "altoolbar.hpp"
 
+namespace AL {
 /**
  * @brief \class CALToolBarStyle
  * @param style pointer to the parent style
@@ -265,3 +266,5 @@ void CALToolBarStyle::drawText(QPainter* painter, const QRect& contentRect, cons
 		}
 	}
 }
+
+} // namespace AL

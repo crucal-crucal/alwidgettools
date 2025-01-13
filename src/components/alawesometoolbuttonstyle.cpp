@@ -7,6 +7,7 @@
 
 #include "althememanager.hpp"
 
+namespace AL {
 /**
  * @brief \class CALAwesomeToolButtonStyle
  * @param style pointer to the parent style
@@ -39,8 +40,8 @@ void CALAwesomeToolButtonStyle::drawComplexControl(const ComplexControl cc, cons
 				p->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
 				p->setPen(m_isTransparent ? Qt::transparent : ALThemeColor(m_themeMode, ALThemeType::BasicBorder));
 				/// 背景绘制
-				if (bopt->state.testFlag(QStyle::State_Enabled)) {                                                                                        // 启用状态
-					if (bopt->state.testFlag(QStyle::State_Sunken)) {                                                                                     // 按下状态
+				if (bopt->state.testFlag(QStyle::State_Enabled)) {                                                                        // 启用状态
+					if (bopt->state.testFlag(QStyle::State_Sunken)) {                                                                     // 按下状态
 						p->setBrush(ALThemeColor(m_themeMode, m_isTransparent ? ALThemeType::BasicPressAlpha : ALThemeType::BasicPress)); // 按下状态颜色
 						p->drawRoundedRect(toolButtonRect, m_borderRadius, m_borderRadius);
 					} else {
@@ -251,3 +252,5 @@ qreal CALAwesomeToolButtonStyle::calculateExpandIndicatorWidth(const QStyleOptio
 	painter->restore();
 	return indicatorWidth;
 }
+
+} // namespace AL

@@ -23,4 +23,5 @@ private:
 	void initRadioButtonArea();
 	void initSpinBoxArea();
 	void initDoubleSpinBoxArea();
+	void initPlainTextEditArea();
 };

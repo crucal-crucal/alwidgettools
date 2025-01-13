@@ -4,6 +4,7 @@
 
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALMultiSelectComboBoxPrivate;
 
 class CALWIDGETTOOLS_EXPORT CALMultiSelectComboBox : public QComboBox {
@@ -40,3 +41,5 @@ protected:
 	void showPopup() override;
 	void hidePopup() override;
 };
+
+} // namespace AL

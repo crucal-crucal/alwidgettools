@@ -2,6 +2,7 @@
 
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALListView;
 class CALListViewStyle;
 class CALScrollBar;
@@ -23,3 +24,5 @@ private:
 	CALScrollBar* verticalScrollBar{ nullptr };
 	CALScrollBar* horizontalScrollBar{ nullptr };
 };
+
+} // namespace AL

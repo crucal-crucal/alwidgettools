@@ -6,6 +6,8 @@
 #include "alimagecard.hpp"
 #include "altext.hpp"
 
+using namespace AL;
+
 E_About::E_About(QWidget* parent): CALWidget(parent) {
 	setWindowTitle(tr("about..."));
 	setWindowIcon(QIcon(":alwidgettools/image/crucal.png"));

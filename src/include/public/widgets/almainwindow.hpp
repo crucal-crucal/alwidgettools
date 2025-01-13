@@ -5,6 +5,7 @@
 #include "alappbar.hpp"
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALMainWindowPrivate;
 
 class CALWIDGETTOOLS_EXPORT CALMainWindow : public QMainWindow {
@@ -18,7 +19,7 @@ class CALWIDGETTOOLS_EXPORT CALMainWindow : public QMainWindow {
 	Q_PROPERTY(int customWidgetMaximumWidth READ getCustomWidgetMaximumWidth WRITE setCustomWidgetMaximumWidth NOTIFY sigCustomWidgetMaximumWidthChanged)
 	Q_PROPERTY(int themeChangeTime READ getThemeChangeTime WRITE setThemeChangeTime NOTIFY sigThemeChangeTimeChanged)
 	Q_PROPERTY(ALNavigationType::NavigationDisplayMode navigationDisplayMode READ getNavigationDisplayMode WRITE setNavigationDisplayMode NOTIFY sigNavigationDisplayModeChanged)
-	Q_TAKEOVER_NATIVEEVENT_H
+	AL_TAKEOVER_NATIVEEVENT_H
 
 public:
 	explicit CALMainWindow(QWidget* parent = nullptr);
@@ -110,3 +111,5 @@ protected:
 	bool eventFilter(QObject* watched, QEvent* event) override;
 	QMenu* createPopupMenu() override;
 };
+
+} // namespace AL

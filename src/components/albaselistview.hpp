@@ -2,6 +2,9 @@
 
 #include <QListView>
 
+#include "alwidgettoolsdef.hpp"
+
+namespace AL {
 class CALScrollBar;
 
 class CALBaseListView final : public QListView {
@@ -21,3 +24,5 @@ protected:
 	void mouseReleaseEvent(QMouseEvent* event) override;
 	void mouseDoubleClickEvent(QMouseEvent* event) override;
 };
+
+} // namespace AL

@@ -8,10 +8,10 @@
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 #define Q_TAKEOVER_NATIVEEVENT_H bool nativeEvent(const QByteArray& eventType, void* message, qintptr* result) override;
 #else
-#define Q_TAKEOVER_NATIVEEVENT_H bool nativeEvent(const QByteArray& eventType, void* message, long* result) override;
+#define AL_TAKEOVER_NATIVEEVENT_H bool nativeEvent(const QByteArray& eventType, void* message, long* result) override;
 #endif
 #else
-#define Q_TAKEOVER_NATIVEEVENT_H
+#define AL_TAKEOVER_NATIVEEVENT_H
 #endif
 
 #ifdef Q_OS_WIN
@@ -33,15 +33,16 @@
         CALAPPBAR_HANDLE(CALAppBar)                                                        \
     }
 #else
-#define Q_TAKEOVER_NATIVEEVENT_CPP(CLASS, CALAppBar)                                    \
+#define AL_TAKEOVER_NATIVEEVENT_CPP(CLASS, CALAppBar)                                    \
     bool CLASS::nativeEvent(const QByteArray& eventType, void* message, long* result) { \
         CALAPPBAR_HANDLE(CALAppBar)                                                     \
     }
 #endif
 #else
-#define Q_TAKEOVER_NATIVEEVENT_CPP(CLASS, CALAppBar)
+#define AL_TAKEOVER_NATIVEEVENT_CPP(CLASS, CALAppBar)
 #endif
 
+namespace AL {
 class CALAppBarPrivate;
 
 class CALWIDGETTOOLS_EXPORT CALAppBar : public QWidget {
@@ -123,3 +124,5 @@ protected:
 	void paintEvent(QPaintEvent* event) override;
 	bool eventFilter(QObject* watched, QEvent* event) override;
 };
+
+} // namespace AL

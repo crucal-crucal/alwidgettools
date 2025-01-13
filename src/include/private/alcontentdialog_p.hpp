@@ -1,8 +1,10 @@
 ﻿#pragma once
 
-#include <QObject>
+#include "alwidgettoolsdef.hpp"
 
 class QVBoxLayout;
+
+namespace AL {
 class CALPushButton;
 class CALContentDialog;
 
@@ -26,3 +28,4 @@ private:
 	CALPushButton* closeButton{ nullptr };
 	CALPushButton* cancelButton{ nullptr };
 };
+}

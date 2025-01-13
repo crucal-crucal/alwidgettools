@@ -4,6 +4,7 @@
 
 #include "althememanager.hpp"
 
+namespace AL {
 /**
  * @brief \class CALCalendarPickerContainer
  * @param parent pointer to the parent class
@@ -27,3 +28,5 @@ void CALCalendarPickerContainer::paintEvent(QPaintEvent* event) {
 	ALTheme->drawEffectShadow(&painter, rect(), 6, 5);
 	painter.restore();
 }
+
+} // namespace AL

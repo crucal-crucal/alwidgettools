@@ -4,6 +4,7 @@
 
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALImageCardPrivate;
 
 class CALWIDGETTOOLS_EXPORT CALImageCard : public QWidget {
@@ -41,3 +42,5 @@ protected:
 
 	void paintEvent(QPaintEvent* event) override;
 };
+
+} // namespace AL

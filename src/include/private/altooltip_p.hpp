@@ -1,10 +1,10 @@
 ﻿#pragma once
 
-#include <QObject>
-
 #include "alwidgettoolsdef.hpp"
 
 class QVBoxLayout;
+
+namespace AL {
 class CALText;
 class CALToolTip;
 
@@ -44,3 +44,5 @@ private:
 
 	void doShowAnimation();
 };
+
+} // namespace AL

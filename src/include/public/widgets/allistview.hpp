@@ -1,9 +1,10 @@
-#pragma once
+﻿#pragma once
 
 #include <QListView>
 
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALListViewPrivate;
 
 class CALWIDGETTOOLS_EXPORT CALListView : public QListView {
@@ -29,3 +30,5 @@ Q_SIGNALS:
 protected:
 	const QScopedPointer<CALListViewPrivate> d_ptr{ nullptr };
 };
+
+} // namespace AL

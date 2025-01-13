@@ -2,6 +2,9 @@
 
 #include <QAbstractListModel>
 
+#include "alwidgettoolsdef.hpp"
+
+namespace AL {
 class CALBreadcrumbBarModel final : public QAbstractListModel {
 	Q_OBJECT
 
@@ -15,13 +18,15 @@ public:
 
 	void setBreadcrumbList(const QStringList& breadcrumbList);
 
-	int getBreadcrumbListCount() const;
-	QStringList getBreadcrumbList() const;
+	[[nodiscard]] int getBreadcrumbListCount() const;
+	[[nodiscard]] QStringList getBreadcrumbList() const;
 
 protected:
-	int rowCount(const QModelIndex& parent) const override;
-	QVariant data(const QModelIndex& index, int role) const override;
+	[[nodiscard]] int rowCount(const QModelIndex& parent) const override;
+	[[nodiscard]] QVariant data(const QModelIndex& index, int role) const override;
 
 private:
 	QStringList m_breadcrumbList{};
 };
+
+} // namespace AL

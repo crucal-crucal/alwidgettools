@@ -7,8 +7,7 @@
 #include "almenu.hpp"
 #include "althememanager.hpp"
 
-using namespace ALIcon;
-
+namespace AL {
 /**
  * @brief \class CALMenuStyle
  * @param style pointer to the parent style
@@ -86,7 +85,7 @@ void CALMenuStyle::drawControl(const ControlElement element, const QStyleOption*
 						iconFont.setPixelSize(m_menuItemHeight * 0.57); // NOLINT
 						painter->setFont(iconFont);
 						painter->drawText(QRectF(menuRect.x() + contentPadding, menuRect.y(), m_iconWidth, menuRect.height()),
-						                  Qt::AlignCenter, mopt->checked ? QChar(static_cast<unsigned short>(AweSomeIcon::Check)) : QChar(static_cast<unsigned short>(AweSomeIcon::None)));
+						                  Qt::AlignCenter, mopt->checked ? QChar(static_cast<unsigned short>(ALIcon::AweSomeIcon::Check)) : QChar(static_cast<unsigned short>(ALIcon::AweSomeIcon::None)));
 						painter->restore();
 					} else {
 						QString iconText{};
@@ -126,7 +125,7 @@ void CALMenuStyle::drawControl(const ControlElement element, const QStyleOption*
 						QFont iconFont("CALAwesome");
 						iconFont.setPixelSize(18);
 						painter->setFont(iconFont);
-						painter->drawText(QRect(menuRect.right() - 25, menuRect.y(), 25, menuRect.height()), Qt::AlignVCenter, QChar(static_cast<unsigned short>(AweSomeIcon::AngleRight)));
+						painter->drawText(QRect(menuRect.right() - 25, menuRect.y(), 25, menuRect.height()), Qt::AlignVCenter, QChar(static_cast<unsigned short>(ALIcon::AweSomeIcon::AngleRight)));
 						painter->restore();
 					}
 					painter->restore();
@@ -196,3 +195,5 @@ void CALMenuStyle::setMenuItemHeight(const int height) {
 int CALMenuStyle::getMenuItemHeight() const {
 	return m_menuItemHeight;
 }
+
+} // namespace AL

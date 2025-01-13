@@ -13,6 +13,7 @@
 #include "almenu.hpp"
 #include "althememanager.hpp"
 
+namespace AL {
 /**
  * @brief \class CALLineEditPrivate
  * Internal class for CALLineEdit
@@ -64,6 +65,8 @@ CALLineEdit::CALLineEdit(QWidget* parent): QLineEdit(parent), d_ptr(new CALLineE
 	Q_D(CALLineEdit);
 
 	setObjectName("CALLineEdit");
+	setStyleSheet("#CALLineEdit { padding-left: 10px; } ");
+
 	d->themeMode = ALTheme->getThemeMode();
 	d->borderRadius = 6;
 	d->expandMarkWidth = 0;
@@ -77,7 +80,6 @@ CALLineEdit::CALLineEdit(QWidget* parent): QLineEdit(parent), d_ptr(new CALLineE
 	textFont.setLetterSpacing(QFont::AbsoluteSpacing, d->textSpacing);
 	setFont(textFont);
 	setStyle(new CALLineEditStyle(style()));
-	setStyleSheet("#CALLineEdit { padding-left: 10px; } ");
 	d->slotThemeChanged(ALTheme->getThemeMode());
 	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, d, &CALLineEditPrivate::slotThemeChanged);
 }
@@ -204,3 +206,5 @@ void CALLineEdit::contextMenuEvent(QContextMenuEvent* event) {
 	connect(action, &QAction::triggered, this, &CALLineEdit::selectAll);
 	menu->popup(event->globalPos());
 }
+
+} // namespace AL

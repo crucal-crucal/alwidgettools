@@ -7,6 +7,7 @@
 class QHBoxLayout;
 class QVBoxLayout;
 
+namespace AL {
 class CALEvent;
 class CALMainWindow;
 class CALNavigationBar;
@@ -63,3 +64,5 @@ private:
 	void resetWindowLayout(bool isAnimation) const;
 	void doNavigationDisplayModeChange();
 };
+
+} // namespace AL

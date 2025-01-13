@@ -15,13 +15,14 @@
 #include "almicabaseinitobject.hpp"
 #include "althememanager.hpp"
 
+namespace AL {
 /**
  * @brief \class CALApplicationPrivate
  * Internal class for CALApplication
  * @param q pointer to the public class
  * @param parent pointer to the parent class
  */
-CALApplicationPrivate::CALApplicationPrivate(CALApplication* q, QObject* parent): QObject(parent), q_ptr(q) {
+CALApplicationPrivate::CALApplicationPrivate(AL::CALApplication* q, QObject* parent): QObject(parent), q_ptr(q) {
 }
 
 CALApplicationPrivate::~CALApplicationPrivate() = default;
@@ -56,7 +57,7 @@ bool CALApplicationPrivate::eventFilter(QObject* watched, QEvent* event) {
 }
 
 void CALApplicationPrivate::initMicaBaseImage(const QImage& img) {
-	Q_Q(CALApplication);
+	Q_Q(AL::CALApplication);
 
 	if (img.isNull()) {
 		return;
@@ -122,6 +123,7 @@ void CALApplicationPrivate::updateAllMicaWidget() {
  * @brief \class CALApplication
  * @return CALApplication instance
  */
+
 CALApplication* CALApplication::instance() {
 	return CALSingleton<CALApplication>::instance();
 }
@@ -214,3 +216,5 @@ CALApplication::CALApplication(QObject* parent): QObject(parent), d_ptr(new CALA
 }
 
 CALApplication::~CALApplication() = default;
+
+} // namespace AL

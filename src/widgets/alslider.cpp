@@ -4,6 +4,7 @@
 
 #include "alsliderstyle.hpp"
 
+namespace AL {
 /**
  * @brief \class CALSliderPrivate
  * Internal class for CALSlider
@@ -72,15 +73,17 @@ void CALSlider::setSliderHandleOuterDisabledColor(const QColor& color) {
 
 void CALSlider::mousePressEvent(QMouseEvent* event) {
 	QSlider::mousePressEvent(event);
-	emit sigLeftMousePressed();
+	Q_EMIT sigLeftMousePressed();
 }
 
 void CALSlider::mouseMoveEvent(QMouseEvent* event) {
 	QSlider::mouseMoveEvent(event);
-	emit sigLeftMouseMoved();
+	Q_EMIT sigLeftMouseMoved();
 }
 
 void CALSlider::mouseReleaseEvent(QMouseEvent* event) {
 	QSlider::mouseReleaseEvent(event);
-	emit sigLeftMouseReleased();
+	Q_EMIT sigLeftMouseReleased();
 }
+
+} // namespace AL

@@ -7,6 +7,7 @@
 #include "allcdnumberstyle.hpp"
 #include "althememanager.hpp"
 
+namespace AL {
 /**
  * @brief \class CALLCDNumberPrivate
  * Internal class for CALLCDNumber
@@ -92,3 +93,5 @@ void CALLCDNumber::setAutoClockFormat(const QString& autoClockFormat) {
 QString CALLCDNumber::getAutoClockFormat() const {
 	return d_func()->autoClockFormat;
 }
+
+} // namespace AL

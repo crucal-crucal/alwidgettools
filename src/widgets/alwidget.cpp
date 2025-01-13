@@ -7,6 +7,7 @@
 #include "althememanager.hpp"
 #include "alwidget_p.hpp"
 
+namespace AL {
 /**
  * @brief \class CALWidgetPrivate
  * Internal class for CALWidget
@@ -19,7 +20,7 @@ CALWidgetPrivate::CALWidgetPrivate(CALWidget* q, QObject* parent): QObject(paren
 CALWidgetPrivate::~CALWidgetPrivate() = default;
 
 
-Q_TAKEOVER_NATIVEEVENT_CPP(CALWidget, d_func()->appBar)
+AL_TAKEOVER_NATIVEEVENT_CPP(CALWidget, d_func()->appBar)
 
 /**
  * @brief \class CALWidget
@@ -137,3 +138,5 @@ void CALWidget::paintEvent(QPaintEvent* event) {
 
 	QWidget::paintEvent(event);
 }
+
+} // namespace AL

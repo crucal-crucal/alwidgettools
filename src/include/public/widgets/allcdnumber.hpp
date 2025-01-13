@@ -4,6 +4,7 @@
 
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALLCDNumberPrivate;
 
 class CALWIDGETTOOLS_EXPORT CALLCDNumber : public QLCDNumber {
@@ -35,3 +36,5 @@ Q_SIGNALS:
 protected:
 	const QScopedPointer<CALLCDNumberPrivate> d_ptr{ nullptr };
 };
+
+} // namespace AL

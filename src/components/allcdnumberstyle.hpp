@@ -4,6 +4,7 @@
 
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
 class CALLCDNumberStyle final : public QProxyStyle {
 	Q_OBJECT
 
@@ -21,3 +22,5 @@ private:
 	bool m_isTransparent{};
 	qreal m_borderRadius{};
 };
+
+} // namespace AL

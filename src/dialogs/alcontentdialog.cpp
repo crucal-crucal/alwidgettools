@@ -9,6 +9,7 @@
 #include "altext.hpp"
 #include "althememanager.hpp"
 
+namespace AL {
 /**
  * @brief \class CALContentDialogPrivate
  * Internal class for CALContentDialog
@@ -32,7 +33,7 @@ CALContentDialog::CALContentDialog(QWidget* parent): CALBaseDialog(parent), d_pt
 
 #ifdef Q_OS_WIN
 #if (QT_VERSION >= QT_VERSION_CHECK(6, 5, 3) && QT_VERSION <= QT_VERSION_CHECK(6, 6, 1))
-    window()->setWindowFlags((window()->windowFlags()) | Qt::WindowMinimizeButtonHint | Qt::FramelessWindowHint);
+	window()->setWindowFlags((window()->windowFlags()) | Qt::WindowMinimizeButtonHint | Qt::FramelessWindowHint);
 #endif
 #else
 	window()->setWindowFlags((window()->windowFlags()) | Qt::FramelessWindowHint);
@@ -127,4 +128,5 @@ void CALContentDialog::setCancelButtonText(const QString& text) {
 
 void CALContentDialog::keyPressEvent(QKeyEvent* event) {
 	event->accept();
+}
 }

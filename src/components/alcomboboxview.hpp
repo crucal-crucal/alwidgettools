@@ -2,6 +2,9 @@
 
 #include <QListView>
 
+#include "alwidgettoolsdef.hpp"
+
+namespace AL {
 class CALComboBoxView final : public QListView {
 	Q_OBJECT
 
@@ -15,3 +18,5 @@ signals:
 protected:
 	void mousePressEvent(QMouseEvent* event) override;
 };
+
+} // namespace AL

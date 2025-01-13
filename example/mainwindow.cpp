@@ -6,6 +6,8 @@
 #include "alawesometoolbutton.hpp"
 #include "almenu.hpp"
 #include "almenubar.hpp"
+#include "alstatusbar.hpp"
+#include "altext.hpp"
 #include "altoolbar.hpp"
 
 #include "e_about.hpp"
@@ -14,6 +16,8 @@
 #include "e_icon.hpp"
 #include "e_popup.hpp"
 #include "e_settings.hpp"
+
+using namespace AL;
 
 MainWindow::MainWindow(QWidget* parent): CALMainWindow(parent) {
 	initWindow();
@@ -72,6 +76,13 @@ void MainWindow::initEdgeLayout() {
 	toolbutton3->setText(tr("Bluetooth"));
 	toolBar->addWidget(toolbutton3);
 	this->addToolBar(Qt::TopToolBarArea, toolBar);
+
+	/// status bar
+	const auto statusBar = new CALStatusBar(this);
+	const auto textLabel = new CALText(tr("status bar example"), statusBar);
+	textLabel->setTextPixelSize(14);
+	statusBar->addWidget(textLabel);
+	this->setStatusBar(statusBar);
 }
 
 void MainWindow::initContent() {

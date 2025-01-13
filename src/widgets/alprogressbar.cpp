@@ -6,6 +6,7 @@
 
 #include "alprogressbar_p.hpp"
 
+namespace AL {
 /**
  * @brief \class CALProgressBarPrivate
  * Internal class for CALProgressBar
@@ -214,3 +215,5 @@ void CALProgressBar::paintEvent(QPaintEvent* event) {
 
 	painter.restore();
 }
+
+} // namespace AL

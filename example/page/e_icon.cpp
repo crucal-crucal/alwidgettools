@@ -11,6 +11,8 @@
 #include "e_icondelegate.hpp"
 #include "e_iconmodel.hpp"
 
+using namespace AL;
+
 E_Icon::E_Icon(QWidget* parent): E_BasePage(parent) {
 	setWindowTitle("CALIcon");
 	createCustomWidget("some thing...");

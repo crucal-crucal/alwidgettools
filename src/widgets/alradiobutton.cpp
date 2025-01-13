@@ -4,6 +4,7 @@
 #include "alradiobuttonstyle.hpp"
 #include "althememanager.hpp"
 
+namespace AL {
 /**
  * \class CALRadioButtonPrivate
  * Internal class for CALRadioButton
@@ -44,3 +45,5 @@ CALRadioButton::CALRadioButton(const QString& text, QWidget* parent): CALRadioBu
 }
 
 CALRadioButton::~CALRadioButton() = default;
+
+} // namespace AL
