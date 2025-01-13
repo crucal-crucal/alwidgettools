@@ -27,5 +27,4 @@ private:
 	CALPlainTextEditStyle* style{ nullptr };
 	CALEvent* focusEvent{ nullptr };
 };
-
 } // namespace AL

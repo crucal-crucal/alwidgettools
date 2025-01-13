@@ -64,5 +64,4 @@ private:
 	void resetWindowLayout(bool isAnimation) const;
 	void doNavigationDisplayModeChange();
 };
-
 } // namespace AL

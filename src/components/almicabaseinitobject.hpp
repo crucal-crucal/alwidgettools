@@ -22,5 +22,4 @@ Q_SIGNALS:
 private:
 	CALApplicationPrivate* appPrivate{ nullptr };
 };
-
 } // namespace AL

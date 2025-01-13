@@ -34,5 +34,4 @@ private:
 
 	void _doCloseAnimation();
 };
-
 } // namespace AL

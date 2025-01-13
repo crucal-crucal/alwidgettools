@@ -38,5 +38,4 @@ Q_SIGNALS:
 protected:
 	const QScopedPointer<CALBreadcrumbBarPrivate> d_ptr{ nullptr };
 };
-
 } // namespace AL

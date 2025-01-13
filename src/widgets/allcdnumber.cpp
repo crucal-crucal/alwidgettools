@@ -93,5 +93,4 @@ void CALLCDNumber::setAutoClockFormat(const QString& autoClockFormat) {
 QString CALLCDNumber::getAutoClockFormat() const {
 	return d_func()->autoClockFormat;
 }
-
 } // namespace AL

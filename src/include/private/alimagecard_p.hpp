@@ -26,5 +26,4 @@ private:
 	qreal maximumAspectRatio{};
 	QImage cardImage{};
 };
-
 } // namespace AL

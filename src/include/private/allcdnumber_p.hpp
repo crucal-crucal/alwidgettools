@@ -29,5 +29,4 @@ private:
 	QTimer* clockTimer{ nullptr };
 	CALLCDNumberStyle* lcdNumberStyle{ nullptr };
 };
-
 } // namespace AL

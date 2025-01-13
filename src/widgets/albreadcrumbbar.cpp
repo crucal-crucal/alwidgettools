@@ -138,5 +138,4 @@ void CALBreadcrumbBar::setIsAutoRemove(const bool isAutoRemove) {
 bool CALBreadcrumbBar::getIsAutoRemove() const {
 	return d_func()->isAutoRemove;
 }
-
 } // namespace AL

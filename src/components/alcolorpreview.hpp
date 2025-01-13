@@ -25,5 +25,4 @@ private:
 	QColor m_baseColor{};
 	ALThemeType::ThemeMode m_themeMode{};
 };
-
 } // namespace AL

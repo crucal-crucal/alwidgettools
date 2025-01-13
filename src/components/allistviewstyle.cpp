@@ -167,5 +167,4 @@ void CALListViewStyle::setIsTransparent(const bool isTransparent) {
 bool CALListViewStyle::getIsTransparent() const {
 	return m_isTransparent;
 }
-
 } // namespace AL

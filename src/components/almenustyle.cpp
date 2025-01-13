@@ -195,5 +195,4 @@ void CALMenuStyle::setMenuItemHeight(const int height) {
 int CALMenuStyle::getMenuItemHeight() const {
 	return m_menuItemHeight;
 }
-
 } // namespace AL

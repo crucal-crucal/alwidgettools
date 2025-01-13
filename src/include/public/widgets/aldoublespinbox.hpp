@@ -20,5 +20,4 @@ protected:
 
 	void contextMenuEvent(QContextMenuEvent* event) override;
 };
-
 } // namespace AL

@@ -79,5 +79,4 @@ private:
 	qreal dashLength{};
 	int angle{};
 };
-
 } // namespace AL

@@ -37,5 +37,4 @@ CALCheckBox::CALCheckBox(const QString& text, QWidget* parent): CALCheckBox(pare
 }
 
 CALCheckBox::~CALCheckBox() = default;
-
 } // namespace AL

@@ -267,5 +267,4 @@ void CALPushButton::paintEvent(QPaintEvent* event) {
 	painter.drawText(foregroundRect, Qt::AlignCenter, text());
 	painter.restore();
 }
-
 } // namespace AL

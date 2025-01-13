@@ -30,5 +30,4 @@ protected:
 private:
 	CALNavigationStyle* m_navigationStyle{ nullptr };
 };
-
 } // namespace AL

@@ -28,5 +28,4 @@ protected:
 private:
 	int m_MaskAlpha{};
 };
-
 } // namespace AL

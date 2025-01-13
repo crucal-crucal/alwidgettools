@@ -50,5 +50,4 @@ void CALColorDisplayDelegate::paint(QPainter* painter, const QStyleOptionViewIte
 QSize CALColorDisplayDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const {
 	return { 30, 30 };
 }
-
 } // namespace AL

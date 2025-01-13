@@ -60,5 +60,4 @@ void CALCustomWidget::paintEvent(QPaintEvent* event) {
 		painter.restore();
 	}
 }
-
 } // namespace AL

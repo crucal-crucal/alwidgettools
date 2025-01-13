@@ -31,5 +31,4 @@ private:
 	int m_iconWidth{};
 	int m_menuItemHeight{};
 };
-
 } // namespace AL

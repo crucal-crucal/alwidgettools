@@ -37,5 +37,4 @@ private:
 	explicit CALThemeManager(QObject* parent = nullptr);
 	~CALThemeManager() override;
 };
-
 } // namespace AL

@@ -179,5 +179,4 @@ CALThemeManager::CALThemeManager(QObject* parent): QObject(parent), d_ptr(new CA
 }
 
 CALThemeManager::~CALThemeManager() = default;
-
 } // namespace AL

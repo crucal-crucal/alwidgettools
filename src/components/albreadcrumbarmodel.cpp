@@ -80,5 +80,4 @@ QVariant CALBreadcrumbBarModel::data(const QModelIndex& index, const int role) c
 	}
 	return {};
 }
-
 } // namespace AL

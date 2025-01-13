@@ -34,5 +34,4 @@ Q_SIGNALS:
 protected:
 	const QScopedPointer<CALScrollPagePrivate> d_ptr{ nullptr };
 };
-
 } // namespace AL

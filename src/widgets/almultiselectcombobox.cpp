@@ -469,5 +469,4 @@ void CALMultiSelectComboBox::hidePopup() {
 		}
 	}
 }
-
 } // namespace AL

@@ -25,5 +25,4 @@ public:
 private:
 	QVector<CALSuggestion*> m_suggestionVector{}; // 符合搜索的节点
 };
-
 } // namespace AL

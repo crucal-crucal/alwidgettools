@@ -411,5 +411,4 @@ void CALPromotionCard::paintEvent(QPaintEvent* event) {
 	}
 	painter.restore();
 }
-
 } // namespace AL

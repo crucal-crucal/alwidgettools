@@ -28,5 +28,4 @@ void CALCalendarPickerContainer::paintEvent(QPaintEvent* event) {
 	ALTheme->drawEffectShadow(&painter, rect(), 6, 5);
 	painter.restore();
 }
-
 } // namespace AL

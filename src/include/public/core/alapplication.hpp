@@ -39,5 +39,4 @@ protected:
 private:
 	explicit CALApplication(QObject* parent = nullptr);
 	~CALApplication() override;
-};
-} // namespace AL
+};} // namespace AL

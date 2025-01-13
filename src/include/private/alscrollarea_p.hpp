@@ -23,5 +23,4 @@ private:
 	CALScrollBar* horizontalScrollBar{ nullptr };
 	CALScrollBar* verticalScrollBar{ nullptr };
 };
-
 } // namespace AL

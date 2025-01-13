@@ -28,5 +28,4 @@ protected:
 private:
 	QStringList m_breadcrumbList{};
 };
-
 } // namespace AL

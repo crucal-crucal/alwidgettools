@@ -23,5 +23,4 @@ private:
 	bool isEanbleMica{};
 	CALAppBar* appBar{ nullptr };
 };
-
 } // namespace AL

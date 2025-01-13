@@ -85,5 +85,4 @@ void CALSlider::mouseReleaseEvent(QMouseEvent* event) {
 	QSlider::mouseReleaseEvent(event);
 	Q_EMIT sigLeftMouseReleased();
 }
-
 } // namespace AL

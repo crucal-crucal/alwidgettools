@@ -21,5 +21,4 @@ private:
 	ALThemeType::ThemeMode themeMode{};
 	int borderRadius{};
 };
-
 } // namespace AL

@@ -49,5 +49,4 @@ protected:
 	void showEvent(QShowEvent* event) override;;
 	void paintEvent(QPaintEvent* event) override;
 };
-
 } // namespace AL

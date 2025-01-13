@@ -46,5 +46,4 @@ private:
 	void drawIcon(QPainter* painter, QRect iconRect, const QStyleOptionToolButton* bopt, const QWidget* widget) const;
 	void drawText(QPainter* painter, QRect contentRect, const QStyleOptionToolButton* bopt) const;
 	static qreal calculateExpandIndicatorWidth(const QStyleOptionToolButton* bopt, QPainter* painter);
-};
-} // namespace AL
+};} // namespace AL

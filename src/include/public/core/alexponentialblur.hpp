@@ -26,5 +26,4 @@ private:
 	explicit CALExponentialBlur(QObject* parent = nullptr);
 	~CALExponentialBlur() override;
 };
-
 } // namespace AL

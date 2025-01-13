@@ -325,5 +325,4 @@ void CALPromotionView::paintEvent(QPaintEvent* event) {
 	}
 	painter.restore();
 }
-
 } // namespace AL

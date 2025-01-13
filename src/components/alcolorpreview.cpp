@@ -46,5 +46,4 @@ void CALColorPreview::paintEvent(QPaintEvent* event) {
 	painter.drawRoundedRect(viewRect, borderRadius, borderRadius);
 	painter.restore();
 }
-
 } // namespace AL

@@ -30,5 +30,4 @@ protected:
 	void showPopup() override;
 	void hidePopup() override;
 };
-
 } // namespace AL

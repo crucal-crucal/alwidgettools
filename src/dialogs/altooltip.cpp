@@ -317,5 +317,4 @@ bool CALToolTipHelper::isVisible() {
 QString CALToolTipHelper::text() {
 	return instance()->getToolTip();
 }
-
 } // namespace AL

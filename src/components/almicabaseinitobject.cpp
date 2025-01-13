@@ -58,5 +58,4 @@ void CALMicaBaseInitObject::slotInitMicaBase(QImage image) {
 	appPrivate->darkBaseImage = darkImage.copy();
 	Q_EMIT sigInitFinished();
 }
-
 } // namespace AL

@@ -38,5 +38,4 @@ private:
 	qreal m_expandMarkWidth{};
 	int m_shadowBorderWidth{};
 };
-
 } // namespace AL

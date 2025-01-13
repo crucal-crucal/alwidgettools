@@ -410,5 +410,4 @@ bool CALNavigationStyle::compareItemY(CALNavigationNode* node1, CALNavigationNod
 		}
 	}
 }
-
 } // namespace AL

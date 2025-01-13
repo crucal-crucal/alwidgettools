@@ -187,5 +187,4 @@ void CALComboBox::hidePopup() {
 		markAnimation->start(QAbstractAnimation::DeleteWhenStopped);
 	}
 }
-
 } // namespace AL

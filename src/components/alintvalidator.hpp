@@ -24,5 +24,4 @@ private:
 
 	[[nodiscard]] static QString completeInput(const QString& input, int length);
 };
-
 } // namespace AL

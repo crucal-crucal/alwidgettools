@@ -75,5 +75,4 @@ protected:
 	friend class CALToolTip;
 	friend class CALSingleton<CALToolTip>;
 };
-
 } // namespace AL

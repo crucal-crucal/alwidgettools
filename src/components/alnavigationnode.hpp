@@ -102,5 +102,4 @@ private:
 	QString m_nodeKey{};
 	QString m_nodeTitle{};
 };
-
 } // namespace AL

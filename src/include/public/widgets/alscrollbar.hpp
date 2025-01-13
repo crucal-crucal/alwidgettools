@@ -57,5 +57,4 @@ protected:
 	bool eventFilter(QObject* watched, QEvent* event) override;
 };
 
-Q_DECLARE_OPERATORS_FOR_FLAGS(CALScrollBar::ContextMenuFlags)
-} // namespace AL
+Q_DECLARE_OPERATORS_FOR_FLAGS(CALScrollBar::ContextMenuFlags)} // namespace AL

@@ -143,5 +143,4 @@ void CALSliderStyle::_startRadiusAnimation(const qreal startRadius, const qreal 
 	circleRadiusAnimation->setEndValue(endRadius);
 	circleRadiusAnimation->start(QAbstractAnimation::DeleteWhenStopped);
 }
-
 } // namespace AL

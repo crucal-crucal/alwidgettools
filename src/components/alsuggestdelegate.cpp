@@ -60,5 +60,4 @@ QSize CALSuggestDelegate::sizeHint(const QStyleOptionViewItem& option, const QMo
 	size.setHeight(40);
 	return size;
 }
-
 } // namespace AL

@@ -355,5 +355,4 @@ bool CALScrollBar::eventFilter(QObject* watched, QEvent* event) {
 	}
 	return QScrollBar::eventFilter(watched, event);
 }
-
 } // namespace AL

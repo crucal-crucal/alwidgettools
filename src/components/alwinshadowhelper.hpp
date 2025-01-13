@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "alwidgettoolsdef.hpp"
+#include <QtGlobal>
 
 namespace AL {
 #ifdef Q_OS_WIN

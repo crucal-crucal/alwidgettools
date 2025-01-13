@@ -84,5 +84,4 @@ QAction* CALMenuBar::addAweSomeIconAction(const ALIcon::AweSomeIcon& awesomeicon
 	QMenuBar::addAction(action);
 	return action;
 }
-
 } // namespace AL

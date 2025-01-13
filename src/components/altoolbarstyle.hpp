@@ -25,5 +25,4 @@ private:
 	void drawIcon(QPainter* painter, const QRect& iconRect, const QStyleOptionToolButton* bopt, const QWidget* widget) const;
 	void drawText(QPainter* painter, const QRect& contentRect, const QStyleOptionToolButton* bopt) const;
 };
-
 } // namespace AL

@@ -21,5 +21,4 @@ private:
 	ALThemeType::ThemeMode m_themeMode{};
 	int m_menubarItemMargin{};
 };
-
 } // namespace AL

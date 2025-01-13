@@ -37,5 +37,4 @@ private:
 	QColor darkIconColor{};
 	bool isSelected{};
 };
-
 } // namespace AL

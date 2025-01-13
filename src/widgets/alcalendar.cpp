@@ -396,5 +396,4 @@ void CALCalendar::showEvent(QShowEvent* event) {
 	d->scrollToDate(currentDate);
 	QWidget::showEvent(event);
 }
-
 } // namespace AL

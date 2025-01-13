@@ -19,5 +19,4 @@ protected:
 private:
 	ALThemeType::ThemeMode themeMode{};
 };
-
 } // namespace AL

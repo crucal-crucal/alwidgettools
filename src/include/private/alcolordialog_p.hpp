@@ -82,5 +82,4 @@ private:
 	[[nodiscard]] QString getHexRgbValue() const;
 	[[nodiscard]] QColor getColorFromEdit() const;
 };
-
 } // namespace AL

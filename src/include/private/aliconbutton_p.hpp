@@ -44,5 +44,4 @@ private:
 	bool isAlphaAnimationFinished{ true };
 	ALThemeType::ThemeMode themeMode{};
 };
-
 } // namespace AL

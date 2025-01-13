@@ -902,5 +902,4 @@ void CALNavigationBar::paintEvent(QPaintEvent* event) {
 
 	QWidget::paintEvent(event);
 }
-
 } // namespace AL

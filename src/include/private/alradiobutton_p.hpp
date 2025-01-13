@@ -24,5 +24,4 @@ private:
 	ALThemeType::ThemeMode themeMode{};
 	CALRadioButtonStyle* style{ nullptr };
 };
-
 } // namespace AL

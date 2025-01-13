@@ -217,5 +217,4 @@ bool CALFooterDelegate::compareItemY(const CALNavigationNode* node1, const CALNa
 
 	return node1->getModelIndex().row() < node2->getModelIndex().row();
 }
-
 } // namespace AL

@@ -30,5 +30,4 @@ Q_SIGNALS:
 protected:
 	const QScopedPointer<CALListViewPrivate> d_ptr{ nullptr };
 };
-
 } // namespace AL

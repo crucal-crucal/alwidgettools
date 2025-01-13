@@ -60,5 +60,4 @@ int CALColorDisplayModel::rowCount(const QModelIndex& parent) const {
 QVariant CALColorDisplayModel::data(const QModelIndex& index, const int role) const {
 	return role == Qt::UserRole ? QVariant::fromValue(m_displayColorList.at(index.row())) : QVariant();
 }
-
 } // namespace AL

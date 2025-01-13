@@ -172,5 +172,4 @@ void CALCalendarDelegate::drawDays(QPainter* painter, const QStyleOptionViewItem
 		}
 	}
 }
-
 } // namespace AL

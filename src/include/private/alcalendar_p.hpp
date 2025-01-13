@@ -70,5 +70,4 @@ private:
 	void scrollToDate(const QDate& date) const;
 	void doSwitchAnimation(bool isZoomIn);
 };
-
 } // namespace AL

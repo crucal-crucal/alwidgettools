@@ -112,5 +112,4 @@ CALExponentialBlur::CALExponentialBlur(QObject* parent): QObject(parent), d_ptr(
 }
 
 CALExponentialBlur::~CALExponentialBlur() = default;
-
 } // namespace AL

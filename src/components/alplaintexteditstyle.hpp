@@ -26,5 +26,4 @@ private:
 	qreal m_expandMarkWidth{};
 	qreal m_borderRadius{};
 };
-
 } // namespace AL

@@ -72,5 +72,4 @@ private:
 	QVBoxLayout* createVLayout(QWidget* widget) const;
 	[[nodiscard]] QAbstractButton* getButtonByAppBarFlag(const ALAppBarType::ButtonFlag& flag) const;
 };
-
 } // namespace AL

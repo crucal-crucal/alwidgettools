@@ -36,5 +36,4 @@ void CALMaskWidget::paintEvent(QPaintEvent* event) {
 	painter.drawRect(rect());
 	painter.restore();
 }
-
 } // namespace AL

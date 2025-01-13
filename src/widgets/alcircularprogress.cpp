@@ -402,5 +402,4 @@ void CALCircularProgress::paintEvent(QPaintEvent* event) {
 
 	painter.restore();
 }
-
 } // namespace AL

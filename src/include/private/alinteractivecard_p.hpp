@@ -32,5 +32,4 @@ private:
 	QPixmap cardPixmap{};
 	QSize cardPixmapSize{};
 };
-
 } // namespace AL

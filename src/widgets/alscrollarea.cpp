@@ -78,5 +78,4 @@ bool CALScrollArea::getIsAnimation(const Qt::Orientation& orientation) const {
 
 CALScrollArea::CALScrollArea(CALScrollAreaPrivate& dd, CALScrollArea* parent): QScrollArea(parent), d_ptr(&dd) {
 }
-
 } // namespace AL

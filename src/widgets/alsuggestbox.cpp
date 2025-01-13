@@ -299,5 +299,4 @@ void CALSuggestBox::removeSuggestion(const int index) {
 	d->suggestionVector.removeOne(suggest);
 	suggest->deleteLater();
 }
-
 } // namespace AL

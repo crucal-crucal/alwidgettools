@@ -259,5 +259,4 @@ void CALNavigationModel::setSelectedExpandedNode(CALNavigationNode* node) {
 CALNavigationNode* CALNavigationModel::getSelectedExpandedNode() const {
 	return m_selectedExpandedNode;
 }
-
 } // namespace AL

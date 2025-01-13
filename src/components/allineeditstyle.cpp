@@ -52,5 +52,4 @@ void CALLineEditStyle::drawPrimitive(const PrimitiveElement pe, const QStyleOpti
 
 	QProxyStyle::drawPrimitive(pe, opt, p, w);
 }
-
 } // namespace AL

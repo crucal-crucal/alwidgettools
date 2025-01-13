@@ -36,5 +36,4 @@ private:
 
 	QPoint adjustPointLimit(QPoint point) const;
 };
-
 } // namespace AL

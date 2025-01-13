@@ -44,5 +44,4 @@ protected:
 private:
 	QMap<QString, QList<CALEvent*>> eventMap{};
 };
-
 } // namespace AL

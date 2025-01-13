@@ -269,5 +269,4 @@ bool CALBaseDialog::nativeEvent(const QByteArray& eventType, void* message, long
 	return QDialog::nativeEvent(eventType, message, result);
 }
 #endif
-
 } // namespace AL

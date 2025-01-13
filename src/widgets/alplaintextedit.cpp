@@ -167,5 +167,4 @@ void CALPlainTextEdit::contextMenuEvent(QContextMenuEvent* event) {
 	menu->popup(event->globalPos());
 	this->setFocus();
 }
-
 } // namespace AL

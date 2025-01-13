@@ -38,5 +38,4 @@ protected:
 	void paintEvent(QPaintEvent* event) override;
 	void contextMenuEvent(QContextMenuEvent* event) override;
 };
-
 } // namespace AL

@@ -112,5 +112,4 @@ void CALToolBar::paintEvent(QPaintEvent* event) {
 	}
 	painter.restore();
 }
-
 } // namespace AL

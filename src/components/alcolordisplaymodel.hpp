@@ -28,5 +28,4 @@ protected:
 private:
 	QList<QColor> m_displayColorList{};
 };
-
 } // namespace AL

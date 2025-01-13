@@ -35,5 +35,4 @@ private:
 	explicit CALNavigationRouter(QObject* parent = nullptr);
 	~CALNavigationRouter() override;
 };
-
 } // namespace AL

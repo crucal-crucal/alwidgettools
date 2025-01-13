@@ -37,5 +37,4 @@ private:
 	void drawYearOrMonth(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
 	void drawDays(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
 };
-
 } // namespace AL

@@ -109,5 +109,4 @@ QPoint CALColorPicker::adjustPointLimit(QPoint point) const {
 
 	return point;
 }
-
 } // namespace AL

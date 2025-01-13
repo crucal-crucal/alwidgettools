@@ -143,5 +143,4 @@ void CALColorValueSliderStyle::startRadiusAnimation(const qreal startRadius, con
 	circleRadiusAnimatino->setEndValue(endRadius);
 	circleRadiusAnimatino->start(QAbstractAnimation::DeleteWhenStopped);
 }
-
 } // namespace AL

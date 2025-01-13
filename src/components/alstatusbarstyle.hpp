@@ -20,5 +20,4 @@ public:
 private:
 	ALThemeType::ThemeMode m_themeMode{};
 };
-
 } // namespace AL

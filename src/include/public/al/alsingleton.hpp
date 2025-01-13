@@ -21,5 +21,4 @@ private:
 };
 
 template <typename T>
-T* CALSingleton<T>::_instance = nullptr;
-} // namespace AL
+T* CALSingleton<T>::_instance = nullptr;} // namespace AL

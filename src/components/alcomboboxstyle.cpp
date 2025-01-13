@@ -239,5 +239,4 @@ void CALComboBoxStyle::setExpandMarkWidth(const qreal ExpandMarkWidth) {
 qreal CALComboBoxStyle::getExpandMarkWidth() const {
 	return m_expandMarkWidth;
 }
-
 } // namespace AL

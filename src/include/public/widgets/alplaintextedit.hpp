@@ -23,5 +23,4 @@ protected:
 	void focusOutEvent(QFocusEvent* event) override;
 	void contextMenuEvent(QContextMenuEvent* event) override;
 };
-
 } // namespace AL

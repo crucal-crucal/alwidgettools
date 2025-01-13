@@ -52,5 +52,4 @@ private:
 	QImage m_oldWindowImage{};
 	QImage m_newWindowImage{};
 };
-
 } // namespace AL

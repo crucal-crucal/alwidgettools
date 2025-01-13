@@ -51,5 +51,4 @@ void CALBreadcrumbBarDelegate::paint(QPainter* painter, const QStyleOptionViewIt
 	}
 	painter->restore();
 }
-
 } // namespace AL

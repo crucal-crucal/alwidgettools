@@ -24,5 +24,4 @@ private:
 	int maxRouteCount{};
 	QQueue<QVariantMap> routeQueue{};
 };
-
 } // namespace AL

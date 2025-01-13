@@ -156,5 +156,4 @@ void CALMainWindowStyle::drawControl(const ControlElement element, const QStyleO
 
 	QProxyStyle::drawControl(element, opt, p, w);
 }
-
 } // namespace AL

@@ -68,5 +68,4 @@ private:
 	static qreal distance(const QPoint& point1, const QPoint& point2);
 	void startHoverOpacityAnimation(bool isVisiable);
 };
-
 } // namespace AL

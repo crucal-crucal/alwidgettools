@@ -111,5 +111,4 @@ protected:
 	bool eventFilter(QObject* watched, QEvent* event) override;
 	QMenu* createPopupMenu() override;
 };
-
 } // namespace AL

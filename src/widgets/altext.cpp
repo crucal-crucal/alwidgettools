@@ -151,5 +151,4 @@ void CALText::paintEvent(QPaintEvent* event) {
 		QLabel::paintEvent(event);
 	}
 }
-
 } // namespace AL

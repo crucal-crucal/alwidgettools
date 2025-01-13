@@ -46,5 +46,4 @@ private:
 	qreal m_sliderMargin{ 2.5 };
 	int m_scrollBarExtent{ 10 };
 };
-
 } // namespace AL

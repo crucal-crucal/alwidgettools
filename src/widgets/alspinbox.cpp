@@ -124,5 +124,4 @@ void CALSpinBox::contextMenuEvent(QContextMenuEvent* event) {
 	}
 	event->accept();
 }
-
 } // namespace AL

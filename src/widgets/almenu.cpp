@@ -203,5 +203,4 @@ void CALMenu::paintEvent(QPaintEvent* event) {
 		QMenu::paintEvent(event);
 	}
 }
-
 } // namespace AL

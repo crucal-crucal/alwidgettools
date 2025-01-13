@@ -123,5 +123,4 @@ void CALCalendarModel::initRowCount() {
 int CALCalendarModel::getCurrentDay(const int row) const {
 	return m_minimumDate.addDays(row - m_offset).day();
 }
-
 } // namespace AL

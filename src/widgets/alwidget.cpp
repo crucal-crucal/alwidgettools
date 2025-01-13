@@ -138,5 +138,4 @@ void CALWidget::paintEvent(QPaintEvent* event) {
 
 	QWidget::paintEvent(event);
 }
-
 } // namespace AL

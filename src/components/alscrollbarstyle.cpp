@@ -196,5 +196,4 @@ void CALScrollBarStyle::setScrollBar(CALScrollBar* scrollBar) {
 CALScrollBar* CALScrollBarStyle::getScrollBar() const {
 	return m_scrollBar;
 }
-
 } // namespace AL

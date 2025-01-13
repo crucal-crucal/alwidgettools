@@ -70,5 +70,4 @@ int CALRadioButtonStyle::pixelMetric(const PixelMetric metric, const QStyleOptio
 
 	return QProxyStyle::pixelMetric(metric, option, widget);
 }
-
 } // namespace AL

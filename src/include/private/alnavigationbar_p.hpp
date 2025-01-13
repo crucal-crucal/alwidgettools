@@ -93,5 +93,4 @@ private:
 	void doSearchButtonAnimation(bool isCompact, bool isAnimation) const;
 	void doUserButtonAnimation(bool isCompact, bool isAnimation);
 };
-
 } // namespace AL

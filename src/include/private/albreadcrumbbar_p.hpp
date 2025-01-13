@@ -28,5 +28,4 @@ private:
 	CALBreadcrumbBarDelegate* listDelegate{ nullptr };
 	CALBaseListView* listView{ nullptr };
 };
-
 } // namespace AL

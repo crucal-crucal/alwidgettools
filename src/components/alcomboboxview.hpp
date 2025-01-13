@@ -18,5 +18,4 @@ signals:
 protected:
 	void mousePressEvent(QMouseEvent* event) override;
 };
-
 } // namespace AL

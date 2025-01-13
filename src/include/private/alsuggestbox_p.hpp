@@ -84,5 +84,4 @@ private:
 	void startExpandAnimation();
 	void startCloseAnimation();
 };
-
 } // namespace AL

@@ -47,5 +47,4 @@ protected:
 
 	explicit CALScrollArea(CALScrollAreaPrivate& dd, CALScrollArea* parent = nullptr);
 };
-
 } // namespace AL

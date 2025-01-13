@@ -252,5 +252,4 @@ qreal CALAwesomeToolButtonStyle::calculateExpandIndicatorWidth(const QStyleOptio
 	painter->restore();
 	return indicatorWidth;
 }
-
 } // namespace AL

@@ -87,5 +87,4 @@ void CALThemeAnimationWidget::paintEvent(QPaintEvent* event) {
 	painter.drawImage(rect(), m_newWindowImage);
 	painter.restore();
 }
-
 } // namespace AL

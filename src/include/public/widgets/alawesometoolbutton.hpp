@@ -41,5 +41,4 @@ protected:
 
 	bool eventFilter(QObject* watched, QEvent* event) override;
 };
-
 } // namespace AL

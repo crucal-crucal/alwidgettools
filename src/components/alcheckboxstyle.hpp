@@ -23,5 +23,4 @@ private:
 	int m_checkIndicatorWidth{};
 	qreal m_borderRadius{};
 };
-
 } // namespace AL

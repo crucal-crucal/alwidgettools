@@ -36,5 +36,4 @@ private:
 	CALEvent* focusEvent{ nullptr };
 	qreal textSpacing{ 0.5 };
 };
-
 } // namespace AL

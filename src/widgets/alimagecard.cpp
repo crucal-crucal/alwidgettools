@@ -95,5 +95,4 @@ void CALImageCard::paintEvent(QPaintEvent* event) {
 	}
 	painter.restore();
 }
-
 } // namespace AL

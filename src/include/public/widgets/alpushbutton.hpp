@@ -99,5 +99,4 @@ protected:
 	void paintEvent(QPaintEvent* event) override;
 };
 
-Q_DECLARE_OPERATORS_FOR_FLAGS(CALPushButton::ButtonStyles)
-} // namespace AL
+Q_DECLARE_OPERATORS_FOR_FLAGS(CALPushButton::ButtonStyles)} // namespace AL

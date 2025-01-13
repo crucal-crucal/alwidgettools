@@ -109,5 +109,4 @@ protected:
 	bool event(QEvent* event) override;
 	void paintEvent(QPaintEvent* event) override;
 };
-
 } // namespace AL

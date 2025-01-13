@@ -69,5 +69,4 @@ QSize CALStatusBarStyle::sizeFromContents(const ContentsType ct, const QStyleOpt
 int CALStatusBarStyle::pixelMetric(const PixelMetric metric, const QStyleOption* option, const QWidget* widget) const {
 	return QProxyStyle::pixelMetric(metric, option, widget);
 }
-
 } // namespace AL

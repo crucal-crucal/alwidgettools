@@ -29,5 +29,4 @@ private:
 	ALThemeType::ThemeMode m_themeMode{};
 	bool m_isEnableMica{};
 };
-
 } // namespace AL

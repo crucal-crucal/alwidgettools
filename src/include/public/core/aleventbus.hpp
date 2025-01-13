@@ -63,5 +63,4 @@ private:
 	explicit CALEventBus(QObject* parent = nullptr);
 	~CALEventBus() override;
 };
-
 } // namespace AL

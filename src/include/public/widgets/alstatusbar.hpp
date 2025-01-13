@@ -18,5 +18,4 @@ public:
 protected:
 	const QScopedPointer<CALStatusBarPrivate> d_ptr{ nullptr };
 };
-
 } // namespace AL

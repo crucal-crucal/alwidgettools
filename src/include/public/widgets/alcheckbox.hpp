@@ -19,5 +19,4 @@ public:
 protected:
 	const QScopedPointer<CALCheckBoxPrivate> d_ptr{ nullptr };
 };
-
 } // namespace AL

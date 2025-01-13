@@ -144,5 +144,4 @@ bool CALAwesomeToolButton::eventFilter(QObject* watched, QEvent* event) {
 
 	return QToolButton::eventFilter(watched, event);
 }
-
 } // namespace AL

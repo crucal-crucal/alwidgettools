@@ -94,5 +94,4 @@ private:
 
 	static bool compareItemY(CALNavigationNode* node1, CALNavigationNode* node2);
 };
-
 } // namespace AL

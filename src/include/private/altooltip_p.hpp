@@ -44,5 +44,4 @@ private:
 
 	void doShowAnimation();
 };
-
 } // namespace AL

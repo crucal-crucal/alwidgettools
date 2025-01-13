@@ -19,5 +19,4 @@ public:
 protected:
 	const QScopedPointer<CALRadioButtonPrivate> d_ptr{ nullptr };
 };
-
 } // namespace AL

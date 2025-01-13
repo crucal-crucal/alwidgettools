@@ -266,5 +266,4 @@ void CALToolBarStyle::drawText(QPainter* painter, const QRect& contentRect, cons
 		}
 	}
 }
-
 } // namespace AL

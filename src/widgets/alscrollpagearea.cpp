@@ -53,5 +53,4 @@ void CALScrollPageArea::paintEvent(QPaintEvent* event) {
 	painter.drawRoundedRect(foregroundRect, d->borderRadius, d->borderRadius);
 	painter.restore();
 }
-
 } // namespace AL

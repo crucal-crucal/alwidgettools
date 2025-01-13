@@ -46,5 +46,4 @@ void CALBaseListView::mouseDoubleClickEvent(QMouseEvent* event) {
 
 	QListView::mouseDoubleClickEvent(event);
 }
-
 } // namespace AL

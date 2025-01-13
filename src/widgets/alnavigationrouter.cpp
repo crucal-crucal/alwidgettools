@@ -80,5 +80,4 @@ CALNavigationRouter::CALNavigationRouter(QObject* parent): QObject(parent), d_pt
 }
 
 CALNavigationRouter::~CALNavigationRouter() = default;
-
 } // namespace AL

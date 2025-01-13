@@ -97,5 +97,4 @@ void CALNavigationView::mouseDoubleClickEvent(QMouseEvent* event) {
 	viewport()->update();
 	QTreeView::mouseDoubleClickEvent(event);
 }
-
 } // namespace AL

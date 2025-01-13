@@ -44,5 +44,4 @@ private:
 	void updateMica(QWidget* widget, bool isProcessEvent = true) const;
 	void updateAllMicaWidget();
 };
-
 } // namespace AL

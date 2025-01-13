@@ -31,5 +31,4 @@ private:
 	void startRadiusAnimation(qreal startRadius, qreal endRadius);
 	void adjustCircleCenterX();
 };
-
 } // namespace AL

@@ -84,5 +84,4 @@ private:
 	void initRowCount();
 	[[nodiscard]] int getCurrentDay(int row) const;
 };
-
 } // namespace AL

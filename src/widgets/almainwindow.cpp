@@ -582,5 +582,4 @@ QMenu* CALMainWindow::createPopupMenu() {
 
 	return menu;
 }
-
 } // namespace AL

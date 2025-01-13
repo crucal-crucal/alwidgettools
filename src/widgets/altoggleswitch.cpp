@@ -202,5 +202,4 @@ void CALToggleSwitch::paintEvent(QPaintEvent* event) {
 	}
 	painter.restore();
 }
-
 } // namespace AL

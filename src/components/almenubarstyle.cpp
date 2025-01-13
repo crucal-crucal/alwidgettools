@@ -179,5 +179,4 @@ int CALMenuBarStyle::pixelMetric(const PixelMetric metric, const QStyleOption* o
 
 	return QProxyStyle::pixelMetric(metric, option, widget);
 }
-
 } // namespace AL

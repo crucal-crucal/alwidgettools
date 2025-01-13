@@ -36,5 +36,4 @@ Q_SIGNALS:
 protected:
 	const QScopedPointer<CALLCDNumberPrivate> d_ptr{ nullptr };
 };
-
 } // namespace AL

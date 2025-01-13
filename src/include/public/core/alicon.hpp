@@ -18,5 +18,4 @@ private:
 	explicit CALIcon();
 	~CALIcon();
 };
-
 } // namespace AL

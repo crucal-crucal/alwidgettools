@@ -51,5 +51,4 @@ private:
 	void handleScrollBarRangeChanged(int min, int max);
 	void handleScrollBarGeometry();
 };
-
 } // namespace AL

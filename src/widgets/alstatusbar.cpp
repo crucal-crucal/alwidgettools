@@ -29,5 +29,4 @@ CALStatusBar::CALStatusBar(QWidget* parent): QStatusBar(parent), d_ptr(new CALSt
 }
 
 CALStatusBar::~CALStatusBar() = default;
-
 } // namespace AL

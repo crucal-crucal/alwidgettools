@@ -30,5 +30,4 @@ private:
 
 	void startRadiusAnimation(qreal startRadius, qreal endRadius, QWidget* widget) const;
 };
-
 } // namespace AL

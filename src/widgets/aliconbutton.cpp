@@ -259,5 +259,4 @@ void CALIconButton::paintEvent(QPaintEvent* event) {
 
 	painter.restore();
 }
-
 } // namespace AL

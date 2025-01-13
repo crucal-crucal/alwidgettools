@@ -215,5 +215,4 @@ void CALProgressBar::paintEvent(QPaintEvent* event) {
 
 	painter.restore();
 }
-
 } // namespace AL

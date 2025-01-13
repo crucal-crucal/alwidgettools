@@ -119,5 +119,4 @@ void CALCalendarPicker::showEvent(QShowEvent* event) {
 	setSelectedDate(QDate::currentDate());
 	QPushButton::showEvent(event);
 }
-
 } // namespace AL

@@ -43,5 +43,4 @@ private:
 	CALNavigationNode* m_selectedNode{ nullptr };
 	CALNavigationNode* m_selectedExpandedNode{ nullptr };
 };
-
 } // namespace AL

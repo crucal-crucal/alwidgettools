@@ -146,5 +146,4 @@ private:
 	void drawWarning(QPainter* painter);
 	void drawInfo(QPainter* painter);
 };
-
 } // namespace AL

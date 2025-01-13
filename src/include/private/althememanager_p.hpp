@@ -26,5 +26,4 @@ private:
 
 	void initColorList();
 };
-
 } // namespace AL

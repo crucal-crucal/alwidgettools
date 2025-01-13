@@ -25,5 +25,4 @@ private:
 	ALTextType::TextStyle textStyle{ ALTextType::NoStyle };
 	qreal textSpacing{ 0.5 };
 };
-
 } // namespace AL

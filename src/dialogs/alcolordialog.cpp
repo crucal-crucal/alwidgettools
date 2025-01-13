@@ -512,5 +512,4 @@ void CALColorDialog::paintEvent(QPaintEvent* event) {
 
 	QDialog::paintEvent(event);
 }
-
 } // namespace AL

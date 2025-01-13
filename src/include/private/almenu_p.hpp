@@ -36,5 +36,4 @@ private:
 	QPoint mousePressPoint;
 	CALMenuStyle* menuStyle{ nullptr };
 };
-
 } // namespace AL

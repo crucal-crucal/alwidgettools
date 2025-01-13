@@ -42,5 +42,4 @@ private:
 
 	void switchCentralStackIndex(int targetIndex, int lastIndex);
 };
-
 } // namespace AL

@@ -51,5 +51,4 @@ private:
 	void refreshCurrentIndexs();
 	void adjustSelectedVector();
 };
-
 } // namespace AL

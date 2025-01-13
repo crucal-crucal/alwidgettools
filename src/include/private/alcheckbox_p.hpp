@@ -21,5 +21,4 @@ protected:
 private:
 	CALCheckBoxStyle* style{ nullptr };
 };
-
 } // namespace AL

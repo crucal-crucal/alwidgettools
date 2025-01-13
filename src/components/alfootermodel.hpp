@@ -29,5 +29,4 @@ private:
 	CALNavigationNode* m_selectedNode{ nullptr };
 	QList<CALNavigationNode*> m_listFooterNodes;
 };
-
 } // namespace AL

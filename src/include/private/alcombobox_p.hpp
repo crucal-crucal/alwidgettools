@@ -24,5 +24,4 @@ private:
 	CALComboBoxStyle* comboBoxStyle{ nullptr };
 	bool isAllowHidePopup{ false };
 };
-
 } // namespace AL

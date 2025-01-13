@@ -42,5 +42,4 @@ private:
 	[[nodiscard]] int getAdjacentIndex(const Qt::LayoutDirection& direction, const int& index) const;
 	[[nodiscard]] int getRightLimitX() const;
 };
-
 } // namespace AL

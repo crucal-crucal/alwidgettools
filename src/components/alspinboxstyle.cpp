@@ -133,5 +133,4 @@ QRect CALSpinBoxStyle::subControlRect(const ComplexControl cc, const QStyleOptio
 
 	return rect;
 }
-
 } // namespace AL

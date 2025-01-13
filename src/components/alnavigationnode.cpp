@@ -221,5 +221,4 @@ bool CALNavigationNode::getIsChildNode(CALNavigationNode* node) { // NOLINT
 int CALNavigationNode::getRow() const {
 	return m_parentNode ? m_parentNode->getChildrenNodes().indexOf(const_cast<CALNavigationNode*>(this)) : 0;
 }
-
 } // namespace AL

@@ -71,5 +71,4 @@ QVariant CALFooterModel::data(const QModelIndex& index, const int role) const {
 
 	return {};
 }
-
 } // namespace AL

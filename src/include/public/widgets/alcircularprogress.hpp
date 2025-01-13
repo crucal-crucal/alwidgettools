@@ -76,5 +76,4 @@ protected:
 	void hideEvent(QHideEvent* event) override;
 	void paintEvent(QPaintEvent* event) override;
 };
-
 } // namespace AL

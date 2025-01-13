@@ -56,5 +56,4 @@ void CALCenterStackedWidget::paintEvent(QPaintEvent* event) {
 
 	QStackedWidget::paintEvent(event);
 }
-
 } // namespace AL

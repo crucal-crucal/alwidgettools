@@ -41,5 +41,4 @@ private:
 	QColor lightBorderColor{};
 	QColor darkBorderColor{};
 };
-
 } // namespace AL

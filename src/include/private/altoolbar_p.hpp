@@ -23,5 +23,4 @@ private:
 	int shadowBorderWidth{};
 	CALToolBarStyle* style{ nullptr };
 };
-
 } // namespace AL

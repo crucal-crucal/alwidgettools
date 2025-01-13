@@ -99,5 +99,4 @@ void CALCheckBoxStyle::setCheckIndicatorWidth(const int width) {
 int CALCheckBoxStyle::getCheckIndicatorWidth() const {
 	return m_checkIndicatorWidth;
 }
-
 } // namespace AL

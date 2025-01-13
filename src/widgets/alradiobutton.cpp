@@ -45,5 +45,4 @@ CALRadioButton::CALRadioButton(const QString& text, QWidget* parent): CALRadioBu
 }
 
 CALRadioButton::~CALRadioButton() = default;
-
 } // namespace AL

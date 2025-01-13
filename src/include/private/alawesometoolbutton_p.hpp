@@ -23,5 +23,4 @@ private:
 	CALAwesomeToolButtonStyle* style{ nullptr };
 	CALToolTip* tooltip{ nullptr };
 };
-
 } // namespace AL

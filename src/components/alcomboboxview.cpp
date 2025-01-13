@@ -19,5 +19,4 @@ void CALComboBoxView::mousePressEvent(QMouseEvent* event) {
 	}
 	event->ignore();
 }
-
 } // namespace AL

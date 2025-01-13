@@ -81,5 +81,4 @@ protected:
 #endif
 #endif
 };
-
 } // namespace AL

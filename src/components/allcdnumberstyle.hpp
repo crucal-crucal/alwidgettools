@@ -22,5 +22,4 @@ private:
 	bool m_isTransparent{};
 	qreal m_borderRadius{};
 };
-
 } // namespace AL

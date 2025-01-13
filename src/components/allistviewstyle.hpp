@@ -34,5 +34,4 @@ private:
 	int m_itemHeight{};
 	bool m_isTransparent{};
 };
-
 } // namespace AL

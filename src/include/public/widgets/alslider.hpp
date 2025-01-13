@@ -89,5 +89,4 @@ signals:
 protected:
 	const QScopedPointer<CALSliderPrivate> d_ptr{ nullptr };
 };
-
 } // namespace AL

@@ -28,5 +28,4 @@ private:
 	CALCalendar* calendar{ nullptr };
 	CALCalendarPickerContainer* calendarPickerContainer{ nullptr };
 };
-
 } // namespace AL

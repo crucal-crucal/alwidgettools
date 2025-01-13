@@ -35,5 +35,4 @@ void CALSuggestModel::clearSearchNode() {
 CALSuggestion* CALSuggestModel::getSearchSuggestion(const int row) {
 	return row >= m_suggestionVector.count() ? nullptr : m_suggestionVector[row];
 }
-
 } // namespace AL

@@ -24,5 +24,4 @@ private:
 
 	CALMenu* createStandardContextMenu();
 };
-
 } // namespace AL

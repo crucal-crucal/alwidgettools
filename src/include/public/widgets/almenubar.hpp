@@ -23,5 +23,4 @@ public:
 	QAction* addAweSomeIconAction(const ALIcon::AweSomeIcon& awesomeicon, const QString& text);
 	QAction* addAweSomeIconAction(const ALIcon::AweSomeIcon& awesomeicon, const QString& text, const QKeySequence& shortcut);
 };
-
 } // namespace AL

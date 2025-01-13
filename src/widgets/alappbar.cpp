@@ -1064,5 +1064,4 @@ bool CALAppBar::eventFilter(QObject* watched, QEvent* event) {
 	}
 	return QWidget::eventFilter(watched, event);
 }
-
 } // namespace AL

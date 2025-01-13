@@ -56,5 +56,4 @@ void CALListView::setIsTransparent(const bool isTransparent) {
 bool CALListView::getIsTransparent() const {
 	return d_func()->style->getIsTransparent();
 }
-
 } // namespace AL

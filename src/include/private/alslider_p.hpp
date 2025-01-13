@@ -21,5 +21,4 @@ protected:
 private:
 	CALSliderStyle* style{ nullptr };
 };
-
 } // namespace AL

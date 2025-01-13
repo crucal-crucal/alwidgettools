@@ -831,5 +831,4 @@ bool CALMessageBar::nativeEvent(const QByteArray& eventType, void* message, long
 }
 #endif
 #endif
-
 } // namespace AL

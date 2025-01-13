@@ -27,5 +27,4 @@ private:
 	bool m_isTransparent{};
 	bool m_isHasRadius{ true };
 };
-
 } // namespace AL

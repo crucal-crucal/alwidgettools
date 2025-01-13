@@ -30,5 +30,4 @@ void CALSuggestBoxSearchViewContainer::paintEvent(QPaintEvent* event) {
 	painter.drawRoundedRect(QRect(6, 0, rect().width() - 2 * 6, rect().height() - 6), 8, 8);
 	painter.restore();
 }
-
 } // namespace AL
