@@ -20,7 +20,7 @@ public:
 protected:
 	const QScopedPointer<CALExponentialBlurPrivate> d_ptr{ nullptr };
 
-	friend class AL::CALSingleton<CALExponentialBlur>;
+	friend class CALSingleton<CALExponentialBlur>;
 
 private:
 	explicit CALExponentialBlur(QObject* parent = nullptr);

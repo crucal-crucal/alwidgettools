@@ -2,8 +2,6 @@
 
 #include <mutex>
 
-#include "alwidgettoolsdef.hpp"
-
 namespace AL {
 template <typename T>
 class CALSingleton {

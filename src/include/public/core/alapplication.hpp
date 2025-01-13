@@ -34,11 +34,10 @@ Q_SIGNALS:
 protected:
 	const QScopedPointer<CALApplicationPrivate> d_ptr{ nullptr };
 
-	friend class AL::CALSingleton<CALApplication>;
+	friend class CALSingleton<CALApplication>;
 
 private:
 	explicit CALApplication(QObject* parent = nullptr);
 	~CALApplication() override;
 };
-
 } // namespace AL
