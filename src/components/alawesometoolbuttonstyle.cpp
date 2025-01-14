@@ -7,6 +7,9 @@
 
 #include "althememanager.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * @brief \class CALAwesomeToolButtonStyle
@@ -252,4 +255,4 @@ qreal CALAwesomeToolButtonStyle::calculateExpandIndicatorWidth(const QStyleOptio
 	painter->restore();
 	return indicatorWidth;
 }
-} // namespace AL
+}

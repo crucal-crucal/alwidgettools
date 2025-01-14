@@ -9,6 +9,9 @@
 #include "althememanager.hpp"
 #include "altoolbar.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * @brief \class CALToolBarStyle
@@ -266,4 +269,4 @@ void CALToolBarStyle::drawText(QPainter* painter, const QRect& contentRect, cons
 		}
 	}
 }
-} // namespace AL
+}

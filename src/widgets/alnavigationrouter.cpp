@@ -2,6 +2,9 @@
 
 #include "alnavigationrouter_p.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * @brief \class CALNavigationRouterPrivate
@@ -80,4 +83,4 @@ CALNavigationRouter::CALNavigationRouter(QObject* parent): QObject(parent), d_pt
 }
 
 CALNavigationRouter::~CALNavigationRouter() = default;
-} // namespace AL
+}

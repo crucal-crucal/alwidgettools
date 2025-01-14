@@ -6,6 +6,9 @@
 
 #include "alwidgettoolsdef.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALMenuPrivate;
 
@@ -49,4 +52,4 @@ protected:
 	void showEvent(QShowEvent* event) override;;
 	void paintEvent(QPaintEvent* event) override;
 };
-} // namespace AL
+}

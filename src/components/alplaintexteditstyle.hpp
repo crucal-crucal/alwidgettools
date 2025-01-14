@@ -4,6 +4,9 @@
 
 #include "alwidgettoolsdef.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALPlainTextEditStyle final : public QProxyStyle {
 	Q_OBJECT
@@ -26,4 +29,4 @@ private:
 	qreal m_expandMarkWidth{};
 	qreal m_borderRadius{};
 };
-} // namespace AL
+}

@@ -7,6 +7,9 @@
 #include "almenu.hpp"
 #include "althememanager.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * @brief \class CALMenuStyle
@@ -195,4 +198,4 @@ void CALMenuStyle::setMenuItemHeight(const int height) {
 int CALMenuStyle::getMenuItemHeight() const {
 	return m_menuItemHeight;
 }
-} // namespace AL
+}

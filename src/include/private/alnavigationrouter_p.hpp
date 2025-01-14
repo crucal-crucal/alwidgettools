@@ -2,9 +2,11 @@
 
 #include <QQueue>
 #include <QVariantMap>
+#include <QObject>
 
-#include "alwidgettoolsdef.hpp"
-
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALNavigationRouter;
 
@@ -24,4 +26,4 @@ private:
 	int maxRouteCount{};
 	QQueue<QVariantMap> routeQueue{};
 };
-} // namespace AL
+}

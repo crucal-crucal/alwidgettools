@@ -7,6 +7,9 @@
 class QHBoxLayout;
 class QVBoxLayout;
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALEvent;
 class CALMainWindow;
@@ -64,4 +67,4 @@ private:
 	void resetWindowLayout(bool isAnimation) const;
 	void doNavigationDisplayModeChange();
 };
-} // namespace AL
+}

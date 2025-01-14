@@ -4,6 +4,9 @@
 
 #include "alwidgettoolsdef.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALMenu;
 class CALAwesomeToolButtonPrivate;
@@ -41,4 +44,4 @@ protected:
 
 	bool eventFilter(QObject* watched, QEvent* event) override;
 };
-} // namespace AL
+}

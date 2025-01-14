@@ -10,6 +10,9 @@
 #include "aldoublespinbox_p.hpp"
 #include "althememanager.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * \class CALDoubleSpinBoxPrivate
@@ -123,4 +126,4 @@ void CALDoubleSpinBox::contextMenuEvent(QContextMenuEvent* event) {
 	}
 	event->accept();
 }
-} // namespace AL
+}

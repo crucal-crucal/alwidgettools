@@ -6,6 +6,9 @@
 #include "alimagecard_p.hpp"
 #include "althememanager.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * \class CALImageCardPrivate
@@ -95,4 +98,4 @@ void CALImageCard::paintEvent(QPaintEvent* event) {
 	}
 	painter.restore();
 }
-} // namespace AL
+}

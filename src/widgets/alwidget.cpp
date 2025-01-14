@@ -7,6 +7,9 @@
 #include "althememanager.hpp"
 #include "alwidget_p.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * @brief \class CALWidgetPrivate
@@ -138,4 +141,4 @@ void CALWidget::paintEvent(QPaintEvent* event) {
 
 	QWidget::paintEvent(event);
 }
-} // namespace AL
+}

@@ -1,7 +1,10 @@
 ﻿#pragma once
 
-#include "alwidgettoolsdef.hpp"
+#include <QObject>
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALCheckBox;
 class CALCheckBoxStyle;
@@ -21,4 +24,4 @@ protected:
 private:
 	CALCheckBoxStyle* style{ nullptr };
 };
-} // namespace AL
+}

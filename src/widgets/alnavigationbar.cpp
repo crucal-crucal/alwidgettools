@@ -22,6 +22,9 @@
 #include "alsuggestbox.hpp"
 #include "althememanager.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * @brief \class CALNavigationBarPrivate
@@ -90,7 +93,7 @@ void CALNavigationBarPrivate::slotTreeViewClicked(const QModelIndex& index, cons
 					QVariantMap data;
 					const bool isExpanded = navigationView->isExpanded(index);
 					data.insert(isExpanded ? "Collapse" : "Expand", QVariant::fromValue(node));
-					node->setIsExpanded(isExpanded);
+					node->setIsExpanded(!isExpanded);
 					navigationView->navigationNodeStateChanged(data);
 					isExpanded ? navigationView->collapse(index) : navigationView->expand(index);
 				}
@@ -557,7 +560,7 @@ CALNavigationBar::CALNavigationBar(QWidget* parent): QWidget(parent), d_ptr(new 
 	// user card layout
 	const auto userCardLayout = new QHBoxLayout;
 	userCardLayout->setContentsMargins(0, 0, 0, 0);
-	userCardLayout->setSpacing(3);
+	userCardLayout->addSpacing(3);
 	userCardLayout->addLayout(d->userButtonVLayout);
 	userCardLayout->addWidget(d->userInfoCard);
 
@@ -902,4 +905,4 @@ void CALNavigationBar::paintEvent(QPaintEvent* event) {
 
 	QWidget::paintEvent(event);
 }
-} // namespace AL
+}

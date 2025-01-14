@@ -4,6 +4,9 @@
 
 #include "alwidgettoolsdef.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALNavigationNode final : public QObject {
 	Q_OBJECT
@@ -102,4 +105,4 @@ private:
 	QString m_nodeKey{};
 	QString m_nodeTitle{};
 };
-} // namespace AL
+}

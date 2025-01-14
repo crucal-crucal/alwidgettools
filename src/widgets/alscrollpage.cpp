@@ -12,6 +12,9 @@
 #include "alscrollbar.hpp"
 #include "alscrollpage_p.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * @brief \class CALScrollPagePrivate
@@ -188,4 +191,4 @@ int CALScrollPage::getPageTitleSpacing() const {
 void CALScrollPage::setTitleVisible(const bool isVisible) {
 	d_func()->breadcrumbBar->setVisible(isVisible);
 }
-} // namespace AL
+}

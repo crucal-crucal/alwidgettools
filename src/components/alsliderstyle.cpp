@@ -4,6 +4,9 @@
 #include <QPropertyAnimation>
 #include <QStyleOptionSlider>
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * @brief \class CALSliderStyle
@@ -143,4 +146,4 @@ void CALSliderStyle::_startRadiusAnimation(const qreal startRadius, const qreal 
 	circleRadiusAnimation->setEndValue(endRadius);
 	circleRadiusAnimation->start(QAbstractAnimation::DeleteWhenStopped);
 }
-} // namespace AL
+}

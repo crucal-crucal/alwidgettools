@@ -12,6 +12,9 @@
 #include "alscrollbar.hpp"
 #include "althememanager.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * @brief \class CALPlainTextEditPrivate
@@ -167,4 +170,4 @@ void CALPlainTextEdit::contextMenuEvent(QContextMenuEvent* event) {
 	menu->popup(event->globalPos());
 	this->setFocus();
 }
-} // namespace AL
+}

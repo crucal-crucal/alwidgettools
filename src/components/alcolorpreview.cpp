@@ -4,6 +4,9 @@
 
 #include "althememanager.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * @brief \class CALColorPreview
@@ -46,4 +49,4 @@ void CALColorPreview::paintEvent(QPaintEvent* event) {
 	painter.drawRoundedRect(viewRect, borderRadius, borderRadius);
 	painter.restore();
 }
-} // namespace AL
+}

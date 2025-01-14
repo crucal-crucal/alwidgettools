@@ -13,6 +13,9 @@
 #include "alscrollbarstyle.hpp"
 #include "alscrollbar_p.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * @brief \class CALScrollBarPrivate
@@ -355,4 +358,4 @@ bool CALScrollBar::eventFilter(QObject* watched, QEvent* event) {
 	}
 	return QScrollBar::eventFilter(watched, event);
 }
-} // namespace AL
+}

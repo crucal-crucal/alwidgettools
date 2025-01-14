@@ -1,5 +1,6 @@
 ﻿#include "alnavigationstyle.hpp"
 
+#include <QDebug>
 #include <QPainter>
 #include <QPainterPath>
 #include <QPropertyAnimation>
@@ -9,6 +10,9 @@
 #include "alnavigationview.hpp"
 #include "althememanager.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * @brief \class CALNavigationStyle
@@ -410,4 +414,4 @@ bool CALNavigationStyle::compareItemY(CALNavigationNode* node1, CALNavigationNod
 		}
 	}
 }
-} // namespace AL
+}

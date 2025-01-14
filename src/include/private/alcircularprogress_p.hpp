@@ -6,6 +6,9 @@
 
 class QPainter;
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALCircularProgressDelegate;
 class CALCircularProgress;
@@ -79,4 +82,4 @@ private:
 	qreal dashLength{};
 	int angle{};
 };
-} // namespace AL
+}

@@ -4,6 +4,9 @@
 
 #include "alwidgettoolsdef.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALMessageBarManager;
 class CALMessageBarPrivate;
@@ -81,4 +84,4 @@ protected:
 #endif
 #endif
 };
-} // namespace AL
+}

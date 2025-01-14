@@ -4,6 +4,9 @@
 
 #include "alwidgettoolsdef.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALListViewStyle final : public QProxyStyle {
 	Q_OBJECT
@@ -34,4 +37,4 @@ private:
 	int m_itemHeight{};
 	bool m_isTransparent{};
 };
-} // namespace AL
+}

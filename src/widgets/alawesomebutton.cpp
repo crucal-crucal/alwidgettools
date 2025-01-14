@@ -6,6 +6,9 @@
 #include "alawesomebutton_p.hpp"
 #include "altooltip.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * @brief \class CALAwesomeButtonPrivate
@@ -245,4 +248,4 @@ void CALAwesomeButton::paintEvent(QPaintEvent* event) {
 	painter.drawText(0, 0, width(), height(), Qt::AlignCenter, QChar(static_cast<unsigned short>(d->iconType)));
 	painter.restore();
 }
-} // namespace AL
+}

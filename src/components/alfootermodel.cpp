@@ -4,6 +4,9 @@
 
 #define FOOTER_NODE_LIMIT 3
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * @brief \class CALFooterModel
@@ -71,4 +74,4 @@ QVariant CALFooterModel::data(const QModelIndex& index, const int role) const {
 
 	return {};
 }
-} // namespace AL
+}

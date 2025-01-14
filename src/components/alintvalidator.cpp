@@ -1,5 +1,8 @@
 ﻿#include "alintvalidator.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * @brief \class CALIntValidator
@@ -69,4 +72,4 @@ bool CALIntValidator::getIsHexMode() const {
 QString CALIntValidator::completeInput(const QString& input, const int length) {
 	return input.rightJustified(length, '0');
 }
-} // namespace AL
+}

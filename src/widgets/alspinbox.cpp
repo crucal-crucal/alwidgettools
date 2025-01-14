@@ -10,6 +10,9 @@
 #include "alspinbox_p.hpp"
 #include "althememanager.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * \class CALSpinBoxPrivate
@@ -124,4 +127,4 @@ void CALSpinBox::contextMenuEvent(QContextMenuEvent* event) {
 	}
 	event->accept();
 }
-} // namespace AL
+}

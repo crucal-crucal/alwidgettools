@@ -7,6 +7,9 @@
 
 #include "althememanager.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * @brief \class CALLineEditStyle
@@ -52,4 +55,4 @@ void CALLineEditStyle::drawPrimitive(const PrimitiveElement pe, const QStyleOpti
 
 	QProxyStyle::drawPrimitive(pe, opt, p, w);
 }
-} // namespace AL
+}

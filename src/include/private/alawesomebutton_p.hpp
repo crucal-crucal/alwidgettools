@@ -5,6 +5,9 @@
 
 #include "alwidgettoolsdef.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALToolTip;
 class CALAwesomeButton;
@@ -37,4 +40,4 @@ private:
 	QColor darkIconColor{};
 	bool isSelected{};
 };
-} // namespace AL
+}

@@ -4,6 +4,9 @@
 
 #include "alwidgettoolsdef.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALNavigationBarPrivate;
 
@@ -20,6 +23,7 @@ public:
 	void setUserInfoCardTitle(const QString& title);
 	void setUserInfoCardSubTitle(const QString& subTitle);
 
+	// \see almainwindow.hpp 解释
 	ALNavigationType::NodeOperateReturnType addExpanderNode(const QString& expanderTitle, QString& expanderKey, const ALIcon::AweSomeIcon& awewomeIcon = ALIcon::AweSomeIcon::None);
 	ALNavigationType::NodeOperateReturnType addExpanderNode(const QString& expanderTitle, QString& expanderKey, const QString& targetExpanderKey, const ALIcon::AweSomeIcon& awewomeIcon = ALIcon::AweSomeIcon::None);
 	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QWidget* page, const ALIcon::AweSomeIcon& awewomeIcon = ALIcon::AweSomeIcon::None);
@@ -49,4 +53,4 @@ protected:
 
 	void paintEvent(QPaintEvent* event) override;
 };
-} // namespace AL
+}

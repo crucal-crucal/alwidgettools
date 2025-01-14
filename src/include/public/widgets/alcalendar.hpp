@@ -4,6 +4,9 @@
 
 #include "alwidgettoolsdef.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALCalendarPrivate;
 
@@ -44,4 +47,4 @@ protected:
 	void paintEvent(QPaintEvent* event) override;
 	void showEvent(QShowEvent* event) override;
 };
-} // namespace AL
+}

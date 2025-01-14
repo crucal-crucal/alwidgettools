@@ -4,6 +4,9 @@
 
 #include "althememanager.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * @brief \class CALCalendarTitleDelegate
@@ -36,4 +39,4 @@ void CALCalendarTitleDelegate::paint(QPainter* painter, const QStyleOptionViewIt
 QSize CALCalendarTitleDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const {
 	return { 42, 30 };
 }
-} // namespace AL
+}

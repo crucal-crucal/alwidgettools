@@ -4,6 +4,9 @@
 
 #include "alwidgettoolsdef.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALPushButtonPrivate;
 
@@ -99,4 +102,5 @@ protected:
 	void paintEvent(QPaintEvent* event) override;
 };
 
-Q_DECLARE_OPERATORS_FOR_FLAGS(CALPushButton::ButtonStyles)} // namespace AL
+Q_DECLARE_OPERATORS_FOR_FLAGS(CALPushButton::ButtonStyles)
+}

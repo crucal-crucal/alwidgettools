@@ -4,6 +4,9 @@
 
 #include "alwidgettoolsdef.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALListViewPrivate;
 
@@ -30,4 +33,4 @@ Q_SIGNALS:
 protected:
 	const QScopedPointer<CALListViewPrivate> d_ptr{ nullptr };
 };
-} // namespace AL
+}

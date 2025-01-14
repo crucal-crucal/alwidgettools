@@ -6,6 +6,9 @@
 
 #include "althememanager.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 CALSpinBoxStyle::CALSpinBoxStyle(QStyle* style) {
 	m_themeMode = ALTheme->getThemeMode();
@@ -133,4 +136,4 @@ QRect CALSpinBoxStyle::subControlRect(const ComplexControl cc, const QStyleOptio
 
 	return rect;
 }
-} // namespace AL
+}

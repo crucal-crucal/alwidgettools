@@ -4,7 +4,9 @@ file(GLOB ORIGIN *.hpp *.cpp)
 file(GLOB PAGEORIGIN page/*.hpp page/*.cpp)
 file(GLOB MODELVIEWORIGIN modelview/*.hpp modelview/*.cpp)
 
-set(EXAMPLE_SOURCE ${ORIGIN} ${PAGEORIGIN} ${MODELVIEWORIGIN})
+set(EXAMPLE_SOURCE ${ORIGIN} ${PAGEORIGIN} ${MODELVIEWORIGIN}
+        page/e_navigation.cpp
+        page/e_navigation.hpp)
 
 include_directories(page)
 include_directories(modelview)

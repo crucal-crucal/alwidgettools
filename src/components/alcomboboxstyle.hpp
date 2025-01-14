@@ -4,6 +4,9 @@
 
 #include "alwidgettoolsdef.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALComboBoxStyle final : public QProxyStyle {
 	Q_OBJECT
@@ -38,4 +41,4 @@ private:
 	qreal m_expandMarkWidth{};
 	int m_shadowBorderWidth{};
 };
-} // namespace AL
+}

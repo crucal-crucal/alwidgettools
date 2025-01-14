@@ -4,6 +4,9 @@
 
 #include "alwidgettoolsdef.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALApplicationPrivate;
 
@@ -22,4 +25,4 @@ Q_SIGNALS:
 private:
 	CALApplicationPrivate* appPrivate{ nullptr };
 };
-} // namespace AL
+}

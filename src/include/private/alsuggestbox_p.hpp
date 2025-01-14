@@ -6,6 +6,9 @@
 
 class QVBoxLayout;
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALSuggestion final : public QObject {
 	Q_OBJECT
@@ -84,4 +87,4 @@ private:
 	void startExpandAnimation();
 	void startCloseAnimation();
 };
-} // namespace AL
+}

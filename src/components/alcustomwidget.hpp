@@ -7,8 +7,11 @@
 
 class QVBoxLayout;
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
-class CALCustomWidget final : public QDialog {
+class CALCustomWidget : public QDialog {
 	Q_OBJECT
 	AL_TAKEOVER_NATIVEEVENT_H
 
@@ -29,4 +32,4 @@ private:
 	ALThemeType::ThemeMode m_themeMode{};
 	bool m_isEnableMica{};
 };
-} // namespace AL
+}

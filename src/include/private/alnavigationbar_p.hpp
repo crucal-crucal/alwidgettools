@@ -9,6 +9,9 @@ class QVBoxLayout;
 class QHBoxLayout;
 class QLinearGradient;
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALMenu;
 class CALNavigationBar;
@@ -93,4 +96,4 @@ private:
 	void doSearchButtonAnimation(bool isCompact, bool isAnimation) const;
 	void doUserButtonAnimation(bool isCompact, bool isAnimation);
 };
-} // namespace AL
+}

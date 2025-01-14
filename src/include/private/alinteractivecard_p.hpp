@@ -4,6 +4,9 @@
 
 #include "alwidgettoolsdef.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALInteractiveCard;
 
@@ -32,4 +35,4 @@ private:
 	QPixmap cardPixmap{};
 	QSize cardPixmapSize{};
 };
-} // namespace AL
+}

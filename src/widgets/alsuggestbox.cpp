@@ -13,6 +13,9 @@
 #include "alsuggestmodel.hpp"
 #include "althememanager.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * @brief \class CALSuggestion
@@ -299,4 +302,4 @@ void CALSuggestBox::removeSuggestion(const int index) {
 	d->suggestionVector.removeOne(suggest);
 	suggest->deleteLater();
 }
-} // namespace AL
+}

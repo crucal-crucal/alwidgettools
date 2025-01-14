@@ -2,6 +2,9 @@
 
 #include "alwidgettoolsdef.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALScrollPageArea;
 
@@ -21,4 +24,4 @@ private:
 	ALThemeType::ThemeMode themeMode{};
 	int borderRadius{};
 };
-} // namespace AL
+}

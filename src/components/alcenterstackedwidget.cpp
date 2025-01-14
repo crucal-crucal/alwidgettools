@@ -5,6 +5,9 @@
 
 #include "althememanager.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * @brief \class CALCenterStackedWidget
@@ -56,4 +59,4 @@ void CALCenterStackedWidget::paintEvent(QPaintEvent* event) {
 
 	QStackedWidget::paintEvent(event);
 }
-} // namespace AL
+}

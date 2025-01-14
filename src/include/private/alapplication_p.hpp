@@ -6,6 +6,9 @@
 
 class QTranslator;
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALApplication;
 
@@ -44,4 +47,4 @@ private:
 	void updateMica(QWidget* widget, bool isProcessEvent = true) const;
 	void updateAllMicaWidget();
 };
-} // namespace AL
+}

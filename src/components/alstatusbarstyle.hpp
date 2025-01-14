@@ -4,6 +4,9 @@
 
 #include "alwidgettoolsdef.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALStatusBarStyle final : public QProxyStyle {
 	Q_OBJECT
@@ -20,4 +23,4 @@ public:
 private:
 	ALThemeType::ThemeMode m_themeMode{};
 };
-} // namespace AL
+}

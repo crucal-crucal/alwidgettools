@@ -8,6 +8,9 @@
 
 #include "alcircularprogress_p.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * @brief \class CALCircularProgressPrivate
@@ -402,4 +405,4 @@ void CALCircularProgress::paintEvent(QPaintEvent* event) {
 
 	painter.restore();
 }
-} // namespace AL
+}

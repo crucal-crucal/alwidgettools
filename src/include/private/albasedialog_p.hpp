@@ -4,6 +4,9 @@
 
 class QPropertyAnimation;
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALBaseDialog;
 class CALMaskWidget;
@@ -34,4 +37,4 @@ private:
 
 	void _doCloseAnimation();
 };
-} // namespace AL
+}

@@ -25,6 +25,9 @@
 #include "althememanager.hpp"
 #include "alwinshadowhelper.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * @brief \class CALAppBarPrivate
@@ -1064,4 +1067,4 @@ bool CALAppBar::eventFilter(QObject* watched, QEvent* event) {
 	}
 	return QWidget::eventFilter(watched, event);
 }
-} // namespace AL
+}

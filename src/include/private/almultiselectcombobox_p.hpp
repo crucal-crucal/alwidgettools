@@ -4,6 +4,9 @@
 
 #include "alwidgettoolsdef.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALComboBoxStyle;
 class CALComboBoxView;
@@ -51,4 +54,4 @@ private:
 	void refreshCurrentIndexs();
 	void adjustSelectedVector();
 };
-} // namespace AL
+}

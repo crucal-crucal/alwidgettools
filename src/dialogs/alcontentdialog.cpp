@@ -9,6 +9,9 @@
 #include "altext.hpp"
 #include "althememanager.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * @brief \class CALContentDialogPrivate

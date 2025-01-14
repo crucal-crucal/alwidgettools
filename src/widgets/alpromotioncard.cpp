@@ -8,6 +8,9 @@
 #include "alpromotioncard_p.hpp"
 #include "althememanager.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * @brief \class CALPromotionCardPrivate
@@ -411,4 +414,4 @@ void CALPromotionCard::paintEvent(QPaintEvent* event) {
 	}
 	painter.restore();
 }
-} // namespace AL
+}

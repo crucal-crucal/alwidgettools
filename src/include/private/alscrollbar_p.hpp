@@ -9,6 +9,9 @@
 class QTimer;
 class QPropertyAnimation;
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALScrollBarPrivate final : public QObject {
 	Q_OBJECT
@@ -51,4 +54,4 @@ private:
 	void handleScrollBarRangeChanged(int min, int max);
 	void handleScrollBarGeometry();
 };
-} // namespace AL
+}

@@ -5,6 +5,9 @@
 #include "alappbar.hpp"
 #include "alwidgettoolsdef.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALMainWindowPrivate;
 
@@ -27,9 +30,18 @@ public:
 
 	void moveToCenter();
 
+	/**
+	 * @brief 为顶部 appBar 里添加自定义窗口
+	 * @param customArea \enum ALAppBarType::CustomArea
+	 * @param customWidget 自定义窗口
+	 */
 	void setCustomWidget(const ALAppBarType::CustomArea& customArea, QWidget* customWidget);
 	[[nodiscard]] QWidget* getCustomWidget() const;
 
+	/**
+	 * @brief 设置是否启用导航栏
+	 * @param isEnable 是否启用
+	 */
 	void setIsNavigationBarEnable(bool isEnable);
 	[[nodiscard]] bool getIsNavigationBarEnable() const;
 
@@ -38,19 +50,100 @@ public:
 	void setUserInfoCardTitle(const QString& title);
 	void setUserInfoCardSubTitle(const QString& subTitle);
 
+	/**
+	 * @brief 添加扩展节点
+	 * @param expanderTitle 扩展节点 title
+	 * @param expanderKey 扩展节点 key
+	 * @param awesomeIcon 扩展节点 icon \enum ALIcon::AweSomeIcon
+	 * @return \enum ALNavigationType::NodeOperateReturnType
+	 */
 	ALNavigationType::NodeOperateReturnType addExpanderNode(const QString& expanderTitle, QString& expanderKey, const ALIcon::AweSomeIcon& awesomeIcon = ALIcon::AweSomeIcon::None) const;
+
+	/**
+	 * @brief 添加扩展节点，并指定目标扩展节点键
+	 * @param expanderTitle 扩展节点标题
+	 * @param expanderKey 扩展节点键
+	 * @param targetExpanderKey 目标扩展节点键
+	 * @param awesomeIcon 扩展节点图标 \enum ALIcon::AweSomeIcon
+	 * @return \enum ALNavigationType::NodeOperateReturnType
+	 */
 	ALNavigationType::NodeOperateReturnType addExpanderNode(const QString& expanderTitle, QString& expanderKey, const QString& targetExpanderKey, const ALIcon::AweSomeIcon& awesomeIcon = ALIcon::AweSomeIcon::None) const;
+
+	/**
+	 * @brief 添加页面节点
+	 * @param pageTitle 页面标题
+	 * @param page 页面控件
+	 * @param awesomeIcon 节点图标 \enum ALIcon::AweSomeIcon
+	 * @return \enum ALNavigationType::NodeOperateReturnType
+	 */
 	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QWidget* page, const ALIcon::AweSomeIcon& awesomeIcon = ALIcon::AweSomeIcon::None) const;
+
+	/**
+	 * @brief 添加页面节点，并指定目标扩展节点键
+	 * @param pageTitle 页面标题
+	 * @param page 页面控件
+	 * @param targetExpanderKey 目标扩展节点键 
+	 * @param awesomeIcon 节点图标 \enum ALIcon::AweSomeIcon
+	 * @return \enum ALNavigationType::NodeOperateReturnType
+	 */
 	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QWidget* page, const QString& targetExpanderKey, const ALIcon::AweSomeIcon& awesomeIcon = ALIcon::AweSomeIcon::None) const;
+
+	/**
+	 * @brief 添加页面节点，并设置关键点数
+	 * @param pageTitle 页面标题
+	 * @param page 页面控件
+	 * @param keyPoints 页面关键点数
+	 * @param awesomeIcon 节点图标 \enum ALIcon::AweSomeIcon
+	 * @return \enum ALNavigationType::NodeOperateReturnType
+	 */
 	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QWidget* page, int keyPoints = 0, const ALIcon::AweSomeIcon& awesomeIcon = ALIcon::AweSomeIcon::None) const;
+
+	/**
+	 * @brief 添加页面节点，并指定目标扩展节点键和关键点数
+	 * @param pageTitle 页面标题
+	 * @param page 页面控件
+	 * @param targetExpanderKey 目标扩展节点键
+	 * @param keyPoints 页面关键点数
+	 * @param awesomeIcon 节点图标 \enum ALIcon::AweSomeIcon
+	 * @return \enum ALNavigationType::NodeOperateReturnType
+	 */
 	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QWidget* page, const QString& targetExpanderKey, int keyPoints = 0, const ALIcon::AweSomeIcon& awesomeIcon = ALIcon::AweSomeIcon::None) const;
+
+	/**
+	 * @brief 添加页脚节点
+	 * @param footerTitle 页脚标题
+	 * @param footerKey 页脚键
+	 * @param keyPoints 页脚关键点数
+	 * @param awesomeIcon 节点图标 \enum ALIcon::AweSomeIcon
+	 * @return \enum ALNavigationType::NodeOperateReturnType
+	 */
 	ALNavigationType::NodeOperateReturnType addFooterNode(const QString& footerTitle, QString& footerKey, int keyPoints = 0, const ALIcon::AweSomeIcon& awesomeIcon = ALIcon::AweSomeIcon::None) const;
+
+	/**
+	 * @brief 添加页脚节点，并指定页面控件
+	 * @param footerTitle 页脚标题
+	 * @param page 页面控件
+	 * @param footerKey 页脚键
+	 * @param keyPoints 页脚关键点数
+	 * @param awesomeIcon 节点图标 \enum ALIcon::AweSomeIcon
+	 * @return \enum ALNavigationType::NodeOperateReturnType
+	 */
 	ALNavigationType::NodeOperateReturnType addFooterNode(const QString& footerTitle, QWidget* page, QString& footerKey, int keyPoints = 0, const ALIcon::AweSomeIcon& awesomeIcon = ALIcon::AweSomeIcon::None) const;
 
+	/**
+	 * @brief 设置节点关键点数
+	 * @param nodeKey 节点 key
+	 * @param keyPoints 关键点数
+	 */
 	void setNodeKeyPoints(const QString& nodeKey, int keyPoints);
 	[[nodiscard]] int getNodeKeyPoints(const QString& nodeKey) const;
 
+	/**
+	 * @brief 导航到指定页面
+	 * @param pageKey
+	 */
 	void navigation(const QString& pageKey);
+
 	void setWindowButtonFlag(const ALAppBarType::ButtonFlag& buttonFlag, bool isEnable = true);
 	void setWindowButtonFlags(const ALAppBarType::ButtonFlags& buttonFlags);
 	[[nodiscard]] ALAppBarType::ButtonFlags getWindowButtonFlags() const;
@@ -111,4 +204,4 @@ protected:
 	bool eventFilter(QObject* watched, QEvent* event) override;
 	QMenu* createPopupMenu() override;
 };
-} // namespace AL
+}

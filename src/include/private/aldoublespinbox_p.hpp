@@ -1,7 +1,10 @@
 ﻿#pragma once
 
-#include "alwidgettoolsdef.hpp"
+#include <QObject>
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALMenu;
 class CALDoubleSpinBox;
@@ -24,4 +27,4 @@ private:
 
 	CALMenu* createStandardContextMenu();
 };
-} // namespace AL
+}

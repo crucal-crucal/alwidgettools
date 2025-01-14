@@ -5,6 +5,9 @@
 #include "alsingleton.hpp"
 #include "alwidgettoolsdef.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALEventPrivate;
 
@@ -20,14 +23,30 @@ public:
 	explicit CALEvent(const QString& eventName, const QString& funcName, QObject* parent = nullptr);
 	~CALEvent() override;
 
+	/**
+	 * @brief 注册并初始化事件到事件总线
+	 * @return \enum ALEventBusType::EventBusReturnType
+	 */
 	ALEventBusType::EventBusReturnType registerAndInit();
 
+	/**
+	 * @brief 设置事件名称
+	 * @param eventName 事件名称
+	 */
 	void setEventName(const QString& eventName);
 	[[nodiscard]] QString getEventName() const;
 
+	/**
+	 * @brief 设置函数名称
+	 * @param funcName 函数名称
+	 */
 	void setFuncName(const QString& funcName);
 	[[nodiscard]] QString getFuncName() const;
 
+	/**
+	 * @brief 设置事件连接类型
+	 * @param connectionType 事件连接类型
+	 */
 	void setConnectionType(const Qt::ConnectionType& connectionType);
 	[[nodiscard]] Qt::ConnectionType getConnectionType() const;
 
@@ -50,7 +69,18 @@ class CALWIDGETTOOLS_EXPORT CALEventBus final : public QObject {
 public:
 	static CALEventBus* instance();
 
+	/**
+	 * @brief 发布事件到事件总线
+	 * @param eventName 事件名称
+	 * @param data 事件数据
+	 * @return \enum ALEventBusType::EventBusReturnType
+	 */
 	ALEventBusType::EventBusReturnType post(const QString& eventName, const QVariantMap& data = {});
+
+	/**
+	 * @brief 获取已注册的事件名称列表
+	 * @return 注册列表
+	 */
 	[[nodiscard]] QStringList getRegisteredEventsName() const;
 
 protected:
@@ -63,4 +93,4 @@ private:
 	explicit CALEventBus(QObject* parent = nullptr);
 	~CALEventBus() override;
 };
-} // namespace AL
+}

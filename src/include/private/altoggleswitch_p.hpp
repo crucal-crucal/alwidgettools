@@ -2,6 +2,9 @@
 
 #include "alwidgettoolsdef.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALToggleSwitch;
 
@@ -31,4 +34,4 @@ private:
 	void startRadiusAnimation(qreal startRadius, qreal endRadius);
 	void adjustCircleCenterX();
 };
-} // namespace AL
+}

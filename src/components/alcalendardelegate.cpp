@@ -6,6 +6,9 @@
 
 #include "althememanager.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * @brief \class CALCalendarDelegate
@@ -172,4 +175,4 @@ void CALCalendarDelegate::drawDays(QPainter* painter, const QStyleOptionViewItem
 		}
 	}
 }
-} // namespace AL
+}

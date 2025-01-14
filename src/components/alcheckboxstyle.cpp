@@ -5,6 +5,9 @@
 
 #include "althememanager.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * @brief \class CALCheckBoxStyle
@@ -99,4 +102,4 @@ void CALCheckBoxStyle::setCheckIndicatorWidth(const int width) {
 int CALCheckBoxStyle::getCheckIndicatorWidth() const {
 	return m_checkIndicatorWidth;
 }
-} // namespace AL
+}

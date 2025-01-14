@@ -4,6 +4,9 @@
 #include "allistview_p.hpp"
 #include "alscrollbar.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * \class CALListViewPrivate
@@ -56,4 +59,4 @@ void CALListView::setIsTransparent(const bool isTransparent) {
 bool CALListView::getIsTransparent() const {
 	return d_func()->style->getIsTransparent();
 }
-} // namespace AL
+}

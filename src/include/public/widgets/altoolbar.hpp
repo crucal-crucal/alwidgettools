@@ -4,6 +4,9 @@
 
 #include "alwidgettoolsdef.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALToolBarPrivate;
 
@@ -27,4 +30,4 @@ protected:
 
 	void paintEvent(QPaintEvent* event) override;
 };
-} // namespace AL
+}

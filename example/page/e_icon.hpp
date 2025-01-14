@@ -4,6 +4,9 @@
 
 #include "e_basepage.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALLineEdit;
 class CALListView;

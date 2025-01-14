@@ -45,7 +45,17 @@ set(SOURCES ${ORIGIN} ${INCLUDE} ${PRIVATE_INCLUDE} ${COMPONENTS})
 if (CALWIDGETTOOLS_BUILD_STATIC_LIB)
     set(LIB_TYPE STATIC)
 else ()
-    set(LIB_TYPE SHARED)
+    set(LIB_TYPE SHARED
+            include/private/altabbar_p.hpp
+            include/public/widgets/altabbar.hpp
+            components/altabbarstyle.cpp
+            components/altabbarstyle.hpp
+            widgets/altabbar.cpp
+            include/private/altabwidget_p.hpp
+            include/public/widgets/altabwidget.hpp
+            widgets/altabwidget.cpp
+            components/alcustomtabwidget.cpp
+            components/alcustomtabwidget.hpp)
 endif ()
 
 # Add include directories for public, private, and component headers

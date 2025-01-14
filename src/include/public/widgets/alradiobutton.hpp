@@ -4,6 +4,9 @@
 
 #include "alwidgettoolsdef.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALRadioButtonPrivate;
 
@@ -19,4 +22,4 @@ public:
 protected:
 	const QScopedPointer<CALRadioButtonPrivate> d_ptr{ nullptr };
 };
-} // namespace AL
+}

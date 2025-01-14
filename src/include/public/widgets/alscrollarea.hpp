@@ -6,6 +6,9 @@
 
 #include "alwidgettoolsdef.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALScrollBar;
 class CALScrollAreaPrivate;
@@ -47,4 +50,4 @@ protected:
 
 	explicit CALScrollArea(CALScrollAreaPrivate& dd, CALScrollArea* parent = nullptr);
 };
-} // namespace AL
+}

@@ -10,6 +10,9 @@
 #include "alscrollbar.hpp"
 #include "althememanager.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * @brief \class CALComboBoxPrivate
@@ -187,4 +190,4 @@ void CALComboBox::hidePopup() {
 		markAnimation->start(QAbstractAnimation::DeleteWhenStopped);
 	}
 }
-} // namespace AL
+}

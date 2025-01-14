@@ -4,6 +4,9 @@
 
 #include "alwidgettoolsdef.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALColorDisplayDelegate final : public QStyledItemDelegate {
 	Q_OBJECT
@@ -21,4 +24,4 @@ public:
 private:
 	ALThemeType::ThemeMode m_themeMode{};
 };
-} // namespace AL
+}

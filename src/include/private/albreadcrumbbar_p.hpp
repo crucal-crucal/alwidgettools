@@ -1,7 +1,10 @@
 ﻿#pragma once
 
-#include "alwidgettoolsdef.hpp"
+#include <QObject>
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALBaseListView;
 class CALBreadcrumbBarDelegate;
@@ -28,4 +31,4 @@ private:
 	CALBreadcrumbBarDelegate* listDelegate{ nullptr };
 	CALBaseListView* listView{ nullptr };
 };
-} // namespace AL
+}

@@ -4,6 +4,9 @@
 
 #include "alwidgettoolsdef.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALColorPicker final : public QWidget {
 	Q_OBJECT
@@ -36,4 +39,4 @@ private:
 
 	QPoint adjustPointLimit(QPoint point) const;
 };
-} // namespace AL
+}

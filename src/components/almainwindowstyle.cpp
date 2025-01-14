@@ -7,6 +7,9 @@
 
 #include "althememanager.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * @brief \class CALMainWindowStyle
@@ -156,4 +159,4 @@ void CALMainWindowStyle::drawControl(const ControlElement element, const QStyleO
 
 	QProxyStyle::drawControl(element, opt, p, w);
 }
-} // namespace AL
+}

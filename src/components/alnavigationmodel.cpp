@@ -4,6 +4,9 @@
 
 #define NODE_MAX_DEPTHS 10
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * @brief \class CALNavigationModel
@@ -259,4 +262,4 @@ void CALNavigationModel::setSelectedExpandedNode(CALNavigationNode* node) {
 CALNavigationNode* CALNavigationModel::getSelectedExpandedNode() const {
 	return m_selectedExpandedNode;
 }
-} // namespace AL
+}

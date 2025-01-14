@@ -1,9 +1,12 @@
 ﻿#pragma once
 
-#include "alwidgettoolsdef.hpp"
+#include <QObject>
 
 class QVBoxLayout;
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALPushButton;
 class CALContentDialog;

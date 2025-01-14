@@ -15,6 +15,10 @@
 #endif
 
 #ifdef Q_OS_WIN
+/**
+ * @brief 定义处理本地事件，允许通过 takeOverNativeEvent 接管事件
+ * @param CALAppBar appBar
+ */
 #define CALAPPBAR_HANDLE(CALAppBar)                                           \
 	if (CALAppBar) {                                                          \
 		int ret = (CALAppBar)->takeOverNativeEvent(eventType, message, result); \
@@ -42,6 +46,9 @@
 #define AL_TAKEOVER_NATIVEEVENT_CPP(CLASS, CALAppBar)
 #endif
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALAppBarPrivate;
 
@@ -98,6 +105,7 @@ public:
 
 	void closeWindow();
 #ifdef Q_OS_WIN
+	// 接管本地事件
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 	int takeOverNativeEvent(const QByteArray& eventType, void* message, qintptr* result);
 #else
@@ -124,4 +132,4 @@ protected:
 	void paintEvent(QPaintEvent* event) override;
 	bool eventFilter(QObject* watched, QEvent* event) override;
 };
-} // namespace AL
+}

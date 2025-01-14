@@ -4,6 +4,9 @@
 
 #include "alwidgettoolsdef.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALSuggestBoxPrivate;
 
@@ -38,4 +41,4 @@ Q_SIGNALS:
 protected:
 	const QScopedPointer<CALSuggestBoxPrivate> d_ptr{ nullptr };
 };
-} // namespace AL
+}

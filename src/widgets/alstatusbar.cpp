@@ -3,6 +3,9 @@
 #include "alstatusbar_p.hpp"
 #include "alstatusbarstyle.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * @brief \class CALStatusBarPrivate
@@ -29,4 +32,4 @@ CALStatusBar::CALStatusBar(QWidget* parent): QStatusBar(parent), d_ptr(new CALSt
 }
 
 CALStatusBar::~CALStatusBar() = default;
-} // namespace AL
+}

@@ -15,6 +15,9 @@
 #include "alscrollbar.hpp"
 #include "althememanager.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * \class CALCalendarPrivate
@@ -396,4 +399,4 @@ void CALCalendar::showEvent(QShowEvent* event) {
 	d->scrollToDate(currentDate);
 	QWidget::showEvent(event);
 }
-} // namespace AL
+}

@@ -4,6 +4,9 @@
 
 #include "alwidgettoolsdef.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALThemeAnimationWidget final : public QWidget {
 	Q_OBJECT
@@ -52,4 +55,4 @@ private:
 	QImage m_oldWindowImage{};
 	QImage m_newWindowImage{};
 };
-} // namespace AL
+}

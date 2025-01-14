@@ -21,6 +21,9 @@
 #include <windowsx.h>
 #endif
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 QMap<ALMessageBarType::PositionPolicy, QList<CALMessageBar*>*> mapMessageBarActive;
 
@@ -831,4 +834,4 @@ bool CALMessageBar::nativeEvent(const QByteArray& eventType, void* message, long
 }
 #endif
 #endif
-} // namespace AL
+}

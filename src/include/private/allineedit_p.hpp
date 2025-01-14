@@ -2,6 +2,9 @@
 
 #include "alwidgettoolsdef.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALEvent;
 class CALLineEdit;
@@ -36,4 +39,4 @@ private:
 	CALEvent* focusEvent{ nullptr };
 	qreal textSpacing{ 0.5 };
 };
-} // namespace AL
+}

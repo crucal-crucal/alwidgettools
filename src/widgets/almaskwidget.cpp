@@ -3,6 +3,9 @@
 #include <QPainter>
 #include <QPropertyAnimation>
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * @brief \class CALMaskWidget
@@ -36,4 +39,4 @@ void CALMaskWidget::paintEvent(QPaintEvent* event) {
 	painter.drawRect(rect());
 	painter.restore();
 }
-} // namespace AL
+}

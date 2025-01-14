@@ -6,6 +6,9 @@
 
 #include "althememanager.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * @brief \class CALPlainTextEditStyle
@@ -68,4 +71,4 @@ void CALPlainTextEditStyle::setExpandMarkWidth(const qreal expandMarkWidth) {
 qreal CALPlainTextEditStyle::getExpandMarkWidth() const {
 	return m_expandMarkWidth;
 }
-} // namespace AL
+}

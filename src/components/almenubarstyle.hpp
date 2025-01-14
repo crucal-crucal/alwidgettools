@@ -4,6 +4,9 @@
 
 #include "alwidgettoolsdef.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALMenuBarStyle final : public QProxyStyle {
 	Q_OBJECT
@@ -21,4 +24,4 @@ private:
 	ALThemeType::ThemeMode m_themeMode{};
 	int m_menubarItemMargin{};
 };
-} // namespace AL
+}

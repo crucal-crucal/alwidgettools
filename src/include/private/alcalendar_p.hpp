@@ -5,6 +5,9 @@
 
 #include "alwidgettoolsdef.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALCalendar;
 class CALBaseListView;
@@ -70,4 +73,4 @@ private:
 	void scrollToDate(const QDate& date) const;
 	void doSwitchAnimation(bool isZoomIn);
 };
-} // namespace AL
+}

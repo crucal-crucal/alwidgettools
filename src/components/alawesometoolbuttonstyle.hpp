@@ -6,6 +6,9 @@
 
 class QStyleOptionToolButton;
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALAwesomeToolButtonStyle final : public QProxyStyle {
 	Q_OBJECT
@@ -46,4 +49,5 @@ private:
 	void drawIcon(QPainter* painter, QRect iconRect, const QStyleOptionToolButton* bopt, const QWidget* widget) const;
 	void drawText(QPainter* painter, QRect contentRect, const QStyleOptionToolButton* bopt) const;
 	static qreal calculateExpandIndicatorWidth(const QStyleOptionToolButton* bopt, QPainter* painter);
-};} // namespace AL
+};
+}

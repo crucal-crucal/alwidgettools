@@ -1,7 +1,10 @@
 ﻿#pragma once
 
-#include "alwidgettoolsdef.hpp"
+#include <QObject>
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALExponentialBlur;
 
@@ -25,4 +28,4 @@ private:
 	static void drawColumnBlur(QImage& image, const int& column, const int& alpha);
 	static void drawInnerBlur(unsigned char* bptr, int& zR, int& zG, int& zB, int& zA, int alpha);
 };
-} // namespace AL
+}

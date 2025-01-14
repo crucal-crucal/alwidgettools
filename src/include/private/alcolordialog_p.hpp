@@ -6,6 +6,9 @@
 
 class QSlider;
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALAppBar;
 class CALColorDialog;
@@ -82,4 +85,4 @@ private:
 	[[nodiscard]] QString getHexRgbValue() const;
 	[[nodiscard]] QColor getColorFromEdit() const;
 };
-} // namespace AL
+}

@@ -4,6 +4,9 @@
 
 #include "alwidgettoolsdef.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALThemeManager;
 
@@ -26,4 +29,4 @@ private:
 
 	void initColorList();
 };
-} // namespace AL
+}

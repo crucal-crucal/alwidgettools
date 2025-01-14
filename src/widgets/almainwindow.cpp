@@ -20,6 +20,9 @@
 #include "althememanager.hpp"
 #include "althemeanimationwidget.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * @brief \class CALMainWindowPrivate
@@ -582,4 +585,4 @@ QMenu* CALMainWindow::createPopupMenu() {
 
 	return menu;
 }
-} // namespace AL
+}

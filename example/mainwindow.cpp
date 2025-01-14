@@ -11,11 +11,21 @@
 #include "altoolbar.hpp"
 
 #include "e_about.hpp"
-#include "e_basecomponents.hpp"
 #include "e_card.hpp"
 #include "e_icon.hpp"
 #include "e_popup.hpp"
 #include "e_settings.hpp"
+#include "e_toggleswitch_example.hpp"
+#include "e_slider_example.hpp"
+#include "e_radiobutton_example.hpp"
+#include "e_spinbox_example.hpp"
+#include "e_progressbar_example.hpp"
+#include "e_plaintextedit_example.hpp"
+#include "e_multiselectcombobox_example.hpp"
+#include "e_messagebar_example.hpp"
+#include "e_circularprogress_example.hpp"
+#include "e_checkbox_example.hpp"
+#include "e_navigation.hpp"
 
 using namespace AL;
 
@@ -86,14 +96,39 @@ void MainWindow::initEdgeLayout() {
 }
 
 void MainWindow::initContent() {
-	m_baseComponents = new E_BaseComponents(this);
-	addPageNode(m_baseComponents->windowTitle(), m_baseComponents, ALIcon::AweSomeIcon::CabinetFiling);
 	m_card = new E_Card(this);
 	addPageNode(m_card->windowTitle(), m_card, ALIcon::AweSomeIcon::Cards);
 	m_popup = new E_Popup(this);
 	addPageNode(m_popup->windowTitle(), m_popup, ALIcon::AweSomeIcon::WindowMaximize);
 	m_icon = new E_Icon(this);
 	addPageNode(m_icon->windowTitle(), m_icon, 99, ALIcon::AweSomeIcon::FontCase);
+	m_navigation = new E_Navigation(this);
+	addPageNode(m_navigation->windowTitle(), m_navigation, ALIcon::AweSomeIcon::LocationArrow);
+
+	/// expanderNode
+	QString expanderKey{};
+	addExpanderNode("CALBaseComponents", expanderKey, ALIcon::AweSomeIcon::CabinetFiling);
+	m_toggleSwitchExample = new E_ToggleSwitch_Example(this);
+	addPageNode(m_toggleSwitchExample->windowTitle(), m_toggleSwitchExample, expanderKey, ALIcon::AweSomeIcon::ListCheck);
+	m_spinBoxExample = new E_SpinBox_Example(this);
+	addPageNode(m_spinBoxExample->windowTitle(), m_spinBoxExample, expanderKey, ALIcon::AweSomeIcon::ListCheck);
+	m_sliderExample = new E_Slider_Example(this);
+	addPageNode(m_sliderExample->windowTitle(), m_sliderExample, expanderKey, ALIcon::AweSomeIcon::ListCheck);
+	m_radioButtonExample = new E_RadioButton_Example(this);
+	addPageNode(m_radioButtonExample->windowTitle(), m_radioButtonExample, expanderKey, ALIcon::AweSomeIcon::ListCheck);
+	m_progressBarExample = new E_ProgressBar_Example(this);
+	addPageNode(m_progressBarExample->windowTitle(), m_progressBarExample, expanderKey, ALIcon::AweSomeIcon::ListCheck);
+	m_plainTextEditExample = new E_PlainTextEdit_Example(this);
+	addPageNode(m_plainTextEditExample->windowTitle(), m_plainTextEditExample, expanderKey, ALIcon::AweSomeIcon::ListCheck);
+	m_multiSelectComboboxExample = new E_MultiSelectCombobox_Example(this);
+	addPageNode(m_multiSelectComboboxExample->windowTitle(), m_multiSelectComboboxExample, expanderKey, ALIcon::AweSomeIcon::ListCheck);
+	m_messageBarExample = new E_MessageBar_Example(this);
+	addPageNode(m_messageBarExample->windowTitle(), m_messageBarExample, expanderKey, ALIcon::AweSomeIcon::ListCheck);
+	m_circularProgressExample = new E_CircularProgress_Example(this);
+	addPageNode(m_circularProgressExample->windowTitle(), m_circularProgressExample, expanderKey, ALIcon::AweSomeIcon::ListCheck);
+	m_checkboxExample = new E_CheckBox_Example(this);
+	addPageNode(m_checkboxExample->windowTitle(), m_checkboxExample, expanderKey, ALIcon::AweSomeIcon::ListCheck);
+
 
 	m_about = new E_About;
 	QString aboutKey{};

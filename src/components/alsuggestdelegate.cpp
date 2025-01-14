@@ -7,6 +7,9 @@
 #include "alsuggestmodel.hpp"
 #include "althememanager.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * @brief \class CALSuggestDelegate
@@ -60,4 +63,4 @@ QSize CALSuggestDelegate::sizeHint(const QStyleOptionViewItem& option, const QMo
 	size.setHeight(40);
 	return size;
 }
-} // namespace AL
+}

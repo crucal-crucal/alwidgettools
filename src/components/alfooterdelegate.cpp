@@ -10,6 +10,9 @@
 #include "alnavigationnode.hpp"
 #include "althememanager.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * @brief \class CALFooterDelegate
@@ -217,4 +220,4 @@ bool CALFooterDelegate::compareItemY(const CALNavigationNode* node1, const CALNa
 
 	return node1->getModelIndex().row() < node2->getModelIndex().row();
 }
-} // namespace AL
+}

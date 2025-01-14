@@ -14,6 +14,9 @@
 #include "alscrollbar.hpp"
 #include "althememanager.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * @brief \class CALMultiSelectComboBoxPrivate
@@ -469,4 +472,4 @@ void CALMultiSelectComboBox::hidePopup() {
 		}
 	}
 }
-} // namespace AL
+}

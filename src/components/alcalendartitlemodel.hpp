@@ -4,6 +4,9 @@
 
 #include "alwidgettoolsdef.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALCalendarTitleModel final : public QAbstractListModel {
 	Q_OBJECT
@@ -16,4 +19,4 @@ protected:
 	[[nodiscard]] int rowCount(const QModelIndex& parent) const override;
 	[[nodiscard]] QVariant data(const QModelIndex& index, int role) const override;
 };
-} // namespace AL
+}

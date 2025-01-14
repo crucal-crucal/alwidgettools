@@ -4,6 +4,9 @@
 
 #include "alwidgettoolsdef.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALBreadcrumbBarModel final : public QAbstractListModel {
 	Q_OBJECT
@@ -28,4 +31,4 @@ protected:
 private:
 	QStringList m_breadcrumbList{};
 };
-} // namespace AL
+}

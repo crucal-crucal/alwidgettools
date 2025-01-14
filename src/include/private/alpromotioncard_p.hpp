@@ -1,11 +1,13 @@
 ﻿#pragma once
 
 #include <QPixmap>
-
-#include "alwidgettoolsdef.hpp"
+#include <QObject>
 
 class QRadialGradient;
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALPromotionCard;
 
@@ -68,4 +70,4 @@ private:
 	static qreal distance(const QPoint& point1, const QPoint& point2);
 	void startHoverOpacityAnimation(bool isVisiable);
 };
-} // namespace AL
+}

@@ -10,6 +10,9 @@
 #include "alcalendarpicker_p.hpp"
 #include "althememanager.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * @brief \class CALCalendarPickerPrivate
@@ -119,4 +122,4 @@ void CALCalendarPicker::showEvent(QShowEvent* event) {
 	setSelectedDate(QDate::currentDate());
 	QPushButton::showEvent(event);
 }
-} // namespace AL
+}

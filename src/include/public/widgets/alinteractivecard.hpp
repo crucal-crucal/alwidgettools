@@ -4,6 +4,9 @@
 
 #include "alpushbutton.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALInteractiveCardPrivate;
 
@@ -74,4 +77,4 @@ protected:
 
 	void paintEvent(QPaintEvent* event) override;
 };
-} // namespace AL
+}

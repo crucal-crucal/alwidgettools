@@ -7,6 +7,9 @@
 
 #include "alexponentialblur_p.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 int CALExponentialBlurPrivate::_aprec = 12;
 int CALExponentialBlurPrivate::_zprec = 7;
@@ -112,4 +115,4 @@ CALExponentialBlur::CALExponentialBlur(QObject* parent): QObject(parent), d_ptr(
 }
 
 CALExponentialBlur::~CALExponentialBlur() = default;
-} // namespace AL
+}

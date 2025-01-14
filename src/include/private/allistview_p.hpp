@@ -1,7 +1,10 @@
 ﻿#pragma once
 
-#include "alwidgettoolsdef.hpp"
+#include <QObject>
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALListView;
 class CALListViewStyle;
@@ -24,4 +27,4 @@ private:
 	CALScrollBar* verticalScrollBar{ nullptr };
 	CALScrollBar* horizontalScrollBar{ nullptr };
 };
-} // namespace AL
+}

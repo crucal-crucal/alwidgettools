@@ -2,6 +2,9 @@
 
 #include "alwidgettoolsdef.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALAppBar;
 class CALWidget;
@@ -23,4 +26,4 @@ private:
 	bool isEanbleMica{};
 	CALAppBar* appBar{ nullptr };
 };
-} // namespace AL
+}

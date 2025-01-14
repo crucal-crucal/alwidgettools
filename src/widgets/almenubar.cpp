@@ -6,6 +6,9 @@
 #include "almenu.hpp"
 #include "almenubarstyle.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * \class CALMenuBar
@@ -84,4 +87,4 @@ QAction* CALMenuBar::addAweSomeIconAction(const ALIcon::AweSomeIcon& awesomeicon
 	QMenuBar::addAction(action);
 	return action;
 }
-} // namespace AL
+}

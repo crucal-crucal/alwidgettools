@@ -4,6 +4,9 @@
 
 #include "alwidgettoolsdef.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALSpinBoxPrivate;
 
@@ -20,4 +23,4 @@ protected:
 
 	void contextMenuEvent(QContextMenuEvent* event) override;
 };
-} // namespace AL
+}

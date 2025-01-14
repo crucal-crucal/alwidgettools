@@ -2,6 +2,9 @@
 
 #include "alwidgettoolsdef.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALComboBox;
 class CALComboBoxStyle;
@@ -24,4 +27,4 @@ private:
 	CALComboBoxStyle* comboBoxStyle{ nullptr };
 	bool isAllowHidePopup{ false };
 };
-} // namespace AL
+}

@@ -16,6 +16,9 @@
 #include <windowsx.h>
 #endif
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * @brief \class CALBaseDialogPrivate
@@ -269,4 +272,4 @@ bool CALBaseDialog::nativeEvent(const QByteArray& eventType, void* message, long
 	return QDialog::nativeEvent(eventType, message, result);
 }
 #endif
-} // namespace AL
+}

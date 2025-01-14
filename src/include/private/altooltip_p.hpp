@@ -4,6 +4,9 @@
 
 class QVBoxLayout;
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALText;
 class CALToolTip;
@@ -44,4 +47,4 @@ private:
 
 	void doShowAnimation();
 };
-} // namespace AL
+}

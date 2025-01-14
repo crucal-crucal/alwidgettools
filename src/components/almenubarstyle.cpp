@@ -6,6 +6,9 @@
 #include "almenubar.hpp"
 #include "althememanager.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * @brief \class CALMenuBarStyle
@@ -179,4 +182,4 @@ int CALMenuBarStyle::pixelMetric(const PixelMetric metric, const QStyleOption* o
 
 	return QProxyStyle::pixelMetric(metric, option, widget);
 }
-} // namespace AL
+}

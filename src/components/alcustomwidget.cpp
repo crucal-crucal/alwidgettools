@@ -6,6 +6,9 @@
 #include "alapplication.hpp"
 #include "althememanager.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 AL_TAKEOVER_NATIVEEVENT_CPP(CALCustomWidget, m_appBar)
 
@@ -60,4 +63,4 @@ void CALCustomWidget::paintEvent(QPaintEvent* event) {
 		painter.restore();
 	}
 }
-} // namespace AL
+}

@@ -2,6 +2,9 @@
 
 #include <QMouseEvent>
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * @brief \class CALComboBoxView
@@ -19,4 +22,4 @@ void CALComboBoxView::mousePressEvent(QMouseEvent* event) {
 	}
 	event->ignore();
 }
-} // namespace AL
+}

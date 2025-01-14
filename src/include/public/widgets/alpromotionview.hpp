@@ -4,6 +4,9 @@
 
 #include "alwidgettoolsdef.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALPromotionCard;
 class CALPromotionViewPrivate;
@@ -52,4 +55,4 @@ protected:
 	void mousePressEvent(QMouseEvent* event) override;
 	void paintEvent(QPaintEvent* event) override;
 };
-} // namespace AL
+}

@@ -1,7 +1,10 @@
 ﻿#pragma once
 
-#include "alwidgettoolsdef.hpp"
+#include <QObject>
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALStatusBar;
 class CALStatusBarStyle;
@@ -21,4 +24,4 @@ protected:
 private:
 	CALStatusBarStyle* style{ nullptr };
 };
-} // namespace AL
+}

@@ -5,6 +5,9 @@
 
 #include "althememanager.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * @brief \class CALRadioButtonStyle
@@ -70,4 +73,4 @@ int CALRadioButtonStyle::pixelMetric(const PixelMetric metric, const QStyleOptio
 
 	return QProxyStyle::pixelMetric(metric, option, widget);
 }
-} // namespace AL
+}

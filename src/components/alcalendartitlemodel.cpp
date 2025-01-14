@@ -1,5 +1,8 @@
 ﻿#include "alcalendartitlemodel.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * @brief \class CALCalendarTitleModel
@@ -46,4 +49,4 @@ QVariant CALCalendarTitleModel::data(const QModelIndex& index, const int role) c
 
 	return {};
 }
-} // namespace AL
+}

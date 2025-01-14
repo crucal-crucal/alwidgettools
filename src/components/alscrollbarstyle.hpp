@@ -4,6 +4,9 @@
 
 #include "alwidgettoolsdef.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALScrollBar;
 
@@ -46,4 +49,4 @@ private:
 	qreal m_sliderMargin{ 2.5 };
 	int m_scrollBarExtent{ 10 };
 };
-} // namespace AL
+}

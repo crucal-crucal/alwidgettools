@@ -9,6 +9,9 @@
 #include "alpromotionview_p.hpp"
 #include "althememanager.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * @brief \class CALPromotionViewPrivate
@@ -325,4 +328,4 @@ void CALPromotionView::paintEvent(QPaintEvent* event) {
 	}
 	painter.restore();
 }
-} // namespace AL
+}

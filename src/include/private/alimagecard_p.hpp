@@ -4,6 +4,9 @@
 
 #include "alwidgettoolsdef.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALImageCard;
 
@@ -26,4 +29,4 @@ private:
 	qreal maximumAspectRatio{};
 	QImage cardImage{};
 };
-} // namespace AL
+}

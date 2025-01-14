@@ -6,6 +6,9 @@
 #include "alinteractivecard_p.hpp"
 #include "althememanager.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * @brief \class CALInteractiveCardPrivate
@@ -147,14 +150,17 @@ void CALInteractiveCard::paintEvent(QPaintEvent* event) {
 
 	/// 图片
 	if (!d->cardPixmap.isNull()) {
+		painter.save();
 		QPainterPath path;
 		if (d->cardPixMode == ALCardPixType::Ellipse) {
 			path.addEllipse(QPointF(d->cardPixmapSize.width() / 2.0 + 10, height() / 2.0), d->cardPixmapSize.width() / 2.0, d->cardPixmapSize.height() / 2.0);
 			painter.setClipPath(path);
 		} else if (d->cardPixMode == ALCardPixType::RoundedRect) {
-			path.addRoundedRect(10, (height() - d->cardPixmapSize.height()) / 2.0, d->cardPixmapSize.width(), d->cardPixmapSize.height(), d->cardPixmapBorderRadius, d->cardPixmapBorderRadius);
+			path.addRoundedRect(QRectF(10, (height() - d->cardPixmapSize.height()) / 2.0, d->cardPixmapSize.width(), d->cardPixmapSize.height()), d->cardPixmapBorderRadius, d->cardPixmapBorderRadius);
+			painter.setClipPath(path);
 		}
 		painter.drawPixmap(10, (height() - d->cardPixmapSize.height()) / 2, d->cardPixmapSize.width(), d->cardPixmapSize.height(), d->cardPixmap);
+		painter.restore();
 	}
 
 	/// 文字
@@ -172,4 +178,4 @@ void CALInteractiveCard::paintEvent(QPaintEvent* event) {
 	painter.drawText(textStartX, height() / 2 + d->titleSpacing, textWidth, height() / 2 - d->titleSpacing, Qt::AlignTop | Qt::AlignLeft, d->subTitle);
 	painter.restore();
 }
-} // namespace AL
+}

@@ -2,9 +2,11 @@
 
 #include <QPixmap>
 #include <QPoint>
+#include <QObject>
 
-#include "alwidgettoolsdef.hpp"
-
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALMenu;
 class CALMenuStyle;
@@ -36,4 +38,4 @@ private:
 	QPoint mousePressPoint;
 	CALMenuStyle* menuStyle{ nullptr };
 };
-} // namespace AL
+}

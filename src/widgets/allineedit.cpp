@@ -13,6 +13,9 @@
 #include "almenu.hpp"
 #include "althememanager.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * @brief \class CALLineEditPrivate
@@ -206,4 +209,4 @@ void CALLineEdit::contextMenuEvent(QContextMenuEvent* event) {
 	connect(action, &QAction::triggered, this, &CALLineEdit::selectAll);
 	menu->popup(event->globalPos());
 }
-} // namespace AL
+}

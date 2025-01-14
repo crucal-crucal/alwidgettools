@@ -11,6 +11,9 @@
 #include "almenu.hpp"
 #include "altooltip.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * @brief \class CALAwesomeToolButtonPrivate
@@ -144,4 +147,4 @@ bool CALAwesomeToolButton::eventFilter(QObject* watched, QEvent* event) {
 
 	return QToolButton::eventFilter(watched, event);
 }
-} // namespace AL
+}

@@ -15,6 +15,9 @@
 #include "almicabaseinitobject.hpp"
 #include "althememanager.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * @brief \class CALApplicationPrivate
@@ -216,4 +219,4 @@ CALApplication::CALApplication(QObject* parent): QObject(parent), d_ptr(new CALA
 }
 
 CALApplication::~CALApplication() = default;
-} // namespace AL
+}

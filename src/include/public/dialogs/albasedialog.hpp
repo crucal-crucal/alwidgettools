@@ -4,6 +4,9 @@
 
 #include "alwidgettoolsdef.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALBaseDialogPrivate;
 
@@ -41,6 +44,9 @@ public:
 	 */
 	[[nodiscard]] bool hasPolicy(const ALDialogPolicy::ShowPolicy& policy) const;
 
+	/**
+	 * @brief 内部实现 close
+	 */
 	void close();
 
 protected:
@@ -56,4 +62,4 @@ protected:
 #endif
 #endif
 };
-} // namespace AL
+}

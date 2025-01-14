@@ -2,6 +2,9 @@
 
 #include "alwidgettoolsdef.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALPromotionCard;
 class CALPromotionView;
@@ -42,4 +45,4 @@ private:
 	[[nodiscard]] int getAdjacentIndex(const Qt::LayoutDirection& direction, const int& index) const;
 	[[nodiscard]] int getRightLimitX() const;
 };
-} // namespace AL
+}

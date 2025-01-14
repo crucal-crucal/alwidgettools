@@ -8,6 +8,9 @@
 #include "albreadcrumbbardelegate.hpp"
 #include "albreadcrumbbar_p.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * @brief \class CALBreadcrumbBarPrivate
@@ -138,4 +141,4 @@ void CALBreadcrumbBar::setIsAutoRemove(const bool isAutoRemove) {
 bool CALBreadcrumbBar::getIsAutoRemove() const {
 	return d_func()->isAutoRemove;
 }
-} // namespace AL
+}

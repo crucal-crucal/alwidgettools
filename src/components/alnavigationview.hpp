@@ -2,8 +2,9 @@
 
 #include <QTreeView>
 
-#include "alwidgettoolsdef.hpp"
-
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALScrollBar;
 class CALNavigationStyle;
@@ -30,4 +31,4 @@ protected:
 private:
 	CALNavigationStyle* m_navigationStyle{ nullptr };
 };
-} // namespace AL
+}

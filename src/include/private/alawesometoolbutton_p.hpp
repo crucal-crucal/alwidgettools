@@ -1,7 +1,10 @@
 #pragma once
 
-#include "alwidgettoolsdef.hpp"
+#include <QObject>
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALToolTip;
 class CALAwesomeToolButton;
@@ -23,4 +26,4 @@ private:
 	CALAwesomeToolButtonStyle* style{ nullptr };
 	CALToolTip* tooltip{ nullptr };
 };
-} // namespace AL
+}

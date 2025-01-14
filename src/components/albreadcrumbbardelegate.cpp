@@ -4,6 +4,9 @@
 
 #include "althememanager.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * @brief \class CALBreadcrumbBarDelegate
@@ -51,4 +54,4 @@ void CALBreadcrumbBarDelegate::paint(QPainter* painter, const QStyleOptionViewIt
 	}
 	painter->restore();
 }
-} // namespace AL
+}

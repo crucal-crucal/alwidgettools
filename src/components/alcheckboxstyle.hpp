@@ -4,6 +4,9 @@
 
 #include "alwidgettoolsdef.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALCheckBoxStyle final : public QProxyStyle {
 	Q_OBJECT
@@ -23,4 +26,4 @@ private:
 	int m_checkIndicatorWidth{};
 	qreal m_borderRadius{};
 };
-} // namespace AL
+}

@@ -4,6 +4,9 @@
 
 #include "alwidgettoolsdef.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALMultiSelectComboBoxPrivate;
 
@@ -41,4 +44,4 @@ protected:
 	void showPopup() override;
 	void hidePopup() override;
 };
-} // namespace AL
+}

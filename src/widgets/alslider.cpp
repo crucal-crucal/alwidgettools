@@ -4,6 +4,9 @@
 
 #include "alsliderstyle.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * @brief \class CALSliderPrivate
@@ -85,4 +88,4 @@ void CALSlider::mouseReleaseEvent(QMouseEvent* event) {
 	QSlider::mouseReleaseEvent(event);
 	Q_EMIT sigLeftMouseReleased();
 }
-} // namespace AL
+}

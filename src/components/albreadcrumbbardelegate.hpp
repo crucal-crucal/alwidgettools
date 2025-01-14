@@ -4,6 +4,9 @@
 
 #include "alwidgettoolsdef.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALBreadcrumbBarDelegate final : public QStyledItemDelegate {
 	Q_OBJECT
@@ -23,4 +26,4 @@ private:
 
 	QModelIndex m_pressIndex{};
 };
-} // namespace AL
+}

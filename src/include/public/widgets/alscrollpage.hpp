@@ -4,6 +4,9 @@
 
 #include "alwidgettoolsdef.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALScrollPagePrivate;
 
@@ -34,4 +37,4 @@ Q_SIGNALS:
 protected:
 	const QScopedPointer<CALScrollPagePrivate> d_ptr{ nullptr };
 };
-} // namespace AL
+}

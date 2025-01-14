@@ -2,6 +2,9 @@
 
 #include "alwidgettoolsdef.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALEvent;
 class CALPlainTextEditStyle;
@@ -27,4 +30,4 @@ private:
 	CALPlainTextEditStyle* style{ nullptr };
 	CALEvent* focusEvent{ nullptr };
 };
-} // namespace AL
+}

@@ -18,6 +18,9 @@
 #include "altext.hpp"
 #include "althememanager.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * @brief \class CALColorDialogPrivate
@@ -512,4 +515,4 @@ void CALColorDialog::paintEvent(QPaintEvent* event) {
 
 	QDialog::paintEvent(event);
 }
-} // namespace AL
+}

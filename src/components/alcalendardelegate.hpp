@@ -4,6 +4,9 @@
 
 #include "alcalendarmodel.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALCalendarDelegate final : public QStyledItemDelegate {
 	Q_OBJECT
@@ -37,4 +40,4 @@ private:
 	void drawYearOrMonth(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
 	void drawDays(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
 };
-} // namespace AL
+}

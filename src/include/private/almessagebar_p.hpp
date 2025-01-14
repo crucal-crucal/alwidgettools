@@ -7,6 +7,9 @@
 
 class QPainter;
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 class CALMessageBar;
 class CALIconButton;
@@ -146,4 +149,4 @@ private:
 	void drawWarning(QPainter* painter);
 	void drawInfo(QPainter* painter);
 };
-} // namespace AL
+}

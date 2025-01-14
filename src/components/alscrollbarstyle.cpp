@@ -9,6 +9,9 @@
 #include "alscrollbar.hpp"
 #include "althememanager.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * @brief \class CALScrollBarStyle
@@ -196,4 +199,4 @@ void CALScrollBarStyle::setScrollBar(CALScrollBar* scrollBar) {
 CALScrollBar* CALScrollBarStyle::getScrollBar() const {
 	return m_scrollBar;
 }
-} // namespace AL
+}

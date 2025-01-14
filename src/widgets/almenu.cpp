@@ -7,6 +7,9 @@
 #include "almenustyle.hpp"
 #include "almenu_p.hpp"
 
+/**
+ * @brief \namespace AL
+ */
 namespace AL {
 /**
  * @brief \class CALMenuPrivate
@@ -203,4 +206,4 @@ void CALMenu::paintEvent(QPaintEvent* event) {
 		QMenu::paintEvent(event);
 	}
 }
-} // namespace AL
+}
