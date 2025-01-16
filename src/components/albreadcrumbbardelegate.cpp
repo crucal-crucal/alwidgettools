@@ -46,7 +46,7 @@ void CALBreadcrumbBarDelegate::paint(QPainter* painter, const QStyleOptionViewIt
 	if (breadcrumbDisplayData != ">") {
 		painter->drawText(itemRect, Qt::AlignVCenter | Qt::AlignLeft, breadcrumbDisplayData);
 	} else {
-		QFont iconFont("CALAwesome");
+		QFont iconFont(ALIcon::getEnumTypeFontName(ALIcon::Awesome));
 		iconFont.setPixelSize(painter->font().pixelSize() * 0.785); // NOLINT
 		painter->setFont(iconFont);
 		itemRect.setX(itemRect.x() - itemRect.width() * 0.36); // NOLINT

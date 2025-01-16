@@ -21,8 +21,8 @@ CALColorPicker::CALColorPicker(QWidget* parent): QWidget(parent) {
 	// 初始化色相图
 	QPixmap colorPickerPix(QSize(257, 257));
 	QImage colorPickerImage = colorPickerPix.toImage();
-	for (int y = 0; y < colorPickerImage.height(); y++) {
-		for (int x = 0; x < colorPickerImage.width(); x++) {
+	for (int y = 0; y < colorPickerImage.height(); ++y) {
+		for (int x = 0; x < colorPickerImage.width(); ++x) {
 			QColor pixColor{};
 			pixColor.setHsvF(1.0 / colorPickerPix.width() * x, 1.0 - 1.0 / colorPickerPix.height() * y, 1.0);
 			pixColor = pixColor.toRgb();

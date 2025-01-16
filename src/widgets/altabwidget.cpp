@@ -1,4 +1,4 @@
-#include "altabwidget.hpp"
+﻿#include "altabwidget.hpp"
 
 #include <QApplication>
 #include <QMimeData>
@@ -8,6 +8,7 @@
 #include "alcustomtabwidget.hpp"
 #include "altabbar.hpp"
 #include "altabwidget_p.hpp"
+#include "althememanager.hpp"
 
 /**
  * @brief \namespace AL
@@ -18,7 +19,7 @@ CALTabWidgetPrivate::CALTabWidgetPrivate(CALTabWidget* q, QObject* parent): QObj
 
 CALTabWidgetPrivate::~CALTabWidgetPrivate() = default;
 
-void CALTabWidgetPrivate::slotTabBarPress(const int index) {
+void CALTabWidgetPrivate::slotTabBarPress(const int index) { // NOLINT
 }
 
 void CALTabWidgetPrivate::slotTabDragCreate(QDrag* drag) {
@@ -27,11 +28,10 @@ void CALTabWidgetPrivate::slotTabDragCreate(QDrag* drag) {
 	QMimeData* mimeData = drag->mimeData();
 	mimeData->setProperty("CALTabWidgetObject", QVariant::fromValue(q));
 	const int index = mimeData->property("TabIndex").toInt();
-	QString tabText = q->tabText(index);
+	const QString tabText = q->tabText(index);
 	QIcon tabIcon = q->tabIcon(index);
 	QWidget* dragWidget = q->widget(index);
-	QVariant originTabWidget = dragWidget->property("CALOriginTabWidget");
-	if (!originTabWidget.isValid()) {
+	if (const QVariant originTabWidget = dragWidget->property("CALOriginTabWidget"); !originTabWidget.isValid()) {
 		dragWidget->setProperty("CALOriginTabWidget", QVariant::fromValue<CALTabWidget*>(q));
 	}
 	mimeData->setProperty("DragWidget", QVariant::fromValue(dragWidget));
@@ -40,14 +40,13 @@ void CALTabWidgetPrivate::slotTabDragCreate(QDrag* drag) {
 	QApplication::sendEvent(mimeData->property("CALTabBarObject").value<CALTabBar*>(), &releaseEvent);
 	if (drag->exec() == Qt::IgnoreAction) {
 		/// new widget
-		const auto originCustomTabBar = mimeData->property("CALTabBarObject").value<CALTabBar*>();
-		if (originCustomTabBar && originCustomTabBar->objectName() == "CALCustomTabBar") {
+		if (const auto originCustomTabBar = mimeData->property("CALTabBarObject").value<CALTabBar*>(); originCustomTabBar && originCustomTabBar->objectName() == "CALCustomTabBar") {
 			originCustomTabBar->removeTab(index);
 		}
 		const auto t_originTabWidget = dragWidget->property("CALOriginTabWidget").value<CALTabWidget*>();
 		const auto floatWidget = new CALCustomTabWidget(t_originTabWidget);
 		CALTabBar* customTabBar = floatWidget->getCustomTabBar();
-		dragWidget->setProperty("CurrentCustomBar", QVariant::fromValue<CALTabBar*>(customTabBar));
+		dragWidget->setProperty("CurrentCustomTabBar", QVariant::fromValue<CALTabBar*>(customTabBar));
 		CALTabWidget* customTabWidget = floatWidget->getCustomTabWidget();
 		customTabWidget->d_func()->customTabBar = customTabBar;
 		connect(customTabBar, &CALTabBar::sigTabBarPress, customTabWidget->d_func(), &CALTabWidgetPrivate::slotTabBarPress);
@@ -55,15 +54,42 @@ void CALTabWidgetPrivate::slotTabDragCreate(QDrag* drag) {
 		connect(customTabBar, &CALTabBar::sigTabDragDrop, customTabWidget->d_func(), &CALTabWidgetPrivate::slotTabDragDrop);
 		floatWidget->addTab(dragWidget, tabIcon, tabText);
 		floatWidget->show();
-		QPoint cursorPoint = QCursor::pos();
+		const QPoint cursorPoint = QCursor::pos();
 		floatWidget->move(cursorPoint.x() - floatWidget->width() / 2, cursorPoint.y() - 40);
 	}
 }
 
 void CALTabWidgetPrivate::slotTabDragDrop(const QMimeData* mimeData) {
+	const auto dragWidget = mimeData->property("DragWidget").value<QWidget*>();
+	const QString tabText = mimeData->property("TabText").toString();
+	const auto tabIcon = mimeData->property("TabIcon").value<QIcon>();
+	const auto customTabBar = mimeData->property("CALTabBarObject").value<CALTabBar*>();
+	const int index = mimeData->property("TabIndex").toInt();
+	const int dropIndex = mimeData->property("TabDropIndex").toInt();
+	if (customTabBar && customTabBar->objectName() == "CALCustomTabBar") {
+		customTabBar->removeTab(index);
+	}
+	q_func()->insertTab(dropIndex, dragWidget, tabIcon, tabText);
+	if (this->customTabBar) {
+		dragWidget->setProperty("CurrentCustomTabBar", QVariant::fromValue<CALTabBar*>(this->customTabBar));
+		this->customTabBar->insertTab(dropIndex, tabIcon, tabText);
+	}
 }
 
-void CALTabWidgetPrivate::slotTabCloseRequested(int index) {
+void CALTabWidgetPrivate::slotTabCloseRequested(const int index) {
+	Q_Q(CALTabWidget);
+
+	QWidget* closeWidget = q->widget(index);
+	if (const auto originTabWidget = closeWidget->property("CALOriginTabWidget").value<CALTabWidget*>(); originTabWidget && originTabWidget != q) {
+		if (const auto customTabBar = closeWidget->property("CurrentCustomTabBar").value<CALTabBar*>()) {
+			customTabBar->removeTab(index);
+			closeWidget->setProperty("CurrentCustomTabBar", QVariant::fromValue<CALTabBar*>(nullptr));
+		}
+		originTabWidget->addTab(closeWidget, q->tabIcon(index), q->tabText(index));
+	} else {
+		q->removeTab(index);
+		closeWidget->deleteLater();
+	}
 }
 
 /**
@@ -108,7 +134,7 @@ void CALTabWidget::paintEvent(QPaintEvent* event) {
 }
 
 void CALTabWidget::dragEnterEvent(QDragEnterEvent* event) {
-	if (event->mimeData()->property("Dragtype").toString() == "CALTabBarDrag") {
+	if (event->mimeData()->property("DragType").toString() == "CALTabBarDrag") {
 		event->acceptProposedAction();
 	}
 

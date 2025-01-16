@@ -84,7 +84,7 @@ void CALMenuStyle::drawControl(const ControlElement element, const QStyleOption*
 					if (mopt->menuHasCheckableItems) {
 						painter->save();
 						painter->setPen(!mopt->state.testFlag(QStyle::State_Enabled) ? Qt::gray : m_themeMode == ALThemeType::Light ? Qt::black : Qt::white);
-						QFont iconFont("CALAwesome");
+						QFont iconFont(ALIcon::getEnumTypeFontName(ALIcon::Awesome));
 						iconFont.setPixelSize(m_menuItemHeight * 0.57); // NOLINT
 						painter->setFont(iconFont);
 						painter->drawText(QRectF(menuRect.x() + contentPadding, menuRect.y(), m_iconWidth, menuRect.height()),
@@ -92,15 +92,17 @@ void CALMenuStyle::drawControl(const ControlElement element, const QStyleOption*
 						painter->restore();
 					} else {
 						QString iconText{};
+						QString iconFontFamily{};
 						if (const auto menu = qobject_cast<const CALMenu*>(widget)) {
 							if (const auto action = menu->actionAt(menuRect.center())) {
-								iconText = action->property("CALIconType").toString();
+								iconText = action->property("CALIcon").toString();
+								iconFontFamily = ALIcon::getEnumTypeFontName(static_cast<ALIcon::IconType>(action->property("CALIconType").toInt()));
 							}
 						}
-						if (!iconText.isEmpty()) {
+						if (!iconText.isEmpty() && !iconFontFamily.isEmpty() && iconFontFamily != ALIcon::errFontFamily) {
 							painter->save();
 							painter->setPen(!mopt->state.testFlag(QStyle::State_Enabled) ? Qt::gray : m_themeMode == ALThemeType::Light ? Qt::black : Qt::white);
-							QFont iconFont("CALAwesome");
+							QFont iconFont(iconFontFamily);
 							iconFont.setPixelSize(m_menuItemHeight * 0.57); // NOLINT
 							painter->setFont(iconFont);
 							painter->drawText(QRectF(menuRect.x() + contentPadding, menuRect.y(), m_iconWidth, menuRect.height()), Qt::AlignCenter, iconText);
@@ -125,7 +127,7 @@ void CALMenuStyle::drawControl(const ControlElement element, const QStyleOption*
 					if (mopt->menuItemType == QStyleOptionMenuItem::SubMenu) {
 						painter->save();
 						painter->setPen(!mopt->state.testFlag(QStyle::State_Enabled) ? Qt::gray : m_themeMode == ALThemeType::Light ? Qt::black : Qt::white);
-						QFont iconFont("CALAwesome");
+						QFont iconFont(ALIcon::getEnumTypeFontName(ALIcon::Awesome));
 						iconFont.setPixelSize(18);
 						painter->setFont(iconFont);
 						painter->drawText(QRect(menuRect.right() - 25, menuRect.y(), 25, menuRect.height()), Qt::AlignVCenter, QChar(static_cast<unsigned short>(ALIcon::AweSomeIcon::AngleRight)));

@@ -15,7 +15,7 @@ class CALCalendarModel;
 class CALCalendarTitleModel;
 class CALCalendarDelegate;
 class CALCalendarTitleDelegate;
-class CALAwesomeToolButton;
+class CALToolButton;
 
 class CALCalendarPrivate final : public QObject {
 	Q_OBJECT
@@ -66,9 +66,9 @@ private:
 	CALBaseListView* calendarTitleView{ nullptr };
 	CALCalendarTitleModel* calendarTitleModel{ nullptr };
 	CALCalendarTitleDelegate* calendarTitleDelegate{ nullptr };
-	CALAwesomeToolButton* modeSwitchButton{ nullptr };
-	CALAwesomeToolButton* upButton{ nullptr };
-	CALAwesomeToolButton* downButton{ nullptr };
+	CALToolButton* modeSwitchButton{ nullptr };
+	CALToolButton* upButton{ nullptr };
+	CALToolButton* downButton{ nullptr };
 
 	void scrollToDate(const QDate& date) const;
 	void doSwitchAnimation(bool isZoomIn);

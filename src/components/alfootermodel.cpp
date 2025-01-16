@@ -19,7 +19,7 @@ CALFooterModel::~CALFooterModel() {
 	qDeleteAll(m_listFooterNodes);
 }
 
-ALNavigationType::NodeOperateReturnType CALFooterModel::addFooterNode(const QString& footerTitle, QString& footerKey, const bool isHasFooterPage, const int keyPoints, const ALIcon::AweSomeIcon& awesome) {
+ALNavigationType::NodeOperateReturnType CALFooterModel::addFooterNode(const QString& footerTitle, QString& footerKey, const bool isHasFooterPage, const int keyPoints, const ALIcon::AweSomeIcon& awesomeicon) {
 	if (m_listFooterNodes.count() >= FOOTER_NODE_LIMIT) {
 		return ALNavigationType::FooterUpperLimit;
 	}
@@ -28,7 +28,26 @@ ALNavigationType::NodeOperateReturnType CALFooterModel::addFooterNode(const QStr
 	node->setKeyPoints(keyPoints);
 	node->setIsFooterNode(true);
 	node->setIsHasFooterNode(isHasFooterPage);
-	node->setAwesomeIcon(awesome);
+	node->setAwesomeIcon(awesomeicon);
+	beginResetModel();
+	m_listFooterNodes.append(node);
+	endResetModel();
+	footerKey = node->getNodeKey();
+	node->setModelIndex(this->index(m_listFooterNodes.count() - 1));
+
+	return ALNavigationType::Success;
+}
+
+ALNavigationType::NodeOperateReturnType CALFooterModel::addFooterNode(const QString& footerTitle, QString& footerKey, bool isHasFooterPage, int keyPoints, const ALIcon::FluentIcon& fluenticon) {
+	if (m_listFooterNodes.count() >= FOOTER_NODE_LIMIT) {
+		return ALNavigationType::FooterUpperLimit;
+	}
+
+	const auto node = new CALNavigationNode(footerTitle);
+	node->setKeyPoints(keyPoints);
+	node->setIsFooterNode(true);
+	node->setIsHasFooterNode(isHasFooterPage);
+	node->setFluentIcon(fluenticon);
 	beginResetModel();
 	m_listFooterNodes.append(node);
 	endResetModel();

@@ -61,8 +61,7 @@ void CALScrollArea::setIsGrabGesture(const bool bIsEnable, const qreal mousePres
 
 void CALScrollArea::setIsOverShoot(const Qt::Orientation& orientation, const bool bIsEnable) const {
 	QScrollerProperties properties = QScroller::scroller(this->viewport())->scrollerProperties();
-	properties.setScrollMetric(orientation == Qt::Horizontal ? QScrollerProperties::HorizontalOvershootPolicy : QScrollerProperties::VerticalOvershootPolicy,
-	                           bIsEnable ? QScrollerProperties::OvershootAlwaysOn : QScrollerProperties::OvershootAlwaysOff);
+	properties.setScrollMetric(orientation == Qt::Horizontal ? QScrollerProperties::HorizontalOvershootPolicy : QScrollerProperties::VerticalOvershootPolicy, bIsEnable ? QScrollerProperties::OvershootAlwaysOn : QScrollerProperties::OvershootAlwaysOff);
 	QScroller::scroller(this->viewport())->setScrollerProperties(properties);
 }
 
@@ -77,8 +76,5 @@ void CALScrollArea::setIsAnimation(const Qt::Orientation& orientation, const boo
 
 bool CALScrollArea::getIsAnimation(const Qt::Orientation& orientation) const {
 	return d_func()->getScrollBar(orientation)->getIsAnimation();
-}
-
-CALScrollArea::CALScrollArea(CALScrollAreaPrivate& dd, CALScrollArea* parent): QScrollArea(parent), d_ptr(&dd) {
 }
 }

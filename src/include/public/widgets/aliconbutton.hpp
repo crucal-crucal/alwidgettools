@@ -28,10 +28,16 @@ public:
 	explicit CALIconButton(const ALIcon::AweSomeIcon& icon, QWidget* parent = nullptr);
 	explicit CALIconButton(const ALIcon::AweSomeIcon& icon, const int& pixelSize, QWidget* parent = nullptr);
 	explicit CALIconButton(const ALIcon::AweSomeIcon& icon, const int& pixelSize, const int& fixedWidth, const int& fixedHeight, QWidget* parent = nullptr);
+	explicit CALIconButton(const ALIcon::FluentIcon& icon, QWidget* parent = nullptr);
+	explicit CALIconButton(const ALIcon::FluentIcon& icon, const int& pixelSize, QWidget* parent = nullptr);
+	explicit CALIconButton(const ALIcon::FluentIcon& icon, const int& pixelSize, const int& fixedWidth, const int& fixedHeight, QWidget* parent = nullptr);
 	~CALIconButton() override;
 
 	void setAweSomeIcon(const ALIcon::AweSomeIcon& icon);
 	[[nodiscard]] ALIcon::AweSomeIcon getAweSomeIcon() const;
+
+	void setFluentIcon(const ALIcon::FluentIcon& icon);
+	[[nodiscard]] ALIcon::FluentIcon getFluentIcon() const;
 
 	void setPixmap(const QPixmap& pix);
 

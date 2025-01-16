@@ -1,13 +1,14 @@
-﻿#include "alawesometoolbutton.hpp"
+﻿#include "altoolbutton.hpp"
 
 #include <QApplication>
 #include <QEvent>
 #include <QMouseEvent>
 #include <QPainter>
 #include <QPropertyAnimation>
+#include <QDebug>
 
 #include "alawesometoolbutton_p.hpp"
-#include "alawesometoolbuttonstyle.hpp"
+#include "altoolbuttonstyle.hpp"
 #include "almenu.hpp"
 #include "altooltip.hpp"
 
@@ -16,62 +17,62 @@
  */
 namespace AL {
 /**
- * @brief \class CALAwesomeToolButtonPrivate
- * Internal class for CALAwesomeToolButton
+ * @brief \class CALToolButtonPrivate
+ * Internal class for CALToolButton
  * @param q pointer to the public class
  * @param parent pointer to the parent class
  */
-CALAwesomeToolButtonPrivate::CALAwesomeToolButtonPrivate(CALAwesomeToolButton* q, QObject* parent): QObject(parent), q_ptr(q) {
+CALToolButtonPrivate::CALToolButtonPrivate(CALToolButton* q, QObject* parent): QObject(parent), q_ptr(q) {
 }
 
-CALAwesomeToolButtonPrivate::~CALAwesomeToolButtonPrivate() = default;
+CALToolButtonPrivate::~CALToolButtonPrivate() = default;
 
 /**
- * @brief \class CALAwesomeToolButton
+ * @brief \class CALToolButton
  * @param parent pointer to the parent class
  */
-CALAwesomeToolButton::CALAwesomeToolButton(QWidget* parent): QToolButton(parent), d_ptr(new CALAwesomeToolButtonPrivate(this, this)) {
-	Q_D(CALAwesomeToolButton);
+CALToolButton::CALToolButton(QWidget* parent): QToolButton(parent), d_ptr(new CALToolButtonPrivate(this, this)) {
+	Q_D(CALToolButton);
 
 	setIconSize(QSize(22, 22));
 	setPopupMode(QToolButton::InstantPopup);
-	d->style = new CALAwesomeToolButtonStyle(style());
+	d->style = new CALToolButtonStyle(style());
 	setStyle(d->style);
 }
 
-CALAwesomeToolButton::~CALAwesomeToolButton() {
+CALToolButton::~CALToolButton() {
 	SAFE_DELETE(d_func()->tooltip)
 	SAFE_DELETE(d_func()->style)
 }
 
-void CALAwesomeToolButton::setBorderRadius(const int borderRadius) {
+void CALToolButton::setBorderRadius(const int borderRadius) {
 	d_func()->style->setBorderRadius(borderRadius);
 	emit sigBorderRadiusChanged();
 }
 
-int CALAwesomeToolButton::getBorderRadius() const {
+int CALToolButton::getBorderRadius() const {
 	return d_func()->style->getBorderRadius();
 }
 
-void CALAwesomeToolButton::setIsSelected(const bool isSelected) {
+void CALToolButton::setIsSelected(const bool isSelected) {
 	d_func()->style->setIsSelected(isSelected);
 	emit sigSelectedChanged();
 }
 
-bool CALAwesomeToolButton::getIsSelected() const {
+bool CALToolButton::getIsSelected() const {
 	return d_func()->style->getIsSelected();
 }
 
-void CALAwesomeToolButton::setIsTransparent(const bool isTransparent) {
+void CALToolButton::setIsTransparent(const bool isTransparent) {
 	d_func()->style->setIsTransparent(isTransparent);
 	update();
 }
 
-bool CALAwesomeToolButton::getIsTransparent() const {
+bool CALToolButton::getIsTransparent() const {
 	return d_func()->style->getIsTransparent();
 }
 
-void CALAwesomeToolButton::setMenu(CALMenu* menu) {
+void CALToolButton::setMenu(CALMenu* menu) {
 	if (!menu || menu == this->menu()) {
 		return;
 	}
@@ -80,10 +81,11 @@ void CALAwesomeToolButton::setMenu(CALMenu* menu) {
 	menu->installEventFilter(this);
 }
 
-void CALAwesomeToolButton::setAweSomeIcon(const ALIcon::AweSomeIcon& icon) {
-	setProperty("CALIconType", QChar(static_cast<unsigned short>(icon)));
+void CALToolButton::setAweSomeIcon(const ALIcon::AweSomeIcon& awewomeicon) {
+	d_func()->style->setALIconType(ALIcon::Awesome);
+	setProperty("CALIcon", QChar(static_cast<unsigned short>(awewomeicon)));\
 	constexpr int pixelSize = 1;
-	QFont iconFont("CALAwesome");
+	QFont iconFont(ALIcon::getEnumTypeFontName(awewomeicon));
 	QPixmap pix(pixelSize, pixelSize);
 	pix.fill(Qt::transparent);
 	QPainter painter;
@@ -91,13 +93,30 @@ void CALAwesomeToolButton::setAweSomeIcon(const ALIcon::AweSomeIcon& icon) {
 	painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
 	iconFont.setPixelSize(pixelSize);
 	painter.setFont(iconFont);
-	painter.drawText(pix.rect(), Qt::AlignCenter, QChar(static_cast<unsigned short>(icon)));
+	painter.drawText(pix.rect(), Qt::AlignCenter, QChar(static_cast<unsigned short>(awewomeicon)));
 	painter.end();
 	setIcon(QIcon(pix));
 }
 
-void CALAwesomeToolButton::setToolTip(const QString& tooltip) {
-	Q_D(CALAwesomeToolButton);
+void CALToolButton::setFluentIcon(const ALIcon::FluentIcon& fluenticon) {
+	d_func()->style->setALIconType(ALIcon::Fluent);
+	setProperty("CALIcon", QChar(static_cast<unsigned short>(fluenticon)));
+	constexpr int pixelSize = 1;
+	QFont iconFont(ALIcon::getEnumTypeFontName(fluenticon));
+	QPixmap pix(pixelSize, pixelSize);
+	pix.fill(Qt::transparent);
+	QPainter painter;
+	painter.begin(&pix);
+	painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
+	iconFont.setPixelSize(pixelSize);
+	painter.setFont(iconFont);
+	painter.drawText(pix.rect(), Qt::AlignCenter, QChar(static_cast<unsigned short>(fluenticon)));
+	painter.end();
+	setIcon(QIcon(pix));
+}
+
+void CALToolButton::setToolTip(const QString& tooltip) {
+	Q_D(CALToolButton);
 
 	if (!d->tooltip) {
 		d->tooltip = new CALToolTip(this);
@@ -106,8 +125,8 @@ void CALAwesomeToolButton::setToolTip(const QString& tooltip) {
 	d->tooltip->setToolTip(tooltip);
 }
 
-bool CALAwesomeToolButton::eventFilter(QObject* watched, QEvent* event) {
-	Q_D(CALAwesomeToolButton);
+bool CALToolButton::eventFilter(QObject* watched, QEvent* event) {
+	Q_D(CALToolButton);
 
 	if (watched == menu()) {
 		switch (event->type()) {

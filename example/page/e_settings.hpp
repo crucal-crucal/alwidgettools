@@ -21,5 +21,7 @@ private:
 
 	void initThemeSwitchArea();
 	void initMicaSwitchArea();
+	void initLogSwitchArea();
 	void initNavigationDisplayModeArea();
+	void initNavigationBarEnabledArea();
 };

@@ -226,19 +226,19 @@ void CALNavigationStyle::drawControl(const ControlElement element, const QStyleO
 
 				// 图标绘制
 				p->setPen(ALThemeColor(m_themeMode, vopt->index == m_pressIndex ? ALThemeType::BasicTextPress : ALThemeType::BasicText));
-				if (node->getAwesomeIcon() != ALIcon::AweSomeIcon::None) {
+				if (node->getIconType() != ALIcon::None) {
 					p->save();
-					QFont iconFont("CALAwesome");
+					QFont iconFont(ALIcon::getEnumTypeFontName(node->getIconType()));
 					iconFont.setPixelSize(17);
 					p->setFont(iconFont);
-					p->drawText(QRect(itemRect.x(), itemRect.y(), m_iconAreaWidth, itemRect.height()), Qt::AlignCenter, QChar(static_cast<unsigned short>(node->getAwesomeIcon())));
+					p->drawText(QRect(itemRect.x(), itemRect.y(), m_iconAreaWidth, itemRect.height()), Qt::AlignCenter, node->property("CALIcon").toString());
 					p->restore();
 				}
 
 				const int viewWidth = w->width();
 				// 文字绘制
 				p->setPen(vopt->index == m_pressIndex ? ALThemeColor(m_themeMode, ALThemeType::BasicTextPress) : ALThemeColor(m_themeMode, ALThemeType::BasicText));
-				const int leftPadding = node->getAwesomeIcon() != ALIcon::AweSomeIcon::None ? m_iconAreaWidth : m_leftPadding;
+				const int leftPadding = node->getIconType() != ALIcon::None ? m_iconAreaWidth : m_leftPadding;
 				const auto textRect = QRect(itemRect.x() + leftPadding, itemRect.y(), itemRect.width() - m_textRightSapcing - m_indicatorIconAreaWidth - leftPadding, itemRect.height());
 				const QString text = p->fontMetrics().elidedText(node->getNodeTitle(), Qt::ElideRight, textRect.width());
 				p->drawText(textRect, Qt::AlignVCenter | Qt::AlignLeft, text);
@@ -249,7 +249,7 @@ void CALNavigationStyle::drawControl(const ControlElement element, const QStyleO
 						if (node->getIsHasChild()) {
 							p->save();
 							const QRectF expandIconRect(itemRect.right() - m_indicatorIconAreaWidth, itemRect.y(), 17, itemRect.height());
-							QFont iconFont("CALAwesome");
+							QFont iconFont(ALIcon::getEnumTypeFontName(node->getIconType()));
 							iconFont.setPixelSize(17);
 							p->setFont(iconFont);
 							p->translate(expandIconRect.x() + expandIconRect.width() / 2.0, expandIconRect.y() + expandIconRect.height() / 2.0);

@@ -46,7 +46,7 @@ private:
 	qreal m_opacity{};
 	qreal m_sliderExtent{};
 	CALScrollBar* m_scrollBar{ nullptr };
-	qreal m_sliderMargin{ 2.5 };
-	int m_scrollBarExtent{ 10 };
+	qreal m_sliderMargin{};
+	int m_scrollBarExtent{};
 };
 }

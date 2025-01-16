@@ -13,6 +13,7 @@ namespace AL {
 class CALSuggestion final : public QObject {
 	Q_OBJECT
 	Q_PROPERTY(ALIcon::AweSomeIcon awesomeIcon READ getAwesomeIcon WRITE setAwesomeIcon NOTIFY sigAwesomeIconChanged)
+	Q_PROPERTY(ALIcon::FluentIcon fluentIcon READ getFluentIcon WRITE setFluentIcon NOTIFY sigFluentIconChanged)
 	Q_PROPERTY(QString suggestText READ getSuggestText WRITE setSuggestText NOTIFY sigSuggestTextChanged)
 	Q_PROPERTY(QVariantMap suggestData READ getSuggestData WRITE setSuggestData NOTIFY sigSuggestDataChanged)
 
@@ -23,21 +24,27 @@ public:
 	void setAwesomeIcon(const ALIcon::AweSomeIcon& icon);
 	[[nodiscard]] ALIcon::AweSomeIcon getAwesomeIcon() const;
 
+	void setFluentIcon(const ALIcon::FluentIcon& icon);
+	[[nodiscard]] ALIcon::FluentIcon getFluentIcon() const;
+
 	void setSuggestText(const QString& text);
 	[[nodiscard]] QString getSuggestText() const;
 
 	void setSuggestData(const QVariantMap& data);
 	[[nodiscard]] QVariantMap getSuggestData() const;
 
+	[[nodiscard]] ALIcon::IconType getIconType() const;
+
 Q_SIGNALS:
 	Q_SIGNAL void sigAwesomeIconChanged();
+	Q_SIGNAL void sigFluentIconChanged();
 	Q_SIGNAL void sigSuggestTextChanged();
 	Q_SIGNAL void sigSuggestDataChanged();
 
 private:
-	ALIcon::AweSomeIcon awesomeIcon{};
-	QString suggestText{};
-	QVariantMap suggestData{};
+	ALIcon::IconType m_iconType{};
+	QString m_suggestText{};
+	QVariantMap m_suggestData{};
 };
 
 class CALLineEdit;

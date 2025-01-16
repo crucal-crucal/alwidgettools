@@ -44,7 +44,7 @@ private:
 	CALScrollBar::ContextMenuFlags contextMenuFlags{};
 	qreal speedLimit{};
 	int targetMaximum{};
-	int scrollValue{ -1 };
+	int scrollValue{};
 
 	void scroll(const Qt::KeyboardModifiers& modifiers, int value);
 	[[nodiscard]] int pixelPosToRangeValue(int pos) const;

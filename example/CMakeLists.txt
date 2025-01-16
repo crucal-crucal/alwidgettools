@@ -4,9 +4,7 @@ file(GLOB ORIGIN *.hpp *.cpp)
 file(GLOB PAGEORIGIN page/*.hpp page/*.cpp)
 file(GLOB MODELVIEWORIGIN modelview/*.hpp modelview/*.cpp)
 
-set(EXAMPLE_SOURCE ${ORIGIN} ${PAGEORIGIN} ${MODELVIEWORIGIN}
-        page/e_navigation.cpp
-        page/e_navigation.hpp)
+set(EXAMPLE_SOURCE ${ORIGIN} ${PAGEORIGIN} ${MODELVIEWORIGIN})
 
 include_directories(page)
 include_directories(modelview)
@@ -19,6 +17,8 @@ include_directories(${CMAKE_SOURCE_DIR}/src/include/public/widgets)
 add_executable(${TARGET_NAME} ${EXAMPLE_SOURCE})
 target_link_libraries(${TARGET_NAME} Qt5::Widgets Qt5::Svg)
 target_link_libraries(${TARGET_NAME} alwidgettools)
+# Qt Release版本中如果需要定位到日志文件，需要添加此宏
+add_definitions(-DQT_MESSAGELOGCONTEXT)
 
 set_target_properties(${TARGET_NAME} PROPERTIES
         ${BUNDLE_ID_OPTION}

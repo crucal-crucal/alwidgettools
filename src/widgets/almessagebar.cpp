@@ -388,7 +388,6 @@ void CALMessageBarPrivate::calculateInitialPos(int& startX, int& startY, int& en
 QList<int> CALMessageBarPrivate::getOtherMessageBarTotalData(const bool isJudgeCreateOrder) {
 	Q_Q(CALMessageBar);
 
-	QList<int> resultList{};
 	int minimumHeightTotal{ 0 };
 	int indexLessCount{ 0 };
 	QList<CALMessageBar*>* messageBarList = mapMessageBarActive[policy];
@@ -396,14 +395,13 @@ QList<int> CALMessageBarPrivate::getOtherMessageBarTotalData(const bool isJudgeC
 		if (messageBar == q) {
 			continue;
 		}
-		if (!isJudgeCreateOrder || (isJudgeCreateOrder && judgeCreateDrder(messageBar))) {
-			indexLessCount++;
+		if (!isJudgeCreateOrder || judgeCreateDrder(messageBar)) {
+			++indexLessCount;
 			minimumHeightTotal += messageBar->minimumHeight();
 		}
 	}
-	resultList.append(minimumHeightTotal);
-	resultList.append(indexLessCount);
-	return resultList;
+
+	return { minimumHeightTotal, indexLessCount };
 }
 
 qreal CALMessageBarPrivate::calculateTargetPosY() {
@@ -449,7 +447,7 @@ void CALMessageBarPrivate::drawMessage(QPainter* painter, const QColor& backgrou
 	textPath.addEllipse(QPoint(leftPadding + 6, q->height() / 2), 9, 9);
 	painter->setClipPath(textPath);
 	painter->fillPath(textPath, iconColor);
-	QFont iconFont("CALAwesome");
+	QFont iconFont(ALIcon::getEnumTypeFontName(ALIcon::Awesome));
 	iconFont.setPixelSize(iconPixelSize);
 	painter->setFont(iconFont);
 	painter->drawText(iconX, 0, q->width(), q->height(), Qt::AlignVCenter, iconText);
@@ -541,7 +539,7 @@ CALMessageBar::CALMessageBar(const ALMessageBarType::PositionPolicy& policy, con
 	setFixedHeight(60);
 	setMouseTracking(true);
 	parent->installEventFilter(this);
-	d->closeButton = new CALIconButton(ALIcon::AweSomeIcon::Close, 17, d->closeButtonWidth, 30, this);
+	d->closeButton = new CALIconButton(ALIcon::FluentIcon::ChromeClose, 10, d->closeButtonWidth, 30, this);
 	switch (d->messageMode) {
 		case ALMessageBarType::Success: {
 			d->closeButton->setLightHoverColor(QColor(0xE6, 0xFC, 0xE3));
@@ -573,7 +571,7 @@ CALMessageBar::CALMessageBar(const ALMessageBarType::PositionPolicy& policy, con
 		}
 	}
 	d->closeButton->setBorderRadius(5);
-	connect(d->closeButton, &CALAwesomeButton::clicked, d, &CALMessageBarPrivate::slotCloseButtonClicked);
+	connect(d->closeButton, &CALIconButton::clicked, d, &CALMessageBarPrivate::slotCloseButtonClicked);
 	const auto mainLayout = new QHBoxLayout(this);
 	mainLayout->setContentsMargins(0, 0, 10, 0);
 	mainLayout->addStretch();

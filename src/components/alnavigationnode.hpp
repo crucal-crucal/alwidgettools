@@ -12,6 +12,7 @@ class CALNavigationNode final : public QObject {
 	Q_OBJECT
 	Q_PROPERTY(QList<CALNavigationNode*> childrenNodes READ getChildrenNodes WRITE setChildrenNodes NOTIFY sigChildrenNodesChanged)
 	Q_PROPERTY(ALIcon::AweSomeIcon awesomeIcon READ getAwesomeIcon WRITE setAwesomeIcon NOTIFY sigAwesomeIconChanged)
+	Q_PROPERTY(ALIcon::FluentIcon fluentIcon READ getFluentIcon WRITE setFluentIcon NOTIFY sigFluentIconChanged)
 	Q_PROPERTY(QModelIndex modelIndex READ getModelIndex WRITE setModelIndex NOTIFY sigModelIndexChanged)
 	Q_PROPERTY(int keyPoints READ getKeyPoints WRITE setKeyPoints NOTIFY sigKeyPointsChanged)
 	Q_PROPERTY(int depth READ getDepth WRITE setDepth NOTIFY sigDepthChanged)
@@ -33,6 +34,9 @@ public:
 
 	void setAwesomeIcon(const ALIcon::AweSomeIcon& awesomeIcon);
 	[[nodiscard]] ALIcon::AweSomeIcon getAwesomeIcon() const;
+
+	void setFluentIcon(const ALIcon::FluentIcon& fluentIcon);
+	[[nodiscard]] ALIcon::FluentIcon getFluentIcon() const;
 
 	void setModelIndex(const QModelIndex& modelIndex);
 	[[nodiscard]] QModelIndex getModelIndex() const;
@@ -76,10 +80,12 @@ public:
 	bool getIsChildNode(CALNavigationNode* node);
 
 	[[nodiscard]] int getRow() const;
+	[[nodiscard]] ALIcon::IconType getIconType() const;
 
 Q_SIGNALS:
 	Q_SIGNAL void sigChildrenNodesChanged();
 	Q_SIGNAL void sigAwesomeIconChanged();
+	Q_SIGNAL void sigFluentIconChanged();
 	Q_SIGNAL void sigModelIndexChanged();
 	Q_SIGNAL void sigKeyPointsChanged();
 	Q_SIGNAL void sigDepthChanged();
@@ -92,7 +98,7 @@ Q_SIGNALS:
 private:
 	CALNavigationNode* m_parentNode{ nullptr };
 	QList<CALNavigationNode*> m_childrenNodes{};
-	ALIcon::AweSomeIcon m_awesomeIcon{};
+	ALIcon::IconType m_iconType{};
 	QModelIndex m_modelIndex{};
 	int m_keyPoints{};
 	int m_depth{};

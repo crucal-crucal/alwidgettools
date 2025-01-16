@@ -9,6 +9,7 @@ namespace AL {
 class CALContentDialog;
 }
 
+class E_Home;
 class E_About;
 class E_Settings;
 class E_Card;
@@ -24,6 +25,7 @@ class E_MultiSelectCombobox_Example;
 class E_MessageBar_Example;
 class E_CircularProgress_Example;
 class E_CheckBox_Example;
+class E_TabWidget_Example;
 class E_Navigation;
 
 class MainWindow final : public AL::CALMainWindow {
@@ -40,11 +42,13 @@ public:
 private:
 	AL::CALContentDialog* m_closeDialog{ nullptr };
 
+	E_Home* m_home{ nullptr };
 	E_Settings* m_settings{ nullptr };
 	E_Card* m_card{ nullptr };
 	E_Popup* m_popup{ nullptr };
 	E_About* m_about{ nullptr };
-	E_Icon* m_icon{ nullptr };
+	E_Icon* m_fluenticon{ nullptr };
+	E_Icon* m_awesomeicon{ nullptr };
 	E_ToggleSwitch_Example* m_toggleSwitchExample{ nullptr };
 	E_SpinBox_Example* m_spinBoxExample{ nullptr };
 	E_Slider_Example* m_sliderExample{ nullptr };
@@ -55,5 +59,6 @@ private:
 	E_MessageBar_Example* m_messageBarExample{ nullptr };
 	E_CircularProgress_Example* m_circularProgressExample{ nullptr };
 	E_CheckBox_Example* m_checkboxExample{ nullptr };
+	E_TabWidget_Example* m_tabWidgetExample{ nullptr };
 	E_Navigation* m_navigation{ nullptr };
 };

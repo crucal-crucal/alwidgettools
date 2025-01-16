@@ -23,7 +23,9 @@ public:
 	[[nodiscard]] int getToolBarSpacing() const;
 
 	QAction* addAweIconAction(const ALIcon::AweSomeIcon& awesomeicon, const QString& text);
+	QAction* addFluentIconAction(const ALIcon::FluentIcon& fluenticon, const QString& text);
 	QAction* addAweIconAction(const ALIcon::AweSomeIcon& awesomeicon, const QString& text, const QKeySequence& shortcut);
+	QAction* addFluentIconAction(const ALIcon::FluentIcon& fluenticon, const QString& text, const QKeySequence& shortcut);
 
 protected:
 	const QScopedPointer<CALToolBarPrivate> d_ptr{ nullptr };

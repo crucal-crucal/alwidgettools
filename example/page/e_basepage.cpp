@@ -2,7 +2,7 @@
 
 #include <QHBoxLayout>
 
-#include "alawesometoolbutton.hpp"
+#include "altoolbutton.hpp"
 #include "almenu.hpp"
 #include "altext.hpp"
 #include "althememanager.hpp"
@@ -27,7 +27,7 @@ void E_BasePage::createCustomWidget(const QString& desText) {
 	subTitleText->setTextInteractionFlags(Qt::TextSelectableByMouse);
 	subTitleText->setTextPixelSize(11);
 
-	const auto documentationButton = new CALAwesomeToolButton(this);
+	const auto documentationButton = new CALToolButton(this);
 	documentationButton->setFixedHeight(35);
 	documentationButton->setIsTransparent(false);
 	documentationButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
@@ -38,7 +38,7 @@ void E_BasePage::createCustomWidget(const QString& desText) {
 	documentationMenu->addAction(ALIcon::AweSomeIcon::EarthAmericas, "EarthAmericas");
 	documentationButton->setMenu(documentationMenu);
 
-	const auto sourceButton = new CALAwesomeToolButton(this);
+	const auto sourceButton = new CALToolButton(this);
 	sourceButton->setFixedHeight(35);
 	sourceButton->setIsTransparent(false);
 	sourceButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
@@ -49,11 +49,11 @@ void E_BasePage::createCustomWidget(const QString& desText) {
 	sourceMenu->addAction(ALIcon::AweSomeIcon::Galaxy, "Galaxy");
 	sourceButton->setMenu(sourceMenu);
 
-	const auto themeButton = new CALAwesomeToolButton(this);
+	const auto themeButton = new CALToolButton(this);
 	themeButton->setFixedSize(35, 35);
 	themeButton->setIsTransparent(false);
 	themeButton->setAweSomeIcon(ALIcon::AweSomeIcon::MoonStars);
-	connect(themeButton, &CALAwesomeToolButton::clicked, this, [=]() { ALTheme->setThemeMode(ALTheme->getThemeMode() == ALThemeType::Light ? ALThemeType::Dark : ALThemeType::Light); });
+	connect(themeButton, &CALToolButton::clicked, this, [=]() { ALTheme->setThemeMode(ALTheme->getThemeMode() == ALThemeType::Light ? ALThemeType::Dark : ALThemeType::Light); });
 
 	const auto buttonLayout = new QHBoxLayout;
 	buttonLayout->addWidget(documentationButton);

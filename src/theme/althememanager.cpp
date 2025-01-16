@@ -146,7 +146,7 @@ void CALThemeManager::drawEffectShadow(QPainter* painter, const QRect& widgetRec
 	QPainterPath path;
 	path.setFillRule(Qt::WindingFill);
 	QColor color = d->themeMode == ALThemeType::Light ? QColor(0x70, 0x70, 0x70) : QColor(0x9C, 0x9B, 0x9E);
-	for (int i = 0; i < shadowBorderWidth; i++) {
+	for (int i = 0; i < shadowBorderWidth; ++i) {
 		path.addRoundedRect(shadowBorderWidth - i, shadowBorderWidth - i, widgetRect.width() - (shadowBorderWidth - i) * 2, widgetRect.height() - (shadowBorderWidth - i) * 2, borderRadius + i, borderRadius + i);
 		const int alpha = 1 * (shadowBorderWidth - i + 1);
 		color.setAlpha(alpha > 255 ? 255 : alpha);

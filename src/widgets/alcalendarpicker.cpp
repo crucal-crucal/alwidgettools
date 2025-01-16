@@ -111,7 +111,7 @@ void CALCalendarPicker::paintEvent(QPaintEvent* event) {
 	textRect.adjust(10, 0, 0, 0);
 	painter.drawText(textRect, Qt::AlignVCenter | Qt::AlignLeft, date);
 	// icon
-	QFont iconFont("CALAwesome");
+	QFont iconFont(ALIcon::getEnumTypeFontName(ALIcon::Awesome));
 	iconFont.setPixelSize(17);
 	painter.setFont(iconFont);
 	painter.drawText(QRect(baseRect.right() - 25, 0, 15, height()), Qt::AlignVCenter | Qt::AlignRight, QChar(static_cast<unsigned short>(ALIcon::AweSomeIcon::CalendarRange)));

@@ -5,7 +5,7 @@
 #include <QPainter>
 #include <QPropertyAnimation>
 
-#include "alawesometoolbutton.hpp"
+#include "altoolbutton.hpp"
 #include "albaselistview.hpp"
 #include "alcalendardelegate.hpp"
 #include "alcalendarmodel.hpp"
@@ -276,24 +276,24 @@ CALCalendar::CALCalendar(QWidget* parent): QWidget(parent), d_ptr(new CALCalenda
 	vScrollBar->setSpeedLimit(6);
 	connect(d->calendarView, &CALBaseListView::clicked, d, &CALCalendarPrivate::slotCalendarViewClicked);
 	/// mode switch button
-	d->modeSwitchButton = new CALAwesomeToolButton(this);
+	d->modeSwitchButton = new CALToolButton(this);
 	d->modeSwitchButton->setText(tr("January 1997"));
 	QFont switchButtonFont = d->modeSwitchButton->font();
 	switchButtonFont.setWeight(QFont::Bold);
 	d->modeSwitchButton->setFont(switchButtonFont);
 	d->modeSwitchButton->setToolButtonStyle(Qt::ToolButtonTextOnly);
 	d->modeSwitchButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-	connect(d->modeSwitchButton, &CALAwesomeToolButton::clicked, d, &CALCalendarPrivate::slotSwitchButtonClicked);
+	connect(d->modeSwitchButton, &CALToolButton::clicked, d, &CALCalendarPrivate::slotSwitchButtonClicked);
 	connect(d->calendarView->verticalScrollBar(), &QScrollBar::valueChanged, d, &CALCalendarPrivate::slotUpdateSwitchButtonText);
 	/// up or down button
-	d->upButton = new CALAwesomeToolButton(this);
+	d->upButton = new CALToolButton(this);
 	d->upButton->setFixedSize(36, 36);
 	d->upButton->setAweSomeIcon(ALIcon::AweSomeIcon::CaretUp);
-	connect(d->upButton, &CALAwesomeToolButton::clicked, d, &CALCalendarPrivate::slotUpButtonClicked);
-	d->downButton = new CALAwesomeToolButton(this);
+	connect(d->upButton, &CALToolButton::clicked, d, &CALCalendarPrivate::slotUpButtonClicked);
+	d->downButton = new CALToolButton(this);
 	d->downButton->setFixedSize(36, 36);
 	d->downButton->setAweSomeIcon(ALIcon::AweSomeIcon::CaretDown);
-	connect(d->downButton, &CALAwesomeToolButton::clicked, d, &CALCalendarPrivate::slotDownButtonClicked);
+	connect(d->downButton, &CALToolButton::clicked, d, &CALCalendarPrivate::slotDownButtonClicked);
 	/// layout
 	const auto buttonHLayout = new QHBoxLayout;
 	buttonHLayout->setContentsMargins(5, 5, 10, 0);

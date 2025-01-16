@@ -28,16 +28,18 @@ public:
 	QAction* addMenu(QMenu* menu);
 	CALMenu* addMenu(const QString& title);
 	CALMenu* addMenu(const QIcon& icon, const QString& title);
-	CALMenu* addMenu(const ALIcon::AweSomeIcon& icon, const QString& title);
 
 	using QWidget::addAction;
 	QAction* addAction(const QString& text);
-	QAction* addAction(const ALIcon::AweSomeIcon& icon, const QString& text);
 	QAction* addAction(const QIcon& icon, const QString& text);
-	QAction* addAction(const ALIcon::AweSomeIcon& icon, const QString& text, const QKeySequence& shortcut);
+	QAction* addAction(const ALIcon::AweSomeIcon& awesomeicon, const QString& text);
+	QAction* addAction(const ALIcon::FluentIcon& fluenticon, const QString& text);
 	QAction* addAction(const QIcon& icon, const QString& text, const QKeySequence& shortcut);
-	QAction* addAction(const ALIcon::AweSomeIcon& icon, const QString& text, const QObject* receiver, const char* member, const QKeySequence& shortcut = 0);
+	QAction* addAction(const ALIcon::AweSomeIcon& awesomeicon, const QString& text, const QKeySequence& shortcut);
+	QAction* addAction(const ALIcon::FluentIcon& fluenticon, const QString& text, const QKeySequence& shortcut);
 	QAction* addAction(const QIcon& icon, const QString& text, const QObject* receiver, const char* member, const QKeySequence& shortcut = 0);
+	QAction* addAction(const ALIcon::AweSomeIcon& awesomeicon, const QString& text, const QObject* receiver, const char* member, const QKeySequence& shortcut = 0);
+	QAction* addAction(const ALIcon::FluentIcon& fluenticon, const QString& text, const QObject* receiver, const char* member, const QKeySequence& shortcut = 0);
 
 
 	[[nodiscard]] bool isHasChildMenu() const;

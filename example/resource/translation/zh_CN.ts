@@ -20,18 +20,17 @@
     </message>
 </context>
 <context>
-    <name>E_BaseComponents</name>
+    <name>E_CheckBox_Example</name>
     <message>
-        <location filename="../../page/e_basecomponents.cpp" line="109"/>
-        <location filename="../../page/e_basecomponents.cpp" line="147"/>
-        <location filename="../../page/e_basecomponents.cpp" line="205"/>
-        <location filename="../../page/e_basecomponents.cpp" line="226"/>
-        <location filename="../../page/e_basecomponents.cpp" line="251"/>
-        <location filename="../../page/e_basecomponents.cpp" line="301"/>
-        <location filename="../../page/e_basecomponents.cpp" line="321"/>
-        <location filename="../../page/e_basecomponents.cpp" line="341"/>
-        <location filename="../../page/e_basecomponents.cpp" line="361"/>
-        <location filename="../../page/e_basecomponents.cpp" line="381"/>
+        <location filename="../../page/e_checkbox_example.cpp" line="33"/>
+        <source>Disable</source>
+        <translation type="unfinished">禁用</translation>
+    </message>
+</context>
+<context>
+    <name>E_CircularProgress_Example</name>
+    <message>
+        <location filename="../../page/e_circularprogress_example.cpp" line="69"/>
         <source>Disable</source>
         <translation type="unfinished">禁用</translation>
     </message>
@@ -52,6 +51,46 @@
         <location filename="../../page/e_icon.cpp" line="40"/>
         <source>search icon</source>
         <translation type="unfinished">搜索图标</translation>
+    </message>
+</context>
+<context>
+    <name>E_MessageBar_Example</name>
+    <message>
+        <location filename="../../page/e_messagebar_example.cpp" line="51"/>
+        <source>Disable</source>
+        <translation type="unfinished">禁用</translation>
+    </message>
+</context>
+<context>
+    <name>E_MultiSelectCombobox_Example</name>
+    <message>
+        <location filename="../../page/e_multiselectcombobox_example.cpp" line="33"/>
+        <source>Disable</source>
+        <translation type="unfinished">禁用</translation>
+    </message>
+</context>
+<context>
+    <name>E_Navigation</name>
+    <message>
+        <location filename="../../page/e_navigation.cpp" line="43"/>
+        <source>reset</source>
+        <translation type="unfinished">还原</translation>
+    </message>
+</context>
+<context>
+    <name>E_ProgressBar_Example</name>
+    <message>
+        <location filename="../../page/e_progressbar_example.cpp" line="65"/>
+        <source>Disable</source>
+        <translation type="unfinished">禁用</translation>
+    </message>
+</context>
+<context>
+    <name>E_RadioButton_Example</name>
+    <message>
+        <location filename="../../page/e_radiobutton_example.cpp" line="32"/>
+        <source>Disable</source>
+        <translation type="unfinished">禁用</translation>
     </message>
 </context>
 <context>
@@ -118,6 +157,31 @@
         <translation type="unfinished">关闭 mica 效果成功</translation>
     </message>
     <message>
+        <location filename="../../page/e_settings.cpp" line="126"/>
+        <source>open log</source>
+        <translation type="unfinished">日志开关</translation>
+    </message>
+    <message>
+        <location filename="../../page/e_settings.cpp" line="134"/>
+        <source>log switch</source>
+        <translation type="unfinished">日志操作</translation>
+    </message>
+    <message>
+        <location filename="../../page/e_settings.cpp" line="134"/>
+        <source>open log success</source>
+        <translation type="unfinished">开启记录日志成功</translation>
+    </message>
+    <message>
+        <location filename="../../page/e_settings.cpp" line="134"/>
+        <source>close log success</source>
+        <translation type="unfinished">关闭记录日志成功</translation>
+    </message>
+    <message>
+        <location filename="../../page/e_settings.cpp" line="156"/>
+        <source>navigationDisplayMode</source>
+        <translation type="unfinished">导航栏模式</translation>
+    </message>
+    <message>
         <location filename="../../page/e_settings.cpp" line="143"/>
         <source>Navigation Mode switch</source>
         <translation type="unfinished">导航栏模式</translation>
@@ -131,6 +195,41 @@
         <location filename="../../page/e_settings.cpp" line="143"/>
         <source> mode success</source>
         <translation type="unfinished"> 模式成功</translation>
+    </message>
+    <message>
+        <location filename="../../page/e_settings.cpp" line="175"/>
+        <source>Navigation Bar is Disabled</source>
+        <translation type="unfinished">导航栏为禁用状态</translation>
+    </message>
+    <message>
+        <location filename="../../page/e_settings.cpp" line="192"/>
+        <source>navigation bar enabled</source>
+        <translation type="unfinished">开启导航栏</translation>
+    </message>
+</context>
+<context>
+    <name>E_Slider_Example</name>
+    <message>
+        <location filename="../../page/e_slider_example.cpp" line="33"/>
+        <source>Disable</source>
+        <translation type="unfinished">禁用</translation>
+    </message>
+</context>
+<context>
+    <name>E_SpinBox_Example</name>
+    <message>
+        <location filename="../../page/e_spinbox_example.cpp" line="33"/>
+        <location filename="../../page/e_spinbox_example.cpp" line="49"/>
+        <source>Disable</source>
+        <translation type="unfinished">禁用</translation>
+    </message>
+</context>
+<context>
+    <name>E_ToggleSwitch_Example</name>
+    <message>
+        <location filename="../../page/e_toggleswitch_example.cpp" line="31"/>
+        <source>Disable</source>
+        <translation type="unfinished">禁用</translation>
     </message>
 </context>
 <context>
@@ -151,6 +250,11 @@
         <translation type="unfinished">排序</translation>
     </message>
     <message>
+        <location filename="../../mainwindow.cpp" line="69"/>
+        <source>Airplane</source>
+        <translation type="unfinished">飞行模式</translation>
+    </message>
+    <message>
         <location filename="../../mainwindow.cpp" line="57"/>
         <source>Toolbar</source>
         <translation type="unfinished">工具栏</translation>
@@ -159,6 +263,33 @@
         <location filename="../../mainwindow.cpp" line="72"/>
         <source>Bluetooth</source>
         <translation type="unfinished">蓝牙</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp" line="87"/>
+        <source>Wifi</source>
+        <translation type="unfinished">Wifi</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp" line="95"/>
+        <source>status bar example</source>
+        <translation type="unfinished">状态栏示例</translation>
+    </message>
+</context>
+<context>
+    <name>E_BaseComponents</name>
+    <message>
+        <location filename="../../page/e_basecomponents.cpp" line="109"/>
+        <location filename="../../page/e_basecomponents.cpp" line="147"/>
+        <location filename="../../page/e_basecomponents.cpp" line="205"/>
+        <location filename="../../page/e_basecomponents.cpp" line="226"/>
+        <location filename="../../page/e_basecomponents.cpp" line="251"/>
+        <location filename="../../page/e_basecomponents.cpp" line="301"/>
+        <location filename="../../page/e_basecomponents.cpp" line="321"/>
+        <location filename="../../page/e_basecomponents.cpp" line="341"/>
+        <location filename="../../page/e_basecomponents.cpp" line="361"/>
+        <location filename="../../page/e_basecomponents.cpp" line="381"/>
+        <source>Disable</source>
+        <translation type="unfinished">禁用</translation>
     </message>
 </context>
 </TS>

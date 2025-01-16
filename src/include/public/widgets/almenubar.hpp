@@ -21,9 +21,13 @@ public:
 	CALMenu* addMenu(const QString& title);
 	CALMenu* addMenu(const QIcon& icon, const QString& title);
 	CALMenu* addMenu(const ALIcon::AweSomeIcon& awesomeicon, const QString& title);
+	CALMenu* addMenu(const ALIcon::FluentIcon& fluenticon, const QString& title);
 
 	QAction* addAweSomeIconAction(const ALIcon::AweSomeIcon& awesomeicon);
+	QAction* addFluentIconAction(const ALIcon::FluentIcon& fluenticon);
 	QAction* addAweSomeIconAction(const ALIcon::AweSomeIcon& awesomeicon, const QString& text);
+	QAction* addFluentIconAction(const ALIcon::FluentIcon& fluenticon, const QString& text);
 	QAction* addAweSomeIconAction(const ALIcon::AweSomeIcon& awesomeicon, const QString& text, const QKeySequence& shortcut);
+	QAction* addFluentIconAction(const ALIcon::FluentIcon& fluenticon, const QString& text, const QKeySequence& shortcut);
 };
 }

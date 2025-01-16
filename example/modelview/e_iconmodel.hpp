@@ -3,12 +3,14 @@
 #include <QAbstractListModel>
 #include <QMetaEnum>
 
+#include "alwidgettoolsdef.hpp"
+
 class E_IconModel final : public QAbstractListModel {
 	Q_OBJECT
 	Q_PROPERTY(bool isSearchMode READ getIsSearchMode WRITE setIsSearchMode NOTIFY sigIsSearchModeChanged)
 
 public:
-	explicit E_IconModel(QObject* parent = nullptr);
+	explicit E_IconModel(const QMetaEnum& metaEnum, QObject* parent = nullptr);
 	~E_IconModel() override;
 
 	[[nodiscard]] int rowCount(const QModelIndex& parent) const override;
@@ -22,10 +24,13 @@ public:
 	void setIsSearchMode(bool isSearchMode);
 	[[nodiscard]] bool getIsSearchMode() const;
 
+	[[nodiscard]] ALIcon::IconType getIconType() const { return m_iconType; }
+
 Q_SIGNALS:
 	Q_SIGNAL void sigIsSearchModeChanged();
 
 private:
+	ALIcon::IconType m_iconType{};
 	QMetaEnum m_metaEnum{};
 	QStringList m_searchKeyList{};
 	int m_rowCount{};

@@ -37,7 +37,7 @@ E_MultiSelectCombobox_Example::E_MultiSelectCombobox_Example(QWidget* parent): E
 	multiSelectComboBoxHLayout->addWidget(multiSelectComboBoxDisable);
 	multiSelectComboBoxHLayout->addSpacing(10);
 	multiSelectComboBox->addItem("select all");
-	for (int i = 0; i < 15; i++) {
+	for (int i = 0; i < 15; ++i) {
 		multiSelectComboBox->addItem(QString("test %1").arg(i));
 	}
 	multiSelectComboBox->setCurrentSelection(QList<int>{ 1, 2, 3, 4, 5 });

@@ -22,7 +22,7 @@ class CALLineEdit;
 class CALComboBox;
 class CALText;
 class CALPushButton;
-class CALAwesomeToolButton;
+class CALToolButton;
 
 class CALColorDialogPrivate final : public QObject {
 	Q_OBJECT
@@ -66,8 +66,8 @@ private:
 	CALBaseListView* basicColorView{ nullptr };
 	CALColorDisplayModel* basicColorModel{ nullptr };
 	CALColorDisplayDelegate* basicColorDelegate{ nullptr };
-	CALAwesomeToolButton* addCustomColorButton{ nullptr };
-	CALAwesomeToolButton* removeCustomColorButton{ nullptr };
+	CALToolButton* addCustomColorButton{ nullptr };
+	CALToolButton* removeCustomColorButton{ nullptr };
 	CALBaseListView* customColorView{ nullptr };
 	CALColorDisplayModel* customColorModel{ nullptr };
 	CALColorDisplayDelegate* customColorDelegate{ nullptr };

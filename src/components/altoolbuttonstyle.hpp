@@ -10,13 +10,13 @@ class QStyleOptionToolButton;
  * @brief \namespace AL
  */
 namespace AL {
-class CALAwesomeToolButtonStyle final : public QProxyStyle {
+class CALToolButtonStyle final : public QProxyStyle {
 	Q_OBJECT
 	Q_PROPERTY(qreal expandIconRotate MEMBER m_expandIconRotate NOTIFY sigExpandIconRotateChanged)
 
 public:
-	explicit CALAwesomeToolButtonStyle(QStyle* style = nullptr);
-	~CALAwesomeToolButtonStyle() override;
+	explicit CALToolButtonStyle(QStyle* style = nullptr);
+	~CALToolButtonStyle() override;
 
 	void drawComplexControl(ComplexControl cc, const QStyleOptionComplex* opt, QPainter* p, const QWidget* widget) const override;
 	QSize sizeFromContents(ContentsType ct, const QStyleOption* opt, const QSize& contentsSize, const QWidget* w) const override;
@@ -33,11 +33,15 @@ public:
 	void setIsSelected(const bool isSelected) { m_isSelected = isSelected; }
 	[[nodiscard]] bool getIsSelected() const { return m_isSelected; }
 
+	void setALIconType(const ALIcon::IconType& iconType) { m_iconType = iconType; }
+	[[nodiscard]] ALIcon::IconType getALIconType() const { return m_iconType; }
+
 signals:
 	void sigExpandIconRotateChanged();
 
 private:
 	ALThemeType::ThemeMode m_themeMode{};
+	ALIcon::IconType m_iconType{};
 	bool m_isTransparent{};
 	int m_borderRadius{};
 	qreal m_expandIconRotate{};

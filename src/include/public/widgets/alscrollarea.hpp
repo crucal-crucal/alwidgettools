@@ -47,7 +47,5 @@ public:
 
 protected:
 	const QScopedPointer<CALScrollAreaPrivate> d_ptr{ nullptr };
-
-	explicit CALScrollArea(CALScrollAreaPrivate& dd, CALScrollArea* parent = nullptr);
 };
 }

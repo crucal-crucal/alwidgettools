@@ -13,11 +13,8 @@
 
 using namespace AL;
 
-E_Icon::E_Icon(QWidget* parent): E_BasePage(parent) {
-	setWindowTitle("CALIcon");
+E_Icon::E_Icon(const QMetaEnum& metaEnum, QWidget* parent): E_BasePage(parent), m_metaEnum(metaEnum) {
 	createCustomWidget("some thing...");
-
-	m_metaEnum = QMetaEnum::fromType<ALIcon::AweSomeIcon>();
 	/// listView
 	m_iconListView = new CALListView(this);
 	m_iconListView->setIsTransparent(true);
@@ -32,7 +29,7 @@ E_Icon::E_Icon(QWidget* parent): E_BasePage(parent) {
 		QApplication::clipboard()->setText(iconName);
 		CALMessageBar::success(tr("copy finish"), iconName + tr("Copied to Clipboard"), 2000, ALMessageBarType::Top, this);
 	});
-	m_iconModel = new E_IconModel(this);
+	m_iconModel = new E_IconModel(metaEnum, this);
 	m_iconDelegate = new E_IconDelegate(this);
 	m_iconListView->setModel(m_iconModel);
 	m_iconListView->setItemDelegate(m_iconDelegate);
@@ -43,18 +40,20 @@ E_Icon::E_Icon(QWidget* parent): E_BasePage(parent) {
 	m_searchEdit->setFixedSize(300, 35);
 	connect(m_searchEdit, &CALLineEdit::textEdited, this, &E_Icon::slotSearchEditTextChanged);
 	connect(m_searchEdit, &CALLineEdit::sigFocusIn, this, &E_Icon::slotSearchEditTextChanged);
-
-	const auto centralWidget = new QWidget(this);
-	centralWidget->setWindowTitle(this->windowTitle());
-	const auto centralWidgetVLayout = new QVBoxLayout(centralWidget);
-	centralWidgetVLayout->setContentsMargins(0, 0, 0, 0);
-	centralWidgetVLayout->addSpacing(13);
-	centralWidgetVLayout->addWidget(m_searchEdit);
-	centralWidgetVLayout->addWidget(m_iconListView);
-	addCentralWidget(centralWidget, true, true, 0);
 }
 
 E_Icon::~E_Icon() = default;
+
+void E_Icon::init() {
+	const auto centralWidget = new QWidget(this);
+	centralWidget->setWindowTitle(this->windowTitle());
+	mainVLayout = new QVBoxLayout(centralWidget);
+	mainVLayout->setContentsMargins(0, 0, 0, 0);
+	mainVLayout->addSpacing(13);
+	mainVLayout->addWidget(m_searchEdit);
+	mainVLayout->addWidget(m_iconListView);
+	addCentralWidget(centralWidget, true, true, 0);
+}
 
 void E_Icon::slotSearchEditTextChanged(const QString& searchText) const {
 	if (searchText.isEmpty()) {

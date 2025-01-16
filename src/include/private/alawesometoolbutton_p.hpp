@@ -7,23 +7,23 @@
  */
 namespace AL {
 class CALToolTip;
-class CALAwesomeToolButton;
-class CALAwesomeToolButtonStyle;
+class CALToolButton;
+class CALToolButtonStyle;
 
-class CALAwesomeToolButtonPrivate final : public QObject {
+class CALToolButtonPrivate final : public QObject {
 	Q_OBJECT
-	Q_DISABLE_COPY(CALAwesomeToolButtonPrivate)
-	Q_DECLARE_PUBLIC(CALAwesomeToolButton)
+	Q_DISABLE_COPY(CALToolButtonPrivate)
+	Q_DECLARE_PUBLIC(CALToolButton)
 
 public:
-	explicit CALAwesomeToolButtonPrivate(CALAwesomeToolButton* q, QObject* parent = nullptr);
-	~CALAwesomeToolButtonPrivate() override;
+	explicit CALToolButtonPrivate(CALToolButton* q, QObject* parent = nullptr);
+	~CALToolButtonPrivate() override;
 
 protected:
-	CALAwesomeToolButton* const q_ptr{ nullptr };
+	CALToolButton* const q_ptr{ nullptr };
 
 private:
-	CALAwesomeToolButtonStyle* style{ nullptr };
+	CALToolButtonStyle* style{ nullptr };
 	CALToolTip* tooltip{ nullptr };
 };
 }

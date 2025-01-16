@@ -20,7 +20,9 @@ namespace AL {
 CALScrollBarStyle::CALScrollBarStyle(QStyle* style): QProxyStyle(style) {
 	m_isExpand = false;
 	m_opacity = 0;
+	m_scrollBarExtent = 10;
 	m_sliderExtent = 2.4;
+	m_sliderMargin = 2.5;
 	m_themeMode = ALTheme->getThemeMode();
 	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { m_themeMode = mode; });
 }

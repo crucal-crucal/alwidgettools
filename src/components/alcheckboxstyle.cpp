@@ -54,7 +54,7 @@ void CALCheckBoxStyle::drawControl(const ControlElement element, const QStyleOpt
 				p->setPen(ALThemeColor(m_themeMode, ALThemeType::BasicText));
 				if (bopt->state.testFlag(QStyle::State_On)) {
 					p->save();
-					QFont iconFont("CALAwesome");
+					QFont iconFont(ALIcon::getEnumTypeFontName(ALIcon::Awesome));
 					iconFont.setPixelSize(m_checkIndicatorWidth * 0.75); // NOLINT
 					p->setFont(iconFont);
 					p->drawText(checkRect, Qt::AlignCenter, QChar(static_cast<unsigned short>(ALIcon::AweSomeIcon::Check)));

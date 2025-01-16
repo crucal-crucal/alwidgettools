@@ -34,11 +34,11 @@ void CALExponentialBlurPrivate::drawExponentialBlur(QImage& image, const quint64
 	const int alpha = static_cast<int>((1 << _aprec) * (1.0f - std::exp(-2.3f / static_cast<float>(qRadius + 1)))); // NOLINT
 	const int height = image.height();
 	const int width = image.width();
-	for (int row = 0; row < height; row++) {
+	for (int row = 0; row < height; ++row) {
 		drawColumnBlur(image, row, alpha);
 	}
 
-	for (int col = 0; col < width; col++) {
+	for (int col = 0; col < width; ++col) {
 		drawColumnBlur(image, col, alpha);
 	}
 }
@@ -52,10 +52,10 @@ void CALExponentialBlurPrivate::drawRowBlur(QImage& image, const int& row, const
 	int zB = *(reinterpret_cast<unsigned char*>(ptr) + 2) << _zprec;
 	int zA = *(reinterpret_cast<unsigned char*>(ptr) + 3) << _zprec;
 
-	for (int index = 0; index < width; index++) {
+	for (int index = 0; index < width; ++index) {
 		drawInnerBlur(reinterpret_cast<unsigned char*>(&ptr[index]), zR, zG, zB, zA, alpha);
 	}
-	for (int index = width - 2; index >= 0; index--) {
+	for (int index = width - 2; index >= 0; --index) {
 		drawInnerBlur(reinterpret_cast<unsigned char*>(&ptr[index]), zR, zG, zB, zA, alpha);
 	}
 }

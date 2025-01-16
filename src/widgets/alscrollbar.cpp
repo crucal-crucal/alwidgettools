@@ -1,13 +1,13 @@
 ﻿#include "alscrollbar.hpp"
 
 #include <QApplication>
-#include <QDebug>
 #include <QPainter>
 #include <QPointer>
 #include <QPropertyAnimation>
 #include <QStyleOptionSlider>
 #include <QTimer>
 #include <QWheelEvent>
+#include <QDebug>
 
 #include "almenu.hpp"
 #include "alscrollbarstyle.hpp"
@@ -35,7 +35,7 @@ void CALScrollBarPrivate::slotRangeChanged(const int min, const int max) {
 		const auto rangeSmoothAnimation = new QPropertyAnimation(this, "targetMaximum");
 		connect(rangeSmoothAnimation, &QPropertyAnimation::valueChanged, this, [=](const QVariant& value) {
 			q->blockSignals(true);
-			q->setMinimum(value.toInt());
+			q->setMaximum(value.toInt());
 			q->blockSignals(false);
 			q->update();
 		});
@@ -43,7 +43,7 @@ void CALScrollBarPrivate::slotRangeChanged(const int min, const int max) {
 			Q_EMIT q->sigRangeAnimationFinished();
 		});
 		rangeSmoothAnimation->setEasingCurve(QEasingCurve::OutSine);
-		rangeSmoothAnimation->setDuration(200);
+		rangeSmoothAnimation->setDuration(250);
 		rangeSmoothAnimation->setStartValue(targetMaximum);
 		rangeSmoothAnimation->setEndValue(max);
 		rangeSmoothAnimation->start(QAbstractAnimation::DeleteWhenStopped);
@@ -76,7 +76,7 @@ void CALScrollBarPrivate::scroll(const Qt::KeyboardModifiers& modifiers, const i
 	} else {
 		stepsToScroll = QApplication::wheelScrollLines() * static_cast<int>(offset) * singleStep;
 	}
-	if (std::abs(scrollValue - q->value()) > std::abs(stepsToScroll * speedLimit)) {
+	if (abs(scrollValue - q->value()) > abs(stepsToScroll * speedLimit)) {
 		scrollValue = q->value();
 	}
 	scrollValue -= stepsToScroll;
@@ -152,9 +152,11 @@ CALScrollBar::CALScrollBar(QWidget* parent): QScrollBar(parent), d_ptr(new CALSc
 	setSingleStep(1);
 	setObjectName("CALScrollBar");
 	setAttribute(Qt::WA_OpaquePaintEvent, false);
+	d->scrollValue = -1;
 	d->speedLimit = 20;
 	d->targetMaximum = 0;
 	d->isAnimation = false;
+	d->isExpand = false;
 	d->contextMenuFlags = CALScrollBar::HasIcon;
 	connect(this, &CALScrollBar::rangeChanged, d, &CALScrollBarPrivate::slotRangeChanged);
 	const auto scrollBarStyle = new CALScrollBarStyle(style());
@@ -194,15 +196,9 @@ CALScrollBar::CALScrollBar(QScrollBar* originScrollBar, QAbstractScrollArea* par
 	d->originScrollBar = originScrollBar;
 	d->initAllConfig();
 
-	connect(d->originScrollBar, &QScrollBar::valueChanged, this, [=](const int value) {
-		CALScrollBarPrivate::handleScrollBarValueChanged(this, value);
-	});
-	connect(this, &QScrollBar::valueChanged, this, [=](const int value) {
-		CALScrollBarPrivate::handleScrollBarValueChanged(d->originScrollBar, value);
-	});
-	connect(d->originScrollBar, &QScrollBar::rangeChanged, this, [=](const int min, const int max) {
-		d->handleScrollBarRangeChanged(min, max);
-	});
+	connect(d->originScrollBar, &QScrollBar::valueChanged, this, [=](const int value) { CALScrollBarPrivate::handleScrollBarValueChanged(this, value); });
+	connect(d->originScrollBar, &QScrollBar::rangeChanged, this, [=](const int min, const int max) { d->handleScrollBarRangeChanged(min, max); });
+	connect(this, &QScrollBar::valueChanged, this, [=](const int value) { CALScrollBarPrivate::handleScrollBarValueChanged(d->originScrollBar, value); });
 }
 
 CALScrollBar::~CALScrollBar() = default;
@@ -274,7 +270,7 @@ void CALScrollBar::wheelEvent(QWheelEvent* event) {
 
 	if (const int delta = event->angleDelta().y() != 0 ? event->angleDelta().y() : event->angleDelta().x();
 		(value() == minimum() && delta > 0) || (value() == maximum() && delta < 0)) {
-		QScrollBar::wheelEvent(event); // 边界情况调用基类处理
+		return QScrollBar::wheelEvent(event); // 边界情况调用基类处理
 	} else {
 		d->scroll(event->modifiers(), delta);
 	}

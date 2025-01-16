@@ -24,7 +24,7 @@ class CALInteractiveCard;
 class CALFooterModel;
 class CALFooterDelegate;
 class CALIconButton;
-class CALAwesomeToolButton;
+class CALToolButton;
 
 class CALNavigationBarPrivate final : public QObject {
 	Q_OBJECT
@@ -69,8 +69,8 @@ private:
 	QVBoxLayout* userButtonVLayout{ nullptr };
 
 	CALIconButton* userButton{ nullptr };
-	CALAwesomeToolButton* searchButton{ nullptr };
-	CALAwesomeToolButton* navigationButton{ nullptr };
+	CALToolButton* searchButton{ nullptr };
+	CALToolButton* navigationButton{ nullptr };
 	CALNavigationModel* navigationModel{ nullptr };
 	CALNavigationView* navigationView{ nullptr };
 	CALBaseListView* footerView{ nullptr };

@@ -154,7 +154,7 @@ void CALComboBoxStyle::drawComplexControl(const ComplexControl control, const QS
 				painter->drawRoundedRect(QRectF(comboBoxRect.center().x() - m_expandMarkWidth, comboBoxRect.height() - 3, m_expandMarkWidth * 2, 3), 2, 2);
 				// 展开图标绘制
 				if (const QRect expandIconRect = subControlRect(QStyle::CC_ComboBox, copt, QStyle::SC_ScrollBarAddPage, widget); expandIconRect.isValid()) {
-					QFont iconFont("CALAwesome");
+					QFont iconFont(ALIcon::getEnumTypeFontName(ALIcon::Awesome));
 					iconFont.setPixelSize(17);
 					painter->setFont(iconFont);
 					painter->setPen(ALThemeColor(m_themeMode, isEnabled ? ALThemeType::BasicText : ALThemeType::BasicTextDisable));

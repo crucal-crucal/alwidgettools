@@ -48,7 +48,7 @@ void CALMenuBarStyle::drawControl(const ControlElement element, const QStyleOpti
 				}
 				// 展开图标
 				p->setPen(topt->state.testFlag(QStyle::State_Enabled) ? ALThemeColor(m_themeMode, ALThemeType::BasicText) : Qt::gray);
-				QFont iconFont("CALAwesome");
+				QFont iconFont(ALIcon::getEnumTypeFontName(ALIcon::Awesome));
 				iconFont.setPixelSize(18);
 				p->setFont(iconFont);
 				p->drawText(topt->rect, Qt::AlignCenter, QChar(static_cast<unsigned short>(ALIcon::AweSomeIcon::AngleRight)));
@@ -82,18 +82,20 @@ void CALMenuBarStyle::drawControl(const ControlElement element, const QStyleOpti
 				const QIcon icon = mopt->icon;
 				QString menuText = mopt->text;
 				QString iconText;
+				QString iconFontFamily;
 				menuText = menuText.replace("&", "");
 				if (const auto menuBar = dynamic_cast<const CALMenuBar*>(w)) {
 					if (const QAction* action = menuBar->actionAt(menuItemRect.center())) {
-						iconText = action->property("CALIconType").toString();
+						iconText = action->property("CALIcon").toString();
+						iconFontFamily = ALIcon::getEnumTypeFontName(static_cast<ALIcon::IconType>(action->property("CALIconType").toInt()));
 					}
 				}
 				if (menuText.isEmpty()) {
 					// icon
-					if (!iconText.isEmpty()) {
+					if (!iconText.isEmpty() && !iconFontFamily.isEmpty() && iconFontFamily != ALIcon::errFontFamily) {
 						p->save();
 						p->setPen(ALThemeColor(m_themeMode, mopt->state.testFlag(QStyle::State_Enabled) ? ALThemeType::BasicText : ALThemeType::BasicDetailsText));
-						QFont iconFont("CALAwesome");
+						QFont iconFont(iconFontFamily);
 						iconFont.setPixelSize(menuBarHeight * 0.7); // NOLINT
 						p->setFont(iconFont);
 						p->drawText(menuItemRect, Qt::AlignCenter, iconText);
@@ -108,10 +110,10 @@ void CALMenuBarStyle::drawControl(const ControlElement element, const QStyleOpti
 					if (icon.isNull() && iconText.isEmpty()) {
 						p->drawText(menuItemRect, Qt::AlignCenter, menuText);
 					} else {
-						if (!iconText.isEmpty()) {
+						if (!iconText.isEmpty() && !iconFontFamily.isEmpty() && iconFontFamily != ALIcon::errFontFamily) {
 							p->save();
 							const QRectF menuIconRect(menuItemRect.x() + menuBarHeight * 0.1 + m_menubarItemMargin, menuBarHeight * 0.1, menuBarHeight * 0.8, menuBarHeight * 0.8);
-							QFont iconFont("CALAwesome");
+							QFont iconFont(iconFontFamily);
 							iconFont.setPixelSize(menuBarHeight * 0.7); // NOLINT
 							p->setFont(iconFont);
 							p->drawText(menuIconRect, Qt::AlignCenter, iconText);

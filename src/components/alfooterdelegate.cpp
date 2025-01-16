@@ -157,12 +157,12 @@ void CALFooterDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opt
 
 	// iocn
 	painter->setPen(index == m_pressIndex ? ALThemeColor(themeMode, ALThemeType::BasicTextPress) : ALThemeColor(themeMode, ALThemeType::BasicText));
-	if (node->getAwesomeIcon() != ALIcon::AweSomeIcon::None) {
+	if (node->getIconType() != ALIcon::None) {
 		painter->save();
-		QFont iconFont("CALAwesome");
+		QFont iconFont(ALIcon::getEnumTypeFontName(node->getIconType()));
 		iconFont.setPixelSize(17);
 		painter->setFont(iconFont);
-		painter->drawText(itemRect.x(), itemRect.y(), m_iconAreaWidth, itemRect.height(), Qt::AlignCenter, QChar(static_cast<unsigned short>(node->getAwesomeIcon())));
+		painter->drawText(itemRect.x(), itemRect.y(), m_iconAreaWidth, itemRect.height(), Qt::AlignCenter, node->property("CALIcon").toString());
 		painter->restore();
 	}
 
@@ -186,7 +186,7 @@ void CALFooterDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opt
 
 	// text
 	painter->setPen(ALThemeColor(themeMode, index == m_pressIndex ? ALThemeType::BasicTextPress : ALThemeType::BasicText));
-	const int padding = node->getAwesomeIcon() != ALIcon::AweSomeIcon::None ? m_iconAreaWidth : m_leftPadding;
+	const int padding = node->getIconType() != ALIcon::None ? m_iconAreaWidth : m_leftPadding;
 	const QRect textRect{ itemRect.x() + padding, itemRect.y(), itemRect.width() - m_textRightSpacing - m_indicatorIconAreaWidth - padding, itemRect.height() };
 	const QString text = painter->fontMetrics().elidedText(node->getNodeTitle(), Qt::ElideRight, textRect.width());
 	painter->drawText(textRect, Qt::AlignVCenter | Qt::AlignLeft, text);

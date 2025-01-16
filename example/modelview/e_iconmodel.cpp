@@ -2,8 +2,12 @@
 
 #include "alwidgettoolsdef.hpp"
 
-E_IconModel::E_IconModel(QObject* parent): QAbstractListModel(parent) {
-	m_metaEnum = QMetaEnum::fromType<ALIcon::AweSomeIcon>();
+E_IconModel::E_IconModel(const QMetaEnum& metaEnum, QObject* parent): QAbstractListModel(parent), m_metaEnum(metaEnum) {
+	if (metaEnum.name() == QMetaEnum::fromType<ALIcon::FluentIcon>().name()) {
+		m_iconType = ALIcon::Fluent;
+	} else if (metaEnum.name() == QMetaEnum::fromType<ALIcon::AweSomeIcon>().name()) {
+		m_iconType = ALIcon::Awesome;
+	}
 	m_rowCount = m_metaEnum.keyCount() - 1;
 	m_isSearchMode = false;
 }
@@ -47,11 +51,11 @@ QString E_IconModel::getIconNameFromModelIndex(const QModelIndex& index) const {
 	QString iconName{};
 	if (m_isSearchMode) {
 		if (index.row() < m_searchKeyList.count()) {
-			iconName = QString("ALIcon::AweSomeIcon::") + m_searchKeyList.at(index.row());
+			iconName = QString("ALIcon::FluentIcon::") + m_searchKeyList.at(index.row());
 		}
 	} else {
 		if (index.row() < m_metaEnum.keyCount() - 1) {
-			iconName = QString("ALIcon::AweSomeIcon::") + m_metaEnum.key(index.row() + 1);
+			iconName = QString("ALIcon::FluentIcon::") + m_metaEnum.key(index.row() + 1);
 		}
 	}
 	return iconName;

@@ -17,7 +17,8 @@ public:
 	explicit CALFooterModel(QObject* parent = nullptr);
 	~CALFooterModel() override;
 
-	ALNavigationType::NodeOperateReturnType addFooterNode(const QString& footerTitle, QString& footerKey, bool isHasFooterPage, int keyPoints = 0, const ALIcon::AweSomeIcon& awesome = ALIcon::AweSomeIcon::None);
+	ALNavigationType::NodeOperateReturnType addFooterNode(const QString& footerTitle, QString& footerKey, bool isHasFooterPage, int keyPoints = 0, const ALIcon::AweSomeIcon& awesomeicon = ALIcon::AweSomeIcon::None);
+	ALNavigationType::NodeOperateReturnType addFooterNode(const QString& footerTitle, QString& footerKey, bool isHasFooterPage, int keyPoints = 0, const ALIcon::FluentIcon& fluenticon = ALIcon::FluentIcon::None);
 	[[nodiscard]] int getFooterNodeCount() const;
 	CALNavigationNode* getNavigationNode(const QString& footerKey);
 

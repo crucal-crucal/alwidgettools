@@ -34,7 +34,7 @@ private:
 	CALToolTip* tooltip{ nullptr };
 	qreal borderRadius{};
 	qreal opacity{};
-	ALIcon::AweSomeIcon awesomeIcon{};
+	ALIcon::IconType iconType{};
 	QColor lightHoverColor{};
 	QColor darkHoverColor{};
 	QColor lightIconColor{};

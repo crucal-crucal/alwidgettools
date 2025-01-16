@@ -138,6 +138,7 @@ void CALApplication::init() {
 	QResource::registerResource(applicationDirPath + QDir::separator() + "alwidgettools.rcc");
 	QApplication::setAttribute(Qt::AA_DontCreateNativeWidgetSiblings);
 	QFontDatabase::addApplicationFont(":alwidgettools/font/ALAwesome.ttf");
+	QFontDatabase::addApplicationFont(":alwidgettools/font/ALFluent.ttf");
 	QFontDatabase::addApplicationFont(":alwidgettools/font/segoe_slboot_EX.ttf");
 	QFontDatabase::addApplicationFont(":alwidgettools/font/segoen_slboot_EX.ttf");
 	d->translator->load(":alwidgettools/translation/zh_CN.qm");

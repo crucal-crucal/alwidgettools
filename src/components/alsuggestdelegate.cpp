@@ -2,6 +2,7 @@
 
 #include <QPainter>
 #include <QPainterPath>
+#include <QDebug>
 
 #include "alsuggestbox_p.hpp"
 #include "alsuggestmodel.hpp"
@@ -49,11 +50,14 @@ void CALSuggestDelegate::paint(QPainter* painter, const QStyleOptionViewItem& op
 	painter->setPen(ALThemeColor(themeMode, ALThemeType::BasicText));
 	painter->drawText(option.rect.x() + 57, option.rect.y() + 25, suggest->getSuggestText());
 	/// 图标
-	if (suggest->getAwesomeIcon() != ALIcon::AweSomeIcon::None) {
-		QFont iconFont("CALAwesome");
+	const QString iconFontFamily = ALIcon::getEnumTypeFontName(suggest->getIconType());
+	if (suggest->getIconType() != ALIcon::None && iconFontFamily != ALIcon::errFontFamily) {
+		painter->save();
+		QFont iconFont(iconFontFamily);
 		iconFont.setPixelSize(17);
 		painter->setFont(iconFont);
-		painter->drawText(option.rect.x() + 11, option.rect.y() + 26, QChar(static_cast<unsigned short>(suggest->getAwesomeIcon())));
+		painter->drawText(option.rect.x() + 11, option.rect.y() + 26, suggest->property("CALIcon").toString());
+		painter->restore();
 	}
 	painter->restore();
 }

@@ -85,7 +85,7 @@ void CALSpinBoxStyle::drawComplexControl(const ComplexControl cc, const QStyleOp
 					p->drawLine(subLineRect.right() + 1, subLineRect.y() + subLineRect.height() - 1, addLineRect.left() - 1, subLineRect.y() + subLineRect.height() - 1);
 				}
 				// add icon
-				QFont iconFont("CALAwesome");
+				QFont iconFont(ALIcon::getEnumTypeFontName(ALIcon::Awesome));
 				iconFont.setPixelSize(17);
 				p->setFont(iconFont);
 				p->setPen(ALThemeColor(m_themeMode, isEnable ? ALThemeType::BasicText : ALThemeType::BasicTextDisable));

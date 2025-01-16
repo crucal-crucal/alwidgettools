@@ -24,11 +24,17 @@ public:
 	QVariant data(const QModelIndex& index, int role) const override;
 
 	ALNavigationType::NodeOperateReturnType addExpanderNode(const QString& expanderTitle, QString& expanderKey, const ALIcon::AweSomeIcon& awewomeIcon);
+	ALNavigationType::NodeOperateReturnType addExpanderNode(const QString& expanderTitle, QString& expanderKey, const ALIcon::FluentIcon& fluentIcon);
 	ALNavigationType::NodeOperateReturnType addExpanderNode(const QString& expanderTitle, QString& expanderKey, const QString& targetExpanderKey, const ALIcon::AweSomeIcon& awewomeIcon);
+	ALNavigationType::NodeOperateReturnType addExpanderNode(const QString& expanderTitle, QString& expanderKey, const QString& targetExpanderKey, const ALIcon::FluentIcon& fluentIcon);
 	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QString& pageKey, const ALIcon::AweSomeIcon& awewomeIcon);
+	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QString& pageKey, const ALIcon::FluentIcon& fluentIcon);
 	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QString& pageKey, const QString& targetExpanderKey, const ALIcon::AweSomeIcon& awewomeIcon);
+	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QString& pageKey, const QString& targetExpanderKey, const ALIcon::FluentIcon& fluentIcon);
 	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QString& pageKey, int keyPoints, const ALIcon::AweSomeIcon& awewomeIcon);
+	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QString& pageKey, int keyPoints, const ALIcon::FluentIcon& fluentIcon);
 	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QString& pageKey, const QString& targetExpanderKey, int keyPoints, const ALIcon::AweSomeIcon& awewomeIcon);
+	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QString& pageKey, const QString& targetExpanderKey, int keyPoints, const ALIcon::FluentIcon& fluentIcon);
 
 	CALNavigationNode* getNavigationNode(const QString& nodeKey) const;
 	QList<CALNavigationNode*> getRootExpanderNodes() const;

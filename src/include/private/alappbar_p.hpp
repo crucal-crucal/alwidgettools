@@ -14,7 +14,7 @@ class QVBoxLayout;
 namespace AL {
 class CALText;
 class CALIconButton;
-class CALAwesomeToolButton;
+class CALToolButton;
 class CALAppBar;
 
 class CALAppBarPrivate final : public QObject {
@@ -56,18 +56,18 @@ private:
 	QHBoxLayout* mainHLayout{ nullptr };
 	QVBoxLayout* iconLabelVLayout{ nullptr };
 	QVBoxLayout* titleLabelVLayout{ nullptr };
-	CALAwesomeToolButton* routeBackButton{ nullptr };
-	CALAwesomeToolButton* navigationButton{ nullptr };
-	CALAwesomeToolButton* themeChangeButton{ nullptr };
-	CALAwesomeToolButton* stayTopButton{ nullptr };
-	CALAwesomeToolButton* minButton{ nullptr };
-	CALAwesomeToolButton* maxButton{ nullptr };
+	CALToolButton* routeBackButton{ nullptr };
+	CALToolButton* navigationButton{ nullptr };
+	CALToolButton* themeChangeButton{ nullptr };
+	CALToolButton* stayTopButton{ nullptr };
+	CALToolButton* minButton{ nullptr };
+	CALToolButton* maxButton{ nullptr };
 	CALIconButton* closeButton{ nullptr };
 	QScreen* lastScreen{ nullptr };
 	CALText* titleLabel{ nullptr };
 	QLabel* iconLabel{ nullptr };
 
-	void changeMaxButtonAwesome(bool isMaximized) const;
+	void changeMaxButtonIcon(bool isMaximized) const;
 	void showSystemMenu(const QPoint& point);
 	void updateCursor(int edges);
 	bool containsCursorToItem(QWidget* item);

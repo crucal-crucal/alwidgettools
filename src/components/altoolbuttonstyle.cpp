@@ -1,4 +1,4 @@
-﻿#include "alawesometoolbuttonstyle.hpp"
+﻿#include "altoolbuttonstyle.hpp"
 
 #include <QPainter>
 #include <QPainterPath>
@@ -12,21 +12,22 @@
  */
 namespace AL {
 /**
- * @brief \class CALAwesomeToolButtonStyle
+ * @brief \class CALToolButtonStyle
  * @param style pointer to the parent style
  */
-CALAwesomeToolButtonStyle::CALAwesomeToolButtonStyle(QStyle* style) {
+CALToolButtonStyle::CALToolButtonStyle(QStyle* style) {
 	m_isSelected = false;
 	m_isTransparent = true;
 	m_expandIconRotate = 0;
 	m_borderRadius = 4;
+	m_iconType = ALIcon::None;
 	m_themeMode = ALTheme->getThemeMode();
 	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { m_themeMode = mode; });
 }
 
-CALAwesomeToolButtonStyle::~CALAwesomeToolButtonStyle() = default;
+CALToolButtonStyle::~CALToolButtonStyle() = default;
 
-void CALAwesomeToolButtonStyle::drawComplexControl(const ComplexControl cc, const QStyleOptionComplex* opt, QPainter* p, const QWidget* widget) const {
+void CALToolButtonStyle::drawComplexControl(const ComplexControl cc, const QStyleOptionComplex* opt, QPainter* p, const QWidget* widget) const {
 	switch (cc) {
 		case QStyle::CC_ToolButton: {
 			// 内容绘制
@@ -86,7 +87,7 @@ void CALAwesomeToolButtonStyle::drawComplexControl(const ComplexControl cc, cons
 	QProxyStyle::drawComplexControl(cc, opt, p, widget);
 }
 
-QSize CALAwesomeToolButtonStyle::sizeFromContents(const ContentsType ct, const QStyleOption* opt, const QSize& contentsSize, const QWidget* w) const {
+QSize CALToolButtonStyle::sizeFromContents(const ContentsType ct, const QStyleOption* opt, const QSize& contentsSize, const QWidget* w) const {
 	if (ct == QStyle::CT_ToolButton) {
 		if (const auto bopt = qstyleoption_cast<const QStyleOptionToolButton*>(opt)) {
 			QSize toolButtonSize = QProxyStyle::sizeFromContents(ct, opt, contentsSize, w);
@@ -100,7 +101,7 @@ QSize CALAwesomeToolButtonStyle::sizeFromContents(const ContentsType ct, const Q
 	return QProxyStyle::sizeFromContents(ct, opt, contentsSize, w);
 }
 
-void CALAwesomeToolButtonStyle::drawIndicator(QPainter* painter, const QStyleOptionToolButton* bopt, const QWidget* widget) const {
+void CALToolButtonStyle::drawIndicator(QPainter* painter, const QStyleOptionToolButton* bopt, const QWidget* widget) const {
 	if (bopt->features.testFlag(QStyleOptionToolButton::MenuButtonPopup)) {
 		const QRect indicatorRect = subControlRect(QStyle::CC_ToolButton, bopt, QStyle::SC_ScrollBarSubLine, widget);
 		// 指示器区域
@@ -130,7 +131,7 @@ void CALAwesomeToolButtonStyle::drawIndicator(QPainter* painter, const QStyleOpt
 		const QSize iconSize = bopt->iconSize;
 		painter->save();
 		const QRect toolButtonRect = bopt->rect;
-		QFont iconFont("CALAwesome");
+		QFont iconFont(ALIcon::getEnumTypeFontName(ALIcon::Awesome));
 		iconFont.setPixelSize(0.75 * std::min(iconSize.width(), iconSize.height())); // NOLINT
 		painter->setFont(iconFont);
 		const int indicatorWidth = painter->fontMetrics().horizontalAdvance(QChar(static_cast<unsigned short>(ALIcon::AweSomeIcon::AngleDown)));
@@ -144,10 +145,10 @@ void CALAwesomeToolButtonStyle::drawIndicator(QPainter* painter, const QStyleOpt
 	}
 }
 
-void CALAwesomeToolButtonStyle::drawIcon(QPainter* painter, QRect iconRect, const QStyleOptionToolButton* bopt, const QWidget* widget) const {
+void CALToolButtonStyle::drawIcon(QPainter* painter, QRect iconRect, const QStyleOptionToolButton* bopt, const QWidget* widget) const {
 	if (bopt->toolButtonStyle != Qt::ToolButtonTextOnly) {
 		const QSize iconSize = bopt->iconSize;
-		if (widget->property("CALIconType").toString().isEmpty()) {
+		if (m_iconType == ALIcon::None) {
 			// 绘制QIcon
 			if (const QIcon icon = bopt->icon; !icon.isNull()) {
 				const QPixmap iconPix = icon.pixmap(iconSize, (bopt->state & State_Enabled) ? QIcon::Normal : QIcon::Disabled, (bopt->state & State_Selected) ? QIcon::On : QIcon::Off);
@@ -174,15 +175,16 @@ void CALAwesomeToolButtonStyle::drawIcon(QPainter* painter, QRect iconRect, cons
 				}
 			}
 		} else {
-			// 绘制AwesomeIcon
+			// 绘制 ALIcon
 			painter->save();
 			painter->setPen(ALThemeColor(m_themeMode, bopt->state.testFlag(QStyle::State_Enabled) ? ALThemeType::BasicText : ALThemeType::BasicTextDisable));
-			QFont iconFont("CALAwesome");
+
+			QFont iconFont(ALIcon::getEnumTypeFontName(m_iconType));
 			switch (bopt->toolButtonStyle) {
 				case Qt::ToolButtonIconOnly: {
 					iconFont.setPixelSize(0.75 * std::min(iconSize.width(), iconSize.height())); // NOLINT
 					painter->setFont(iconFont);
-					painter->drawText(iconRect, Qt::AlignCenter, widget->property("CALIconType").toString());
+					painter->drawText(iconRect, Qt::AlignCenter, widget->property("CALIcon").toString());
 					break;
 				}
 				case Qt::ToolButtonFollowStyle:
@@ -190,7 +192,7 @@ void CALAwesomeToolButtonStyle::drawIcon(QPainter* painter, QRect iconRect, cons
 					const QRect adjustIconRect(iconRect.x() + m_contentMargin, iconRect.y(), iconSize.width(), iconRect.height());
 					iconFont.setPixelSize(0.75 * std::min(iconSize.width(), iconSize.height())); // NOLINT
 					painter->setFont(iconFont);
-					painter->drawText(adjustIconRect, Qt::AlignCenter, widget->property("CALIconType").toString());
+					painter->drawText(adjustIconRect, Qt::AlignCenter, widget->property("CALIcon").toString());
 					break;
 				}
 				case Qt::ToolButtonTextUnderIcon: {
@@ -200,7 +202,7 @@ void CALAwesomeToolButtonStyle::drawIcon(QPainter* painter, QRect iconRect, cons
 					const QRect adjustIconRect(iconRect.center().x() - iconSize.width() / 2, iconRect.y() + 0.2 * std::min(iconSize.width(), iconSize.height()), iconSize.width(), iconSize.height()); // NOLINT
 					iconFont.setPixelSize(0.8 * std::min(iconSize.width(), iconSize.height()));                                                                                                        // NOLINT
 					painter->setFont(iconFont);
-					painter->drawText(adjustIconRect, Qt::AlignHCenter, widget->property("CALIconType").toString());
+					painter->drawText(adjustIconRect, Qt::AlignHCenter, widget->property("CALIcon").toString());
 					break;
 				}
 				default: {
@@ -212,7 +214,7 @@ void CALAwesomeToolButtonStyle::drawIcon(QPainter* painter, QRect iconRect, cons
 	}
 }
 
-void CALAwesomeToolButtonStyle::drawText(QPainter* painter, QRect contentRect, const QStyleOptionToolButton* bopt) const {
+void CALToolButtonStyle::drawText(QPainter* painter, QRect contentRect, const QStyleOptionToolButton* bopt) const {
 	if (!bopt->text.isEmpty()) {
 		painter->setPen(ALThemeColor(m_themeMode, bopt->state.testFlag(QStyle::State_Enabled) ? ALThemeType::BasicText : ALThemeType::BasicTextDisable));
 		switch (bopt->toolButtonStyle) {
@@ -244,11 +246,11 @@ void CALAwesomeToolButtonStyle::drawText(QPainter* painter, QRect contentRect, c
 	}
 }
 
-qreal CALAwesomeToolButtonStyle::calculateExpandIndicatorWidth(const QStyleOptionToolButton* bopt, QPainter* painter) {
+qreal CALToolButtonStyle::calculateExpandIndicatorWidth(const QStyleOptionToolButton* bopt, QPainter* painter) {
 	// 展开指示器
 	const QSize iconSize = bopt->iconSize;
 	painter->save();
-	QFont iconFont("CALAwesome");
+	QFont iconFont(ALIcon::getEnumTypeFontName(ALIcon::Awesome));
 	iconFont.setPixelSize(0.75 * std::min(iconSize.width(), iconSize.height())); // NOLINT
 	painter->setFont(iconFont);
 	const int indicatorWidth = painter->fontMetrics().horizontalAdvance(QChar(static_cast<unsigned short>(ALIcon::AweSomeIcon::AngleDown)));

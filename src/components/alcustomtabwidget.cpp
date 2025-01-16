@@ -1,7 +1,5 @@
 ﻿#include "alcustomtabwidget.hpp"
 
-#include <QIcon>
-#include <QTabBar>
 #include <QVariant>
 #include <QVBoxLayout>
 
@@ -25,10 +23,10 @@ CALCustomTabWidget::CALCustomTabWidget(QWidget* parent): CALCustomWidget(parent)
 	originTabBar->hide();
 	m_customTabBar = new CALTabBar(this);
 	m_customTabBar->setObjectName("CALCustomTabBar");
-	connect(m_customTabBar, &CALTabBar::tabMoved, this, [=](int form, int to) { m_customTabWidget->tabBar()->moveTab(form, to); });
-	connect(m_customTabBar, &CALTabBar::currentChanged, this, [=](int index) { m_customTabWidget->setCurrentIndex(index); });
+	connect(m_customTabBar, &CALTabBar::tabMoved, this, [=](const int form, const int to) { m_customTabWidget->tabBar()->moveTab(form, to); });
+	connect(m_customTabBar, &CALTabBar::currentChanged, this, [=](const int index) { m_customTabWidget->setCurrentIndex(index); });
 	connect(m_customTabBar, &CALTabBar::tabCloseRequested, originTabBar, &QTabBar::tabCloseRequested);
-	connect(m_customTabWidget, &CALTabWidget::currentChanged, this, [=](int index) {
+	connect(m_customTabWidget, &CALTabWidget::currentChanged, this, [=](const int index) {
 		if (index == -1) {
 			close();
 		}
@@ -46,9 +44,8 @@ CALCustomTabWidget::CALCustomTabWidget(QWidget* parent): CALCustomWidget(parent)
 CALCustomTabWidget::~CALCustomTabWidget() {
 	while (m_customTabWidget->count() > 0) {
 		QWidget* closeWidget = m_customTabWidget->widget(0);
-		const auto originTabWidget = closeWidget->property("CALOriginTabWidget").value<CALTabWidget*>();
-		if (originTabWidget) {
-			closeWidget->setProperty("CurrentCustomBar", QVariant::fromValue<CALTabBar*>(nullptr));
+		if (const auto originTabWidget = closeWidget->property("CALOriginTabWidget").value<CALTabWidget*>()) {
+			closeWidget->setProperty("CurrentCustomTabBar", QVariant::fromValue<CALTabBar*>(nullptr));
 			originTabWidget->addTab(closeWidget, m_customTabWidget->tabIcon(0), m_customTabWidget->tabText(0));
 		} else {
 			m_customTabWidget->removeTab(0);
@@ -56,7 +53,7 @@ CALCustomTabWidget::~CALCustomTabWidget() {
 	}
 }
 
-void CALCustomTabWidget::addTab(QWidget* widget, QIcon& tabIcon, const QString& tabTitle) {
+void CALCustomTabWidget::addTab(QWidget* widget, const QIcon& tabIcon, const QString& tabTitle) const {
 	m_customTabBar->addTab(tabIcon, tabTitle);
 	m_customTabWidget->addTab(widget, tabIcon, tabTitle);
 }

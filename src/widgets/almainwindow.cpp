@@ -69,7 +69,7 @@ void CALMainWindowPrivate::slotThemeReadyChange() {
 	// 主题变更绘制窗口
 	appBar->setIsOnlyAllowMinAndClose(true);
 	if (!themeAnimationWidget) {
-		const QPoint centerPos = q->mapFromGlobal(QCursor::pos());
+		const QPoint centerPos = q->rect().center();
 		themeAnimationWidget = new CALThemeAnimationWidget(q);
 		connect(themeAnimationWidget, &CALThemeAnimationWidget::sigAnimationFinished, this, [=]() {
 			appBar->setIsOnlyAllowMinAndClose(false);
@@ -95,6 +95,10 @@ void CALMainWindowPrivate::slotThemeReadyChange() {
 
 void CALMainWindowPrivate::slotDisplayModeChanged() {
 	currentNavigationBarDisplayMode = navigationDisplayMode;
+	if (!isNavigationEnable) {
+		return;
+	}
+
 	switch (currentNavigationBarDisplayMode) {
 		case ALNavigationType::Auto: {
 			appBar->setWindowButtonFlag(ALAppBarType::NavigationButtonHint, false);
@@ -376,32 +380,64 @@ ALNavigationType::NodeOperateReturnType CALMainWindow::addExpanderNode(const QSt
 	return d_func()->navigationBar->addExpanderNode(expanderTitle, expanderKey, awesomeIcon);
 }
 
+ALNavigationType::NodeOperateReturnType CALMainWindow::addExpanderNode(const QString& expanderTitle, QString& expanderKey, const ALIcon::FluentIcon& fluentIcon) const {
+	return d_func()->navigationBar->addExpanderNode(expanderTitle, expanderKey, fluentIcon);
+}
+
 ALNavigationType::NodeOperateReturnType CALMainWindow::addExpanderNode(const QString& expanderTitle, QString& expanderKey, const QString& targetExpanderKey, const ALIcon::AweSomeIcon& awesomeIcon) const {
 	return d_func()->navigationBar->addExpanderNode(expanderTitle, expanderKey, targetExpanderKey, awesomeIcon);
+}
+
+ALNavigationType::NodeOperateReturnType CALMainWindow::addExpanderNode(const QString& expanderTitle, QString& expanderKey, const QString& targetExpanderKey, const ALIcon::FluentIcon& fluentIcon) const {
+	return d_func()->navigationBar->addExpanderNode(expanderTitle, expanderKey, targetExpanderKey, fluentIcon);
 }
 
 ALNavigationType::NodeOperateReturnType CALMainWindow::addPageNode(const QString& pageTitle, QWidget* page, const ALIcon::AweSomeIcon& awesomeIcon) const {
 	return d_func()->navigationBar->addPageNode(pageTitle, page, awesomeIcon);
 }
 
+ALNavigationType::NodeOperateReturnType CALMainWindow::addPageNode(const QString& pageTitle, QWidget* page, const ALIcon::FluentIcon& fluentIcon) const {
+	return d_func()->navigationBar->addPageNode(pageTitle, page, fluentIcon);
+}
+
 ALNavigationType::NodeOperateReturnType CALMainWindow::addPageNode(const QString& pageTitle, QWidget* page, const QString& targetExpanderKey, const ALIcon::AweSomeIcon& awesomeIcon) const {
 	return d_func()->navigationBar->addPageNode(pageTitle, page, targetExpanderKey, awesomeIcon);
+}
+
+ALNavigationType::NodeOperateReturnType CALMainWindow::addPageNode(const QString& pageTitle, QWidget* page, const QString& targetExpanderKey, const ALIcon::FluentIcon& fluentIcon) const {
+	return d_func()->navigationBar->addPageNode(pageTitle, page, targetExpanderKey, fluentIcon);
 }
 
 ALNavigationType::NodeOperateReturnType CALMainWindow::addPageNode(const QString& pageTitle, QWidget* page, const int keyPoints, const ALIcon::AweSomeIcon& awesomeIcon) const {
 	return d_func()->navigationBar->addPageNode(pageTitle, page, keyPoints, awesomeIcon);
 }
 
+ALNavigationType::NodeOperateReturnType CALMainWindow::addPageNode(const QString& pageTitle, QWidget* page, const int keyPoints, const ALIcon::FluentIcon& fluentIcon) const {
+	return d_func()->navigationBar->addPageNode(pageTitle, page, keyPoints, fluentIcon);
+}
+
 ALNavigationType::NodeOperateReturnType CALMainWindow::addPageNode(const QString& pageTitle, QWidget* page, const QString& targetExpanderKey, const int keyPoints, const ALIcon::AweSomeIcon& awesomeIcon) const {
 	return d_func()->navigationBar->addPageNode(pageTitle, page, targetExpanderKey, keyPoints, awesomeIcon);
+}
+
+ALNavigationType::NodeOperateReturnType CALMainWindow::addPageNode(const QString& pageTitle, QWidget* page, const QString& targetExpanderKey, const int keyPoints, const ALIcon::FluentIcon& fluentIcon) const {
+	return d_func()->navigationBar->addPageNode(pageTitle, page, targetExpanderKey, keyPoints, fluentIcon);
 }
 
 ALNavigationType::NodeOperateReturnType CALMainWindow::addFooterNode(const QString& footerTitle, QString& footerKey, const int keyPoints, const ALIcon::AweSomeIcon& awesomeIcon) const {
 	return d_func()->navigationBar->addFooterNode(footerTitle, footerKey, keyPoints, awesomeIcon);
 }
 
+ALNavigationType::NodeOperateReturnType CALMainWindow::addFooterNode(const QString& footerTitle, QString& footerKey, const int keyPoints, const ALIcon::FluentIcon& fluentIcon) const {
+	return d_func()->navigationBar->addFooterNode(footerTitle, footerKey, keyPoints, fluentIcon);
+}
+
 ALNavigationType::NodeOperateReturnType CALMainWindow::addFooterNode(const QString& footerTitle, QWidget* page, QString& footerKey, const int keyPoints, const ALIcon::AweSomeIcon& awesomeIcon) const {
 	return d_func()->navigationBar->addFooterNode(footerTitle, page, footerKey, keyPoints, awesomeIcon);
+}
+
+ALNavigationType::NodeOperateReturnType CALMainWindow::addFooterNode(const QString& footerTitle, QWidget* page, QString& footerKey, const int keyPoints, const ALIcon::FluentIcon& fluentIcon) const {
+	return d_func()->navigationBar->addFooterNode(footerTitle, page, footerKey, keyPoints, fluentIcon);
 }
 
 void CALMainWindow::setNodeKeyPoints(const QString& nodeKey, const int keyPoints) {
@@ -559,7 +595,7 @@ QMenu* CALMainWindow::createPopupMenu() {
 	CALMenu* menu{ nullptr };
 	if (const QList<QDockWidget*> dockWidgets = this->findChildren<QDockWidget*>(); !dockWidgets.isEmpty()) {
 		menu = new CALMenu(this);
-		for (int i = 0; i < dockWidgets.count(); i++) {
+		for (int i = 0; i < dockWidgets.count(); ++i) {
 			if (const QDockWidget* dockWidget = dockWidgets.at(i); dockWidget->parentWidget() == this) {
 				menu->addAction(dockWidget->toggleViewAction());
 			}
@@ -572,7 +608,7 @@ QMenu* CALMainWindow::createPopupMenu() {
 			menu = new CALMenu(this);
 		}
 
-		for (int i = 0; i < toolBars.count(); i++) {
+		for (int i = 0; i < toolBars.count(); ++i) {
 			if (const QToolBar* toolBar = toolBars.at(i); toolBar->parentWidget() == this) {
 				menu->addAction(toolBar->toggleViewAction());
 			}

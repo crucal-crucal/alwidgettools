@@ -22,7 +22,7 @@ public:
 	void setTabPosition(const TabPosition& position);
 
 	void setIsTransparent(bool isTransparent);
-	bool getIsTransparent() const;
+	[[nodiscard]] bool getIsTransparent() const;
 
 Q_SIGNALS:
 	Q_SIGNAL void sigIsTransparentChanged();

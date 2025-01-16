@@ -3,7 +3,7 @@
 #include <QHBoxLayout>
 #include <QPainter>
 
-#include "alawesometoolbutton.hpp"
+#include "altoolbutton.hpp"
 #include "albaselistview.hpp"
 #include "alcolordialog_p.hpp"
 #include "alcolordisplaydelegate.hpp"
@@ -166,7 +166,7 @@ void CALColorDialogPrivate::initBasicColor() const {
 
 void CALColorDialogPrivate::initCustomColor() const {
 	QList<QColor> customColorList{};
-	for (int i = 0; i < 24; i++) {
+	for (int i = 0; i < 24; ++i) {
 		customColorList.append(QColor());
 	}
 	customColorModel->appendDisplayColor(customColorList);
@@ -402,14 +402,14 @@ CALColorDialog::CALColorDialog(QWidget* parent): QDialog(parent), d_ptr(new CALC
 	d->initCustomColor();
 	connect(d->customColorView, &CALBaseListView::clicked, d, &CALColorDialogPrivate::slotCustomColorViewClicked);
 	/// add & remove button
-	d->addCustomColorButton = new CALAwesomeToolButton(this);
+	d->addCustomColorButton = new CALToolButton(this);
 	d->addCustomColorButton->setIsTransparent(false);
 	d->addCustomColorButton->setAweSomeIcon(ALIcon::AweSomeIcon::Plus);
-	connect(d->addCustomColorButton, &CALAwesomeToolButton::clicked, d, &CALColorDialogPrivate::slotAddCustomColorButtonClicked);
-	d->removeCustomColorButton = new CALAwesomeToolButton(this);
+	connect(d->addCustomColorButton, &CALToolButton::clicked, d, &CALColorDialogPrivate::slotAddCustomColorButtonClicked);
+	d->removeCustomColorButton = new CALToolButton(this);
 	d->removeCustomColorButton->setIsTransparent(false);
 	d->removeCustomColorButton->setAweSomeIcon(ALIcon::AweSomeIcon::Minus);
-	connect(d->removeCustomColorButton, &CALAwesomeToolButton::clicked, d, &CALColorDialogPrivate::slotRemoveCustomColorButtonClicked);
+	connect(d->removeCustomColorButton, &CALToolButton::clicked, d, &CALColorDialogPrivate::slotRemoveCustomColorButtonClicked);
 	const auto customColorViewText = new CALText(tr("custom color"), this);
 	customColorViewText->setTextPixelSize(14);
 	const auto customColorHLayout = new QHBoxLayout;

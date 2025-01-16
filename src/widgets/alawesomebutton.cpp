@@ -24,7 +24,7 @@ CALAwesomeButtonPrivate::~CALAwesomeButtonPrivate() = default;
 void CALAwesomeButtonPrivate::init() {
 	Q_Q(CALAwesomeButton);
 
-	iconFont = QFont("CALAwesome");
+	iconFont = QFont(ALIcon::getEnumTypeFontName(ALIcon::Awesome));
 	lightHoverColor = QColor(0xEA, 0xE9, 0xF0);
 	darkHoverColor = QColor(0x2F, 0x2E, 0x2C);
 	lightIconColor = Qt::black;

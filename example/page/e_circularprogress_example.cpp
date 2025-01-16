@@ -39,7 +39,7 @@ E_CircularProgress_Example::E_CircularProgress_Example(QWidget* parent): E_BaseP
 	circularProgress->setColor(colorDialog->getCurrentColor());
 	connect(colorDialog, &CALColorDialog::sigColorSelected, circularProgress, &CALCircularProgress::setColor);
 	const auto circularProgressType = new CALComboBox(this);
-	for (int i = 0; i < metaEnum.keyCount(); i++) {
+	for (int i = 0; i < metaEnum.keyCount(); ++i) {
 		circularProgressType->addItem(metaEnum.key(i));
 	}
 	circularProgressType->setCurrentText(QString(metaEnum.valueToKey(circularProgress->getProgressType())));

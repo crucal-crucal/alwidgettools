@@ -1,5 +1,6 @@
 ﻿#include "alnavigationnode.hpp"
 
+#include <QMetaEnum>
 #include <QUuid>
 
 /**
@@ -47,12 +48,23 @@ QList<CALNavigationNode*> CALNavigationNode::getChildrenNodes() const {
 }
 
 void CALNavigationNode::setAwesomeIcon(const ALIcon::AweSomeIcon& awesomeIcon) {
-	m_awesomeIcon = awesomeIcon;
+	m_iconType = ALIcon::Awesome;
+	setProperty("CALIcon", QChar(static_cast<unsigned short>(awesomeIcon)));
 	Q_EMIT sigAwesomeIconChanged();
 }
 
 ALIcon::AweSomeIcon CALNavigationNode::getAwesomeIcon() const {
-	return m_awesomeIcon;
+	return static_cast<ALIcon::AweSomeIcon>(this->property("CALIcon").toInt());
+}
+
+void CALNavigationNode::setFluentIcon(const ALIcon::FluentIcon& fluentIcon) {
+	m_iconType = ALIcon::Fluent;
+	setProperty("CALIcon", QChar(static_cast<unsigned short>(fluentIcon)));
+	Q_EMIT sigFluentIconChanged();
+}
+
+ALIcon::FluentIcon CALNavigationNode::getFluentIcon() const {
+	return static_cast<ALIcon::FluentIcon>(this->property("CALIcon").toInt());
 }
 
 void CALNavigationNode::setModelIndex(const QModelIndex& modelIndex) {
@@ -223,5 +235,9 @@ bool CALNavigationNode::getIsChildNode(CALNavigationNode* node) { // NOLINT
 
 int CALNavigationNode::getRow() const {
 	return m_parentNode ? m_parentNode->getChildrenNodes().indexOf(const_cast<CALNavigationNode*>(this)) : 0;
+}
+
+ALIcon::IconType CALNavigationNode::getIconType() const {
+	return m_iconType;
 }
 }

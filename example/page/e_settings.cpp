@@ -6,6 +6,7 @@
 
 #include "alapplication.hpp"
 #include "alcombobox.hpp"
+#include "allog.hpp"
 #include "almainwindow.hpp"
 #include "almessagebar.hpp"
 #include "alradiobutton.hpp"
@@ -30,6 +31,10 @@ E_Settings::E_Settings(QWidget* parent): E_BasePage(parent) {
 	initThemeSwitchArea();
 	/// micaSwitchArea
 	initMicaSwitchArea();
+	/// logSwitchArea
+	initLogSwitchArea();
+	/// navigationBarEnabledArea
+	initNavigationBarEnabledArea();
 	/// navigationTypeArea
 	initNavigationDisplayModeArea();
 
@@ -51,7 +56,7 @@ void E_Settings::initThemeSwitchArea() {
 	themeText->setWordWrap(false);
 	themeText->setTextPixelSize(18);
 	const auto themeComboBox = new CALComboBox(this);
-	for (int i = 0; i < metaEnum.keyCount(); i++) {
+	for (int i = 0; i < metaEnum.keyCount(); ++i) {
 		themeComboBox->addItem(metaEnum.key(i));
 	}
 
@@ -116,6 +121,28 @@ void E_Settings::initMicaSwitchArea() {
 	mainVLayout->addWidget(micaSwitchArea);
 }
 
+void E_Settings::initLogSwitchArea() {
+	const auto logSwitchButton = new CALToggleSwitch(this);
+	const auto logSwitchArea = new CALScrollPageArea(this);
+	const auto logSwitchHLayout = new QHBoxLayout(logSwitchArea);
+	const auto logSwitchText = new CALText(tr("open log"), this);
+	logSwitchText->setWordWrap(false);
+	logSwitchText->setTextPixelSize(15);
+	logSwitchHLayout->addWidget(logSwitchText);
+	logSwitchHLayout->addStretch();
+	logSwitchHLayout->addWidget(logSwitchButton);
+	connect(logSwitchButton, &CALToggleSwitch::sigToggleChanged, this, [=](const bool toggled) {
+		CALLog::instance()->setMessageLogEnable(toggled);
+		CALMessageBar::success(tr("log switch"), toggled ? tr("open log success") : tr("close log success"), 2000, ALMessageBarType::Top);
+		if (toggled) {
+			qInfo() << "open log to file";
+		}
+	});
+
+	mainVLayout->addSpacing(10);
+	mainVLayout->addWidget(logSwitchArea);
+}
+
 void E_Settings::initNavigationDisplayModeArea() {
 	const QMetaObject& metaObject = ALNavigationType::staticMetaObject;
 	const QMetaEnum metaEnum = metaObject.enumerator(metaObject.indexOfEnumerator("NavigationDisplayMode"));
@@ -126,13 +153,13 @@ void E_Settings::initNavigationDisplayModeArea() {
 
 	const auto navigationDisplayModeArea = new CALScrollPageArea(this);
 	const auto navigationDisplayModeHLayout = new QHBoxLayout(navigationDisplayModeArea);
-	const auto navigationDisplayModeText = new CALText("navigationDisplayMode", this);
+	const auto navigationDisplayModeText = new CALText(tr("navigationDisplayMode"), this);
 	navigationDisplayModeText->setWordWrap(false);
 	navigationDisplayModeText->setTextPixelSize(15);
 	navigationDisplayModeHLayout->addWidget(navigationDisplayModeText);
 	navigationDisplayModeHLayout->addStretch();
 
-	for (int i = 0; i < metaEnum.keyCount(); i++) {
+	for (int i = 0; i < metaEnum.keyCount(); ++i) {
 		const char* key = metaEnum.key(i);
 		const int value = metaEnum.value(i);
 
@@ -142,7 +169,11 @@ void E_Settings::initNavigationDisplayModeArea() {
 		connect(radioButton, &CALRadioButton::toggled, this, [=](const bool checked) {
 			if (checked) {
 				m_mainWindow->setNavigationDisplayMode(static_cast<ALNavigationType::NavigationDisplayMode>(value));
-				CALMessageBar::success(tr("Navigation Mode switch"), tr("switch to ") + radioButton->text() + tr(" mode success"), 2000, ALMessageBarType::Top);
+				if (m_mainWindow->getIsNavigationBarEnable()) {
+					CALMessageBar::success(tr("Navigation Mode switch"), tr("switch to ") + radioButton->text() + tr(" mode success"), 2000, ALMessageBarType::Top);
+				} else {
+					CALMessageBar::information(tr("Navigation Mode switch"), tr("Navigation Bar is Disabled"), 2000, ALMessageBarType::Top);
+				}
 			}
 		});
 
@@ -151,4 +182,21 @@ void E_Settings::initNavigationDisplayModeArea() {
 
 
 	mainVLayout->addWidget(navigationDisplayModeArea);
+}
+
+void E_Settings::initNavigationBarEnabledArea() {
+	const auto navigationBarEnabledButton = new CALToggleSwitch(this);
+	navigationBarEnabledButton->setIsToggled(true);
+	const auto navigationBarEnabledArea = new CALScrollPageArea(this);
+	const auto navigationBarEnabledHLayout = new QHBoxLayout(navigationBarEnabledArea);
+	const auto navigationBarEnabledText = new CALText(tr("navigation bar enabled"), this);
+	navigationBarEnabledText->setWordWrap(false);
+	navigationBarEnabledText->setTextPixelSize(15);
+	navigationBarEnabledHLayout->addWidget(navigationBarEnabledText);
+	navigationBarEnabledHLayout->addStretch();
+	navigationBarEnabledHLayout->addWidget(navigationBarEnabledButton);
+	connect(navigationBarEnabledButton, &CALToggleSwitch::sigToggleChanged, m_mainWindow, &CALMainWindow::setIsNavigationBarEnable);
+
+	mainVLayout->addSpacing(10);
+	mainVLayout->addWidget(navigationBarEnabledArea);
 }

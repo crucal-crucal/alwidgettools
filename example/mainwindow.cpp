@@ -3,7 +3,7 @@
 #include <QVBoxLayout>
 
 #include "alcontentdialog.hpp"
-#include "alawesometoolbutton.hpp"
+#include "altoolbutton.hpp"
 #include "almenu.hpp"
 #include "almenubar.hpp"
 #include "alstatusbar.hpp"
@@ -25,7 +25,9 @@
 #include "e_messagebar_example.hpp"
 #include "e_circularprogress_example.hpp"
 #include "e_checkbox_example.hpp"
+#include "e_home.hpp"
 #include "e_navigation.hpp"
+#include "e_tabwidget_example.hpp"
 
 using namespace AL;
 
@@ -65,7 +67,7 @@ void MainWindow::initEdgeLayout() {
 	const auto iconMenu = menuBar->addMenu(ALIcon::AweSomeIcon::Aperture, tr("icon menu"));
 	iconMenu->setMenuItemHeight(27);
 	iconMenu->addAction(ALIcon::AweSomeIcon::BoxCheck, tr("sort"), QKeySequence::SelectAll);
-
+	iconMenu->addAction(ALIcon::FluentIcon::Airplane, tr("Airplane"), QKeySequence::SelectAll);
 
 	/// toolBar
 	const auto toolBar = new CALToolBar(tr("Toolbar"), this);
@@ -73,17 +75,17 @@ void MainWindow::initEdgeLayout() {
 	toolBar->setToolBarSpacing(3);
 	toolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
 	toolBar->setIconSize(QSize(25, 25));
-	const auto toolbutton1 = new CALAwesomeToolButton(this);
+	const auto toolbutton1 = new CALToolButton(this);
 	toolbutton1->setAweSomeIcon(ALIcon::AweSomeIcon::BadgeCheck);
 	toolBar->addWidget(toolbutton1);
-	const auto toolbutton2 = new CALAwesomeToolButton(this);
-	toolbutton2->setAweSomeIcon(ALIcon::AweSomeIcon::ChartUser);
+	const auto toolbutton2 = new CALToolButton(this);
+	toolbutton2->setFluentIcon(ALIcon::FluentIcon::Calculator);
 	toolBar->addWidget(toolbutton2);
 	toolBar->addSeparator();
-	const auto toolbutton3 = new CALAwesomeToolButton(this);
-	toolbutton3->setAweSomeIcon(ALIcon::AweSomeIcon::Bluetooth);
+	const auto toolbutton3 = new CALToolButton(this);
+	toolbutton3->setFluentIcon(ALIcon::FluentIcon::Wifi);
 	toolbutton3->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-	toolbutton3->setText(tr("Bluetooth"));
+	toolbutton3->setText(tr("Wifi"));
 	toolBar->addWidget(toolbutton3);
 	this->addToolBar(Qt::TopToolBarArea, toolBar);
 
@@ -96,40 +98,59 @@ void MainWindow::initEdgeLayout() {
 }
 
 void MainWindow::initContent() {
+	/// pageNode
+	// home
+	m_home = new E_Home(this);
+	addPageNode(m_home->windowTitle(), m_home, ALIcon::FluentIcon::Home);
+	// card
 	m_card = new E_Card(this);
-	addPageNode(m_card->windowTitle(), m_card, ALIcon::AweSomeIcon::Cards);
+	addPageNode(m_card->windowTitle(), m_card, ALIcon::FluentIcon::QuickNote);
+	// popup
 	m_popup = new E_Popup(this);
 	addPageNode(m_popup->windowTitle(), m_popup, ALIcon::AweSomeIcon::WindowMaximize);
-	m_icon = new E_Icon(this);
-	addPageNode(m_icon->windowTitle(), m_icon, 99, ALIcon::AweSomeIcon::FontCase);
+	// navigation
 	m_navigation = new E_Navigation(this);
 	addPageNode(m_navigation->windowTitle(), m_navigation, ALIcon::AweSomeIcon::LocationArrow);
 
 	/// expanderNode
-	QString expanderKey{};
-	addExpanderNode("CALBaseComponents", expanderKey, ALIcon::AweSomeIcon::CabinetFiling);
+	// icon
+	QString iconExpanderKey{};
+	addExpanderNode("CALIcon", iconExpanderKey, ALIcon::AweSomeIcon::CabinetFiling);
+	m_fluenticon = new E_Icon(QMetaEnum::fromType<ALIcon::FluentIcon>(), this);
+	m_fluenticon->setWindowTitle("CALFluentIcon");
+	m_fluenticon->init();
+	addPageNode(m_fluenticon->windowTitle(), m_fluenticon, iconExpanderKey, 99, ALIcon::AweSomeIcon::FontCase);
+	m_awesomeicon = new E_Icon(QMetaEnum::fromType<ALIcon::AweSomeIcon>(), this);
+	m_awesomeicon->setWindowTitle("CALIcon");
+	m_awesomeicon->init();
+	addPageNode(m_awesomeicon->windowTitle(), m_awesomeicon, iconExpanderKey, 99, ALIcon::AweSomeIcon::FontCase);
+	// baseComponents
+	QString baseExpanderKey{};
+	addExpanderNode("CALBaseComponents", baseExpanderKey, ALIcon::AweSomeIcon::CabinetFiling);
 	m_toggleSwitchExample = new E_ToggleSwitch_Example(this);
-	addPageNode(m_toggleSwitchExample->windowTitle(), m_toggleSwitchExample, expanderKey, ALIcon::AweSomeIcon::ListCheck);
+	addPageNode(m_toggleSwitchExample->windowTitle(), m_toggleSwitchExample, baseExpanderKey, ALIcon::AweSomeIcon::ListCheck);
 	m_spinBoxExample = new E_SpinBox_Example(this);
-	addPageNode(m_spinBoxExample->windowTitle(), m_spinBoxExample, expanderKey, ALIcon::AweSomeIcon::ListCheck);
+	addPageNode(m_spinBoxExample->windowTitle(), m_spinBoxExample, baseExpanderKey, ALIcon::AweSomeIcon::ListCheck);
 	m_sliderExample = new E_Slider_Example(this);
-	addPageNode(m_sliderExample->windowTitle(), m_sliderExample, expanderKey, ALIcon::AweSomeIcon::ListCheck);
+	addPageNode(m_sliderExample->windowTitle(), m_sliderExample, baseExpanderKey, ALIcon::AweSomeIcon::ListCheck);
 	m_radioButtonExample = new E_RadioButton_Example(this);
-	addPageNode(m_radioButtonExample->windowTitle(), m_radioButtonExample, expanderKey, ALIcon::AweSomeIcon::ListCheck);
+	addPageNode(m_radioButtonExample->windowTitle(), m_radioButtonExample, baseExpanderKey, ALIcon::AweSomeIcon::ListCheck);
 	m_progressBarExample = new E_ProgressBar_Example(this);
-	addPageNode(m_progressBarExample->windowTitle(), m_progressBarExample, expanderKey, ALIcon::AweSomeIcon::ListCheck);
+	addPageNode(m_progressBarExample->windowTitle(), m_progressBarExample, baseExpanderKey, ALIcon::AweSomeIcon::ListCheck);
 	m_plainTextEditExample = new E_PlainTextEdit_Example(this);
-	addPageNode(m_plainTextEditExample->windowTitle(), m_plainTextEditExample, expanderKey, ALIcon::AweSomeIcon::ListCheck);
+	addPageNode(m_plainTextEditExample->windowTitle(), m_plainTextEditExample, baseExpanderKey, ALIcon::AweSomeIcon::ListCheck);
 	m_multiSelectComboboxExample = new E_MultiSelectCombobox_Example(this);
-	addPageNode(m_multiSelectComboboxExample->windowTitle(), m_multiSelectComboboxExample, expanderKey, ALIcon::AweSomeIcon::ListCheck);
+	addPageNode(m_multiSelectComboboxExample->windowTitle(), m_multiSelectComboboxExample, baseExpanderKey, ALIcon::AweSomeIcon::ListCheck);
 	m_messageBarExample = new E_MessageBar_Example(this);
-	addPageNode(m_messageBarExample->windowTitle(), m_messageBarExample, expanderKey, ALIcon::AweSomeIcon::ListCheck);
+	addPageNode(m_messageBarExample->windowTitle(), m_messageBarExample, baseExpanderKey, ALIcon::AweSomeIcon::ListCheck);
 	m_circularProgressExample = new E_CircularProgress_Example(this);
-	addPageNode(m_circularProgressExample->windowTitle(), m_circularProgressExample, expanderKey, ALIcon::AweSomeIcon::ListCheck);
+	addPageNode(m_circularProgressExample->windowTitle(), m_circularProgressExample, baseExpanderKey, ALIcon::AweSomeIcon::ListCheck);
 	m_checkboxExample = new E_CheckBox_Example(this);
-	addPageNode(m_checkboxExample->windowTitle(), m_checkboxExample, expanderKey, ALIcon::AweSomeIcon::ListCheck);
-
-
+	addPageNode(m_checkboxExample->windowTitle(), m_checkboxExample, baseExpanderKey, ALIcon::AweSomeIcon::ListCheck);
+	m_tabWidgetExample = new E_TabWidget_Example(this);
+	addPageNode(m_tabWidgetExample->windowTitle(), m_tabWidgetExample, baseExpanderKey, ALIcon::AweSomeIcon::ListCheck);
+	/// fotterNode
+	// about
 	m_about = new E_About;
 	QString aboutKey{};
 	addFooterNode(m_about->windowTitle(), nullptr, aboutKey, 0, ALIcon::AweSomeIcon::User);
@@ -140,7 +161,7 @@ void MainWindow::initContent() {
 			m_about->show();
 		}
 	});
-
+	// settings
 	m_settings = new E_Settings(this);
 	QString settingKey{};
 	addFooterNode(m_settings->windowTitle(), m_settings, settingKey, 0, ALIcon::AweSomeIcon::GearComplex);

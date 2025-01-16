@@ -4,6 +4,7 @@
 #include <QDebug>
 
 #include "althememanager.hpp"
+#include "e_iconmodel.hpp"
 
 using namespace AL;
 
@@ -33,7 +34,8 @@ void E_IconDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option
 	painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
 	/// icon
 	painter->save();
-	QFont iconFont("CALAwesome");
+	const auto model = qobject_cast<const E_IconModel*>(index.model());
+	QFont iconFont(ALIcon::getEnumTypeFontName(model->getIconType()));
 	iconFont.setPixelSize(22);
 	painter->setFont(iconFont);
 	painter->setPen(ALThemeColor(m_themeMode, ALThemeType::BasicText));

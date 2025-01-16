@@ -1,9 +1,9 @@
 ﻿#include "altoolbarstyle.hpp"
 
-#include <qmath.h>
 #include <QPainter>
 #include <QPainterPath>
 #include <QStyleOptionToolButton>
+#include <QtMath>
 #include <QToolButton>
 
 #include "althememanager.hpp"
@@ -93,7 +93,7 @@ void CALToolBarStyle::drawControl(const ControlElement element, const QStyleOpti
 					}
 					// 展开图标
 					p->setPen(ALThemeColor(m_themeMode, bopt->state.testFlag(QStyle::State_Enabled) ? ALThemeType::BasicText : ALThemeType::BasicTextDisable));
-					QFont iconFont("CALAwesome");
+					QFont iconFont(ALIcon::getEnumTypeFontName(ALIcon::Awesome));
 					iconFont.setPixelSize(18);
 					p->setFont(iconFont);
 					p->drawText(bopt->rect, Qt::AlignCenter, QChar(static_cast<unsigned short>(ALIcon::AweSomeIcon::AngleRight)));
@@ -192,7 +192,7 @@ void CALToolBarStyle::drawIcon(QPainter* painter, const QRect& iconRect, const Q
 		if (!action) {
 			return;
 		}
-		if (action->property("CALIconType").toString().isEmpty()) {
+		if (action->property("CALIconType").toInt() == ALIcon::None) {
 			// QIcon
 			if (const QIcon icon = bopt->icon; !icon.isNull()) {
 				const QPixmap iconPix = icon.pixmap(iconSize, bopt->state.testFlag(QStyle::State_Enabled) ? QIcon::Normal : QIcon::Disabled, bopt->state.testFlag(QStyle::State_Selected) ? QIcon::On : QIcon::Off);
@@ -218,8 +218,8 @@ void CALToolBarStyle::drawIcon(QPainter* painter, const QRect& iconRect, const Q
 			// CALIcon
 			painter->save();
 			painter->setPen(ALThemeColor(m_themeMode, ALThemeType::BasicText));
-			QFont iconFont("CALAwesome");
-			const QString iconText = action->property("CALIconType").toString();
+			QFont iconFont(ALIcon::getEnumTypeFontName(static_cast<ALIcon::IconType>(action->property("CALIconType").toInt())));
+			const QString iconText = action->property("CALIcon").toString();
 			switch (bopt->toolButtonStyle) {
 				case Qt::ToolButtonIconOnly:
 				case Qt::ToolButtonTextBesideIcon:

@@ -19,8 +19,10 @@ class E_Icon final : public E_BasePage {
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE explicit E_Icon(QWidget* parent = nullptr);
+	Q_INVOKABLE explicit E_Icon(const QMetaEnum& metaEnum, QWidget* parent = nullptr);
 	~E_Icon() override;
+
+	void init();
 
 	Q_SLOT void slotSearchEditTextChanged(const QString& searchText) const;
 

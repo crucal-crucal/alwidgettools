@@ -1,5 +1,7 @@
 ﻿#include "alsuggestbox.hpp"
 
+#include <QDebug>
+#include <QMetaEnum>
 #include <QPropertyAnimation>
 #include <QVBoxLayout>
 
@@ -23,38 +25,53 @@ namespace AL {
  * @param parent pointer to the parent class
  */
 CALSuggestion::CALSuggestion(QObject* parent): QObject(parent) {
-	awesomeIcon = ALIcon::AweSomeIcon::None;
-	suggestText = "";
-	suggestData = QVariantMap();
+	m_iconType = ALIcon::None;
+	m_suggestText = "";
+	m_suggestData = QVariantMap();
 }
 
 CALSuggestion::~CALSuggestion() = default;
 
 void CALSuggestion::setAwesomeIcon(const ALIcon::AweSomeIcon& icon) {
-	awesomeIcon = icon;
+	m_iconType = ALIcon::Awesome;
+	setProperty("CALIcon", QChar(static_cast<unsigned short>(icon)));
 	Q_EMIT sigAwesomeIconChanged();
 }
 
 ALIcon::AweSomeIcon CALSuggestion::getAwesomeIcon() const {
-	return awesomeIcon;
+	return static_cast<ALIcon::AweSomeIcon>(this->property("CALIcon").toInt());
+}
+
+void CALSuggestion::setFluentIcon(const ALIcon::FluentIcon& icon) {
+	m_iconType = ALIcon::Fluent;
+	setProperty("CALIcon", QChar(static_cast<unsigned short>(icon)));
+	Q_EMIT sigFluentIconChanged();
+}
+
+ALIcon::FluentIcon CALSuggestion::getFluentIcon() const {
+	return static_cast<ALIcon::FluentIcon>(this->property("CALIcon").toInt());
 }
 
 void CALSuggestion::setSuggestText(const QString& text) {
-	suggestText = text;
+	m_suggestText = text;
 	Q_EMIT sigSuggestTextChanged();
 }
 
 QString CALSuggestion::getSuggestText() const {
-	return suggestText;
+	return m_suggestText;
 }
 
 void CALSuggestion::setSuggestData(const QVariantMap& data) {
-	suggestData = data;
+	m_suggestData = data;
 	Q_EMIT sigSuggestDataChanged();
 }
 
 QVariantMap CALSuggestion::getSuggestData() const {
-	return suggestData;
+	return m_suggestData;
+}
+
+ALIcon::IconType CALSuggestion::getIconType() const {
+	return m_iconType;
 }
 
 /**
@@ -274,6 +291,14 @@ void CALSuggestBox::addSuggestion(const QString& suggestText, const QVariantMap&
 void CALSuggestBox::addSuggestion(const ALIcon::AweSomeIcon& awesomeIcon, const QString& suggestText, const QVariantMap& suggestData) {
 	const auto suggest = new CALSuggestion(this);
 	suggest->setAwesomeIcon(awesomeIcon);
+	suggest->setSuggestText(suggestText);
+	suggest->setSuggestData(suggestData);
+	d_func()->suggestionVector.append(suggest);
+}
+
+void CALSuggestBox::addSuggestion(const ALIcon::FluentIcon& fluentIcon, const QString& suggestText, const QVariantMap& suggestData) {
+	const auto suggest = new CALSuggestion(this);
+	suggest->setFluentIcon(fluentIcon);
 	suggest->setSuggestText(suggestText);
 	suggest->setSuggestData(suggestData);
 	d_func()->suggestionVector.append(suggest);

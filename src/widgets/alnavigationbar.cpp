@@ -6,7 +6,7 @@
 #include <QPainterPath>
 #include <QPropertyAnimation>
 
-#include "alawesometoolbutton.hpp"
+#include "altoolbutton.hpp"
 #include "albaselistview.hpp"
 #include "alcustomwidget.hpp"
 #include "alfooterdelegate.hpp"
@@ -269,7 +269,7 @@ void CALNavigationBarPrivate::expandSelectedNodeParent() const {
 
 void CALNavigationBarPrivate::initNodeModelIndex(const QModelIndex& parentIndex) { // NOLINT
 	const int rowCount = navigationModel->rowCount(parentIndex);
-	for (int row = 0; row < rowCount; row++) {
+	for (int row = 0; row < rowCount; ++row) {
 		QModelIndex index = navigationModel->index(row, 0, parentIndex);
 		const auto childNode = static_cast<CALNavigationNode*>(index.internalPointer());
 		childNode->setModelIndex(index);
@@ -290,7 +290,11 @@ void CALNavigationBarPrivate::addStackedPage(QWidget* page, const QString& pageK
 	QVariantMap suggestData{};
 	suggestData.insert("CALNodeType", "Stacked");
 	suggestData.insert("CALPageKey", pageKey);
-	navigationSuggestBox->addSuggestion(node->getAwesomeIcon(), node->getNodeTitle(), suggestData);
+	if (node->getIconType() == ALIcon::Awesome) {
+		navigationSuggestBox->addSuggestion(node->getAwesomeIcon(), node->getNodeTitle(), suggestData);
+	} else {
+		navigationSuggestBox->addSuggestion(node->getFluentIcon(), node->getNodeTitle(), suggestData);
+	}
 }
 
 void CALNavigationBarPrivate::addFooterPage(QWidget* page, const QString& footKey) {
@@ -305,7 +309,11 @@ void CALNavigationBarPrivate::addFooterPage(QWidget* page, const QString& footKe
 	QVariantMap suggestData{};
 	suggestData.insert("CALNodeType", "Footer");
 	suggestData.insert("CALPageKey", footKey);
-	navigationSuggestBox->addSuggestion(node->getAwesomeIcon(), node->getNodeTitle(), suggestData);
+	if (node->getIconType() == ALIcon::Awesome) {
+		navigationSuggestBox->addSuggestion(node->getAwesomeIcon(), node->getNodeTitle(), suggestData);
+	} else {
+		navigationSuggestBox->addSuggestion(node->getFluentIcon(), node->getNodeTitle(), suggestData);
+	}
 }
 
 void CALNavigationBarPrivate::raiseNavigationBar() {
@@ -566,18 +574,18 @@ CALNavigationBar::CALNavigationBar(QWidget* parent): QWidget(parent), d_ptr(new 
 
 	/// Search bar and button group
 	// navigation button
-	d->navigationButton = new CALAwesomeToolButton(this);
+	d->navigationButton = new CALToolButton(this);
 	d->navigationButton->setFixedSize(40, 38);
 	d->navigationButton->setAweSomeIcon(ALIcon::AweSomeIcon::Bars);
 	d->navigationButton->setBorderRadius(8);
-	connect(d->navigationButton, &CALAwesomeToolButton::clicked, d, &CALNavigationBarPrivate::slotNavigationButtonClicked);
+	connect(d->navigationButton, &CALToolButton::clicked, d, &CALNavigationBarPrivate::slotNavigationButtonClicked);
 	// search button
-	d->searchButton = new CALAwesomeToolButton(this);
+	d->searchButton = new CALToolButton(this);
 	d->searchButton->setFixedSize(40, 38);
 	d->searchButton->setAweSomeIcon(ALIcon::AweSomeIcon::MagnifyingGlass);
 	d->searchButton->setBorderRadius(8);
 	d->searchButton->setVisible(false);
-	connect(d->searchButton, &CALAwesomeToolButton::clicked, d, &CALNavigationBarPrivate::slotNavigationButtonClicked);
+	connect(d->searchButton, &CALToolButton::clicked, d, &CALNavigationBarPrivate::slotNavigationButtonClicked);
 	// navigation suggest box
 	d->navigationSuggestBox = new CALSuggestBox(this);
 	d->navigationSuggestBox->setMinimumWidth(0);
@@ -695,10 +703,34 @@ ALNavigationType::NodeOperateReturnType CALNavigationBar::addExpanderNode(const 
 	return resType;
 }
 
+ALNavigationType::NodeOperateReturnType CALNavigationBar::addExpanderNode(const QString& expanderTitle, QString& expanderKey, const ALIcon::FluentIcon& fluentIcon) {
+	Q_D(CALNavigationBar);
+
+	const ALNavigationType::NodeOperateReturnType resType = d->navigationModel->addExpanderNode(expanderTitle, expanderKey, fluentIcon);
+	if (resType == ALNavigationType::Success) {
+		d->initNodeModelIndex({});
+		d->resetNodeSelected();
+	}
+
+	return resType;
+}
+
 ALNavigationType::NodeOperateReturnType CALNavigationBar::addExpanderNode(const QString& expanderTitle, QString& expanderKey, const QString& targetExpanderKey, const ALIcon::AweSomeIcon& awewomeIcon) {
 	Q_D(CALNavigationBar);
 
 	const ALNavigationType::NodeOperateReturnType resType = d->navigationModel->addExpanderNode(expanderTitle, expanderKey, targetExpanderKey, awewomeIcon);
+	if (resType == ALNavigationType::Success) {
+		d->initNodeModelIndex({});
+		d->resetNodeSelected();
+	}
+
+	return resType;
+}
+
+ALNavigationType::NodeOperateReturnType CALNavigationBar::addExpanderNode(const QString& expanderTitle, QString& expanderKey, const QString& targetExpanderKey, const ALIcon::FluentIcon& fluentIcon) {
+	Q_D(CALNavigationBar);
+
+	const ALNavigationType::NodeOperateReturnType resType = d->navigationModel->addExpanderNode(expanderTitle, expanderKey, targetExpanderKey, fluentIcon);
 	if (resType == ALNavigationType::Success) {
 		d->initNodeModelIndex({});
 		d->resetNodeSelected();
@@ -715,6 +747,24 @@ ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QStr
 
 	QString pageKey{};
 	const ALNavigationType::NodeOperateReturnType resType = d->navigationModel->addPageNode(pageTitle, pageKey, awewomeIcon);
+	if (resType == ALNavigationType::Success) {
+		d->mapPageMeta.insert(pageKey, page->metaObject());
+		d->addStackedPage(page, pageKey);
+		d->initNodeModelIndex({});
+		d->resetNodeSelected();
+	}
+
+	return resType;
+}
+
+ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QString& pageTitle, QWidget* page, const ALIcon::FluentIcon& fluentIcon) {
+	Q_D(CALNavigationBar);
+	if (!page) {
+		return ALNavigationType::PageInvalid;
+	}
+
+	QString pageKey{};
+	const ALNavigationType::NodeOperateReturnType resType = d->navigationModel->addPageNode(pageTitle, pageKey, fluentIcon);
 	if (resType == ALNavigationType::Success) {
 		d->mapPageMeta.insert(pageKey, page->metaObject());
 		d->addStackedPage(page, pageKey);
@@ -757,6 +807,38 @@ ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QStr
 	return resType;
 }
 
+ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QString& pageTitle, QWidget* page, const QString& targetExpanderKey, const ALIcon::FluentIcon& fluentIcon) {
+	Q_D(CALNavigationBar);
+	if (!page) {
+		return ALNavigationType::PageInvalid;
+	}
+	if (targetExpanderKey.isEmpty()) {
+		return ALNavigationType::TargetNodeInvalid;
+	}
+
+	QString pageKey{};
+	const ALNavigationType::NodeOperateReturnType resType = d->navigationModel->addPageNode(pageTitle, pageKey, targetExpanderKey, fluentIcon);
+	if (resType == ALNavigationType::Success) {
+		d->mapPageMeta.insert(pageKey, page->metaObject());
+		CALNavigationNode* node = d->navigationModel->getNavigationNode(pageKey);
+		if (CALNavigationNode* originalNode = node->getOriginalNode(); d->mapCompactMenu.contains(originalNode)) {
+			CALMenu* menu = d->mapCompactMenu.value(originalNode);
+			const QAction* action = menu->addAction(node->getAwesomeIcon(), node->getNodeTitle());
+			connect(action, &QAction::triggered, this, [=]() { d->slotTreeViewClicked(node->getModelIndex()); });
+		} else {
+			const auto menu = new CALMenu(const_cast<CALNavigationBar*>(this));
+			const QAction* action = menu->addAction(node->getAwesomeIcon(), node->getNodeTitle());
+			connect(action, &QAction::triggered, this, [=]() { d->slotTreeViewClicked(node->getModelIndex()); });
+			d->mapCompactMenu.insert(originalNode, menu);
+		}
+		d->addStackedPage(page, pageKey);
+		d->initNodeModelIndex({});
+		d->resetNodeSelected();
+	}
+
+	return resType;
+}
+
 ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QString& pageTitle, QWidget* page, const int keyPoints, const ALIcon::AweSomeIcon& awewomeIcon) {
 	Q_D(CALNavigationBar);
 	if (!page) {
@@ -765,6 +847,24 @@ ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QStr
 
 	QString pageKey{};
 	const ALNavigationType::NodeOperateReturnType resType = d->navigationModel->addPageNode(pageTitle, pageKey, keyPoints, awewomeIcon);
+	if (resType == ALNavigationType::Success) {
+		d->mapPageMeta.insert(pageKey, page->metaObject());
+		d->addStackedPage(page, pageKey);
+		d->initNodeModelIndex({});
+		d->resetNodeSelected();
+	}
+
+	return resType;
+}
+
+ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QString& pageTitle, QWidget* page, const int keyPoints, const ALIcon::FluentIcon& fluentIcon) {
+	Q_D(CALNavigationBar);
+	if (!page) {
+		return ALNavigationType::PageInvalid;
+	}
+
+	QString pageKey{};
+	const ALNavigationType::NodeOperateReturnType resType = d->navigationModel->addPageNode(pageTitle, pageKey, keyPoints, fluentIcon);
 	if (resType == ALNavigationType::Success) {
 		d->mapPageMeta.insert(pageKey, page->metaObject());
 		d->addStackedPage(page, pageKey);
@@ -807,14 +907,61 @@ ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QStr
 	return resType;
 }
 
+ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QString& pageTitle, QWidget* page, const QString& targetExpanderKey, const int keyPoints, const ALIcon::FluentIcon& fluentIcon) {
+	Q_D(CALNavigationBar);
+	if (!page) {
+		return ALNavigationType::PageInvalid;
+	}
+	if (targetExpanderKey.isEmpty()) {
+		return ALNavigationType::TargetNodeInvalid;
+	}
+
+	QString pageKey{};
+	const ALNavigationType::NodeOperateReturnType resType = d->navigationModel->addPageNode(pageTitle, pageKey, targetExpanderKey, keyPoints, fluentIcon);
+	if (resType == ALNavigationType::Success) {
+		d->mapPageMeta.insert(pageKey, page->metaObject());
+		CALNavigationNode* node = d->navigationModel->getNavigationNode(pageKey);
+		if (CALNavigationNode* originalNode = node->getOriginalNode(); d->mapCompactMenu.contains(originalNode)) {
+			CALMenu* menu = d->mapCompactMenu.value(originalNode);
+			const QAction* action = menu->addAction(node->getAwesomeIcon(), node->getNodeTitle());
+			connect(action, &QAction::triggered, this, [=]() { d->slotTreeViewClicked(node->getModelIndex()); });
+		} else {
+			const auto menu = new CALMenu(const_cast<CALNavigationBar*>(this));
+			const QAction* action = menu->addAction(node->getAwesomeIcon(), node->getNodeTitle());
+			connect(action, &QAction::triggered, this, [=]() { d->slotTreeViewClicked(node->getModelIndex()); });
+			d->mapCompactMenu.insert(originalNode, menu);
+		}
+		d->addStackedPage(page, pageKey);
+		d->initNodeModelIndex({});
+		d->resetNodeSelected();
+	}
+
+	return resType;
+}
+
 ALNavigationType::NodeOperateReturnType CALNavigationBar::addFooterNode(const QString& footerTitle, QString& footerKey, const int keyPoints, const ALIcon::AweSomeIcon& awewomeIcon) {
 	return addFooterNode(footerTitle, nullptr, footerKey, keyPoints, awewomeIcon);
+}
+
+ALNavigationType::NodeOperateReturnType CALNavigationBar::addFooterNode(const QString& footerTitle, QString& footerKey, const int keyPoints, const ALIcon::FluentIcon& fluentIcon) {
+	return addFooterNode(footerTitle, nullptr, footerKey, keyPoints, fluentIcon);
 }
 
 ALNavigationType::NodeOperateReturnType CALNavigationBar::addFooterNode(const QString& footerTitle, QWidget* page, QString& footerKey, const int keyPoints, const ALIcon::AweSomeIcon& awewomeIcon) {
 	Q_D(CALNavigationBar);
 
 	const auto resType = d->footerModel->addFooterNode(footerTitle, footerKey, page ? true : false, keyPoints, awewomeIcon);
+	if (resType == ALNavigationType::Success) {
+		d->addFooterPage(page, footerKey);
+	}
+
+	return resType;
+}
+
+ALNavigationType::NodeOperateReturnType CALNavigationBar::addFooterNode(const QString& footerTitle, QWidget* page, QString& footerKey, const int keyPoints, const ALIcon::FluentIcon& fluentIcon) {
+	Q_D(CALNavigationBar);
+
+	const auto resType = d->footerModel->addFooterNode(footerTitle, footerKey, page ? true : false, keyPoints, fluentIcon);
 	if (resType == ALNavigationType::Success) {
 		d->addFooterPage(page, footerKey);
 	}

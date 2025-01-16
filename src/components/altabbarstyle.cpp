@@ -34,7 +34,7 @@ void CALTabBarStyle::drawPrimitive(const PrimitiveElement pe, const QStyleOption
 				p->setBrush(ALThemeColor(m_themeMode, ALThemeType::BasicHoverAlpha));
 				p->drawRoundedRect(opt->rect, 2, 2);
 			}
-			QFont iconFont("CALAwesome");
+			QFont iconFont(ALIcon::getEnumTypeFontName(ALIcon::Awesome));
 			iconFont.setPixelSize(16);
 			p->setFont(iconFont);
 			p->setPen(ALThemeColor(m_themeMode, ALThemeType::BasicText));

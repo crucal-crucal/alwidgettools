@@ -91,7 +91,7 @@ void CALMultiSelectComboBoxPrivate::refreshCurrentIndexs() {
 	adjustSelectedVector();
 	QVector<bool> selectedIndexVector{};
 	bool allSelected = true;
-	for (int i = 0; i < q->count(); i++) {
+	for (int i = 0; i < q->count(); ++i) {
 		QModelIndex index = q->model()->index(i, 0);
 		if (itemSelection[i]) {
 			comboBoxView->selectionModel()->select(index, QItemSelectionModel::Select | QItemSelectionModel::Rows);
@@ -201,7 +201,7 @@ void CALMultiSelectComboBox::setCurrentSelection(const QString& selection) {
 
 	d->itemSelection.fill(false);
 	d->comboBoxView->selectionModel()->clearSelection();
-	for (int i = 0; i < this->count(); i++) {
+	for (int i = 0; i < this->count(); ++i) {
 		if (selection == itemText(i)) {
 			QModelIndex index = model()->index(i, 0);
 			d->comboBoxView->selectionModel()->select(index, QItemSelectionModel::Select | QItemSelectionModel::Rows);
@@ -216,7 +216,7 @@ void CALMultiSelectComboBox::setCurrentSelection(const QStringList& selection) {
 
 	d->itemSelection.fill(false);
 	d->comboBoxView->selectionModel()->clearSelection();
-	for (int i = 0; i < this->count(); i++) {
+	for (int i = 0; i < this->count(); ++i) {
 		if (selection.contains(itemText(i))) {
 			QModelIndex index = model()->index(i, 0);
 			d->comboBoxView->selectionModel()->select(index, QItemSelectionModel::Select | QItemSelectionModel::Rows);
@@ -267,7 +267,7 @@ QList<int> CALMultiSelectComboBox::getCurrentSelectionIndex() const {
 	Q_D(const CALMultiSelectComboBox);
 
 	QList<int> indexList{};
-	for (int i = 0; i < d->itemSelection.size(); i++) {
+	for (int i = 0; i < d->itemSelection.size(); ++i) {
 		if (d->itemSelection[i]) {
 			indexList.append(i);
 		}
@@ -338,7 +338,7 @@ void CALMultiSelectComboBox::paintEvent(QPaintEvent* event) {
 	// 展开图标绘制
 	if (count() > 0) {
 		painter.save();
-		QFont iconFont("CALAwesome");
+		QFont iconFont(ALIcon::getEnumTypeFontName(ALIcon::Awesome));
 		iconFont.setPixelSize(17);
 		painter.setFont(iconFont);
 		painter.setPen(ALThemeColor(d->themeMode, isEnabled() ? ALThemeType::BasicText : ALThemeType::BasicTextDisable));

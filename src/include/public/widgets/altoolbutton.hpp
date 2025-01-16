@@ -9,17 +9,17 @@
  */
 namespace AL {
 class CALMenu;
-class CALAwesomeToolButtonPrivate;
+class CALToolButtonPrivate;
 
-class CALWIDGETTOOLS_EXPORT CALAwesomeToolButton : public QToolButton {
+class CALWIDGETTOOLS_EXPORT CALToolButton : public QToolButton {
 	Q_OBJECT
-	Q_DECLARE_PRIVATE(CALAwesomeToolButton)
+	Q_DECLARE_PRIVATE(CALToolButton)
 	Q_PROPERTY(int borderRadius READ getBorderRadius WRITE setBorderRadius NOTIFY sigBorderRadiusChanged)
 	Q_PROPERTY(bool isSelected READ getIsSelected WRITE setIsSelected NOTIFY sigSelectedChanged)
 
 public:
-	explicit CALAwesomeToolButton(QWidget* parent = nullptr);
-	~CALAwesomeToolButton() override;
+	explicit CALToolButton(QWidget* parent = nullptr);
+	~CALToolButton() override;
 
 	void setBorderRadius(int borderRadius);
 	[[nodiscard]] int getBorderRadius() const;
@@ -31,7 +31,8 @@ public:
 	[[nodiscard]] bool getIsTransparent() const;
 
 	void setMenu(CALMenu* menu);
-	void setAweSomeIcon(const ALIcon::AweSomeIcon& icon);
+	void setAweSomeIcon(const ALIcon::AweSomeIcon& awewomeicon);
+	void setFluentIcon(const ALIcon::FluentIcon& fluenticon);
 
 	void setToolTip(const QString& tooltip);
 
@@ -40,7 +41,7 @@ signals:
 	void sigSelectedChanged();
 
 protected:
-	const QScopedPointer<CALAwesomeToolButtonPrivate> d_ptr{ nullptr };
+	const QScopedPointer<CALToolButtonPrivate> d_ptr{ nullptr };
 
 	bool eventFilter(QObject* watched, QEvent* event) override;
 };
