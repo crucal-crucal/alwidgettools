@@ -113,7 +113,7 @@ void CALListViewStyle::drawControl(const ControlElement element, const QStyleOpt
 				// text
 				if (!vopt->text.isEmpty()) {
 					p->setPen(ALThemeColor(m_themeMode, ALThemeType::BasicText));
-					p->drawText(textRect, vopt->decorationAlignment, vopt->text);
+					p->drawText(textRect, vopt->displayAlignment, vopt->text);
 				}
 				// selected
 				if (vopt->state.testFlag(QStyle::State_Selected) && viewMode == QListView::ListMode) {

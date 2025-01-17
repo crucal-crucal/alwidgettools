@@ -249,7 +249,7 @@ void CALNavigationStyle::drawControl(const ControlElement element, const QStyleO
 						if (node->getIsHasChild()) {
 							p->save();
 							const QRectF expandIconRect(itemRect.right() - m_indicatorIconAreaWidth, itemRect.y(), 17, itemRect.height());
-							QFont iconFont(ALIcon::getEnumTypeFontName(node->getIconType()));
+							QFont iconFont(ALIcon::getEnumTypeFontName(ALIcon::Awesome));
 							iconFont.setPixelSize(17);
 							p->setFont(iconFont);
 							p->translate(expandIconRect.x() + expandIconRect.width() / 2.0, expandIconRect.y() + expandIconRect.height() / 2.0);

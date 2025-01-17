@@ -112,7 +112,7 @@ void E_Home::initPopularArea() {
 	const auto toggleSwitchCard = new CALPopularCard(this);
 	toggleSwitchCard->setCardPixmap(QPixmap(":example/home/toggleswitch.png"));
 	toggleSwitchCard->setTitle("Toggle Switch");
-	toggleSwitchCard->setSubTitle("A custom toggle switch widget");
+	toggleSwitchCard->setSubTitle("A custom toggleSwitch widget");
 	toggleSwitchCard->setDetailedText("Toggle Switch is a custom widget that provides a toggle switch with a custom style and animation effect.");
 	toggleSwitchCard->setCardFloatPixmap(QPixmap(":example/home/toggleswitch.png"));
 	connect(toggleSwitchCard, &CALPopularCard::sigPopularCardButtonClicked, this, &E_Home::sigToggleSwitchCardClicked);
@@ -121,7 +121,7 @@ void E_Home::initPopularArea() {
 	const auto spinBoxCard = new CALPopularCard(this);
 	spinBoxCard->setCardPixmap(QPixmap(":example/home/spinbox.png"));
 	spinBoxCard->setTitle("Spin Box");
-	spinBoxCard->setSubTitle("A custom spin box widget");
+	spinBoxCard->setSubTitle("A custom spinBox widget");
 	spinBoxCard->setDetailedText("Spin Box is a custom widget that provides a spin box with a custom style and animation effect.");
 	spinBoxCard->setCardFloatPixmap(QPixmap(":example/home/spinbox.png"));
 	connect(spinBoxCard, &CALPopularCard::sigPopularCardButtonClicked, this, &E_Home::sigSpinBoxCardClicked);
@@ -139,7 +139,7 @@ void E_Home::initPopularArea() {
 	const auto radioButtonCard = new CALPopularCard(this);
 	radioButtonCard->setCardPixmap(QPixmap(":example/home/radiobutton.png"));
 	radioButtonCard->setTitle("Radio Button");
-	radioButtonCard->setSubTitle("A custom radio button widget");
+	radioButtonCard->setSubTitle("A custom radioButton widget");
 	radioButtonCard->setDetailedText("Radio Button is a custom widget that provides a radio button with a custom style and animation effect.");
 	radioButtonCard->setCardFloatPixmap(QPixmap(":example/home/radiobutton.png"));
 	connect(radioButtonCard, &CALPopularCard::sigPopularCardButtonClicked, this, &E_Home::sigRadioButtonCardClicked);
@@ -148,7 +148,7 @@ void E_Home::initPopularArea() {
 	const auto progressBarCard = new CALPopularCard(this);
 	progressBarCard->setCardPixmap(QPixmap(":example/home/progressbar.png"));
 	progressBarCard->setTitle("Progress Bar");
-	progressBarCard->setSubTitle("A custom progress bar widget");
+	progressBarCard->setSubTitle("A custom progressBar widget");
 	progressBarCard->setDetailedText("Progress Bar is a custom widget that provides a progress bar with a custom style and animation effect.");
 	progressBarCard->setCardFloatPixmap(QPixmap(":example/home/progressbar.png"));
 	connect(progressBarCard, &CALPopularCard::sigPopularCardButtonClicked, this, &E_Home::sigProgressBarCardClicked);
@@ -157,7 +157,7 @@ void E_Home::initPopularArea() {
 	const auto plainTextEditCard = new CALPopularCard(this);
 	plainTextEditCard->setCardPixmap(QPixmap(":example/home/edit.png"));
 	plainTextEditCard->setTitle("Plain Text Edit");
-	plainTextEditCard->setSubTitle("A custom plain text edit widget");
+	plainTextEditCard->setSubTitle("A custom plainTextEdit widget");
 	plainTextEditCard->setDetailedText("Plain Text Edit is a custom widget that provides a plain text edit with a custom style and animation effect.");
 	plainTextEditCard->setCardFloatPixmap(QPixmap(":example/home/edit.png"));
 	connect(plainTextEditCard, &CALPopularCard::sigPopularCardButtonClicked, this, &E_Home::sigPlainTextEditCardClicked);
@@ -166,8 +166,8 @@ void E_Home::initPopularArea() {
 	const auto mutiSelectComboBoxCard = new CALPopularCard(this);
 	mutiSelectComboBoxCard->setCardPixmap(QPixmap(":example/home/combobox.png"));
 	mutiSelectComboBoxCard->setTitle("Muti Select ComboBox");
-	mutiSelectComboBoxCard->setSubTitle("A custom muti select combo box widget");
-	mutiSelectComboBoxCard->setDetailedText("Muti Select ComboBox is a custom widget that provides a muti select combo box with a custom style and animation effect.");
+	mutiSelectComboBoxCard->setSubTitle("A custom mutiSelectcomboBox widget");
+	mutiSelectComboBoxCard->setDetailedText("Muti Select ComboBox is a custom widget that provides a muti select combobox with a custom style and animation effect.");
 	mutiSelectComboBoxCard->setCardFloatPixmap(QPixmap(":example/home/combobox.png"));
 	connect(mutiSelectComboBoxCard, &CALPopularCard::sigPopularCardButtonClicked, this, &E_Home::sigMutiSelectComboBoxCardClicked);
 	flowLayout->addWidget(mutiSelectComboBoxCard);
@@ -175,7 +175,7 @@ void E_Home::initPopularArea() {
 	const auto messageBarCard = new CALPopularCard(this);
 	messageBarCard->setCardPixmap(QPixmap(":example/home/messagebar.png"));
 	messageBarCard->setTitle("Message Bar");
-	messageBarCard->setSubTitle("A custom message bar widget");
+	messageBarCard->setSubTitle("A custom messageBar widget");
 	messageBarCard->setDetailedText("Message Bar is a custom widget that provides a message bar with a custom style and animation effect.");
 	messageBarCard->setCardFloatPixmap(QPixmap(":example/home/messagebar.png"));
 	connect(messageBarCard, &CALPopularCard::sigPopularCardButtonClicked, this, &E_Home::sigMessageBarCardClicked);
@@ -184,7 +184,7 @@ void E_Home::initPopularArea() {
 	const auto circularProgressCard = new CALPopularCard(this);
 	circularProgressCard->setCardPixmap(QPixmap(":example/home/circularprogressbar.png"));
 	circularProgressCard->setTitle("Circular Progress");
-	circularProgressCard->setSubTitle("A custom circular progress widget");
+	circularProgressCard->setSubTitle("A custom circularProgress widget");
 	circularProgressCard->setDetailedText("Circular Progress is a custom widget that provides a circular progress with a custom style and animation effect.");
 	circularProgressCard->setCardFloatPixmap(QPixmap(":example/home/circularprogressbar.png"));
 	connect(circularProgressCard, &CALPopularCard::sigPopularCardButtonClicked, this, &E_Home::sigCircularProgressCardClicked);
@@ -193,7 +193,7 @@ void E_Home::initPopularArea() {
 	const auto checkBoxCard = new CALPopularCard(this);
 	checkBoxCard->setCardPixmap(QPixmap(":example/home/checkbox.png"));
 	checkBoxCard->setTitle("Check Box");
-	checkBoxCard->setSubTitle("A custom check box widget");
+	checkBoxCard->setSubTitle("A custom checkBox widget");
 	checkBoxCard->setDetailedText("Check Box is a custom widget that provides a check box with a custom style and animation effect.");
 	checkBoxCard->setCardFloatPixmap(QPixmap(":example/home/checkbox.png"));
 	connect(checkBoxCard, &CALPopularCard::sigPopularCardButtonClicked, this, &E_Home::sigCheckBoxCardClicked);
@@ -202,11 +202,29 @@ void E_Home::initPopularArea() {
 	const auto tabWidgetCard = new CALPopularCard(this);
 	tabWidgetCard->setCardPixmap(QPixmap(":example/home/tabwidget.png"));
 	tabWidgetCard->setTitle("Tab Widget");
-	tabWidgetCard->setSubTitle("A custom tab widget");
+	tabWidgetCard->setSubTitle("A custom tabWidget");
 	tabWidgetCard->setDetailedText("Tab Widget is a custom widget that provides a tab widget with a custom style and animation effect.");
 	tabWidgetCard->setCardFloatPixmap(QPixmap(":example/home/tabwidget.png"));
 	connect(tabWidgetCard, &CALPopularCard::sigPopularCardButtonClicked, this, &E_Home::sigTabWidgetCardClicked);
 	flowLayout->addWidget(tabWidgetCard);
+
+	const auto listViewCard = new CALPopularCard(this);
+	listViewCard->setCardPixmap(QPixmap(":example/home/listview.png"));
+	listViewCard->setTitle("List View");
+	listViewCard->setSubTitle("A custom listView widget");
+	listViewCard->setDetailedText("List View is a custom widget that provides a list view with a custom style and animation effect.");
+	listViewCard->setCardFloatPixmap(QPixmap(":example/home/listview.png"));
+	connect(listViewCard, &CALPopularCard::sigPopularCardButtonClicked, this, &E_Home::sigListViewCardClicked);
+	flowLayout->addWidget(listViewCard);
+
+	const auto tableView = new CALPopularCard(this);
+	tableView->setCardPixmap(QPixmap(":example/home/tableview.png"));
+	tableView->setTitle("Table View");
+	tableView->setSubTitle("A custom tableView widget");
+	tableView->setDetailedText("Table View is a custom widget that provides a table view with a custom style and animation effect.");
+	tableView->setCardFloatPixmap(QPixmap(":example/home/tableview.png"));
+	connect(tableView, &CALPopularCard::sigPopularCardButtonClicked, this, &E_Home::sigTableViewCardClicked);
+	flowLayout->addWidget(tableView);
 
 	mainVLayout->addLayout(flowTextHAlyout);
 	mainVLayout->addSpacing(10);

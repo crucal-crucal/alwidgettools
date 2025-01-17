@@ -19,5 +19,7 @@
         <file>home/spinbox.png</file>
         <file>home/tabwidget.png</file>
         <file>home/toggleswitch.png</file>
+        <file>home/listview.png</file>
+        <file>home/tableview.png</file>
     </qresource>
 </RCC>

@@ -3,31 +3,33 @@
 #include <QVBoxLayout>
 
 #include "alcontentdialog.hpp"
-#include "altoolbutton.hpp"
 #include "almenu.hpp"
 #include "almenubar.hpp"
 #include "alstatusbar.hpp"
 #include "altext.hpp"
 #include "altoolbar.hpp"
+#include "altoolbutton.hpp"
 
 #include "e_about.hpp"
 #include "e_card.hpp"
-#include "e_icon.hpp"
-#include "e_popup.hpp"
-#include "e_settings.hpp"
-#include "e_toggleswitch_example.hpp"
-#include "e_slider_example.hpp"
-#include "e_radiobutton_example.hpp"
-#include "e_spinbox_example.hpp"
-#include "e_progressbar_example.hpp"
-#include "e_plaintextedit_example.hpp"
-#include "e_multiselectcombobox_example.hpp"
-#include "e_messagebar_example.hpp"
-#include "e_circularprogress_example.hpp"
 #include "e_checkbox_example.hpp"
+#include "e_circularprogress_example.hpp"
 #include "e_home.hpp"
+#include "e_icon.hpp"
+#include "e_listview.hpp"
+#include "e_messagebar_example.hpp"
+#include "e_multiselectcombobox_example.hpp"
 #include "e_navigation.hpp"
+#include "e_plaintextedit_example.hpp"
+#include "e_popup.hpp"
+#include "e_progressbar_example.hpp"
+#include "e_radiobutton_example.hpp"
+#include "e_settings.hpp"
+#include "e_slider_example.hpp"
+#include "e_spinbox_example.hpp"
+#include "e_tableview.hpp"
 #include "e_tabwidget_example.hpp"
+#include "e_toggleswitch_example.hpp"
 
 using namespace AL;
 
@@ -149,6 +151,13 @@ void MainWindow::initContent() {
 	addPageNode(m_checkboxExample->windowTitle(), m_checkboxExample, baseExpanderKey, ALIcon::AweSomeIcon::ListCheck);
 	m_tabWidgetExample = new E_TabWidget_Example(this);
 	addPageNode(m_tabWidgetExample->windowTitle(), m_tabWidgetExample, baseExpanderKey, ALIcon::AweSomeIcon::ListCheck);
+	// view
+	QString viewExpanderKey{};
+	addExpanderNode("CALView", viewExpanderKey, ALIcon::FluentIcon::List);
+	m_listView = new E_ListView(this);
+	addPageNode(m_listView->windowTitle(), m_listView, viewExpanderKey, ALIcon::FluentIcon::BulletedList);
+	m_tableView = new E_TableView(this);
+	addPageNode(m_tableView->windowTitle(), m_tableView, viewExpanderKey, ALIcon::FluentIcon::Tablet);
 	/// fotterNode
 	// about
 	m_about = new E_About;
@@ -177,4 +186,6 @@ void MainWindow::initContent() {
 	connect(m_home, &E_Home::sigCircularProgressCardClicked, this, [=]() { this->navigation(m_circularProgressExample->property("CALPageKey").toString()); });
 	connect(m_home, &E_Home::sigCheckBoxCardClicked, this, [=]() { this->navigation(m_checkboxExample->property("CALPageKey").toString()); });
 	connect(m_home, &E_Home::sigTabWidgetCardClicked, this, [=]() { this->navigation(m_tabWidgetExample->property("CALPageKey").toString()); });
+	connect(m_home, &E_Home::sigListViewCardClicked, this, [=]() { this->navigation(m_listView->property("CALPageKey").toString()); });
+	connect(m_home, &E_Home::sigTableViewCardClicked, this, [=]() { this->navigation(m_tableView->property("CALPageKey").toString()); });
 }

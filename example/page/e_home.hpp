@@ -21,6 +21,8 @@ Q_SIGNALS:
 	Q_SIGNAL void sigCircularProgressCardClicked();
 	Q_SIGNAL void sigCheckBoxCardClicked();
 	Q_SIGNAL void sigTabWidgetCardClicked();
+	Q_SIGNAL void sigListViewCardClicked();
+	Q_SIGNAL void sigTableViewCardClicked();
 
 private:
 	void initTitleCardArea();

@@ -27,6 +27,8 @@ class E_CircularProgress_Example;
 class E_CheckBox_Example;
 class E_TabWidget_Example;
 class E_Navigation;
+class E_ListView;
+class E_TableView;
 
 class MainWindow final : public AL::CALMainWindow {
 	Q_OBJECT
@@ -61,4 +63,6 @@ private:
 	E_CheckBox_Example* m_checkboxExample{ nullptr };
 	E_TabWidget_Example* m_tabWidgetExample{ nullptr };
 	E_Navigation* m_navigation{ nullptr };
+	E_ListView* m_listView{ nullptr };
+	E_TableView* m_tableView{ nullptr };
 };
