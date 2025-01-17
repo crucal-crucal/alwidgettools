@@ -119,7 +119,7 @@ void MainWindow::initContent() {
 	m_fluenticon = new E_Icon(QMetaEnum::fromType<ALIcon::FluentIcon>(), this);
 	m_fluenticon->setWindowTitle("CALFluentIcon");
 	m_fluenticon->init();
-	addPageNode(m_fluenticon->windowTitle(), m_fluenticon, iconExpanderKey, 99, ALIcon::AweSomeIcon::FontCase);
+	addPageNode(m_fluenticon->windowTitle(), m_fluenticon, iconExpanderKey, 199, ALIcon::AweSomeIcon::FontCase);
 	m_awesomeicon = new E_Icon(QMetaEnum::fromType<ALIcon::AweSomeIcon>(), this);
 	m_awesomeicon->setWindowTitle("CALIcon");
 	m_awesomeicon->init();
@@ -165,4 +165,16 @@ void MainWindow::initContent() {
 	m_settings = new E_Settings(this);
 	QString settingKey{};
 	addFooterNode(m_settings->windowTitle(), m_settings, settingKey, 0, ALIcon::AweSomeIcon::GearComplex);
+	// home conntection
+	connect(m_home, &E_Home::sigToggleSwitchCardClicked, this, [=]() { this->navigation(m_toggleSwitchExample->property("CALPageKey").toString()); });
+	connect(m_home, &E_Home::sigSpinBoxCardClicked, this, [=]() { this->navigation(m_spinBoxExample->property("CALPageKey").toString()); });
+	connect(m_home, &E_Home::sigSliderCardClicked, this, [=]() { this->navigation(m_sliderExample->property("CALPageKey").toString()); });
+	connect(m_home, &E_Home::sigRadioButtonCardClicked, this, [=]() { this->navigation(m_radioButtonExample->property("CALPageKey").toString()); });
+	connect(m_home, &E_Home::sigProgressBarCardClicked, this, [=]() { this->navigation(m_progressBarExample->property("CALPageKey").toString()); });
+	connect(m_home, &E_Home::sigPlainTextEditCardClicked, this, [=]() { this->navigation(m_plainTextEditExample->property("CALPageKey").toString()); });
+	connect(m_home, &E_Home::sigMutiSelectComboBoxCardClicked, this, [=]() { this->navigation(m_multiSelectComboboxExample->property("CALPageKey").toString()); });
+	connect(m_home, &E_Home::sigMessageBarCardClicked, this, [=]() { this->navigation(m_messageBarExample->property("CALPageKey").toString()); });
+	connect(m_home, &E_Home::sigCircularProgressCardClicked, this, [=]() { this->navigation(m_circularProgressExample->property("CALPageKey").toString()); });
+	connect(m_home, &E_Home::sigCheckBoxCardClicked, this, [=]() { this->navigation(m_checkboxExample->property("CALPageKey").toString()); });
+	connect(m_home, &E_Home::sigTabWidgetCardClicked, this, [=]() { this->navigation(m_tabWidgetExample->property("CALPageKey").toString()); });
 }

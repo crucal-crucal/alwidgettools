@@ -70,6 +70,7 @@ CALPopularCard::CALPopularCard(QWidget* parent): QWidget(parent), d_ptr(new CALP
 	d->isFloating = false;
 	d->cardFloatArea = parentWidget();
 	d->floater = new CALPopularCardFloater(this, d, d->cardFloatArea);
+	d->floater->setVisible(false);
 	d->floatTimer = new QTimer(this);
 	connect(d->floatTimer, &QTimer::timeout, d, &CALPopularCardPrivate::showFloater);
 	d->themeMode = ALTheme->getThemeMode();
@@ -212,6 +213,28 @@ bool CALPopularCard::event(QEvent* event) {
 			opacityAnimation->start(QAbstractAnimation::DeleteWhenStopped);
 			break;
 		}
+		case QEvent::MouseMove: {
+			if (d->isFloating) {
+				const QPoint globalPos = QCursor::pos();
+				const QRect thisRect = rect();
+				// 如果鼠标不在 this 或 floater 区域内，并且 isFloating 为 true
+				if (const QRect floaterRect = d->floater->rect(); !thisRect.contains(mapFromGlobal(globalPos)) && !floaterRect.contains(mapFromGlobal(globalPos))) {
+					d->floatTimer->stop();
+					const auto hoverAnimation = new QPropertyAnimation(d, "hoverYOffset");
+					connect(hoverAnimation, &QPropertyAnimation::valueChanged, this, [=]() { update(); });
+					hoverAnimation->setDuration(130);
+					hoverAnimation->setStartValue(d->hoverYOffset);
+					hoverAnimation->setEndValue(0);
+					hoverAnimation->start(QAbstractAnimation::DeleteWhenStopped);
+					const auto opacityAnimation = new QPropertyAnimation(d, "hoverOpacity");
+					opacityAnimation->setDuration(130);
+					opacityAnimation->setStartValue(d->hoverOpacity);
+					opacityAnimation->setEndValue(0);
+					opacityAnimation->start(QAbstractAnimation::DeleteWhenStopped);
+				}
+			}
+			break;
+		}
 		case QEvent::MouseButtonRelease: {
 			Q_EMIT sigPopularCardClicked();
 			break;
@@ -269,7 +292,7 @@ void CALPopularCard::paintEvent(QPaintEvent* event) {
 	const int titleHeight = painter.fontMetrics().height();
 	const QRectF titleRect(pixRect.right() + d->textHSpacing, pixRect.y(), d->floater->m_floatGeometryOffset * 2 + foregroundRect.width() - pixRect.width() - d->textHSpacing * 2 - foregroundRect.height() * 0.15 - buttonTargetWidth, titleHeight);
 	const QString titleText = painter.fontMetrics().elidedText(d->title, Qt::ElideRight, titleRect.width()); // NOLINT
-	painter.drawText(titleRect, Qt::AlignLeft | Qt::AlignTop | Qt::TextSingleLine, titleText);
+	painter.drawText(titleRect, Qt::AlignLeft | Qt::AlignTop | Qt::TextSingleLine | Qt::TextWordWrap, titleText);
 	// subtitle
 	font.setWeight(QFont::DemiBold);
 	font.setPixelSize(13);
@@ -277,7 +300,7 @@ void CALPopularCard::paintEvent(QPaintEvent* event) {
 	const int subTitleHeight = painter.fontMetrics().height();
 	const QRectF subTitleRect(pixRect.right() + d->textHSpacing, titleRect.bottom() + d->textVSpacing, d->floater->m_floatGeometryOffset * 2 + foregroundRect.width() - pixRect.width() - d->textHSpacing * 2 - foregroundRect.height() * 0.15 - buttonTargetWidth, subTitleHeight);
 	const QString subTitleText = painter.fontMetrics().elidedText(d->subTitle, Qt::ElideRight, subTitleRect.width()); // NOLINT
-	painter.drawText(subTitleRect, Qt::AlignLeft | Qt::AlignTop | Qt::TextSingleLine, subTitleText);
+	painter.drawText(subTitleRect, Qt::AlignLeft | Qt::AlignTop | Qt::TextSingleLine | Qt::TextWordWrap, subTitleText);
 	// InteractiveTips
 	const int tipWidth = painter.fontMetrics().horizontalAdvance(d->interactiveTips);
 	const int tipHeight = painter.fontMetrics().height();
@@ -296,7 +319,7 @@ void CALPopularCard::paintEvent(QPaintEvent* event) {
 		painter.drawRoundedRect(baseRect, 6, 6);
 		//文字绘制
 		painter.setPen(ALThemeColor(d->themeMode, ALThemeType::BasicText));
-		painter.drawText(tipRect, Qt::AlignLeft | Qt::AlignVCenter | Qt::TextSingleLine, d->interactiveTips);
+		painter.drawText(tipRect, Qt::AlignLeft | Qt::AlignVCenter | Qt::TextSingleLine | Qt::TextWordWrap, d->interactiveTips);
 	} else {
 		QRectF tipRect(foregroundRect.right() - d->textHSpacing - 50, foregroundRect.bottom() - d->textHSpacing - tipHeight, foregroundRect.width() / 2 - d->textHSpacing, tipHeight);
 		tipRect.setRight(tipRect.x() + tipWidth);

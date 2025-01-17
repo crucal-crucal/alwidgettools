@@ -173,14 +173,16 @@ void CALFooterDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opt
 		painter->setBrush(Qt::white);
 		painter->drawEllipse(QPoint(255, itemRect.y() + itemRect.height() / 2), 10, 10);
 		painter->setBrush(ALThemeColor(themeMode, ALThemeType::StatusDanger));
-		painter->drawEllipse(QPoint(255, itemRect.y() + itemRect.height() / 2), 9, 9);
+		const bool isUpper99 = keyPoints > 99;
+		keyPoints = qMin(99, keyPoints);
+		const QString keyPointstext = isUpper99 ? "99+" : QString::number(keyPoints);
+		painter->drawEllipse(QPoint(255, itemRect.y() + itemRect.height() / 2), 12, 12);
 		painter->setPen(QPen(Qt::white, 2));
 		QFont font = painter->font();
 		font.setBold(true);
-		keyPoints = std::min(99, keyPoints);
 		font.setPixelSize(keyPoints > 9 ? 11 : 12);
 		painter->setFont(font);
-		painter->drawText(keyPoints > 9 ? 248 : 251, itemRect.y() + itemRect.height() / 2 + 4, QString::number(keyPoints));
+		painter->drawText(isUpper99 ? 245 : keyPoints > 9 ? 248 : 251, itemRect.y() + itemRect.height() / 2 + 4, keyPointstext);
 		painter->restore();
 	}
 

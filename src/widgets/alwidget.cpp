@@ -34,7 +34,7 @@ CALWidget::CALWidget(QWidget* parent): QWidget(parent), d_ptr(new CALWidgetPriva
 
 	/// appBar
 	d->appBar = new CALAppBar(this);
-	d->appBar->setWindowButtonFlags(ALAppBarType::Widget);
+	d->appBar->setWindowButtonFlags(ALAppBarType::StayTopButtonHint | ALAppBarType::MinimizeButtonHint | ALAppBarType::MaximizeButtonHint | ALAppBarType::CloseButtonHint);
 	connect(d->appBar, &CALAppBar::sigRouteBackButtonClicked, this, &CALWidget::sigRouteBackButtonClicked);
 	connect(d->appBar, &CALAppBar::sigNavigationButtonClicked, this, &CALWidget::sigNavigationButtonClicked);
 	connect(d->appBar, &CALAppBar::sigThemeChangeButtonClicked, this, &CALWidget::sigThemeChangeButtonClicked);

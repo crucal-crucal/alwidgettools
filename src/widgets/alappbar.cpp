@@ -175,39 +175,38 @@ bool CALAppBarPrivate::containsCursorToItem(QWidget* item) { // NOLINT
 
 int CALAppBarPrivate::calculateMinimumWidth() {
 	Q_Q(CALAppBar);
+
 	int width = 0;
+    // Add width of titleLabel if visible
 	if (titleLabel->isVisible()) {
-		width += titleLabel->width();
-		width += 10;
+		width += titleLabel->width() + 10;
 	}
+
+	// Add width of iconLabel if visible
 	if (iconLabel->isVisible()) {
-		width += iconLabel->width();
-		width += 10;
+		width += iconLabel->width() + 10;
 	}
-	bool isHasNavigationBar = false;
-	if (q->parentWidget()->findChild<CALNavigationBar*>()) {
-		isHasNavigationBar = true;
-		width += 305;
-	} else {
-		width += 5;
-	}
+
+	// Calculate width for navigation bar (if present)
+	const bool isHasNavigationBar = q->parentWidget()->findChild<CALNavigationBar*>();
+	width += isHasNavigationBar ? 305 : 5;
+
+	// Calculate width for custom widget
 	if (customWidget) {
 		const int customWidgetWidth = customWidget->width();
-		if (isHasNavigationBar) {
-			if (customWidgetWidth > 300) {
-				width += customWidgetWidth - 300;
-			}
-		} else {
-			width += customWidgetWidth;
-		}
+		width += isHasNavigationBar && customWidgetWidth > 300 ? customWidgetWidth - 300 : customWidgetWidth;
 	}
+
+	// Add width for all visible buttons, excluding CALNavigationButton
 	QList<QAbstractButton*> buttonList = q->findChildren<QAbstractButton*>();
 	for (const auto button : buttonList) {
 		if (button->isVisible() && button->objectName() != "CALNavigationButton") {
 			width += button->width();
 		}
 	}
-	return width;
+
+	// Ensure the minimum width is not smaller than the parent widget's minimum width
+	return qMax(width, q->parentWidget()->minimumWidth());
 }
 
 QVBoxLayout* CALAppBarPrivate::createVLayout(QWidget* widget) const {

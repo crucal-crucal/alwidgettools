@@ -575,6 +575,14 @@ ALNavigationType::NavigationDisplayMode CALMainWindow::getNavigationDisplayMode(
 	return d_func()->navigationDisplayMode;
 }
 
+void CALMainWindow::setThemeMode(const ALThemeType::ThemeMode& mode) {
+	ALTheme->setThemeMode(mode);
+}
+
+ALThemeType::ThemeMode CALMainWindow::getThemeMode() {
+	return ALTheme->getThemeMode();
+}
+
 bool CALMainWindow::eventFilter(QObject* watched, QEvent* event) {
 	Q_D(CALMainWindow);
 

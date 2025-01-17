@@ -21,7 +21,7 @@ void CALMicaBaseInitObject::slotInitMicaBase(QImage image) {
 	// QColorDialog
 	// 统一处理为 1920 * 1080 以节省空间
 	image = image.scaled(1920, 1080, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-
+	// 指数模糊, 产生光晕效果
 	QImage blurImage = CALExponentialBlur::doExponentialBlur(image, 500).toImage();
 	QImage lightImage = blurImage;
 	QImage darkImage = blurImage;

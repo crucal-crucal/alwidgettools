@@ -200,7 +200,7 @@ void CALPopularCardFloater::paintEvent(QPaintEvent* event) {
 	const int titleHeight = painter.fontMetrics().height();
 	const QRectF titleRect(pixRect.right() + m_cardPrivate->textHSpacing, pixRect.y(), m_floatGeometryOffset * 2 + cardForegroundRect.width() - pixRect.width() - m_cardPrivate->textHSpacing * 2 - cardForegroundRect.height() * 0.15 - m_cardPrivate->buttonTargetRect.width(), titleHeight);
 	const QString titleText = painter.fontMetrics().elidedText(m_cardPrivate->title, Qt::ElideRight, titleRect.width()); // NOLINT
-	painter.drawText(titleRect, Qt::AlignLeft | Qt::AlignTop | Qt::TextSingleLine, titleText);
+	painter.drawText(titleRect, Qt::AlignLeft | Qt::AlignTop | Qt::TextSingleLine | Qt::TextWordWrap, titleText);
 	// subtitle
 	font.setWeight(QFont::DemiBold);
 	font.setPixelSize(13);
@@ -209,13 +209,13 @@ void CALPopularCardFloater::paintEvent(QPaintEvent* event) {
 	const QRectF subTitleRect(pixRect.right() + m_cardPrivate->textHSpacing, titleRect.bottom() + m_cardPrivate->textVSpacing,
 	                    m_floatGeometryOffset * 2 + cardForegroundRect.width() - pixRect.width() - m_cardPrivate->textHSpacing * 2 - cardForegroundRect.height() * 0.15 - m_cardPrivate->buttonTargetRect.width(), subTitleHeight);
 	const QString subTitleText = painter.fontMetrics().elidedText(m_cardPrivate->subTitle, Qt::ElideRight, subTitleRect.width()); // NOLINT
-	painter.drawText(subTitleRect, Qt::AlignLeft | Qt::AlignTop | Qt::TextSingleLine, subTitleText);
+	painter.drawText(subTitleRect, Qt::AlignLeft | Qt::AlignTop | Qt::TextSingleLine | Qt::TextWordWrap, subTitleText);
 	// detailedText
 	painter.setPen(ALThemeColor(m_themeMode, ALThemeType::BasicDetailsText));
 	const int detailedTextHeight = painter.fontMetrics().height() * 2 + 2;
 	const QRectF detailedTextRect(pixRect.x(), pixRect.bottom() + cardForegroundRect.height() * 0.15, cardForegroundRect.width() + 2 * m_floatGeometryOffset - m_cardPrivate->textHSpacing - cardForegroundRect.height() * 0.15, detailedTextHeight);
 	const QString detailedText = painter.fontMetrics().elidedText(m_cardPrivate->detailedText, Qt::ElideRight, detailedTextRect.width() * 1.9); // NOLINT
-	painter.drawText(detailedTextRect, Qt::AlignLeft | Qt::AlignTop | Qt::TextSingleLine, detailedText);
+	painter.drawText(detailedTextRect, Qt::AlignLeft | Qt::AlignTop | Qt::TextSingleLine | Qt::TextWordWrap, detailedText);
 	// Parting line
 	painter.setPen(ALThemeColor(m_themeMode, ALThemeType::BasicBaseLine));
 	painter.drawLine(foregroundRect.x(), detailedTextRect.bottom() + 5, foregroundRect.right(), detailedTextRect.bottom() + 5); // NOLINT

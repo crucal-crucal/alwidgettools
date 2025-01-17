@@ -244,7 +244,7 @@ void CALNavigationStyle::drawControl(const ControlElement element, const QStyleO
 				p->drawText(textRect, Qt::AlignVCenter | Qt::AlignLeft, text);
 
 				if (viewWidth > 260) {
-					// 展开图标 keyPoints
+					// 展开图标 & keyPoints
 					if (node->getIsExpanderNode()) {
 						if (node->getIsHasChild()) {
 							p->save();
@@ -271,14 +271,19 @@ void CALNavigationStyle::drawControl(const ControlElement element, const QStyleO
 							p->setBrush(Qt::white);
 							p->drawEllipse(QPoint(itemRect.right() - 26, itemRect.y() + itemRect.height() / 2), 10, 10);
 							p->setBrush(ALThemeColor(m_themeMode, ALThemeType::StatusDanger));
-							p->drawEllipse(QPoint(itemRect.right() - 26, itemRect.y() + itemRect.height() / 2), 9, 9);
+							const bool isUpper99 = keyPoints > 99;
+							keyPoints = qMin(99, keyPoints);
+							const QString keyPointstext = isUpper99 ? "99+" : QString::number(keyPoints);
+							const int textWidth = p->fontMetrics().horizontalAdvance(keyPointstext);
+							p->drawEllipse(QPoint(itemRect.right() - 26, itemRect.y() + itemRect.height() / 2), 12, 12);
 							p->setPen(QPen(Qt::white, 2));
 							QFont font = p->font();
 							font.setBold(true);
 							keyPoints = qMin(99, keyPoints);
 							font.setPixelSize(keyPoints > 9 ? 11 : 12);
 							p->setFont(font);
-							p->drawText(keyPoints > 9 ? itemRect.right() - 33 : itemRect.right() - 30, itemRect.y() + itemRect.height() / 2 + 4, QString::number(keyPoints));
+							const int textX = itemRect.right() - (isUpper99 ? 25 : 26) - textWidth / 2;
+							p->drawText(textX, itemRect.y() + itemRect.height() / 2 + 4, keyPointstext);
 						}
 					}
 				}

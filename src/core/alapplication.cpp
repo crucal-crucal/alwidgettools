@@ -126,7 +126,6 @@ void CALApplicationPrivate::updateAllMicaWidget() {
  * @brief \class CALApplication
  * @return CALApplication instance
  */
-
 CALApplication* CALApplication::instance() {
 	return CALSingleton<CALApplication>::instance();
 }

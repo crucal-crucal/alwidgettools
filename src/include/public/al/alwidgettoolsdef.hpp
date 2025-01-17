@@ -135,7 +135,6 @@ enum ButtonFlag {
 	MinimizeButtonHint    = 0x00010,
 	MaximizeButtonHint    = 0x0020,
 	CloseButtonHint       = 0x0040,
-	Widget                = StayTopButtonHint | MinimizeButtonHint | MaximizeButtonHint | CloseButtonHint,
 };
 
 Q_ENUM_NS(ButtonFlag)

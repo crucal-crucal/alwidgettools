@@ -8,5 +8,16 @@
         <file>promotion/promotion5.jpg</file>
         <file>promotion/promotion6.jpg</file>
         <file>translation/zh_CN.qm</file>
+        <file>home/checkbox.png</file>
+        <file>home/circularprogressbar.png</file>
+        <file>home/combobox.png</file>
+        <file>home/edit.png</file>
+        <file>home/messagebar.png</file>
+        <file>home/progressbar.png</file>
+        <file>home/radiobutton.png</file>
+        <file>home/slider.png</file>
+        <file>home/spinbox.png</file>
+        <file>home/tabwidget.png</file>
+        <file>home/toggleswitch.png</file>
     </qresource>
 </RCC>
