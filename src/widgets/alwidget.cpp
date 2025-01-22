@@ -22,9 +22,6 @@ CALWidgetPrivate::CALWidgetPrivate(CALWidget* q, QObject* parent): QObject(paren
 
 CALWidgetPrivate::~CALWidgetPrivate() = default;
 
-
-AL_TAKEOVER_NATIVEEVENT_CPP(CALWidget, d_func()->appBar)
-
 /**
  * @brief \class CALWidget
  * @param parent pointer to the parent class
@@ -54,6 +51,8 @@ CALWidget::CALWidget(QWidget* parent): QWidget(parent), d_ptr(new CALWidgetPriva
 	setWindowTitle("CALWidget");
 	resize(500, 500);
 }
+
+AL_TAKEOVER_NATIVEEVENT_CPP(CALWidget, d_func()->appBar)
 
 CALWidget::~CALWidget() = default;
 

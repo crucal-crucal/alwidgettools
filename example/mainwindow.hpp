@@ -29,6 +29,7 @@ class E_TabWidget_Example;
 class E_Navigation;
 class E_ListView;
 class E_TableView;
+class E_TreeView;
 
 class MainWindow final : public AL::CALMainWindow {
 	Q_OBJECT
@@ -40,6 +41,9 @@ public:
 	void initWindow();
 	void initEdgeLayout();
 	void initContent();
+
+protected:
+	void showEvent(QShowEvent* event) override;
 
 private:
 	AL::CALContentDialog* m_closeDialog{ nullptr };
@@ -65,4 +69,5 @@ private:
 	E_Navigation* m_navigation{ nullptr };
 	E_ListView* m_listView{ nullptr };
 	E_TableView* m_tableView{ nullptr };
+	E_TreeView* m_treeView{ nullptr };
 };

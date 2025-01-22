@@ -230,8 +230,6 @@ QColor CALColorDialogPrivate::getColorFromEdit() const {
 	return editColor;
 }
 
-
-AL_TAKEOVER_NATIVEEVENT_CPP(CALColorDialog, d_func()->appBar)
 /**
  * @brief \class CALColorDialog
  * @param parent pointer to the parent class
@@ -246,10 +244,10 @@ CALColorDialog::CALColorDialog(QWidget* parent): QDialog(parent), d_ptr(new CALC
 
 	/// appBar
 	d->appBar = new CALAppBar(this);
-	d->appBar->setAppBarHeight(30);
 	d->appBar->setIsStayTop(true);
 	d->appBar->setWindowButtonFlags(ALAppBarType::CloseButtonHint);
 	d->appBar->setIsDefaultClosed(false);
+	d->appBar->setIsFixedSize(true);
 	connect(d->appBar, &CALAppBar::sigCloseButtonClicked, this, &CALColorDialog::close);
 	/// color picker
 	const auto colorPickerText = new CALText("edit color", this);
@@ -467,6 +465,8 @@ CALColorDialog::CALColorDialog(QWidget* parent): QDialog(parent), d_ptr(new CALC
 	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { d->themeMode = mode; });
 	setCurrentColor(QColor(0x80, 0xFF, 0xEF));
 }
+
+AL_TAKEOVER_NATIVEEVENT_CPP(CALColorDialog, d_func()->appBar)
 
 CALColorDialog::~CALColorDialog() = default;
 

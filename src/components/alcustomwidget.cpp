@@ -10,8 +10,6 @@
  * @brief \namespace AL
  */
 namespace AL {
-AL_TAKEOVER_NATIVEEVENT_CPP(CALCustomWidget, m_appBar)
-
 /**
  * @brief \class CALCustomWidget
  * @param parent pointer to the parent class
@@ -40,6 +38,8 @@ CALCustomWidget::CALCustomWidget(QWidget* parent): QDialog(parent) {
 	alApp->syncMica(this);
 	setAttribute(Qt::WA_DeleteOnClose);
 }
+
+AL_TAKEOVER_NATIVEEVENT_CPP(CALCustomWidget, m_appBar)
 
 CALCustomWidget::~CALCustomWidget() = default;
 

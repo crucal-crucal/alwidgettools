@@ -21,5 +21,6 @@
         <file>home/toggleswitch.png</file>
         <file>home/listview.png</file>
         <file>home/tableview.png</file>
+        <file>home/treeview.png</file>
     </qresource>
 </RCC>

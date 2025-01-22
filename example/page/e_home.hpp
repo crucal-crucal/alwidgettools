@@ -23,6 +23,7 @@ Q_SIGNALS:
 	Q_SIGNAL void sigTabWidgetCardClicked();
 	Q_SIGNAL void sigListViewCardClicked();
 	Q_SIGNAL void sigTableViewCardClicked();
+	Q_SIGNAL void sigTreeViewCardClicked();
 
 private:
 	void initTitleCardArea();

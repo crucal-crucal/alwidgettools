@@ -226,6 +226,15 @@ void E_Home::initPopularArea() {
 	connect(tableView, &CALPopularCard::sigPopularCardButtonClicked, this, &E_Home::sigTableViewCardClicked);
 	flowLayout->addWidget(tableView);
 
+	const auto treeView = new CALPopularCard(this);
+	treeView->setCardPixmap(QPixmap(":example/home/treeview.png"));
+	treeView->setTitle("Tree View");
+	treeView->setSubTitle("A custom treeView widget");
+	treeView->setDetailedText("Tree View is a custom widget that provides a tree view with a custom style and animation effect.");
+	treeView->setCardFloatPixmap(QPixmap(":example/home/treeview.png"));
+	connect(treeView, &CALPopularCard::sigPopularCardButtonClicked, this, &E_Home::sigTreeViewCardClicked);
+	flowLayout->addWidget(treeView);
+
 	mainVLayout->addLayout(flowTextHAlyout);
 	mainVLayout->addSpacing(10);
 	mainVLayout->addLayout(flowLayout);

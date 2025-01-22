@@ -254,12 +254,10 @@ void CALMainWindowPrivate::doNavigationDisplayModeChange() {
 	}
 }
 
-
 /**
- * @brief \class CALMainWindow
+ * \class CALMainWindow
+ * @param parent pointer to the parent class
  */
-AL_TAKEOVER_NATIVEEVENT_CPP(CALMainWindow, d_func()->appBar)
-
 CALMainWindow::CALMainWindow(QWidget* parent): QMainWindow(parent), d_ptr(new CALMainWindowPrivate(this, this)) {
 	Q_D(CALMainWindow);
 
@@ -323,6 +321,8 @@ CALMainWindow::CALMainWindow(QWidget* parent): QMainWindow(parent), d_ptr(new CA
 	alApp->syncMica(this);
 	connect(alApp, &CALApplication::sigIsEnableMicaChanged, this, [=]() { d->slotThemeModeChanged(d->themeMode); });
 }
+
+AL_TAKEOVER_NATIVEEVENT_CPP(CALMainWindow, d_func()->appBar)
 
 CALMainWindow::~CALMainWindow() = default;
 
