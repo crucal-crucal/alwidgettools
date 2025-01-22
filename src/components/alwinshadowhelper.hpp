@@ -2,10 +2,6 @@
 
 #include <QtGlobal>
 
-/**
- * @brief \namespace AL
- */
-namespace AL {
 #ifdef Q_OS_WIN
 #include <dwmapi.h>
 #include <windowsx.h>
@@ -20,4 +16,3 @@ static inline void setShadow(HWND hwnd) {
 	}
 }
 #endif
-}

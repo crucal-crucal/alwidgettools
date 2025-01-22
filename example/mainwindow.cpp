@@ -3,6 +3,7 @@
 #include <QVBoxLayout>
 
 #include "alcontentdialog.hpp"
+#include "aldockwidget.hpp"
 #include "almenu.hpp"
 #include "almenubar.hpp"
 #include "alstatusbar.hpp"
@@ -71,6 +72,11 @@ void MainWindow::initEdgeLayout() {
 	iconMenu->addAction(ALIcon::AweSomeIcon::BoxCheck, tr("sort"), QKeySequence::SelectAll);
 	iconMenu->addAction(ALIcon::FluentIcon::Airplane, tr("Airplane"), QKeySequence::SelectAll);
 
+	/// dockWidget
+	const auto logDockWidget = new CALDockWidget("log msg", this);
+	logDockWidget->setWidget(new CALText("log", logDockWidget));
+	this->addDockWidget(Qt::RightDockWidgetArea, logDockWidget);
+	resizeDocks({ logDockWidget }, { 200 }, Qt::Horizontal);
 	/// toolBar
 	const auto toolBar = new CALToolBar(tr("Toolbar"), this);
 	toolBar->setAllowedAreas(Qt::TopToolBarArea | Qt::BottomToolBarArea);

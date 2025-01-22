@@ -78,7 +78,6 @@ CALIconButton::CALIconButton(const ALIcon::AweSomeIcon& icon, const int& pixelSi
 	d->isSelected = false;
 	d->borderRadius = 0;
 	d->themeMode = ALTheme->getThemeMode();
-	d->tooltip = new CALToolTip(this);
 	d->iconType = ALIcon::Awesome;
 	QFont iconFont(ALIcon::getEnumTypeFontName(d->iconType));
 	iconFont.setPixelSize(pixelSize);
@@ -113,7 +112,6 @@ CALIconButton::CALIconButton(const ALIcon::FluentIcon& icon, const int& pixelSiz
 	d->isSelected = false;
 	d->borderRadius = 0;
 	d->themeMode = ALTheme->getThemeMode();
-	d->tooltip = new CALToolTip(this);
 	d->iconType = ALIcon::Fluent;
 	QFont iconFont(ALIcon::getEnumTypeFontName(d->iconType));
 	iconFont.setPixelSize(pixelSize);
@@ -237,7 +235,12 @@ bool CALIconButton::getIsSelected() const {
 }
 
 void CALIconButton::setToolTip(const QString& tooltip) {
-	d_func()->tooltip->setToolTip(tooltip);
+	Q_D(CALIconButton);
+
+	if (!d->tooltip) {
+		d->tooltip = new CALToolTip(this);
+	}
+	d->tooltip->setToolTip(tooltip);
 }
 
 bool CALIconButton::event(QEvent* event) {
