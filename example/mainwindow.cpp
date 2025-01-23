@@ -74,7 +74,9 @@ void MainWindow::initEdgeLayout() {
 
 	/// dockWidget
 	const auto logDockWidget = new CALDockWidget("log msg", this);
-	logDockWidget->setWidget(new CALText("log", logDockWidget));
+	const auto label = new CALText("log label", logDockWidget);
+	label->setAlignment(Qt::AlignTop | Qt::AlignHCenter);
+	logDockWidget->setWidget(label);
 	this->addDockWidget(Qt::RightDockWidgetArea, logDockWidget);
 	resizeDocks({ logDockWidget }, { 200 }, Qt::Horizontal);
 	/// toolBar
