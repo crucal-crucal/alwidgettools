@@ -44,7 +44,7 @@ private:
 	bool isSelected{};
 	int hoverAlpha{};
 	QPixmap iconPix{};
-	bool isAlphaAnimationFinished{ true };
+	bool isAlphaAnimationFinished{};
 	ALThemeType::ThemeMode themeMode{};
 };
 }

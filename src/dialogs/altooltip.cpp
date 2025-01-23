@@ -138,6 +138,7 @@ CALToolTip::CALToolTip(QWidget* parent): QWidget(parent), d_ptr(new CALToolTipPr
 	d->displayMsec = -1;
 	d->showDelayMsec = 0;
 	d->hideDelayMsec = 0;
+	d->shadowBorderWidth = 6;
 	d->customWidget = nullptr;
 	setObjectName("CALToolTip");
 	if (parent) {

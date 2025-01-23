@@ -30,9 +30,9 @@ public:
 	void setExpandMarkWidth(qreal expandMarkWidth);
 	[[nodiscard]] qreal getExpandMarkWidth() const;
 
-signals:
-	void sigExpandIconRotateChanged(qreal);
-	void sigExpandMarkWidthChanged(qreal);
+Q_SIGNALS:
+	Q_SIGNAL void sigExpandIconRotateChanged(qreal);
+	Q_SIGNAL void sigExpandMarkWidthChanged(qreal);
 
 protected:
 	CALMultiSelectComboBox* const q_ptr{ nullptr };
@@ -46,8 +46,8 @@ private:
 	CALComboBoxStyle* comboBoxStyle{ nullptr };
 	CALComboBoxView* comboBoxView{ nullptr };
 	QVector<bool> itemSelection{};
-	bool isFirstPopup{ false };
-	bool isAllowHidePopup{ false };
+	bool isFirstPopup{};
+	bool isAllowHidePopup{};
 	QString currentText{};
 	QStringList selectedTextList{};
 

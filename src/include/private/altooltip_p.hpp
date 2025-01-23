@@ -24,8 +24,8 @@ public:
 	void setOpacity(qreal opacity);
 	[[nodiscard]] qreal getOpacity() const;
 
-signals:
-	void sigOpacityChanged();
+Q_SIGNALS:
+	Q_SIGNAL void sigOpacityChanged();
 
 protected:
 	CALToolTip* const q_ptr{ nullptr };
@@ -37,7 +37,7 @@ private:
 	QVBoxLayout* mainVLayout{ nullptr };
 	QWidget* customWidget{ nullptr };
 	ALThemeType::ThemeMode themeMode{};
-	int shadowBorderWidth{ 6 };
+	int shadowBorderWidth{};
 	int displayMsec{};
 	int showDelayMsec{};
 	int hideDelayMsec{};

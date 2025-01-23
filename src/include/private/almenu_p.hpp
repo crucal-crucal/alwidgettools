@@ -25,8 +25,8 @@ public:
 	void setAnimationImagePosY(int pos);
 	[[nodiscard]] int getAnimationImagePosY() const;
 
-signals:
-	void onAnimationImagePosYChanged();
+Q_SIGNALS:
+	Q_SIGNAL void onAnimationImagePosYChanged();
 
 protected:
 	CALMenu* const q_ptr{ nullptr };
@@ -34,7 +34,7 @@ protected:
 private:
 	int animationImagePosY{};
 	QPixmap animationPix;
-	bool isCloseAnimation{ false };
+	bool isCloseAnimation{};
 	QPoint mousePressPoint;
 	CALMenuStyle* menuStyle{ nullptr };
 };

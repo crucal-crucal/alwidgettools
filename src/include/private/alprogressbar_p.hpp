@@ -29,10 +29,10 @@ protected:
 private:
 	ALProgressType::ProgressType progressType{ ALProgressType::IndeterminateProgress };
 	ALProgressType::ProgressTextPosition position{ ALProgressType::Right };
-	bool showProgerssText{ false };
+	bool showProgerssText{};
 	QColor progressColor{};
 	QColor backgroundColor{};
-	qreal borderRadius{ 0.0 };
+	qreal borderRadius{};
 
 	void calculateRects(QRect& progressRect, QRect& textRect, const ALProgressType::ProgressTextPosition& position) const;
 };
@@ -52,6 +52,6 @@ public:
 
 private:
 	CALProgressBar* const m_progress{ nullptr };
-	qreal m_offset{ 0.0 };
+	qreal m_offset{};
 };
 }

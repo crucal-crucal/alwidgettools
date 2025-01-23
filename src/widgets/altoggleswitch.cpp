@@ -74,8 +74,13 @@ CALToggleSwitch::CALToggleSwitch(QWidget* parent) : QWidget(parent), d_ptr(new C
 
 	setMouseTracking(true);
 	setFixedSize(44, 22);
+	d->margin = 1;
 	d->circleCenterX = -1;
+	d->circleRadius = 0;
+	d->lastMouseX = 0;
 	d->isToggled = false;
+	d->isLeftButtonPress = false;
+	d->isMousePressMove = false;
 	d->themeMode = ALTheme->getThemeMode();
 	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { d->themeMode = mode; });
 	setProperty("circleCenterX", 0.01);

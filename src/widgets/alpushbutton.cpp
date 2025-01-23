@@ -29,8 +29,11 @@ CALPushButtonPrivate::~CALPushButtonPrivate() = default;
 CALPushButton::CALPushButton(QWidget* parent): QPushButton(parent), d_ptr(new CALPushButtonPrivate(this, this)) {
 	Q_D(CALPushButton);
 
+	d->shadowBorderWidth = 3;
 	d->borderRadius = 5;
 	d->borderWidth = 0.5;
+	d->isPressed = false;
+	d->customButtonStyles = CALPushButton::ButtonStyle::Normal;
 	d->themeMode = ALTheme->getThemeMode();
 	d->lightDefaultColor = ALThemeColor(ALThemeType::Light, ALThemeType::BasicBase);
 	d->darkDefaultColor = ALThemeColor(ALThemeType::Dark, ALThemeType::BasicBase);
@@ -254,7 +257,7 @@ void CALPushButton::paintEvent(QPaintEvent* event) {
 	// 底边线绘制
 	if (!d->isPressed && d->customButtonStyles.testFlag(ButtonStyle::BottomLine)) {
 		painter.setPen(ALThemeColor(d->themeMode, ALThemeType::BasicBaseLine));
-		painter.drawLine(foregroundRect.x() + d->borderRadius, height() - d->shadowBorderWidth, foregroundRect.width(), height() - d->shadowBorderWidth);
+		painter.drawLine(foregroundRect.x() + d->borderRadius, height() - d->shadowBorderWidth, foregroundRect.width(), height() - d->shadowBorderWidth); // NOLINT
 	}
 	// 绘制边框
 	if (d->customButtonStyles.testFlag(ButtonStyle::Border)) {

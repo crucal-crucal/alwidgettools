@@ -87,6 +87,7 @@ void CALProgressBarPrivate::calculateRects(QRect& progressRect, QRect& textRect,
  */
 CALProgressBarDelegate::CALProgressBarDelegate(CALProgressBar* parent): QObject(parent), m_progress(parent), m_offset(0) {
 	Q_ASSERT(parent);
+	m_offset = 0.0;
 }
 
 CALProgressBarDelegate::~CALProgressBarDelegate() = default;

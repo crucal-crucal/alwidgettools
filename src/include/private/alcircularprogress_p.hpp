@@ -42,15 +42,13 @@ private:
 	QColor textColor{};
 	QTimer* timer{ nullptr };
 	qreal penWidth{};
-	bool showProgressText{ true };
+	bool showProgressText{};
 	int size{};
-
-	int startIndex1{ 0xe052 };
-	int endIndex1{ 0xe0cb };
+	int startIndex1{};
+	int endIndex1{};
 	int currentIndex1{ 0xe052 };
-
-	int startIndex2{ 0xe100 };
-	int endIndex2{ 0xe176 };
+	int startIndex2{};
+	int endIndex2{};
 	int currentIndex2{ 0xe100 };
 };
 

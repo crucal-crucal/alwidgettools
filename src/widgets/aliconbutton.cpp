@@ -52,6 +52,7 @@ CALIconButton::CALIconButton(const QPixmap& pix, QWidget* parent): QPushButton(p
 	d->lightHoverIconColor = ALThemeColor(ALThemeType::Light, ALThemeType::BasicText);
 	d->darkHoverIconColor = ALThemeColor(ALThemeType::Dark, ALThemeType::BasicText);
 	d->isSelected = false;
+	d->isAlphaAnimationFinished = true;
 	d->borderRadius = 0;
 	d->themeMode = ALTheme->getThemeMode();
 	connect(this, &CALIconButton::sigIsSelectedChanged, this, [=]() { update(); });

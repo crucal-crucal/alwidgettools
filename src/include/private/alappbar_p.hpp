@@ -47,7 +47,7 @@ private:
 	int lastMinTrackWidth{};
 	quint64 clickTimer{};
 	int edges{};
-	int margins{ 8 };
+	int margins{};
 	ALAppBarType::ButtonFlags buttonFlags{};
 	QMap<ALAppBarType::ButtonFlag, QAbstractButton*> buttonMap{};
 	QColor backgroundColor{};

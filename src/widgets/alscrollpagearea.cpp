@@ -35,12 +35,12 @@ CALScrollPageArea::CALScrollPageArea(QWidget* parent): QWidget(parent), d_ptr(ne
 
 CALScrollPageArea::~CALScrollPageArea() = default;
 
-void CALScrollPageArea::setBorderRadius(const int borderRadius) {
+void CALScrollPageArea::setBorderRadius(const qreal borderRadius) {
 	d_func()->borderRadius = borderRadius;
 	Q_EMIT sigBorderRadiusChanged();
 }
 
-int CALScrollPageArea::getBorderRadius() const {
+qreal CALScrollPageArea::getBorderRadius() const {
 	return d_func()->borderRadius;
 }
 

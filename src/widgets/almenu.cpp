@@ -41,6 +41,7 @@ CALMenu::CALMenu(QWidget* parent): QMenu(parent), d_ptr(new CALMenuPrivate(this,
 	setWindowFlags(Qt::Popup | Qt::FramelessWindowHint | Qt::NoDropShadowWindowHint);
 	setAttribute(Qt::WA_TranslucentBackground);
 	setObjectName("CALMenu");
+	d->isCloseAnimation = false;
 	d->menuStyle = new CALMenuStyle(style());
 	setStyle(d->menuStyle);
 	d->animationImagePosY = 0;

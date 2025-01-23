@@ -2,8 +2,6 @@
 
 #include <QListView>
 
-#include "alwidgettoolsdef.hpp"
-
 /**
  * @brief \namespace AL
  */
@@ -15,8 +13,8 @@ public:
 	explicit CALComboBoxView(QWidget* parent = nullptr);
 	~CALComboBoxView() override;
 
-signals:
-	void sigItemPressed(const QModelIndex& index);
+Q_SIGNALS:
+	Q_SIGNAL void sigItemPressed(const QModelIndex& index);
 
 protected:
 	void mousePressEvent(QMouseEvent* event) override;

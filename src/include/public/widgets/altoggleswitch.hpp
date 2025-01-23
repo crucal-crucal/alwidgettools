@@ -22,8 +22,8 @@ public:
 	void setIsToggled(bool isToggled);
 	[[nodiscard]] bool isToggled() const;
 
-signals:
-	void sigToggleChanged(bool toggled);
+Q_SIGNALS:
+	Q_SIGNAL void sigToggleChanged(bool toggled);
 
 protected:
 	const QScopedPointer<CALToggleSwitchPrivate> d_ptr{ nullptr };

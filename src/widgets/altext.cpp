@@ -44,6 +44,9 @@ CALText::CALText(QWidget* parent): QLabel(parent), d_ptr(new CALTextPrivate(this
 	textFont.setPixelSize(28);
 	setFont(textFont);
 	setWordWrap(true);
+	d->textSpacing = 0.5;
+	d->isWrapAnyWhere = false;
+	d->textStyle = ALTextType::NoStyle;
 	d->themeMode = ALTheme->getThemeMode();
 	d->slotThemeChanged(ALTheme->getThemeMode());
 	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, d, &CALTextPrivate::slotThemeChanged);

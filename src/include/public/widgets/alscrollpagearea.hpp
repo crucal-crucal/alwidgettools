@@ -13,14 +13,14 @@ class CALScrollPageAreaPrivate;
 class CALWIDGETTOOLS_EXPORT CALScrollPageArea : public QWidget {
 	Q_OBJECT
 	Q_DECLARE_PRIVATE(CALScrollPageArea)
-	Q_PROPERTY(int borderRadius READ getBorderRadius WRITE setBorderRadius NOTIFY sigBorderRadiusChanged)
+	Q_PROPERTY(qreal borderRadius READ getBorderRadius WRITE setBorderRadius NOTIFY sigBorderRadiusChanged)
 
 public:
 	explicit CALScrollPageArea(QWidget* parent = nullptr);
 	~CALScrollPageArea() override;
 
-	void setBorderRadius(int borderRadius);
-	[[nodiscard]] int getBorderRadius() const;
+	void setBorderRadius(qreal borderRadius);
+	[[nodiscard]] qreal getBorderRadius() const;
 
 Q_SIGNALS:
 	Q_SIGNAL void sigBorderRadiusChanged();

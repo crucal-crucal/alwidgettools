@@ -37,6 +37,6 @@ private:
 	qreal expandMarkWidth{};
 	ALThemeType::ThemeMode themeMode{};
 	CALEvent* focusEvent{ nullptr };
-	qreal textSpacing{ 0.5 };
+	qreal textSpacing{};
 };
 }

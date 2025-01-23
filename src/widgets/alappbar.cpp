@@ -239,6 +239,7 @@ CALAppBar::CALAppBar(QWidget* parent): QWidget(parent), d_ptr(new CALAppBarPriva
 	Q_D(CALAppBar);
 
 	window()->setAttribute(Qt::WA_Mapped);
+	d->margins = 8;
 	d->appBarHeight = 45;
 	setFixedHeight(d->appBarHeight);
 	window()->setContentsMargins(0, this->height(), 0, 0);

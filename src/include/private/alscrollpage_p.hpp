@@ -38,8 +38,8 @@ private:
 	CALBreadcrumbBar* breadcrumbBar{ nullptr };
 
 	QMap<QString, int> mapCentralWidget{};
-	int navigationTargetIndex{ 0 };
-	int pageTitleSpacing{ 0 };
+	int navigationTargetIndex{};
+	int pageTitleSpacing{};
 	bool isGrabGesture{};
 
 	void switchCentralStackIndex(int targetIndex, int lastIndex);

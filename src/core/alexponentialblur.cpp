@@ -11,8 +11,8 @@
  * @brief \namespace AL
  */
 namespace AL {
-int CALExponentialBlurPrivate::_aprec = 12;
-int CALExponentialBlurPrivate::_zprec = 7;
+int CALExponentialBlurPrivate::aprec = 12;
+int CALExponentialBlurPrivate::zprec = 7;
 
 /**
  * @brief \class CALExponentialBlurPrivate
@@ -31,7 +31,7 @@ void CALExponentialBlurPrivate::drawExponentialBlur(QImage& image, const quint64
 	}
 
 	image = image.convertToFormat(QImage::Format_ARGB32_Premultiplied);
-	const int alpha = static_cast<int>((1 << _aprec) * (1.0f - std::exp(-2.3f / static_cast<float>(qRadius + 1)))); // NOLINT
+	const int alpha = static_cast<int>((1 << aprec) * (1.0f - std::exp(-2.3f / static_cast<float>(qRadius + 1)))); // NOLINT
 	const int height = image.height();
 	const int width = image.width();
 	for (int row = 0; row < height; ++row) {
@@ -47,10 +47,10 @@ void CALExponentialBlurPrivate::drawRowBlur(QImage& image, const int& row, const
 	const auto ptr = reinterpret_cast<QRgb*>(image.scanLine(row));
 	const int width = image.width();
 
-	int zR = *reinterpret_cast<unsigned char*>(ptr) << _zprec;
-	int zG = *(reinterpret_cast<unsigned char*>(ptr) + 1) << _zprec;
-	int zB = *(reinterpret_cast<unsigned char*>(ptr) + 2) << _zprec;
-	int zA = *(reinterpret_cast<unsigned char*>(ptr) + 3) << _zprec;
+	int zR = *reinterpret_cast<unsigned char*>(ptr) << zprec;
+	int zG = *(reinterpret_cast<unsigned char*>(ptr) + 1) << zprec;
+	int zB = *(reinterpret_cast<unsigned char*>(ptr) + 2) << zprec;
+	int zA = *(reinterpret_cast<unsigned char*>(ptr) + 3) << zprec;
 
 	for (int index = 0; index < width; ++index) {
 		drawInnerBlur(reinterpret_cast<unsigned char*>(&ptr[index]), zR, zG, zB, zA, alpha);
@@ -66,10 +66,10 @@ void CALExponentialBlurPrivate::drawColumnBlur(QImage& image, const int& column,
 	const int height = image.height();
 	const int width = image.width();
 
-	int zR = *reinterpret_cast<unsigned char*>(ptr) << _zprec;
-	int zG = *(reinterpret_cast<unsigned char*>(ptr) + 1) << _zprec;
-	int zB = *(reinterpret_cast<unsigned char*>(ptr) + 2) << _zprec;
-	int zA = *(reinterpret_cast<unsigned char*>(ptr) + 3) << _zprec;
+	int zR = *reinterpret_cast<unsigned char*>(ptr) << zprec;
+	int zG = *(reinterpret_cast<unsigned char*>(ptr) + 1) << zprec;
+	int zB = *(reinterpret_cast<unsigned char*>(ptr) + 2) << zprec;
+	int zA = *(reinterpret_cast<unsigned char*>(ptr) + 3) << zprec;
 
 	for (int index = width; index < (height - 1) * width; index += width) {
 		drawInnerBlur(reinterpret_cast<unsigned char*>(&ptr[index]), zR, zG, zB, zA, alpha);
@@ -86,15 +86,15 @@ void CALExponentialBlurPrivate::drawInnerBlur(unsigned char* bptr, int& zR, int&
 	const int B = *(bptr + 2);
 	const int A = *(bptr + 3);
 
-	zR += (alpha * ((R << _zprec) - zR)) >> _zprec;
-	zG += (alpha * ((G << _zprec) - zG)) >> _zprec;
-	zB += (alpha * ((B << _zprec) - zB)) >> _zprec;
-	zA += (alpha * ((A << _zprec) - zA)) >> _zprec;
+	zR += (alpha * ((R << zprec) - zR)) >> zprec;
+	zG += (alpha * ((G << zprec) - zG)) >> zprec;
+	zB += (alpha * ((B << zprec) - zB)) >> zprec;
+	zA += (alpha * ((A << zprec) - zA)) >> zprec;
 
-	*bptr = zR >> _zprec;
-	*(bptr + 1) = zG >> _zprec;
-	*(bptr + 2) = zB >> _zprec;
-	*(bptr + 3) = zA >> _zprec;
+	*bptr = zR >> zprec;
+	*(bptr + 1) = zG >> zprec;
+	*(bptr + 2) = zB >> zprec;
+	*(bptr + 3) = zA >> zprec;
 }
 
 /**

@@ -34,6 +34,12 @@ void CALCircularProgressPrivate::init() {
 	textColor = Qt::black;
 	penWidth = 6.25;
 	size = 64;
+	startIndex1 = 0xe052;
+	endIndex1 = 0xe0cb;
+	currentIndex1 = startIndex1;
+	startIndex2 = 0xe100;
+	endIndex2 = 0xe176;
+	currentIndex2 = startIndex2;
 	timer = new QTimer(q);
 	connect(timer, &QTimer::timeout, this, &CALCircularProgressPrivate::_updateAnimation);
 

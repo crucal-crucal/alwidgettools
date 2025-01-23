@@ -33,6 +33,7 @@ CALComboBox::CALComboBox(QWidget* parent): QComboBox(parent), d_ptr(new CALCombo
 	Q_D(CALComboBox);
 
 	d->borderRadius = 3;
+	d->isAllowHidePopup = false;
 	d->themeMode = ALTheme->getThemeMode();
 	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { d->themeMode = mode; });
 	setObjectName("CALComboBox");

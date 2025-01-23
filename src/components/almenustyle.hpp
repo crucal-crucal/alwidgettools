@@ -24,8 +24,8 @@ public:
 	void setMenuItemHeight(int height);
 	[[nodiscard]] int getMenuItemHeight() const;
 
-signals:
-	void sigMenuItemHeightChanged();
+Q_SIGNALS:
+	Q_SIGNAL void sigMenuItemHeightChanged();
 
 private:
 	ALThemeType::ThemeMode m_themeMode{};

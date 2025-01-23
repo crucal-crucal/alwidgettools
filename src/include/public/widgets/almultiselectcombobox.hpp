@@ -32,10 +32,10 @@ public:
 	void deselectAllItems();
 	[[nodiscard]] bool isAllSelected() const;
 
-signals:
-	void sigItemSelectionChanged(const QVector<bool>& itemSelection);
-	void sigCurrentTextListChanged(const QStringList& selectedTextList);
-	void sigBorderRadiusChanged();
+Q_SIGNALS:
+	Q_SIGNAL void sigItemSelectionChanged(const QVector<bool>& itemSelection);
+	Q_SIGNAL void sigCurrentTextListChanged(const QStringList& selectedTextList);
+	Q_SIGNAL void sigBorderRadiusChanged();
 
 protected:
 	const QScopedPointer<CALMultiSelectComboBoxPrivate> d_ptr{ nullptr };

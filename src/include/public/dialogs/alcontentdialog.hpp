@@ -44,9 +44,9 @@ public:
 	 */
 	void setCancelButtonText(const QString& text);
 
-signals:
-	void sigCloseButtonClicked();
-	void sigCancelButtonClicked();
+Q_SIGNALS:
+	Q_SIGNAL void sigCloseButtonClicked();
+	Q_SIGNAL void sigCancelButtonClicked();
 
 protected:
 	const QScopedPointer<CALContentDialogPrivate> d_ptr{ nullptr };

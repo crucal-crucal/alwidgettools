@@ -27,7 +27,7 @@ private:
 	mutable QMap<CALFlowLayout*, int> lastHeightMap{};
 	mutable QMap<QLayoutItem*, QPoint> lastGeometryMap{};
 	QList<QLayoutItem*> itemList{};
-	bool isAnimation{ false };
+	bool isAnimation{};
 	int hSpacing{};
 	int vSpacing{};
 

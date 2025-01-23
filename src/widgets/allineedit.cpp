@@ -73,6 +73,7 @@ CALLineEdit::CALLineEdit(QWidget* parent): QLineEdit(parent), d_ptr(new CALLineE
 	d->themeMode = ALTheme->getThemeMode();
 	d->borderRadius = 6;
 	d->expandMarkWidth = 0;
+	d->textSpacing = 0.5;
 	d->isClearButtonEnable = true;
 	setFocusPolicy(Qt::StrongFocus);
 	// 事件总线

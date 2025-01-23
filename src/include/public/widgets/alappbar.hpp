@@ -114,17 +114,17 @@ public:
 #endif
 
 Q_SIGNALS:
-	void sigIsStayTopChanged();
-	void sigIsFixedSizeChanged();
-	void sigIsDefaultClosedChanged();
-	void sigIsOnlyAllowMinAndCloseChanged();
-	void sigAppBarHeightChanged();
-	void sigCustomWidgetMaximumWidthChanged();
-	void sigRouteBackButtonClicked();
-	void sigNavigationButtonClicked();
-	void sigThemeChangeButtonClicked();
-	void sigCloseButtonClicked();
-	void sigCustomWidgetChanged();
+	Q_SIGNAL void sigIsStayTopChanged();
+	Q_SIGNAL void sigIsFixedSizeChanged();
+	Q_SIGNAL void sigIsDefaultClosedChanged();
+	Q_SIGNAL void sigIsOnlyAllowMinAndCloseChanged();
+	Q_SIGNAL void sigAppBarHeightChanged();
+	Q_SIGNAL void sigCustomWidgetMaximumWidthChanged();
+	Q_SIGNAL void sigRouteBackButtonClicked();
+	Q_SIGNAL void sigNavigationButtonClicked();
+	Q_SIGNAL void sigThemeChangeButtonClicked();
+	Q_SIGNAL void sigCloseButtonClicked();
+	Q_SIGNAL void sigCustomWidgetChanged();
 
 protected:
 	const QScopedPointer<CALAppBarPrivate> d_ptr{ nullptr };

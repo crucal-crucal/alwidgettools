@@ -22,13 +22,13 @@ protected:
 
 private:
 	ALThemeType::ThemeMode themeMode{};
-	bool isToggled{ false };
-	int margin{ 1 };
-	qreal circleCenterX{ 0 };
-	qreal circleRadius{ 0 };
-	bool isLeftButtonPress{ false };
-	bool isMousePressMove{ false };
-	int lastMouseX{ 0 };
+	bool isToggled{};
+	int margin{};
+	qreal circleCenterX{};
+	qreal circleRadius{};
+	bool isLeftButtonPress{};
+	bool isMousePressMove{};
+	int lastMouseX{};
 
 	void startPosAnimation(qreal startX, qreal endX, bool isToggle);
 	void startRadiusAnimation(qreal startRadius, qreal endRadius);

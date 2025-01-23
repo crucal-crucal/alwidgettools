@@ -36,8 +36,8 @@ public:
 	void setALIconType(const ALIcon::IconType& iconType) { m_iconType = iconType; }
 	[[nodiscard]] ALIcon::IconType getALIconType() const { return m_iconType; }
 
-signals:
-	void sigExpandIconRotateChanged();
+Q_SIGNALS:
+	Q_SIGNAL void sigExpandIconRotateChanged();
 
 private:
 	ALThemeType::ThemeMode m_themeMode{};

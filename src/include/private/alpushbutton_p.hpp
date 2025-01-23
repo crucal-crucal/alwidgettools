@@ -28,9 +28,9 @@ protected:
 private:
 	ALThemeType::ThemeMode themeMode{};
 	CALToolTip* toolTip{ nullptr };
-	bool isPressed{ false };
-	CALPushButton::ButtonStyles customButtonStyles{ CALPushButton::ButtonStyle::Normal };
-	int shadowBorderWidth{ 3 };
+	bool isPressed{};
+	CALPushButton::ButtonStyles customButtonStyles{};
+	int shadowBorderWidth{};
 	qreal borderRadius{};
 	qreal borderWidth{};
 	QColor lightTextColor{};

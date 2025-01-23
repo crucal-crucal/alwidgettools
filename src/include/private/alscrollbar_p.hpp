@@ -29,7 +29,7 @@ public:
 	[[nodiscard]] int getTargetMaximum() const;
 
 Q_SIGNALS:
-	void sigTargetMaximumChanged();
+	Q_SIGNAL void sigTargetMaximumChanged();
 
 protected:
 	CALScrollBar* const q_ptr{ nullptr };
@@ -39,7 +39,7 @@ private:
 	QAbstractScrollArea* originScrollArea{ nullptr };
 	QTimer* expandTimer{ nullptr };
 	QPropertyAnimation* slideSmoothAnimation{ nullptr };
-	bool isExpand{ false };
+	bool isExpand{};
 	bool isAnimation{};
 	CALScrollBar::ContextMenuFlags contextMenuFlags{};
 	qreal speedLimit{};

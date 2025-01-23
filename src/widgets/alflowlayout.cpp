@@ -102,15 +102,17 @@ int CALFlowLayoutPrivate::smartSpacing(const QStyle::PixelMetric pm) const {
 CALFlowLayout::CALFlowLayout(QWidget* parent, const int margin, const int hSpacing, const int vSpacing): QLayout(parent), d_ptr(new CALFlowLayoutPrivate(this, this)) {
 	Q_D(CALFlowLayout);
 
+	d->isAnimation = false;
 	d->hSpacing = hSpacing;
 	d->vSpacing = vSpacing;
 	d->lastHeightMap.insert(this, 0);
 	setMargin(margin);
 }
 
-CALFlowLayout::CALFlowLayout(int margin, int hSpacing, int vSpacing): d_ptr(new CALFlowLayoutPrivate(this, this)) {
+CALFlowLayout::CALFlowLayout(const int margin, const int hSpacing, const int vSpacing): d_ptr(new CALFlowLayoutPrivate(this, this)) {
 	Q_D(CALFlowLayout);
 
+	d->isAnimation = false;
 	d->hSpacing = hSpacing;
 	d->vSpacing = vSpacing;
 	d->lastHeightMap.insert(this, 0);
@@ -120,7 +122,7 @@ CALFlowLayout::CALFlowLayout(int margin, int hSpacing, int vSpacing): d_ptr(new 
 CALFlowLayout::~CALFlowLayout() {
 	QLayoutItem* item;
 	while ((item = CALFlowLayout::takeAt(0))) {
-		delete item;
+		SAFE_DELETE(item)
 	}
 }
 

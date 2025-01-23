@@ -25,6 +25,6 @@ private:
 	ALThemeType::ThemeMode themeMode{};
 	int borderRadius{};
 	CALComboBoxStyle* comboBoxStyle{ nullptr };
-	bool isAllowHidePopup{ false };
+	bool isAllowHidePopup{};
 };
 }

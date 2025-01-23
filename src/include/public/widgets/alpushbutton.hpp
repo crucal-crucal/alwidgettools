@@ -85,14 +85,14 @@ public:
 
 	void setToolTip(const QString& tooltip);
 
-signals:
-	void sigBorderRadiusChanged();
-	void sigLightDefaultColorChanged();
-	void sigDarkDefaultColorChanged();
-	void sigLightHoverColorChanged();
-	void sigDarkHoverColorChanged();
-	void sigLightPressedColorChanged();
-	void sigDarkPressedColorChanged();
+Q_SIGNALS:
+	Q_SIGNAL void sigBorderRadiusChanged();
+	Q_SIGNAL void sigLightDefaultColorChanged();
+	Q_SIGNAL void sigDarkDefaultColorChanged();
+	Q_SIGNAL void sigLightHoverColorChanged();
+	Q_SIGNAL void sigDarkHoverColorChanged();
+	Q_SIGNAL void sigLightPressedColorChanged();
+	Q_SIGNAL void sigDarkPressedColorChanged();
 
 protected:
 	const QScopedPointer<CALPushButtonPrivate> d_ptr{ nullptr };

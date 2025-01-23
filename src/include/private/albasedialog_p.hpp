@@ -27,14 +27,14 @@ protected:
 
 private:
 	ALThemeType::ThemeMode themeMode{};
-	qint64 currentWinID{ 0 };
-	ALDialogPolicy::ShowPolicys showPolicys{ ALDialogPolicy::Normal };
-	CALMaskWidget* maskWidget{ nullptr };
+	ALDialogPolicy::ShowPolicys showPolicys{};
+	qint64 currentWinID{};
 
+	CALMaskWidget* maskWidget{ nullptr };
 	/// animation
 	QPropertyAnimation* fadeInAnimation{ nullptr };  // 淡入动画
 	QPropertyAnimation* fadeOutAnimation{ nullptr }; // 淡出动画
 
-	void _doCloseAnimation();
+	void doCloseAnimation();
 };
 }

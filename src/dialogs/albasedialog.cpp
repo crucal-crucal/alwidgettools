@@ -35,7 +35,7 @@ bool CALBaseDialogPrivate::hasPolicy(const ALDialogPolicy::ShowPolicy& policy) c
 	return showPolicys.testFlag(policy);
 }
 
-void CALBaseDialogPrivate::_doCloseAnimation() {
+void CALBaseDialogPrivate::doCloseAnimation() {
 	Q_Q(CALBaseDialog);
 
 	if (hasPolicy(ALDialogPolicy::ShowMask)) {
@@ -56,6 +56,8 @@ void CALBaseDialogPrivate::_doCloseAnimation() {
 CALBaseDialog::CALBaseDialog(QWidget* parent): QDialog(parent), d_ptr(new CALBaseDialogPrivate(this, this)) {
 	Q_D(CALBaseDialog);
 
+	d->currentWinID = 0;
+	d->showPolicys = ALDialogPolicy::Normal;
 	QWidget* targetParent = parent ? parent : QApplication::activeWindow();
 	d->maskWidget = new CALMaskWidget(targetParent);
 	d->maskWidget->setFixedSize(targetParent->size());
@@ -82,9 +84,9 @@ CALBaseDialog::CALBaseDialog(QWidget* parent): QDialog(parent), d_ptr(new CALBas
 }
 
 CALBaseDialog::~CALBaseDialog() {
-	delete d_func()->fadeInAnimation;
-	delete d_func()->fadeOutAnimation;
-	d_func()->maskWidget->deleteLater();
+	SAFE_DELETE(d_func()->fadeInAnimation)
+	SAFE_DELETE(d_func()->fadeOutAnimation)
+	SAFE_DELETE(d_func()->maskWidget)
 }
 
 void CALBaseDialog::setShowPolicys(const ALDialogPolicy::ShowPolicys& policys) {
@@ -108,7 +110,7 @@ bool CALBaseDialog::hasPolicy(const ALDialogPolicy::ShowPolicy& policy) const {
 }
 
 void CALBaseDialog::close() {
-	d_func()->_doCloseAnimation();
+	d_func()->doCloseAnimation();
 }
 
 void CALBaseDialog::paintEvent(QPaintEvent* event) {

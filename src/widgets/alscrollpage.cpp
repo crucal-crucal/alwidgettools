@@ -23,9 +23,6 @@ namespace AL {
  * @param parent pointer to the parent class
  */
 CALScrollPagePrivate::CALScrollPagePrivate(CALScrollPage* q, QObject* parent): QObject(parent), q_ptr(q) {
-	navigationTargetIndex = 0;
-	pageTitleSpacing = 0;
-	isGrabGesture = false;
 }
 
 CALScrollPagePrivate::~CALScrollPagePrivate() = default;
@@ -77,7 +74,11 @@ void CALScrollPagePrivate::switchCentralStackIndex(const int targetIndex, const 
  */
 CALScrollPage::CALScrollPage(QWidget* parent): QWidget(parent), d_ptr(new CALScrollPagePrivate(this, this)) {
 	Q_D(CALScrollPage);
+
 	setProperty("CALBaseClassName", "CALScrollPage");
+	d->navigationTargetIndex = 0;
+	d->pageTitleSpacing = 0;
+	d->isGrabGesture = false;
 	d->breadcrumbBar = new CALBreadcrumbBar(this);
 	d->breadcrumbBar->setTextPixelSize(28);
 	connect(d->breadcrumbBar, &CALBreadcrumbBar::sigBreadcrumbClicked, this, [=](const QString& breadcrumb, const QStringList& lastBreadcrumbList) {

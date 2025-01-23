@@ -22,6 +22,6 @@ protected:
 
 private:
 	ALThemeType::ThemeMode themeMode{};
-	int borderRadius{};
+	qreal borderRadius{};
 };
 }

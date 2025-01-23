@@ -24,8 +24,8 @@ protected:
 
 private:
 	ALThemeType::ThemeMode themeMode{};
-	bool isWrapAnyWhere{ false };
-	ALTextType::TextStyle textStyle{ ALTextType::NoStyle };
-	qreal textSpacing{ 0.5 };
+	bool isWrapAnyWhere{};
+	ALTextType::TextStyle textStyle{};
+	qreal textSpacing{};
 };
 }

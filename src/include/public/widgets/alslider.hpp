@@ -84,10 +84,10 @@ protected:
 	void mouseMoveEvent(QMouseEvent* event) override;
 	void mouseReleaseEvent(QMouseEvent* event) override;
 
-signals:
-	void sigLeftMousePressed();
-	void sigLeftMouseMoved();
-	void sigLeftMouseReleased();
+Q_SIGNALS:
+	Q_SIGNAL void sigLeftMousePressed();
+	Q_SIGNAL void sigLeftMouseMoved();
+	Q_SIGNAL void sigLeftMouseReleased();
 
 protected:
 	const QScopedPointer<CALSliderPrivate> d_ptr{ nullptr };

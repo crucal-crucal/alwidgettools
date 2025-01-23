@@ -21,8 +21,9 @@ protected:
 	CALExponentialBlur* const q_ptr{ nullptr };
 
 private:
-	static int _aprec;
-	static int _zprec;
+	static int aprec;
+	static int zprec;
+
 	static void drawExponentialBlur(QImage& image, const quint64& qRadius);
 	static void drawRowBlur(QImage& image, const int& row, const int& alpha);
 	static void drawColumnBlur(QImage& image, const int& column, const int& alpha);

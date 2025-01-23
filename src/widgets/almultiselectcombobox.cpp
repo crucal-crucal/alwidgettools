@@ -145,6 +145,8 @@ void CALMultiSelectComboBoxPrivate::adjustSelectedVector() {
 CALMultiSelectComboBox::CALMultiSelectComboBox(QWidget* parent): QComboBox(parent), d_ptr(new CALMultiSelectComboBoxPrivate(this, this)) {
 	Q_D(CALMultiSelectComboBox);
 
+	d->isFirstPopup = false;
+	d->isAllowHidePopup = false;
 	d->borderRadius = 2;
 	d->expandIconRotate = 0;
 	d->expandMarkWidth = 0;
