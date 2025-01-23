@@ -25,7 +25,7 @@ public:
 
 	~CALCalendarData() override = default;
 
-	CALCalendarData(int year, int month, int day, QString desText = QString()): year(year), month(month), day(day), desText(std::move(desText)) {
+	CALCalendarData(const int year, const int month, const int day, QString desText = QString()): year(year), month(month), day(day), desText(std::move(desText)) {
 	};
 
 	CALCalendarData(const CALCalendarData& other) {

@@ -53,6 +53,6 @@ private:
 	CALPopularCardPrivate* m_cardPrivate{ nullptr };
 	QGraphicsOpacityEffect* m_opacityEffect{ nullptr };
 
-	QRect calculateTargetGeometry(const QRect& cardGeometry) const;
+	[[nodiscard]] QRect calculateTargetGeometry(const QRect& cardGeometry) const;
 };
 }

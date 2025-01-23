@@ -37,6 +37,6 @@ private:
 	QPoint m_selectedPoint{};
 	QColor m_selectedColor{};
 
-	QPoint adjustPointLimit(QPoint point) const;
+	[[nodiscard]] QPoint adjustPointLimit(QPoint point) const;
 };
 }

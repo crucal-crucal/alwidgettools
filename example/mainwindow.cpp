@@ -73,12 +73,14 @@ void MainWindow::initEdgeLayout() {
 	iconMenu->addAction(ALIcon::FluentIcon::Airplane, tr("Airplane"), QKeySequence::SelectAll);
 
 	/// dockWidget
+#if 0
 	const auto logDockWidget = new CALDockWidget("log msg", this);
 	const auto label = new CALText("log label", logDockWidget);
 	label->setAlignment(Qt::AlignTop | Qt::AlignHCenter);
 	logDockWidget->setWidget(label);
 	this->addDockWidget(Qt::RightDockWidgetArea, logDockWidget);
 	resizeDocks({ logDockWidget }, { 200 }, Qt::Horizontal);
+#endif
 	/// toolBar
 	const auto toolBar = new CALToolBar(tr("Toolbar"), this);
 	toolBar->setAllowedAreas(Qt::TopToolBarArea | Qt::BottomToolBarArea);

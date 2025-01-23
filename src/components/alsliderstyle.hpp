@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include <QProxyStyle>
+#include <QStyleOptionSlider>
 
 #include "alwidgettoolsdef.hpp"
 
@@ -35,7 +36,7 @@ public:
 
 private:
 	mutable QStyle::State m_lastState{};
-	mutable qreal m_circleRadius{ 0 };
+	mutable qreal m_circleRadius{};
 
 	/// 滑槽
 	QColor m_SliderTrackColor{};              // 滑槽默认颜色
@@ -51,6 +52,9 @@ private:
 	QColor m_SliderHandleOuterColor{};          // 滑块外圆颜色
 	QColor m_SliderHandleOuterDisabledColor{};  // 滑块外圆禁用颜色
 
-	void _startRadiusAnimation(qreal startRadius, qreal endRadius, QWidget* widget) const;
+	void startRadiusAnimation(qreal startRadius, qreal endRadius, QWidget* widget) const;
+
+	void drawSliderTrack(QPainter* p, const QRect& sliderRect, const QRect& sliderHandleRect, bool isEnabled, const QStyleOptionSlider* sopt) const;
+	void drawSliderHandle(QPainter* p, const QRect& sliderHandleRect, bool isEnabled, const QStyleOptionSlider* sopt, QWidget* widget) const;
 };
 }

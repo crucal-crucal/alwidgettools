@@ -20,7 +20,7 @@ public:
 	void drawControl(ControlElement element, const QStyleOption* opt, QPainter* p, const QWidget* w) const override;
 	int pixelMetric(PixelMetric metric, const QStyleOption* option, const QWidget* widget) const override;
 
-	const QColor& getMarkColor() const;
+	[[nodiscard]] const QColor& getMarkColor() const;
 
 	void setPressIndex(const QModelIndex& index);
 	[[nodiscard]] QModelIndex getPressIndex() const;
