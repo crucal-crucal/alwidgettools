@@ -1,4 +1,4 @@
-#include "altabbar.hpp"
+﻿#include "altabbar.hpp"
 
 #include <QApplication>
 #include <QDrag>

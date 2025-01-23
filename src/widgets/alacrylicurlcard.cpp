@@ -1,4 +1,4 @@
-#include "alacrylicurlcard.hpp"
+ï»¿#include "alacrylicurlcard.hpp"
 
 #include <QDesktopServices>
 #include <QPainter>
@@ -211,7 +211,7 @@ void CALAcrylicUrlCard::paintEvent(QPaintEvent* event) {
 
 	QPainter painter(this);
 	painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
-	// ÑÇ¿ËÁ¦»æÖÆ
+	// äºšå…‹åŠ›ç»˜åˆ¶
 	painter.save();
 	painter.setPen(QPen(ALThemeColor(d->themeMode, underMouse() ? ALThemeType::BasicBorderHover : ALThemeType::BasicBorder), d->borderWidth));
 	QColor brushColor = ALThemeColor(d->themeMode, underMouse() ? ALThemeType::BasicHover : ALThemeType::BasicBase);
@@ -225,7 +225,7 @@ void CALAcrylicUrlCard::paintEvent(QPaintEvent* event) {
 	painter.setOpacity(d->mainOpacity);
 	painter.drawRoundedRect(foregroundRect, d->borderRadius, d->borderRadius);
 	painter.restore();
-	// Í¼Æ¬
+	// å›¾ç‰‡
 	const QRectF pixRect(width / 8.5, height() / 4.0 - d->cardPixmapSize.height() / 2.0, d->cardPixmapSize.width(), d->cardPixmapSize.height());
 	if (!d->cardPixmap.isNull()) {
 		painter.save();
