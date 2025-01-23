@@ -98,7 +98,7 @@ file(GLOB EXPORT_HEADERS
         ${CMAKE_CURRENT_SOURCE_DIR}/include/public/theme/*.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/include/public/widgets/*.hpp
 )
-set(EXPORT_RESOURCE_FILE ${CMAKE_SOURCE_DIR}/resource/alwidgettools.rcc)
+set(EXPORT_RESOURCE_FILE ${CMAKE_SOURCE_DIR}/resource/alwidgettoolsstyle.dll)
 
 # Set the include directories for the target, with proper interface handling for build and installation
 # 设置目标的包含目录，对于安装时和构建时的路径使用不同的变量

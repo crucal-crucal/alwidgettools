@@ -22,17 +22,22 @@ if (alwidgettools_FOUND)
     target_link_libraries(${PROJECT_NAME} ${alwidgettools_LIBRARIES})
 endif ()
 ```
-add copy zhe dll, rcc file to your execute directory
+add copy the dll file to your execute directory
 ```angular2html
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy
-        ${ALWIDGETTOOLS_PATH}/bin/alwidgettools.rcc
+        ${ALWIDGETTOOLS_PATH}/bin/alwidgettoolsstyle.dll
         $<TARGET_FILE_DIR:${PROJECT_NAME}>
 
         COMMAND ${CMAKE_COMMAND} -E copy
         ${ALWIDGETTOOLS_PATH}/bin/alwidgettools.dll
         $<TARGET_FILE_DIR:${PROJECT_NAME}>
 )
+```
+or
+```angular2html
+FILE(GLOB BIN_FILES  ${ALWIDGETTOOLS_BIN_DIRS}/*)
+FILE(COPY ${BIN_FILES} DESTINATION ${CMAKE_BINARY_DIR})
 ```
 
 # Complete example

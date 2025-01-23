@@ -134,7 +134,7 @@ void CALApplication::init() {
 	Q_D(CALApplication);
 
 	const QString applicationDirPath = QApplication::applicationDirPath();
-	QResource::registerResource(applicationDirPath + QDir::separator() + "alwidgettools.rcc");
+	QResource::registerResource(applicationDirPath + QDir::separator() + "alwidgettoolsstyle.dll");
 	QApplication::setAttribute(Qt::AA_DontCreateNativeWidgetSiblings);
 	QFontDatabase::addApplicationFont(":alwidgettools/font/ALAwesome.ttf");
 	QFontDatabase::addApplicationFont(":alwidgettools/font/ALFluent.ttf");
