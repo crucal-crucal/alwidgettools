@@ -3652,7 +3652,7 @@ enum class AweSomeIcon : int {
 
 Q_ENUM_NS(AweSomeIcon)
 
-enum class FluentIcon :int {
+enum class FluentIcon : int {
 	None                                     = 0x0000,
 	GlobalNavButton                          = 0xe700,
 	Wifi                                     = 0xe701,

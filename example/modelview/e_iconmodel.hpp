@@ -33,6 +33,7 @@ private:
 	ALIcon::IconType m_iconType{};
 	QMetaEnum m_metaEnum{};
 	QStringList m_searchKeyList{};
+	QString m_iconNamePrefix{};
 	int m_rowCount{};
 	bool m_isSearchMode{};
 };
