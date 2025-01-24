@@ -15,7 +15,7 @@ include_directories(${CMAKE_SOURCE_DIR}/src/include/public/theme)
 include_directories(${CMAKE_SOURCE_DIR}/src/include/public/widgets)
 
 add_executable(${TARGET_NAME} ${EXAMPLE_SOURCE})
-target_link_libraries(${TARGET_NAME} Qt5::Widgets Qt5::Svg)
+target_link_libraries(${TARGET_NAME} Qt5::Widgets)
 target_link_libraries(${TARGET_NAME} alwidgettools)
 # Qt Release版本中如果需要定位到日志文件，需要添加此宏
 add_definitions(-DQT_MESSAGELOGCONTEXT)

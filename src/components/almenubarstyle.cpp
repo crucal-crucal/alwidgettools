@@ -86,8 +86,8 @@ void CALMenuBarStyle::drawControl(const ControlElement element, const QStyleOpti
 				menuText = menuText.replace("&", "");
 				if (const auto menuBar = dynamic_cast<const CALMenuBar*>(w)) {
 					if (const QAction* action = menuBar->actionAt(menuItemRect.center())) {
-						iconText = action->property("CALIcon").toString();
-						iconFontFamily = ALIcon::getEnumTypeFontName(static_cast<ALIcon::IconType>(action->property("CALIconType").toInt()));
+						iconText = action->property(ALIcon::iconProperty).toString();
+						iconFontFamily = ALIcon::getEnumTypeFontName(static_cast<ALIcon::IconType>(action->property(ALIcon::iconTypeProperty).toInt()));
 					}
 				}
 				if (menuText.isEmpty()) {

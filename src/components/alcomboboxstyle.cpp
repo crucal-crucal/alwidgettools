@@ -154,14 +154,14 @@ void CALComboBoxStyle::drawComplexControl(const ComplexControl control, const QS
 				painter->drawRoundedRect(QRectF(comboBoxRect.center().x() - m_expandMarkWidth, comboBoxRect.height() - 3, m_expandMarkWidth * 2, 3), 2, 2);
 				// 展开图标绘制
 				if (const QRect expandIconRect = subControlRect(QStyle::CC_ComboBox, copt, QStyle::SC_ScrollBarAddPage, widget); expandIconRect.isValid()) {
-					QFont iconFont(ALIcon::getEnumTypeFontName(ALIcon::Awesome));
+					QFont iconFont(ALIcon::getEnumTypeFontName(ALIcon::Fluent));
 					iconFont.setPixelSize(17);
 					painter->setFont(iconFont);
 					painter->setPen(ALThemeColor(m_themeMode, isEnabled ? ALThemeType::BasicText : ALThemeType::BasicTextDisable));
 					painter->translate(expandIconRect.x() + expandIconRect.width() / 2.0, expandIconRect.y() + expandIconRect.height() / 2.0);
 					painter->rotate(m_expandIconRotate);
 					painter->translate(-expandIconRect.x() - expandIconRect.width() / 2.0, -expandIconRect.y() - expandIconRect.height() / 2.0);
-					painter->drawText(expandIconRect, Qt::AlignCenter, QChar(static_cast<unsigned short>(ALIcon::AweSomeIcon::AngleDown)));
+					painter->drawText(expandIconRect, Qt::AlignCenter, QChar(static_cast<unsigned short>(ALIcon::FluentIcon::ChevronDown)));
 				}
 				painter->restore();
 			}

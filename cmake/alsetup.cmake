@@ -23,12 +23,15 @@ macro(al_setup_Qt)
 
     if (QT_VERSION_MAJOR VERSION_GREATER_EQUAL 5)
         message(STATUS "Qt5 found.")
-        find_package(Qt5
-                REQUIRED
-                COMPONENTS
-                Widgets
-                Svg
-        )
+        if (${ARGC} GREATER 0)
+            find_package(Qt5
+                    REQUIRED
+                    COMPONENTS
+                    ${ARGV}
+            )
+        else ()
+            message(FATAL_ERROR "No Qt components specified. Please provide at least one component.")
+        endif ()
     else ()
         message(FATAL_ERROR "this project requires Qt5. Please install Qt5 and try again.")
     endif ()

@@ -231,7 +231,7 @@ void CALNavigationStyle::drawControl(const ControlElement element, const QStyleO
 					QFont iconFont(ALIcon::getEnumTypeFontName(node->getIconType()));
 					iconFont.setPixelSize(17);
 					p->setFont(iconFont);
-					p->drawText(QRect(itemRect.x(), itemRect.y(), m_iconAreaWidth, itemRect.height()), Qt::AlignCenter, node->property("CALIcon").toString());
+					p->drawText(QRect(itemRect.x(), itemRect.y(), m_iconAreaWidth, itemRect.height()), Qt::AlignCenter, node->property(ALIcon::iconProperty).toString());
 					p->restore();
 				}
 
@@ -249,13 +249,13 @@ void CALNavigationStyle::drawControl(const ControlElement element, const QStyleO
 						if (node->getIsHasChild()) {
 							p->save();
 							const QRectF expandIconRect(itemRect.right() - m_indicatorIconAreaWidth, itemRect.y(), 17, itemRect.height());
-							QFont iconFont(ALIcon::getEnumTypeFontName(ALIcon::Awesome));
+							QFont iconFont(ALIcon::getEnumTypeFontName(ALIcon::Fluent));
 							iconFont.setPixelSize(17);
 							p->setFont(iconFont);
 							p->translate(expandIconRect.x() + expandIconRect.width() / 2.0, expandIconRect.y() + expandIconRect.height() / 2.0);
 							p->rotate(node == m_expandAnimationTargetNode ? m_rotate : node->getIsExpanded() ? -180 : 0);
 							p->translate(-expandIconRect.x() - expandIconRect.width() / 2.0 + 1, -expandIconRect.y() - expandIconRect.height() / 2.0);
-							p->drawText(expandIconRect, Qt::AlignVCenter, QChar(static_cast<unsigned short>(ALIcon::AweSomeIcon::AngleDown)));
+							p->drawText(expandIconRect, Qt::AlignVCenter, QChar(static_cast<unsigned short>(ALIcon::FluentIcon::ChevronDown)));
 							p->restore();
 						}
 

@@ -50,11 +50,11 @@ void CALTreeViewStyle::drawPrimitive(const PrimitiveElement pe, const QStyleOpti
 				p->save();
 				QRect indicatorRect = opt->rect;
 				indicatorRect.adjust(0, 0, -2, 0);
-				QFont iconFont(ALIcon::getEnumTypeFontName(ALIcon::Awesome));
+				QFont iconFont(ALIcon::getEnumTypeFontName(ALIcon::Fluent));
 				iconFont.setPixelSize(17);
 				p->setFont(iconFont);
 				p->setPen(ALThemeColor(m_themeMode, ALThemeType::BasicText));
-				p->drawText(indicatorRect, Qt::AlignVCenter | Qt::AlignRight, vopt->state.testFlag(QStyle::State_Open) ? QChar(static_cast<unsigned short>(ALIcon::AweSomeIcon::AngleDown)) : QChar(static_cast<unsigned short>(ALIcon::AweSomeIcon::AngleRight)));
+				p->drawText(indicatorRect, Qt::AlignVCenter | Qt::AlignRight, vopt->state.testFlag(QStyle::State_Open) ? QChar(static_cast<unsigned short>(ALIcon::FluentIcon::ChevronDown)) : QChar(static_cast<unsigned short>(ALIcon::AweSomeIcon::AngleRight)));
 				p->restore();
 			}
 			return;

@@ -17,7 +17,7 @@
 #ifdef Q_OS_WIN
 /**
  * @brief 定义处理本地事件，允许通过 takeOverNativeEvent 接管事件
- * @param CALAppBar appBar
+ * @param CALAppBar pointer to the CALAppBar object
  */
 #define CALAPPBAR_HANDLE(CALAppBar)                                           \
 	if (CALAppBar) {                                                          \
@@ -32,18 +32,18 @@
 
 #ifdef Q_OS_WIN
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-#define Q_TAKEOVER_NATIVEEVENT_CPP(CLASS, CALAppBar)                                       \
-    bool CLASS::nativeEvent(const QByteArray& eventType, void* message, qintptr* result) { \
+#define Q_TAKEOVER_NATIVEEVENT_CPP(Class, CALAppBar)                                       \
+    bool Class::nativeEvent(const QByteArray& eventType, void* message, qintptr* result) { \
         CALAPPBAR_HANDLE(CALAppBar)                                                        \
     }
 #else
-#define AL_TAKEOVER_NATIVEEVENT_CPP(CLASS, CALAppBar)                                    \
-    bool CLASS::nativeEvent(const QByteArray& eventType, void* message, long* result) { \
+#define AL_TAKEOVER_NATIVEEVENT_CPP(Class, CALAppBar)                                    \
+    bool Class::nativeEvent(const QByteArray& eventType, void* message, long* result) { \
         CALAPPBAR_HANDLE(CALAppBar)                                                     \
     }
 #endif
 #else
-#define AL_TAKEOVER_NATIVEEVENT_CPP(CLASS, CALAppBar)
+#define AL_TAKEOVER_NATIVEEVENT_CPP(Class, CALAppBar)
 #endif
 
 /**

@@ -95,8 +95,8 @@ void CALMenuStyle::drawControl(const ControlElement element, const QStyleOption*
 						QString iconFontFamily{};
 						if (const auto menu = qobject_cast<const CALMenu*>(widget)) {
 							if (const auto action = menu->actionAt(menuRect.center())) {
-								iconText = action->property("CALIcon").toString();
-								iconFontFamily = ALIcon::getEnumTypeFontName(static_cast<ALIcon::IconType>(action->property("CALIconType").toInt()));
+								iconText = action->property(ALIcon::iconProperty).toString();
+								iconFontFamily = ALIcon::getEnumTypeFontName(static_cast<ALIcon::IconType>(action->property(ALIcon::iconTypeProperty).toInt()));
 							}
 						}
 						if (!iconText.isEmpty() && !iconFontFamily.isEmpty() && iconFontFamily != ALIcon::errFontFamily) {

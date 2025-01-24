@@ -192,7 +192,7 @@ void CALToolBarStyle::drawIcon(QPainter* painter, const QRect& iconRect, const Q
 		if (!action) {
 			return;
 		}
-		if (action->property("CALIconType").toInt() == ALIcon::None) {
+		if (action->property(ALIcon::iconTypeProperty).toInt() == ALIcon::None) {
 			// QIcon
 			if (const QIcon icon = bopt->icon; !icon.isNull()) {
 				const QPixmap iconPix = icon.pixmap(iconSize, bopt->state.testFlag(QStyle::State_Enabled) ? QIcon::Normal : QIcon::Disabled, bopt->state.testFlag(QStyle::State_Selected) ? QIcon::On : QIcon::Off);
@@ -218,8 +218,8 @@ void CALToolBarStyle::drawIcon(QPainter* painter, const QRect& iconRect, const Q
 			// CALIcon
 			painter->save();
 			painter->setPen(ALThemeColor(m_themeMode, ALThemeType::BasicText));
-			QFont iconFont(ALIcon::getEnumTypeFontName(static_cast<ALIcon::IconType>(action->property("CALIconType").toInt())));
-			const QString iconText = action->property("CALIcon").toString();
+			QFont iconFont(ALIcon::getEnumTypeFontName(static_cast<ALIcon::IconType>(action->property(ALIcon::iconTypeProperty).toInt())));
+			const QString iconText = action->property(ALIcon::iconProperty).toString();
 			switch (bopt->toolButtonStyle) {
 				case Qt::ToolButtonIconOnly:
 				case Qt::ToolButtonTextBesideIcon:

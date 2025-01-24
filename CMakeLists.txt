@@ -1,4 +1,4 @@
-﻿cmake_minimum_required(VERSION 3.16)
+﻿cmake_minimum_required(VERSION 3.7)
 project(alwidgettools VERSION 1.0.0 LANGUAGES CXX)
 
 string(TOUPPER ${PROJECT_NAME} PROJECT_NAME_UPPER)
@@ -7,7 +7,7 @@ include(${CMAKE_SOURCE_DIR}/cmake/alsetup.cmake)
 include(${CMAKE_SOURCE_DIR}/cmake/alconfigmacros.cmake)
 
 al_initialize_build_flags()
-al_setup_Qt()
+al_setup_Qt(widgets)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)

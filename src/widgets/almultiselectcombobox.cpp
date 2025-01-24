@@ -340,7 +340,7 @@ void CALMultiSelectComboBox::paintEvent(QPaintEvent* event) {
 	// 展开图标绘制
 	if (count() > 0) {
 		painter.save();
-		QFont iconFont(ALIcon::getEnumTypeFontName(ALIcon::Awesome));
+		QFont iconFont(ALIcon::getEnumTypeFontName(ALIcon::Fluent));
 		iconFont.setPixelSize(17);
 		painter.setFont(iconFont);
 		painter.setPen(ALThemeColor(d->themeMode, isEnabled() ? ALThemeType::BasicText : ALThemeType::BasicTextDisable));
@@ -348,7 +348,7 @@ void CALMultiSelectComboBox::paintEvent(QPaintEvent* event) {
 		painter.translate(expandIconRect.x() + expandIconRect.width() / 2.0 - 2.0, expandIconRect.y() + expandIconRect.height() / 2.0);
 		painter.rotate(d->expandIconRotate);
 		painter.translate(-expandIconRect.x() - expandIconRect.width() / 2.0 + 2.0, expandIconRect.y() - expandIconRect.height() / 2.0);
-		painter.drawText(expandIconRect, Qt::AlignVCenter, QChar(static_cast<unsigned short>(ALIcon::AweSomeIcon::AngleDown)));
+		painter.drawText(expandIconRect, Qt::AlignVCenter, QChar(static_cast<unsigned short>(ALIcon::FluentIcon::ChevronDown)));
 		painter.restore();
 	}
 	painter.restore();

@@ -131,16 +131,16 @@ void CALToolButtonStyle::drawIndicator(QPainter* painter, const QStyleOptionTool
 		const QSize iconSize = bopt->iconSize;
 		painter->save();
 		const QRect toolButtonRect = bopt->rect;
-		QFont iconFont(ALIcon::getEnumTypeFontName(ALIcon::Awesome));
+		QFont iconFont(ALIcon::getEnumTypeFontName(ALIcon::Fluent));
 		iconFont.setPixelSize(0.75 * std::min(iconSize.width(), iconSize.height())); // NOLINT
 		painter->setFont(iconFont);
-		const int indicatorWidth = painter->fontMetrics().horizontalAdvance(QChar(static_cast<unsigned short>(ALIcon::AweSomeIcon::AngleDown)));
+		const int indicatorWidth = painter->fontMetrics().horizontalAdvance(QChar(static_cast<unsigned short>(ALIcon::FluentIcon::ChevronDown)));
 		const QRect expandIconRect(toolButtonRect.right() - m_contentMargin - indicatorWidth, toolButtonRect.y() + 1, indicatorWidth, toolButtonRect.height());
 		painter->setPen(ALThemeColor(m_themeMode, ALThemeType::BasicText));
 		painter->translate(expandIconRect.center().x(), expandIconRect.y() + static_cast<qreal>(expandIconRect.height()) / 2);
 		painter->rotate(m_expandIconRotate);
 		painter->translate(-expandIconRect.center().x() - 1, -expandIconRect.y() - static_cast<qreal>(expandIconRect.height()) / 2);
-		painter->drawText(expandIconRect, Qt::AlignCenter, QChar(static_cast<unsigned short>(ALIcon::AweSomeIcon::AngleDown)));
+		painter->drawText(expandIconRect, Qt::AlignCenter, QChar(static_cast<unsigned short>(ALIcon::FluentIcon::ChevronDown)));
 		painter->restore();
 	}
 }
@@ -184,7 +184,7 @@ void CALToolButtonStyle::drawIcon(QPainter* painter, QRect iconRect, const QStyl
 				case Qt::ToolButtonIconOnly: {
 					iconFont.setPixelSize(0.75 * std::min(iconSize.width(), iconSize.height())); // NOLINT
 					painter->setFont(iconFont);
-					painter->drawText(iconRect, Qt::AlignCenter, widget->property("CALIcon").toString());
+					painter->drawText(iconRect, Qt::AlignCenter, widget->property(ALIcon::iconProperty).toString());
 					break;
 				}
 				case Qt::ToolButtonFollowStyle:
@@ -192,7 +192,7 @@ void CALToolButtonStyle::drawIcon(QPainter* painter, QRect iconRect, const QStyl
 					const QRect adjustIconRect(iconRect.x() + m_contentMargin, iconRect.y(), iconSize.width(), iconRect.height());
 					iconFont.setPixelSize(0.75 * std::min(iconSize.width(), iconSize.height())); // NOLINT
 					painter->setFont(iconFont);
-					painter->drawText(adjustIconRect, Qt::AlignCenter, widget->property("CALIcon").toString());
+					painter->drawText(adjustIconRect, Qt::AlignCenter, widget->property(ALIcon::iconProperty).toString());
 					break;
 				}
 				case Qt::ToolButtonTextUnderIcon: {
@@ -202,7 +202,7 @@ void CALToolButtonStyle::drawIcon(QPainter* painter, QRect iconRect, const QStyl
 					const QRect adjustIconRect(iconRect.center().x() - iconSize.width() / 2, iconRect.y() + 0.2 * std::min(iconSize.width(), iconSize.height()), iconSize.width(), iconSize.height()); // NOLINT
 					iconFont.setPixelSize(0.8 * std::min(iconSize.width(), iconSize.height()));                                                                                                        // NOLINT
 					painter->setFont(iconFont);
-					painter->drawText(adjustIconRect, Qt::AlignHCenter, widget->property("CALIcon").toString());
+					painter->drawText(adjustIconRect, Qt::AlignHCenter, widget->property(ALIcon::iconProperty).toString());
 					break;
 				}
 				default: {
@@ -236,9 +236,6 @@ void CALToolButtonStyle::drawText(QPainter* painter, QRect contentRect, const QS
 				}
 				break;
 			}
-			case Qt::ToolButtonFollowStyle: { // NOLINT
-				break;
-			}
 			default: {
 				break;
 			}
@@ -250,10 +247,10 @@ qreal CALToolButtonStyle::calculateExpandIndicatorWidth(const QStyleOptionToolBu
 	// 展开指示器
 	const QSize iconSize = bopt->iconSize;
 	painter->save();
-	QFont iconFont(ALIcon::getEnumTypeFontName(ALIcon::Awesome));
+	QFont iconFont(ALIcon::getEnumTypeFontName(ALIcon::Fluent));
 	iconFont.setPixelSize(0.75 * std::min(iconSize.width(), iconSize.height())); // NOLINT
 	painter->setFont(iconFont);
-	const int indicatorWidth = painter->fontMetrics().horizontalAdvance(QChar(static_cast<unsigned short>(ALIcon::AweSomeIcon::AngleDown)));
+	const int indicatorWidth = painter->fontMetrics().horizontalAdvance(QChar(static_cast<unsigned short>(ALIcon::FluentIcon::ChevronDown)));
 	painter->restore();
 	return indicatorWidth;
 }

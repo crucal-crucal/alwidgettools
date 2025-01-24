@@ -89,8 +89,8 @@ QAction* CALMenu::addAction(const QString& text) {
 QAction* CALMenu::addAction(const ALIcon::AweSomeIcon& awesomeicon, const QString& text) {
 	const auto action = new QAction(text, this);
 	if (awesomeicon != ALIcon::AweSomeIcon::None) {
-		action->setProperty("CALIcon", QChar(static_cast<unsigned short>(awesomeicon)));
-		action->setProperty("CALIconType", ALIcon::Awesome);
+		action->setProperty(ALIcon::iconProperty, QChar(static_cast<unsigned short>(awesomeicon)));
+		action->setProperty(ALIcon::iconTypeProperty, ALIcon::Awesome);
 	}
 	QMenu::addAction(action);
 	return action;
@@ -99,8 +99,8 @@ QAction* CALMenu::addAction(const ALIcon::AweSomeIcon& awesomeicon, const QStrin
 QAction* CALMenu::addAction(const ALIcon::FluentIcon& fluenticon, const QString& text) {
 	const auto action = new QAction(text, this);
 	if (fluenticon != ALIcon::FluentIcon::None) {
-		action->setProperty("CALIcon", QChar(static_cast<unsigned short>(fluenticon)));
-		action->setProperty("CALIconType", ALIcon::Fluent);
+		action->setProperty(ALIcon::iconProperty, QChar(static_cast<unsigned short>(fluenticon)));
+		action->setProperty(ALIcon::iconTypeProperty, ALIcon::Fluent);
 	}
 	QMenu::addAction(action);
 	return action;
@@ -112,8 +112,8 @@ QAction* CALMenu::addAction(const QIcon& icon, const QString& text) {
 
 QAction* CALMenu::addAction(const ALIcon::AweSomeIcon& awesomeicon, const QString& text, const QKeySequence& shortcut) {
 	const auto action = new QAction(text, this);
-	action->setProperty("CALIcon", QChar(static_cast<unsigned short>(awesomeicon)));
-	action->setProperty("CALIconType", ALIcon::Awesome);
+	action->setProperty(ALIcon::iconProperty, QChar(static_cast<unsigned short>(awesomeicon)));
+	action->setProperty(ALIcon::iconTypeProperty, ALIcon::Awesome);
 	action->setShortcut(shortcut);
 	QMenu::addAction(action);
 	return action;
@@ -121,8 +121,8 @@ QAction* CALMenu::addAction(const ALIcon::AweSomeIcon& awesomeicon, const QStrin
 
 QAction* CALMenu::addAction(const ALIcon::FluentIcon& fluenticon, const QString& text, const QKeySequence& shortcut) {
 	const auto action = new QAction(text, this);
-	action->setProperty("CALIcon", QChar(static_cast<unsigned short>(fluenticon)));
-	action->setProperty("CALIconType", ALIcon::Fluent);
+	action->setProperty(ALIcon::iconProperty, QChar(static_cast<unsigned short>(fluenticon)));
+	action->setProperty(ALIcon::iconTypeProperty, ALIcon::Fluent);
 	action->setShortcut(shortcut);
 	QMenu::addAction(action);
 	return action;
@@ -138,8 +138,8 @@ QAction* CALMenu::addAction(const QIcon& icon, const QString& text, const QKeySe
 
 QAction* CALMenu::addAction(const ALIcon::AweSomeIcon& awesomeicon, const QString& text, const QObject* receiver, const char* member, const QKeySequence& shortcut) {
 	const auto action = new QAction(text, this);
-	action->setProperty("CALIcon", QChar(static_cast<unsigned short>(awesomeicon)));
-	action->setProperty("CALIconType", ALIcon::Awesome);
+	action->setProperty(ALIcon::iconProperty, QChar(static_cast<unsigned short>(awesomeicon)));
+	action->setProperty(ALIcon::iconTypeProperty, ALIcon::Awesome);
 	action->setShortcut(shortcut);
 	QObject::connect(action, SIGNAL(triggered(bool)), receiver, member);
 	QMenu::addAction(action);
@@ -148,8 +148,8 @@ QAction* CALMenu::addAction(const ALIcon::AweSomeIcon& awesomeicon, const QStrin
 
 QAction* CALMenu::addAction(const ALIcon::FluentIcon& fluenticon, const QString& text, const QObject* receiver, const char* member, const QKeySequence& shortcut) {
 	const auto action = new QAction(text, this);
-	action->setProperty("CALIcon", QChar(static_cast<unsigned short>(fluenticon)));
-	action->setProperty("CALIconType", ALIcon::Fluent);
+	action->setProperty(ALIcon::iconProperty, QChar(static_cast<unsigned short>(fluenticon)));
+	action->setProperty(ALIcon::iconTypeProperty, ALIcon::Fluent);
 	action->setShortcut(shortcut);
 	QObject::connect(action, SIGNAL(triggered(bool)), receiver, member);
 	QMenu::addAction(action);
@@ -177,11 +177,11 @@ bool CALMenu::isHasIcon() const {
 			return false;
 		}
 		// Check menu for icons or property
-		if (const QMenu* menu = action->menu(); menu && (!menu->icon().isNull() || !menu->property("CALIcon").toString().isEmpty())) {
+		if (const QMenu* menu = action->menu(); menu && (!menu->icon().isNull() || !menu->property(ALIcon::iconProperty).toString().isEmpty())) {
 			return true;
 		}
 		// Check action itself for icons or property
-		return !action->icon().isNull() || !action->property("CALIcon").toString().isEmpty();
+		return !action->icon().isNull() || !action->property(ALIcon::iconProperty).toString().isEmpty();
 	});
 
 	return hasIcon;

@@ -49,22 +49,22 @@ QList<CALNavigationNode*> CALNavigationNode::getChildrenNodes() const {
 
 void CALNavigationNode::setAwesomeIcon(const ALIcon::AweSomeIcon& awesomeIcon) {
 	m_iconType = ALIcon::Awesome;
-	setProperty("CALIcon", QChar(static_cast<unsigned short>(awesomeIcon)));
+	setProperty(ALIcon::iconProperty, QChar(static_cast<unsigned short>(awesomeIcon)));
 	Q_EMIT sigAwesomeIconChanged();
 }
 
 ALIcon::AweSomeIcon CALNavigationNode::getAwesomeIcon() const {
-	return static_cast<ALIcon::AweSomeIcon>(this->property("CALIcon").toInt());
+	return static_cast<ALIcon::AweSomeIcon>(this->property(ALIcon::iconProperty).toInt());
 }
 
 void CALNavigationNode::setFluentIcon(const ALIcon::FluentIcon& fluentIcon) {
 	m_iconType = ALIcon::Fluent;
-	setProperty("CALIcon", QChar(static_cast<unsigned short>(fluentIcon)));
+	setProperty(ALIcon::iconProperty, QChar(static_cast<unsigned short>(fluentIcon)));
 	Q_EMIT sigFluentIconChanged();
 }
 
 ALIcon::FluentIcon CALNavigationNode::getFluentIcon() const {
-	return static_cast<ALIcon::FluentIcon>(this->property("CALIcon").toInt());
+	return static_cast<ALIcon::FluentIcon>(this->property(ALIcon::iconProperty).toInt());
 }
 
 void CALNavigationNode::setModelIndex(const QModelIndex& modelIndex) {

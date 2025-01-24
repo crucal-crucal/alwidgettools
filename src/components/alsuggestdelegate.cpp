@@ -56,7 +56,7 @@ void CALSuggestDelegate::paint(QPainter* painter, const QStyleOptionViewItem& op
 		QFont iconFont(iconFontFamily);
 		iconFont.setPixelSize(17);
 		painter->setFont(iconFont);
-		painter->drawText(option.rect.x() + 11, option.rect.y() + 26, suggest->property("CALIcon").toString());
+		painter->drawText(option.rect.x() + 11, option.rect.y() + 26, suggest->property(ALIcon::iconProperty).toString());
 		painter->restore();
 	}
 	painter->restore();

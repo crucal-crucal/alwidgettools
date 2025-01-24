@@ -34,22 +34,22 @@ CALSuggestion::~CALSuggestion() = default;
 
 void CALSuggestion::setAwesomeIcon(const ALIcon::AweSomeIcon& icon) {
 	m_iconType = ALIcon::Awesome;
-	setProperty("CALIcon", QChar(static_cast<unsigned short>(icon)));
+	setProperty(ALIcon::iconProperty, QChar(static_cast<unsigned short>(icon)));
 	Q_EMIT sigAwesomeIconChanged();
 }
 
 ALIcon::AweSomeIcon CALSuggestion::getAwesomeIcon() const {
-	return static_cast<ALIcon::AweSomeIcon>(this->property("CALIcon").toInt());
+	return static_cast<ALIcon::AweSomeIcon>(this->property(ALIcon::iconProperty).toInt());
 }
 
 void CALSuggestion::setFluentIcon(const ALIcon::FluentIcon& icon) {
 	m_iconType = ALIcon::Fluent;
-	setProperty("CALIcon", QChar(static_cast<unsigned short>(icon)));
+	setProperty(ALIcon::iconProperty, QChar(static_cast<unsigned short>(icon)));
 	Q_EMIT sigFluentIconChanged();
 }
 
 ALIcon::FluentIcon CALSuggestion::getFluentIcon() const {
-	return static_cast<ALIcon::FluentIcon>(this->property("CALIcon").toInt());
+	return static_cast<ALIcon::FluentIcon>(this->property(ALIcon::iconProperty).toInt());
 }
 
 void CALSuggestion::setSuggestText(const QString& text) {

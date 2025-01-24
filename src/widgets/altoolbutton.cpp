@@ -83,7 +83,7 @@ void CALToolButton::setMenu(CALMenu* menu) {
 
 void CALToolButton::setAweSomeIcon(const ALIcon::AweSomeIcon& awewomeicon) {
 	d_func()->style->setALIconType(ALIcon::Awesome);
-	setProperty("CALIcon", QChar(static_cast<unsigned short>(awewomeicon)));\
+	setProperty(ALIcon::iconProperty, QChar(static_cast<unsigned short>(awewomeicon)));\
 	constexpr int pixelSize = 1;
 	QFont iconFont(ALIcon::getEnumTypeFontName(awewomeicon));
 	QPixmap pix(pixelSize, pixelSize);
@@ -100,7 +100,7 @@ void CALToolButton::setAweSomeIcon(const ALIcon::AweSomeIcon& awewomeicon) {
 
 void CALToolButton::setFluentIcon(const ALIcon::FluentIcon& fluenticon) {
 	d_func()->style->setALIconType(ALIcon::Fluent);
-	setProperty("CALIcon", QChar(static_cast<unsigned short>(fluenticon)));
+	setProperty(ALIcon::iconProperty, QChar(static_cast<unsigned short>(fluenticon)));
 	constexpr int pixelSize = 1;
 	QFont iconFont(ALIcon::getEnumTypeFontName(fluenticon));
 	QPixmap pix(pixelSize, pixelSize);

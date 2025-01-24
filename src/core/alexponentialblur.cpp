@@ -32,13 +32,11 @@ void CALExponentialBlurPrivate::drawExponentialBlur(QImage& image, const quint64
 
 	image = image.convertToFormat(QImage::Format_ARGB32_Premultiplied);
 	const int alpha = static_cast<int>((1 << aprec) * (1.0f - std::exp(-2.3f / static_cast<float>(qRadius + 1)))); // NOLINT
-	const int height = image.height();
-	const int width = image.width();
-	for (int row = 0; row < height; ++row) {
+	for (int row = 0; row < image.height(); ++row) {
 		drawColumnBlur(image, row, alpha);
 	}
 
-	for (int col = 0; col < width; ++col) {
+	for (int col = 0; col < image.width(); ++col) {
 		drawColumnBlur(image, col, alpha);
 	}
 }

@@ -5065,6 +5065,9 @@ constexpr auto awesomeFontFamily = "CALAwesome";
 constexpr auto fluentFontFamily = "CALFluent";
 constexpr auto errFontFamily = "Unknown";
 
+constexpr auto iconProperty = "CALIcon";
+constexpr auto iconTypeProperty = "CALIconType";
+
 inline QString getEnumTypeFontName(const std::type_info& typeInfo) {
 	static const QMap<std::type_index, std::string> typeFontMap = {
 		{ typeid(AweSomeIcon), awesomeFontFamily },

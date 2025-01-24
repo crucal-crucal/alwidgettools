@@ -162,7 +162,7 @@ void CALFooterDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opt
 		QFont iconFont(ALIcon::getEnumTypeFontName(node->getIconType()));
 		iconFont.setPixelSize(17);
 		painter->setFont(iconFont);
-		painter->drawText(itemRect.x(), itemRect.y(), m_iconAreaWidth, itemRect.height(), Qt::AlignCenter, node->property("CALIcon").toString());
+		painter->drawText(itemRect.x(), itemRect.y(), m_iconAreaWidth, itemRect.height(), Qt::AlignCenter, node->property(ALIcon::iconProperty).toString());
 		painter->restore();
 	}
 
