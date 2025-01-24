@@ -138,8 +138,8 @@ enum ButtonFlag {
 };
 
 Q_ENUM_NS(ButtonFlag)
-
 Q_DECLARE_FLAGS(ButtonFlags, ButtonFlag)
+Q_DECLARE_OPERATORS_FOR_FLAGS(ALAppBarType::ButtonFlags)
 
 enum CustomArea {
 	LeftArea   = 0x0001,
@@ -157,10 +157,7 @@ enum WMMouseActionType {
 };
 
 Q_ENUM_NS(WMMouseActionType)
-
 Q_DECLARE_FLAGS(WMMouseActionTypes, WMMouseActionType)
-Q_DECLARE_OPERATORS_FOR_FLAGS(ALAppBarType::ButtonFlags)
-
 Q_DECLARE_OPERATORS_FOR_FLAGS(ALAppBarType::WMMouseActionTypes)
 }
 
@@ -346,9 +343,7 @@ enum ShowPolicy {
 };
 
 Q_ENUM_NS(ShowPolicy)
-
 Q_DECLARE_FLAGS(ShowPolicys, ShowPolicy)
-Q_FLAGS(ShowPolicys)
 Q_DECLARE_OPERATORS_FOR_FLAGS(ALDialogPolicy::ShowPolicys)
 }
 
