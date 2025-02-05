@@ -3,6 +3,7 @@
 #include <QPainter>
 #include <QPainterPath>
 #include <QStyleOptionFrame>
+#include <QtMath>
 
 #include "althememanager.hpp"
 

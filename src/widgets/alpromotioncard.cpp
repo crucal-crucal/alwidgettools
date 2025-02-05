@@ -4,6 +4,7 @@
 #include <QPainter>
 #include <QPainterPath>
 #include <QPropertyAnimation>
+#include <QtMath>
 
 #include "alpromotioncard_p.hpp"
 #include "althememanager.hpp"

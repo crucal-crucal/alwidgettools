@@ -7,7 +7,7 @@ include(${CMAKE_SOURCE_DIR}/cmake/alsetup.cmake)
 include(${CMAKE_SOURCE_DIR}/cmake/alconfigmacros.cmake)
 
 al_initialize_build_flags()
-al_setup_Qt(widgets)
+al_setup_Qt(Widgets)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)

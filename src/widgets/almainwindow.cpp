@@ -6,6 +6,7 @@
 #include <QPropertyAnimation>
 #include <QScreen>
 #include <QTimer>
+#include <QtMath>
 #include <QToolBar>
 #include <QVariant>
 
@@ -17,8 +18,8 @@
 #include "almenu.hpp"
 #include "alnavigationbar.hpp"
 #include "alnavigationrouter.hpp"
-#include "althememanager.hpp"
 #include "althemeanimationwidget.hpp"
+#include "althememanager.hpp"
 
 /**
  * @brief \namespace AL

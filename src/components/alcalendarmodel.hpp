@@ -48,8 +48,6 @@ public:
 	QString desText{};
 };
 
-Q_DECLARE_METATYPE(CALCalendarData)
-
 class CALCalendarModel final : public QAbstractListModel {
 	Q_OBJECT
 
@@ -88,3 +86,5 @@ private:
 	[[nodiscard]] int getCurrentDay(int row) const;
 };
 }
+
+Q_DECLARE_METATYPE(AL::CALCalendarData)

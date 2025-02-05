@@ -2,7 +2,7 @@
 
 #include <QPixmap>
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-#include <cmath>
+#include <QtMath>
 #endif
 
 #include "alexponentialblur_p.hpp"

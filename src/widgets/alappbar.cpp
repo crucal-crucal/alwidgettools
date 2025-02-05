@@ -53,18 +53,22 @@ void CALAppBarPrivate::slotMaxButtonClicked() {
 void CALAppBarPrivate::slotCloseButtonClicked() {
 	Q_Q(CALAppBar);
 
-	isDefaultClosed ? q->window()->close() : Q_EMIT q->sigCloseButtonClicked();
+	if (isDefaultClosed) {
+		q->window()->close();
+	} else {
+		Q_EMIT q->sigCloseButtonClicked();
+	}
 }
 
 void CALAppBarPrivate::slotStayTopButtonClicked() const {
+	Q_Q(const CALAppBar);
+
 #ifdef Q_OS_WIN
 	HWND hwnd = reinterpret_cast<HWND>(currentWinID); // NOLINT
 	::SetWindowPos(hwnd, isStayTop ? HWND_TOPMOST : HWND_NOTOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
 #else
-	Q_Q(const ElaAppBar);
-	bool isVisible = q->window()->isVisible();
-	q->window()->setWindowFlag(Qt::WindowStaysOnTopHint, _pIsStayTop);
-	if (isVisible) {
+	q->window()->setWindowFlag(Qt::WindowStaysOnTopHint, isStayTop);
+	if (q->window()->isVisible()) {
 		q->window()->show();
 	}
 #endif
@@ -177,7 +181,7 @@ int CALAppBarPrivate::calculateMinimumWidth() {
 	Q_Q(CALAppBar);
 
 	int width = 0;
-    // Add width of titleLabel if visible
+	// Add width of titleLabel if visible
 	if (titleLabel->isVisible()) {
 		width += titleLabel->width() + 10;
 	}
@@ -987,8 +991,10 @@ bool CALAppBar::eventFilter(QObject* watched, QEvent* event) {
 					window()->showNormal();
 				}
 				d->slotCloseButtonClicked();
+				return true;
+			} else {
+				break;
 			}
-			return true;
 		}
 #ifndef Q_OS_WIN
 		case QEvent::MouseButtonPress: {
@@ -1065,6 +1071,7 @@ bool CALAppBar::eventFilter(QObject* watched, QEvent* event) {
 			break;
 		}
 	}
+
 	return QWidget::eventFilter(watched, event);
 }
 }
