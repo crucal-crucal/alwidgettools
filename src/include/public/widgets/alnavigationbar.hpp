@@ -52,10 +52,10 @@ public:
 	void setDisplayMode(const ALNavigationType::NavigationDisplayMode& displayMode, bool isAnimation = true);
 
 Q_SIGNALS:
-	Q_SIGNAL void sigIsTransparentChanged();
-	Q_SIGNAL void sigUserInfoCardClicked();
-	Q_SIGNAL void sigNavigationNodeClicked(const ALNavigationType::NavigationNodeType& nodeType, const QString& nodeKey);
-	Q_SIGNAL void sigNavigationNodeAdded(const ALNavigationType::NavigationNodeType& nodeType, const QString& nodeKey, QWidget* page);
+	void sigIsTransparentChanged();
+	void sigUserInfoCardClicked();
+	void sigNavigationNodeClicked(const ALNavigationType::NavigationNodeType& nodeType, const QString& nodeKey);
+	void sigNavigationNodeAdded(const ALNavigationType::NavigationNodeType& nodeType, const QString& nodeKey, QWidget* page);
 
 protected:
 	const QScopedPointer<CALNavigationBarPrivate> d_ptr{ nullptr };

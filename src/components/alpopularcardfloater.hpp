@@ -33,8 +33,8 @@ public:
 	[[nodiscard]] qreal getHoverOpacity() const;
 
 Q_SIGNALS:
-	Q_SIGNAL void sigHoverYOffsetChanged();
-	Q_SIGNAL void sigHoverOpacityChanged();
+	 void sigHoverYOffsetChanged();
+	 void sigHoverOpacityChanged();
 
 protected:
 	friend class CALPopularCard;

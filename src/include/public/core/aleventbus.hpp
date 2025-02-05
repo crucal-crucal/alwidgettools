@@ -52,9 +52,9 @@ public:
 
 
 Q_SIGNALS:
-	Q_SIGNAL void sigEventNameChanged();
-	Q_SIGNAL void sigFuncNameChanged();
-	Q_SIGNAL void sigConnectionTypeChanged();
+	void sigEventNameChanged();
+	void sigFuncNameChanged();
+	void sigConnectionTypeChanged();
 
 protected:
 	const QScopedPointer<CALEventPrivate> d_ptr{ nullptr };

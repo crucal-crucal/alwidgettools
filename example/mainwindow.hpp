@@ -2,13 +2,6 @@
 
 #include "almainwindow.hpp"
 
-/**
- * @brief \namespace AL
- */
-namespace AL {
-class CALContentDialog;
-}
-
 class E_Home;
 class E_About;
 class E_Settings;
@@ -46,8 +39,6 @@ protected:
 	void showEvent(QShowEvent* event) override;
 
 private:
-	AL::CALContentDialog* m_closeDialog{ nullptr };
-
 	E_Home* m_home{ nullptr };
 	E_Settings* m_settings{ nullptr };
 	E_Card* m_card{ nullptr };

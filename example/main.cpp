@@ -21,7 +21,7 @@ int main(int argc, char* argv[]) {
 #endif
 
 	QApplication app(argc, argv);
-	alApp->init();
+	alApp->initializeApplication();
 	/// register rcc
 	const QString applicationDirPath = QApplication::applicationDirPath();
 	QResource::registerResource(applicationDirPath + QDir::separator() + "example.rcc");

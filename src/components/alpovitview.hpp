@@ -37,8 +37,8 @@ public:
 	[[nodiscard]] CALPovitStyle* getPovitStyle() const;
 
 Q_SIGNALS:
-	Q_SIGNAL void sigMarkXChanged();
-	Q_SIGNAL void sigMarkAnimationWidthChanged();
+	 void sigMarkXChanged();
+	 void sigMarkAnimationWidthChanged();
 
 protected:
 	void mouseReleaseEvent(QMouseEvent* event) override;

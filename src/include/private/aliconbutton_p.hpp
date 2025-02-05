@@ -25,7 +25,7 @@ public:
 	[[nodiscard]] int getHoverAlpha() const;
 
 Q_SIGNALS:
-	Q_SIGNAL void sigHoverAlphaChanged();
+	void sigHoverAlphaChanged();
 
 protected:
 	CALIconButton* const q_ptr{ nullptr };

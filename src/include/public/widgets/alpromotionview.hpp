@@ -42,11 +42,11 @@ public:
 	void appendPromotionCard(CALPromotionCard* card);
 
 Q_SIGNALS:
-	Q_SIGNAL void sigCardExpandWidthChanged();
-	Q_SIGNAL void sigCardCollapseWidthChanged();
-	Q_SIGNAL void sigCurrentIndexChanged();
-	Q_SIGNAL void sigAutoScrollIntervalChanged();
-	Q_SIGNAL void sigIsAutoScrollChanged();
+	void sigCardExpandWidthChanged();
+	void sigCardCollapseWidthChanged();
+	void sigCurrentIndexChanged();
+	void sigAutoScrollIntervalChanged();
+	void sigIsAutoScrollChanged();
 
 protected:
 	const QScopedPointer<CALPromotionViewPrivate> d_ptr{ nullptr };

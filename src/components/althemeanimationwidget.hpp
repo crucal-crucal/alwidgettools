@@ -38,12 +38,12 @@ public:
 	[[nodiscard]] QImage getNewWindowImage() const;
 
 Q_SIGNALS:
-	Q_SIGNAL void sigAnimationFinished();
-	Q_SIGNAL void sigRadiusChanged();
-	Q_SIGNAL void sigEndRadiusChanged();
-	Q_SIGNAL void sigCenterChanged();
-	Q_SIGNAL void sigOldWindowImageChanged();
-	Q_SIGNAL void sigNewWindowImageChanged();
+	 void sigAnimationFinished();
+	 void sigRadiusChanged();
+	 void sigEndRadiusChanged();
+	 void sigCenterChanged();
+	 void sigOldWindowImageChanged();
+	 void sigNewWindowImageChanged();
 
 protected:
 	void paintEvent(QPaintEvent* event) override;

@@ -20,10 +20,11 @@ class CALApplicationPrivate final : public QObject {
 public:
 	explicit CALApplicationPrivate(CALApplication* q, QObject* parent = nullptr);
 	~CALApplicationPrivate() override;
+
 	Q_SLOT void slotThemeModeChanged(const ALThemeType::ThemeMode& mode);
 
 Q_SIGNALS:
-	Q_SIGNAL void sigInitMicaBase(const QImage& img);
+	void sigInitMicaBase(const QImage& img);
 
 protected:
 	CALApplication* const q_ptr{ nullptr };

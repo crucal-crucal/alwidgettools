@@ -18,9 +18,9 @@ public:
 	~CALBaseListView() override;
 
 Q_SIGNALS:
-	Q_SIGNAL void sigMousePress(const QModelIndex& index);
-	Q_SIGNAL void sigMouseRelease(const QModelIndex& index);
-	Q_SIGNAL void sigMouseDoubleClick(const QModelIndex& index);
+	 void sigMousePress(const QModelIndex& index);
+	 void sigMouseRelease(const QModelIndex& index);
+	 void sigMouseDoubleClick(const QModelIndex& index);
 
 protected:
 	void mousePressEvent(QMouseEvent* event) override;

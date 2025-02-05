@@ -32,9 +32,9 @@ public:
 	[[nodiscard]] QString getAutoClockFormat() const;
 
 Q_SIGNALS:
-	Q_SIGNAL void sigIsUseAutoClockChanged();
-	Q_SIGNAL void sigIsTransparentChanged();
-	Q_SIGNAL void sigAutoClockFormatChanged();
+	void sigIsUseAutoClockChanged();
+	void sigIsTransparentChanged();
+	void sigAutoClockFormatChanged();
 
 protected:
 	const QScopedPointer<CALLCDNumberPrivate> d_ptr{ nullptr };

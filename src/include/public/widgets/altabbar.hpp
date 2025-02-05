@@ -20,9 +20,9 @@ public:
 	~CALTabBar() override;
 
 Q_SIGNALS:
-	Q_SIGNAL void sigTabBarPress(int index);
-	Q_SIGNAL void sigTabDragCreate(QDrag* drag);
-	Q_SIGNAL void sigTabDragDrop(const QMimeData* mimeData);
+	void sigTabBarPress(int index);
+	void sigTabDragCreate(QDrag* drag);
+	void sigTabDragDrop(const QMimeData* mimeData);
 
 protected:
 	const QScopedPointer<CALTabBarPrivate> d_ptr{ nullptr };

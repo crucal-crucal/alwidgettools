@@ -48,7 +48,7 @@ public:
 	void slotFooterViewClicked(const QModelIndex& index, bool isLogRoute = true);
 
 Q_SIGNALS:
-	Q_SIGNAL void sigNavigationViewWidthChanged();
+	void sigNavigationViewWidthChanged();
 
 protected:
 	CALNavigationBar* const q_ptr{ nullptr };

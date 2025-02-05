@@ -10,20 +10,20 @@ public:
 	~E_Home() override;
 
 Q_SIGNALS:
-	Q_SIGNAL void sigToggleSwitchCardClicked();
-	Q_SIGNAL void sigSpinBoxCardClicked();
-	Q_SIGNAL void sigSliderCardClicked();
-	Q_SIGNAL void sigRadioButtonCardClicked();
-	Q_SIGNAL void sigProgressBarCardClicked();
-	Q_SIGNAL void sigPlainTextEditCardClicked();
-	Q_SIGNAL void sigMutiSelectComboBoxCardClicked();
-	Q_SIGNAL void sigMessageBarCardClicked();
-	Q_SIGNAL void sigCircularProgressCardClicked();
-	Q_SIGNAL void sigCheckBoxCardClicked();
-	Q_SIGNAL void sigTabWidgetCardClicked();
-	Q_SIGNAL void sigListViewCardClicked();
-	Q_SIGNAL void sigTableViewCardClicked();
-	Q_SIGNAL void sigTreeViewCardClicked();
+	 void sigToggleSwitchCardClicked();
+	 void sigSpinBoxCardClicked();
+	 void sigSliderCardClicked();
+	 void sigRadioButtonCardClicked();
+	 void sigProgressBarCardClicked();
+	 void sigPlainTextEditCardClicked();
+	 void sigMutiSelectComboBoxCardClicked();
+	 void sigMessageBarCardClicked();
+	 void sigCircularProgressCardClicked();
+	 void sigCheckBoxCardClicked();
+	 void sigTabWidgetCardClicked();
+	 void sigListViewCardClicked();
+	 void sigTableViewCardClicked();
+	 void sigTreeViewCardClicked();
 
 private:
 	void initTitleCardArea();

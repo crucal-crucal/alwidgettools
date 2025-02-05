@@ -37,8 +37,8 @@ public:
 	[[nodiscard]] CALScrollBar* getScrollBar() const;
 
 Q_SIGNALS:
-	Q_SIGNAL void sigOpacityChanged();
-	Q_SIGNAL void sigSliderExtentChanged();
+	 void sigOpacityChanged();
+	 void sigSliderExtentChanged();
 
 private:
 	ALThemeType::ThemeMode m_themeMode{};

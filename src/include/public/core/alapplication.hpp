@@ -23,7 +23,7 @@ public:
 	/**
 	 * @brief 初始化 AL 界面类所依赖的资源
 	 */
-	void init();
+	void initializeApplication();
 
 	/**
 	 * @brief 同步 Mica 效果到指定窗口
@@ -54,8 +54,8 @@ public:
 	[[nodiscard]] QString getMicaImagePath() const;
 
 Q_SIGNALS:
-	Q_SIGNAL void sigIsEnableMicaChanged();
-	Q_SIGNAL void sigMicaImagePathChanged();
+	void sigIsEnableMicaChanged();
+	void sigMicaImagePathChanged();
 
 protected:
 	const QScopedPointer<CALApplicationPrivate> d_ptr{ nullptr };

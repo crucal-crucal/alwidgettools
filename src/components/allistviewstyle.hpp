@@ -28,8 +28,8 @@ public:
 	[[nodiscard]] bool getIsTransparent() const;
 
 Q_SIGNALS:
-	Q_SIGNAL void sigItemHeightChanged();
-	Q_SIGNAL void sigIsTransparentChanged();
+	 void sigItemHeightChanged();
+	 void sigIsTransparentChanged();
 
 private:
 	ALThemeType::ThemeMode m_themeMode{};

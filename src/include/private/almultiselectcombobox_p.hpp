@@ -31,8 +31,8 @@ public:
 	[[nodiscard]] qreal getExpandMarkWidth() const;
 
 Q_SIGNALS:
-	Q_SIGNAL void sigExpandIconRotateChanged(qreal);
-	Q_SIGNAL void sigExpandMarkWidthChanged(qreal);
+	void sigExpandIconRotateChanged(qreal);
+	void sigExpandMarkWidthChanged(qreal);
 
 protected:
 	CALMultiSelectComboBox* const q_ptr{ nullptr };

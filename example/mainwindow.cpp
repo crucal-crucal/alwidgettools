@@ -38,10 +38,10 @@ MainWindow::MainWindow(QWidget* parent): CALMainWindow(parent) {
 	initWindow();
 	initEdgeLayout();
 	initContent();
-	m_closeDialog = new CALContentDialog(this);
-	m_closeDialog->setShowPolicys(ALDialogPolicy::ShowMask | ALDialogPolicy::EnableResize);
-	connect(m_closeDialog, &CALContentDialog::sigCloseButtonClicked, this, &CALMainWindow::closeWindow);
-	connect(this, &MainWindow::sigCloseButtonClicked, m_closeDialog, &CALContentDialog::exec);
+	const auto closeDialog = new CALContentDialog(this);
+	closeDialog->setShowPolicys(ALDialogPolicy::ShowMask | ALDialogPolicy::EnableResize);
+	connect(closeDialog, &CALContentDialog::sigCloseButtonClicked, this, &CALMainWindow::closeWindow);
+	connect(this, &MainWindow::sigCloseButtonClicked, closeDialog, &CALContentDialog::exec);
 	this->setIsDefaultClosed(false);
 	moveToCenter();
 }
@@ -55,6 +55,7 @@ void MainWindow::initWindow() {
 }
 
 void MainWindow::initEdgeLayout() {
+#if 1
 	/// menuBar
 	const auto menuBar = new CALMenuBar(this);
 	menuBar->setFixedHeight(30);
@@ -71,7 +72,7 @@ void MainWindow::initEdgeLayout() {
 	iconMenu->setMenuItemHeight(27);
 	iconMenu->addAction(ALIcon::AweSomeIcon::BoxCheck, tr("sort"), QKeySequence::SelectAll);
 	iconMenu->addAction(ALIcon::FluentIcon::Airplane, tr("Airplane"), QKeySequence::SelectAll);
-
+#endif
 	/// dockWidget
 #if 0
 	const auto logDockWidget = new CALDockWidget("log msg", this);

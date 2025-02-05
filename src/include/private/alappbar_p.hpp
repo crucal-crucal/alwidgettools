@@ -43,11 +43,11 @@ private:
 	bool isHoverMaxButton{};
 	int appBarHeight{};
 	int customWidgetMaximumWidth{};
-	qint64 currentWinID{};
 	int lastMinTrackWidth{};
-	quint64 clickTimer{};
 	int edges{};
 	int margins{};
+	qint64 currentWinID{};
+	quint64 clickTimer{};
 	ALAppBarType::ButtonFlags buttonFlags{};
 	QMap<ALAppBarType::ButtonFlag, QAbstractButton*> buttonMap{};
 	QColor backgroundColor{};

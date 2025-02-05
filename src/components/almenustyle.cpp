@@ -194,7 +194,7 @@ QSize CALMenuStyle::sizeFromContents(const ContentsType type, const QStyleOption
 
 void CALMenuStyle::setMenuItemHeight(const int height) {
 	m_menuItemHeight = height;
-	emit sigMenuItemHeightChanged();
+	Q_EMIT sigMenuItemHeightChanged();
 }
 
 int CALMenuStyle::getMenuItemHeight() const {

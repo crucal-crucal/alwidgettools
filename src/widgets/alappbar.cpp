@@ -48,6 +48,8 @@ void CALAppBarPrivate::slotMaxButtonClicked() {
 	Q_Q(CALAppBar);
 
 	q->window()->isMaximized() ? q->window()->showNormal() : q->window()->showMaximized();
+	maxButton->setIsSelected(false);
+	maxButton->update();
 }
 
 void CALAppBarPrivate::slotCloseButtonClicked() {
@@ -89,11 +91,7 @@ void CALAppBarPrivate::showSystemMenu(const QPoint& point) {
 	Q_Q(CALAppBar);
 
 #ifdef Q_OS_WIN
-	const QScreen* screen = QApplication::screenAt(QCursor::pos());
-	if (!screen) {
-		screen = QGuiApplication::primaryScreen();
-	}
-
+	const QScreen* screen = QApplication::screenAt(QCursor::pos()) ? QApplication::screenAt(QCursor::pos()) : QGuiApplication::primaryScreen();
 	if (!screen) {
 		return;
 	}
@@ -102,21 +100,14 @@ void CALAppBarPrivate::showSystemMenu(const QPoint& point) {
 	const auto nativePos = QPointF(QPointF(point - origin) * screen->devicePixelRatio()).toPoint() + origin;
 	auto hwnd = reinterpret_cast<HWND>(q->window()->winId()); // NOLINT
 	HMENU hMenu = ::GetSystemMenu(hwnd, FALSE);               // NOLINT
-	if (q->window()->isMaximized() || q->window()->isFullScreen()) {
-		::EnableMenuItem(hMenu, SC_MOVE, MFS_DISABLED);
-		::EnableMenuItem(hMenu, SC_RESTORE, MFS_ENABLED);
-	} else {
-		::EnableMenuItem(hMenu, SC_MOVE, MFS_ENABLED);
-		::EnableMenuItem(hMenu, SC_RESTORE, MFS_DISABLED);
-	}
 
-	if (!isFixedSize && !q->window()->isMaximized() && !q->window()->isFullScreen()) {
-		::EnableMenuItem(hMenu, SC_SIZE, MFS_ENABLED);
-		::EnableMenuItem(hMenu, SC_MAXIMIZE, MFS_ENABLED);
-	} else {
-		::EnableMenuItem(hMenu, SC_SIZE, MFS_DISABLED);
-		::EnableMenuItem(hMenu, SC_MAXIMIZE, MFS_DISABLED);
-	}
+	const bool isMaxOrFullScreen = q->window()->isMaximized() || q->window()->isFullScreen();
+	const bool isResizable = !isFixedSize && !isMaxOrFullScreen;
+	::EnableMenuItem(hMenu, SC_MOVE, isMaxOrFullScreen ? MFS_DISABLED : MFS_ENABLED);
+	::EnableMenuItem(hMenu, SC_RESTORE, isMaxOrFullScreen ? MFS_ENABLED : MFS_DISABLED);
+	::EnableMenuItem(hMenu, SC_SIZE, isResizable ? MFS_ENABLED : MFS_DISABLED);
+	::EnableMenuItem(hMenu, SC_MAXIMIZE, isResizable ? MFS_ENABLED : MFS_DISABLED);
+
 	if (const int result = ::TrackPopupMenu(hMenu, (TPM_RETURNCMD | (QGuiApplication::isRightToLeft() ? TPM_RIGHTALIGN : TPM_LEFTALIGN)), nativePos.x(), nativePos.y(), 0, hwnd, nullptr); result != FALSE) {
 		::PostMessageW(hwnd, WM_SYSCOMMAND, result, 0);
 	}
@@ -151,7 +142,9 @@ void CALAppBarPrivate::updateCursor(const int edges) {
 			q->window()->setCursor(Qt::SizeBDiagCursor);
 			break;
 		}
-		default: break;
+		default: {
+			break;
+		}
 	}
 }
 
@@ -217,6 +210,7 @@ QVBoxLayout* CALAppBarPrivate::createVLayout(QWidget* widget) const {
 	if (!widget) {
 		return nullptr;
 	}
+
 	const auto vLayout = new QVBoxLayout;
 	vLayout->setContentsMargins(0, 0, 0, 0);
 	vLayout->setSpacing(0);
@@ -225,6 +219,7 @@ QVBoxLayout* CALAppBarPrivate::createVLayout(QWidget* widget) const {
 	}
 	vLayout->addWidget(widget);
 	vLayout->setAlignment(Qt::AlignCenter);
+
 	return vLayout;
 }
 
@@ -242,17 +237,17 @@ CALAppBar::CALAppBar(QWidget* parent): QWidget(parent), d_ptr(new CALAppBarPriva
 
 	Q_D(CALAppBar);
 
-	window()->setAttribute(Qt::WA_Mapped);
 	d->margins = 8;
 	d->appBarHeight = 45;
-	setFixedHeight(d->appBarHeight);
-	window()->setContentsMargins(0, this->height(), 0, 0);
 	d->isStayTop = false;
 	d->isFixedSize = false;
 	d->isDefaultClosed = true;
 	d->isOnlyAllowMinAndClose = false;
 	d->customWidgetMaximumWidth = 550;
 
+	window()->setAttribute(Qt::WA_Mapped);
+	setFixedHeight(d->appBarHeight);
+	window()->setContentsMargins(0, this->height(), 0, 0);
 	window()->installEventFilter(this);
 #ifdef Q_OS_WIN
 #if (QT_VERSION >= QT_VERSION_CHECK(6, 5, 3) && QT_VERSION <= QT_VERSION_CHECK(6, 6, 1))
@@ -294,11 +289,11 @@ CALAppBar::CALAppBar(QWidget* parent): QWidget(parent), d_ptr(new CALAppBarPriva
 	d->iconLabel = new QLabel(this);
 	d->iconLabelVLayout = d->createVLayout(d->iconLabel);
 	d->iconLabel->setPixmap(parent->windowIcon().pixmap(18, 18));
-	d->iconLabel->setVisible(parent->windowIcon().isNull() ? false : true);
+	d->iconLabel->setVisible(!parent->windowIcon().isNull());
 	d->iconLabelVLayout->setContentsMargins(parent->windowIcon().isNull() ? 0 : 10, 0, 0, 0);
 	connect(parent, &QWidget::windowIconChanged, this, [=](const QIcon& icon) {
 		d->iconLabel->setPixmap(icon.pixmap(18, 18));
-		d->iconLabel->setVisible(icon.isNull() ? false : true);
+		d->iconLabel->setVisible(!icon.isNull());
 		d->iconLabelVLayout->setContentsMargins(icon.isNull() ? 0 : 10, 0, 0, 0);
 	});
 
@@ -308,11 +303,11 @@ CALAppBar::CALAppBar(QWidget* parent): QWidget(parent), d_ptr(new CALAppBarPriva
 	d->titleLabel->setTextPixelSize(13);
 	d->titleLabelVLayout = d->createVLayout(d->titleLabel);
 	d->titleLabel->setText(parent->windowTitle());
-	d->titleLabel->setVisible(parent->windowTitle().isEmpty() ? false : true);
+	d->titleLabel->setVisible(!parent->windowTitle().isEmpty());
 	d->titleLabelVLayout->setContentsMargins(parent->windowTitle().isEmpty() ? 0 : 10, 0, 0, 0);
 	connect(parent, &QWidget::windowTitleChanged, this, [=](const QString& title) {
 		d->titleLabel->setText(title);
-		d->titleLabel->setVisible(title.isEmpty() ? false : true);
+		d->titleLabel->setVisible(!title.isEmpty());
 		d->titleLabelVLayout->setContentsMargins(title.isEmpty() ? 0 : 10, 0, 0, 0);
 	});
 
@@ -493,7 +488,7 @@ QColor CALAppBar::getBackgroundColor() const {
 		return backgroundColor;
 	}
 
-	// 如果启用 Mica 或没有背景色，返回默认值
+	// 如果启用 Mica, 返回默认值
 	if (alApp->getIsEnableMica()) {
 		return {};
 	}
@@ -517,17 +512,19 @@ void CALAppBar::setCustomWidget(const ALAppBarType::CustomArea& customArea, QWid
 		d->mainHLayout->removeWidget(d->customWidget);
 	}
 
+	// leftArea 和 rightArea 之间包含着两个 Stretch, 这两个 Stretch 之间就表示 middleArea
+	// leftArea -> Stretch -> middleArea -> Stretch -> rightArea
 	switch (customArea) {
 		case ALAppBarType::LeftArea: {
-			d->mainHLayout->insertWidget(4, widget);
+			d->mainHLayout->insertWidget(d->mainHLayout->indexOf(d->titleLabelVLayout) + 1, widget);
 			break;
 		}
 		case ALAppBarType::MiddleArea: {
-			d->mainHLayout->insertWidget(5, widget);
+			d->mainHLayout->insertWidget(d->mainHLayout->indexOf(d->titleLabelVLayout) + 2, widget);
 			break;
 		}
 		case ALAppBarType::RightArea: {
-			d->mainHLayout->insertWidget(6, widget);
+			d->mainHLayout->insertWidget(d->mainHLayout->indexOf(d->stayTopButton), widget);
 			break;
 		}
 		default: break;
@@ -563,19 +560,19 @@ ALAppBarType::ButtonFlags CALAppBar::getWindowButtonFlags() const {
 }
 
 bool CALAppBar::insertWidgetBeforeButton(QWidget* widget, const ALAppBarType::ButtonFlag& flag) {
-	bool bRet{ false };
-
 	Q_D(CALAppBar);
+
+	bool bRet{ false };
 
 	const auto button = d->getButtonByAppBarFlag(flag);
 	if (!button) {
-		qDebug() << "Button not found for flag:" << flag;
+		qWarning() << "Button not found for flag:" << flag;
 		return bRet;
 	}
 
 	const int index = d->mainHLayout->indexOf(button);
 	if (index == -1) {
-		qDebug() << "Button not found in layout for flag:" << flag;
+		qWarning() << "Button not found in layout for flag:" << flag;
 		return bRet;
 	}
 
@@ -585,13 +582,13 @@ bool CALAppBar::insertWidgetBeforeButton(QWidget* widget, const ALAppBarType::Bu
 }
 
 bool CALAppBar::insertWidgetBeforeWidget(QWidget* widget, QWidget* targetWidget) {
-	bool bRet{ false };
-
 	Q_D(CALAppBar);
+
+	bool bRet{ false };
 
 	const int index = d->mainHLayout->indexOf(targetWidget);
 	if (index == -1) {
-		qDebug() << "targetWidget not found in layout";
+		qWarning() << "targetWidget not found in layout";
 		return bRet;
 	}
 
@@ -601,13 +598,14 @@ bool CALAppBar::insertWidgetBeforeWidget(QWidget* widget, QWidget* targetWidget)
 }
 
 bool CALAppBar::insertWidgetBeforeLayout(QWidget* widget, QLayout* targetLayout) {
+	Q_D(CALAppBar);
+
 	bool bRet{ false };
 
-	Q_D(CALAppBar);
 
 	const int index = d->mainHLayout->indexOf(targetLayout);
 	if (index == -1) {
-		qDebug() << "targetLayout not found in layout";
+		qWarning() << "targetLayout not found in layout";
 		return bRet;
 	}
 
@@ -617,19 +615,19 @@ bool CALAppBar::insertWidgetBeforeLayout(QWidget* widget, QLayout* targetLayout)
 }
 
 bool CALAppBar::insertLayoutBeforeButton(QLayout* layout, const ALAppBarType::ButtonFlag& flag) {
-	bool bRet{ false };
-
 	Q_D(CALAppBar);
+
+	bool bRet{ false };
 
 	const auto button = d->getButtonByAppBarFlag(flag);
 	if (!button) {
-		qDebug() << "Button not found for flag:" << flag;
+		qWarning() << "Button not found for flag:" << flag;
 		return bRet;
 	}
 
 	const int index = d->mainHLayout->indexOf(button);
 	if (index == -1) {
-		qDebug() << "Button not found in layout for flag:" << flag;
+		qWarning() << "Button not found in layout for flag:" << flag;
 		return bRet;
 	}
 
@@ -639,13 +637,13 @@ bool CALAppBar::insertLayoutBeforeButton(QLayout* layout, const ALAppBarType::Bu
 }
 
 bool CALAppBar::insertLayoutBeforeWidget(QLayout* layout, QWidget* targetWidget) {
-	bool bRet{ false };
-
 	Q_D(CALAppBar);
+
+	bool bRet{ false };
 
 	const int index = d->mainHLayout->indexOf(targetWidget);
 	if (index == -1) {
-		qDebug() << "targetWidget not found in layout";
+		qWarning() << "targetWidget not found in layout";
 		return bRet;
 	}
 
@@ -655,13 +653,13 @@ bool CALAppBar::insertLayoutBeforeWidget(QLayout* layout, QWidget* targetWidget)
 }
 
 bool CALAppBar::insertLayoutBeforeLayout(QLayout* layout, QLayout* targetLayout) {
-	bool bRet{ false };
-
 	Q_D(CALAppBar);
+
+	bool bRet{ false };
 
 	const int index = d->mainHLayout->indexOf(targetLayout);
 	if (index == -1) {
-		qDebug() << "targetLayout not found in layout";
+		qWarning() << "targetLayout not found in layout";
 		return bRet;
 	}
 
@@ -710,7 +708,7 @@ int CALAppBar::takeOverNativeEvent(const QByteArray& eventType, const void* mess
 	}
 
 	const auto msg = static_cast<const MSG*>(message);
-	HWND hwnd = msg->hwnd; // NOLINT
+	HWND hwnd = msg->hwnd;
 	if (!hwnd) {
 		return 0;
 	}
@@ -952,12 +950,9 @@ bool CALAppBar::eventFilter(QObject* watched, QEvent* event) {
 		case QEvent::Resize: {
 			QSize size = parentWidget()->size();
 #if (QT_VERSION >= QT_VERSION_CHECK(6, 5, 3) && QT_VERSION <= QT_VERSION_CHECK(6, 6, 1))
-			if (::IsZoomed((HWND)d->_currentWinID))
-			{
+			if (::IsZoomed((HWND)d->currentWinID)) {
 				this->resize(size.width() - 14, this->height());
-			}
-			else
-			{
+			} else {
 				this->resize(size.width(), this->height());
 			}
 #else
@@ -1039,9 +1034,9 @@ bool CALAppBar::eventFilter(QObject* watched, QEvent* event) {
 			auto mouseEvent = dynamic_cast<QHoverEvent*>(event);
 			const QPoint p =
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-				mouseEvent->pos();
+			mouseEvent->pos();
 #else
-            mouseEvent->position().toPoint();
+			mouseEvent->position().toPoint();
 #endif
 			if (p.x() >= d->margins && p.x() <= (window()->width() - d->margins) && p.y() >= d->margins && p.y() <= (window()->height() - d->margins)) {
 				if (d->edges != 0) {

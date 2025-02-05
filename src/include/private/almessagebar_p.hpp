@@ -100,7 +100,7 @@ public:
 
 
 Q_SIGNALS:
-	Q_SIGNAL void sigOpacityChanged();
+	void sigOpacityChanged();
 
 protected:
 	friend class CALMessageBarManager;

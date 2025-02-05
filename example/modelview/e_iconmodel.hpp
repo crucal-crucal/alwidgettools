@@ -27,7 +27,7 @@ public:
 	[[nodiscard]] ALIcon::IconType getIconType() const { return m_iconType; }
 
 Q_SIGNALS:
-	Q_SIGNAL void sigIsSearchModeChanged();
+	 void sigIsSearchModeChanged();
 
 private:
 	ALIcon::IconType m_iconType{};

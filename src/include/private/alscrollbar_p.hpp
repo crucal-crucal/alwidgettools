@@ -29,7 +29,7 @@ public:
 	[[nodiscard]] int getTargetMaximum() const;
 
 Q_SIGNALS:
-	Q_SIGNAL void sigTargetMaximumChanged();
+	void sigTargetMaximumChanged();
 
 protected:
 	CALScrollBar* const q_ptr{ nullptr };

@@ -64,15 +64,15 @@ public:
 	void setToolTip(const QString& tooltip);
 
 Q_SIGNALS:
-	Q_SIGNAL void sigBorderRadiusChanged(int radius);
-	Q_SIGNAL void sigLightHoverColorChanged(const QColor& color);
-	Q_SIGNAL void sigDarkHoverColorChanged(const QColor& color);
-	Q_SIGNAL void sigLightIconColorChanged(const QColor& color);
-	Q_SIGNAL void sigDarkIconColorChanged(const QColor& color);
-	Q_SIGNAL void sigLigntSelectedColorChanged(const QColor& color);
-	Q_SIGNAL void sigDarkSelectedColorChanged(const QColor& color);
-	Q_SIGNAL void sigIsSelectedChanged(bool isSelected);
-	Q_SIGNAL void sigOpacityChanged(qreal opacity);
+	void sigBorderRadiusChanged(int radius);
+	void sigLightHoverColorChanged(const QColor& color);
+	void sigDarkHoverColorChanged(const QColor& color);
+	void sigLightIconColorChanged(const QColor& color);
+	void sigDarkIconColorChanged(const QColor& color);
+	void sigLigntSelectedColorChanged(const QColor& color);
+	void sigDarkSelectedColorChanged(const QColor& color);
+	void sigIsSelectedChanged(bool isSelected);
+	void sigOpacityChanged(qreal opacity);
 
 protected:
 	const QScopedPointer<CALAwesomeButtonPrivate> d_ptr{ nullptr };

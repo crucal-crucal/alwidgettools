@@ -32,8 +32,8 @@ public:
 	[[nodiscard]] E_TreeItem* getParentItem() const;
 
 Q_SIGNALS:
-	Q_SIGNAL void sigChildrenItemsChanged();
-	Q_SIGNAL void sigIsCheckedChanged();
+	 void sigChildrenItemsChanged();
+	 void sigIsCheckedChanged();
 
 private:
 	QString m_itemKey{};

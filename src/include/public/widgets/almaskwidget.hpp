@@ -23,7 +23,7 @@ public:
 	[[nodiscard]] int getMaskAlpha() const { return m_MaskAlpha; }
 
 Q_SIGNALS:
-	Q_SIGNAL void sigMaskAlphaChanged(int alpha);
+	void sigMaskAlphaChanged(int alpha);
 
 protected:
 	void paintEvent(QPaintEvent* event) override;

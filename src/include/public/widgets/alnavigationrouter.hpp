@@ -26,8 +26,8 @@ public:
 	[[nodiscard]] int getMaxRouteCount() const;
 
 Q_SIGNALS:
-	Q_SIGNAL void sigMaxRouteCountChanged();
-	Q_SIGNAL void sigNavigationRouterStateChanged(bool state);
+	void sigMaxRouteCountChanged();
+	void sigNavigationRouterStateChanged(bool state);
 
 protected:
 	const QScopedPointer<CALNavigationRouterPrivate> d_ptr{ nullptr };

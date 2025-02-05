@@ -67,9 +67,9 @@ public:
 	[[nodiscard]] bool getIsAutoRemove() const;
 
 Q_SIGNALS:
-	Q_SIGNAL void sigTextPixelSizeChanged();
-	Q_SIGNAL void sigIsAutoRemoveChanged();
-	Q_SIGNAL void sigBreadcrumbClicked(const QString& breadcrumb, const QStringList& lastBreadcrumbList);
+	void sigTextPixelSizeChanged();
+	void sigIsAutoRemoveChanged();
+	void sigBreadcrumbClicked(const QString& breadcrumb, const QStringList& lastBreadcrumbList);
 
 protected:
 	const QScopedPointer<CALBreadcrumbBarPrivate> d_ptr{ nullptr };

@@ -36,6 +36,20 @@
     </message>
 </context>
 <context>
+    <name>E_Home</name>
+    <message>
+        <location filename="../../page/e_home.cpp" line="61"/>
+        <location filename="../../page/e_home.cpp" line="72"/>
+        <source>open error</source>
+        <translation type="unfinished">打开失败</translation>
+    </message>
+    <message>
+        <location filename="../../page/e_home.cpp" line="102"/>
+        <source>Recommendation card</source>
+        <translation type="unfinished">推荐卡片</translation>
+    </message>
+</context>
+<context>
     <name>E_Icon</name>
     <message>
         <location filename="../../page/e_icon.cpp" line="31"/>
@@ -230,6 +244,39 @@
         <location filename="../../page/e_toggleswitch_example.cpp" line="31"/>
         <source>Disable</source>
         <translation type="unfinished">禁用</translation>
+    </message>
+</context>
+<context>
+    <name>E_TreeView</name>
+    <message>
+        <location filename="../../page/e_treeview.cpp" line="54"/>
+        <source>number: </source>
+        <translation type="unfinished">数量: </translation>
+    </message>
+    <message>
+        <location filename="../../page/e_treeview.cpp" line="56"/>
+        <source>ItemHeight</source>
+        <translation type="unfinished">项高</translation>
+    </message>
+    <message>
+        <location filename="../../page/e_treeview.cpp" line="73"/>
+        <source>HeaderMargin</source>
+        <translation type="unfinished">表头边缘</translation>
+    </message>
+    <message>
+        <location filename="../../page/e_treeview.cpp" line="90"/>
+        <source>Indentation</source>
+        <translation type="unfinished">缩进</translation>
+    </message>
+    <message>
+        <location filename="../../page/e_treeview.cpp" line="109"/>
+        <source>Expand All</source>
+        <translation type="unfinished">展开全部</translation>
+    </message>
+    <message>
+        <location filename="../../page/e_treeview.cpp" line="113"/>
+        <source>Collapse All</source>
+        <translation type="unfinished">收起全部</translation>
     </message>
 </context>
 <context>

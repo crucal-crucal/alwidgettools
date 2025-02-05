@@ -20,7 +20,7 @@ public:
 	Q_SLOT void slotInitMicaBase(QImage image);
 
 Q_SIGNALS:
-	Q_SIGNAL void sigInitFinished();
+	 void sigInitFinished();
 
 private:
 	CALApplicationPrivate* appPrivate{ nullptr };

@@ -46,12 +46,12 @@ public:
 	[[nodiscard]] QWidget* getCustomWidget() const;
 
 Q_SIGNALS:
-	Q_SIGNAL void sigBorderRadiusChanged();
-	Q_SIGNAL void sigDisplayMsecChanged();
-	Q_SIGNAL void sigShowDelayMsecChanged();
-	Q_SIGNAL void sigHideDelayMsecChanged();
-	Q_SIGNAL void sigToolTipChanged();
-	Q_SIGNAL void sigCustomWidgetChanged();
+	void sigBorderRadiusChanged();
+	void sigDisplayMsecChanged();
+	void sigShowDelayMsecChanged();
+	void sigHideDelayMsecChanged();
+	void sigToolTipChanged();
+	void sigCustomWidgetChanged();
 
 protected:
 	const QScopedPointer<CALToolTipPrivate> d_ptr{ nullptr };

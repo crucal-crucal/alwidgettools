@@ -26,7 +26,7 @@ public:
 	Q_SLOT void slotThemeChanged(const ALThemeType::ThemeMode& mode);
 
 Q_SIGNALS:
-	Q_SIGNAL void sigExpandMarkWidthChanged();
+	void sigExpandMarkWidthChanged();
 
 protected:
 	CALLineEdit* const q_ptr{ nullptr };

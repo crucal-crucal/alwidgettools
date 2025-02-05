@@ -32,15 +32,16 @@ public:
 	[[nodiscard]] bool getIsLogFileNameWithTime() const;
 
 Q_SIGNALS:
-	Q_SIGNAL void sigLogSavePathChanged();
-	Q_SIGNAL void sigLogFileNameChanged();
-	Q_SIGNAL void sigIsLogFileNameWithTimeChanged();
-	Q_SIGNAL void sigLogMessage(const QString& msg);
+	void sigLogSavePathChanged();
+	void sigLogFileNameChanged();
+	void sigIsLogFileNameWithTimeChanged();
+	void sigLogMessage(const QString& msg);
 
 protected:
 	const QScopedPointer<CALLogPrivate> d_ptr{ nullptr };
 
 	friend class CALSingleton<CALLog>;
+
 private:
 	explicit CALLog(QObject* parent = nullptr);
 	~CALLog() override;

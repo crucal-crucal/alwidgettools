@@ -87,24 +87,24 @@ public:
 	[[nodiscard]] QColor getSubTitleColor() const;
 
 Q_SIGNALS:
-	Q_SIGNAL void sigPromotionCardClicked();
-	Q_SIGNAL void sigCardTitlePixelSizeChanged();
-	Q_SIGNAL void sigPromotionTitlePixelSizeChanged();
-	Q_SIGNAL void sigTitlePixelSizeChanged();
-	Q_SIGNAL void sigSubTitlePixelSizeChanged();
-	Q_SIGNAL void sigBorderRadiusChanged();
-	Q_SIGNAL void sigCardPixmapChanged();
-	Q_SIGNAL void sigCardTitleChanged();
-	Q_SIGNAL void sigPromotionTitleChanged();
-	Q_SIGNAL void sigTitleChanged();
-	Q_SIGNAL void sigSubTitleChanged();
-	Q_SIGNAL void sigCardTitleColorChanged();
-	Q_SIGNAL void sigPromotionTitleColorChanged();
-	Q_SIGNAL void sigPromotionTitleBaseColorChanged();
-	Q_SIGNAL void sigTitleColorChanged();
-	Q_SIGNAL void sigSubTitleColorChanged();
-	Q_SIGNAL void sigHorizontalCardPixmapRatioChanged();
-	Q_SIGNAL void sigVerticalCardPixmapRatioChanged();
+	void sigPromotionCardClicked();
+	void sigCardTitlePixelSizeChanged();
+	void sigPromotionTitlePixelSizeChanged();
+	void sigTitlePixelSizeChanged();
+	void sigSubTitlePixelSizeChanged();
+	void sigBorderRadiusChanged();
+	void sigCardPixmapChanged();
+	void sigCardTitleChanged();
+	void sigPromotionTitleChanged();
+	void sigTitleChanged();
+	void sigSubTitleChanged();
+	void sigCardTitleColorChanged();
+	void sigPromotionTitleColorChanged();
+	void sigPromotionTitleBaseColorChanged();
+	void sigTitleColorChanged();
+	void sigSubTitleColorChanged();
+	void sigHorizontalCardPixmapRatioChanged();
+	void sigVerticalCardPixmapRatioChanged();
 
 protected:
 	const QScopedPointer<CALPromotionCardPrivate> d_ptr{ nullptr };

@@ -35,11 +35,11 @@ public:
 	[[nodiscard]] QDate getMaximumDate() const;
 
 Q_SIGNALS:
-	Q_SIGNAL void sigClicked(const QDate& date);
-	Q_SIGNAL void sigBorderRadiusChanged();
-	Q_SIGNAL void sigSelectedDateChanged();
-	Q_SIGNAL void sigMinimumDateChanged();
-	Q_SIGNAL void sigMaximumDateChanged();
+	void sigClicked(const QDate& date);
+	void sigBorderRadiusChanged();
+	void sigSelectedDateChanged();
+	void sigMinimumDateChanged();
+	void sigMaximumDateChanged();
 
 protected:
 	const QScopedPointer<CALCalendarPrivate> d_ptr{ nullptr };

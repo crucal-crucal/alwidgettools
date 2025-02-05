@@ -14,7 +14,7 @@ public:
 	~CALComboBoxView() override;
 
 Q_SIGNALS:
-	Q_SIGNAL void sigItemPressed(const QModelIndex& index);
+	 void sigItemPressed(const QModelIndex& index);
 
 protected:
 	void mousePressEvent(QMouseEvent* event) override;

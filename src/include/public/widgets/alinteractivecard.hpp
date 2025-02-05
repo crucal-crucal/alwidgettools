@@ -61,16 +61,16 @@ public:
 	[[nodiscard]] QSize getCardPixmapSize() const;
 
 Q_SIGNALS:
-	Q_SIGNAL void sigCardPixModeChanged();
-	Q_SIGNAL void sigBorderRadiusChanged();
-	Q_SIGNAL void sigTitlePixelSizeChanged();
-	Q_SIGNAL void sigSubTitlePixelSizeChanged();
-	Q_SIGNAL void sigTitleSpacingChanged();
-	Q_SIGNAL void sigCardPixmapBorderRadiusChanged();
-	Q_SIGNAL void sigTitleChanged();
-	Q_SIGNAL void sigSubTitleChanged();
-	Q_SIGNAL void sigCardPixmapChanged();
-	Q_SIGNAL void sigCardPixmapSizeChanged();
+	void sigCardPixModeChanged();
+	void sigBorderRadiusChanged();
+	void sigTitlePixelSizeChanged();
+	void sigSubTitlePixelSizeChanged();
+	void sigTitleSpacingChanged();
+	void sigCardPixmapBorderRadiusChanged();
+	void sigTitleChanged();
+	void sigSubTitleChanged();
+	void sigCardPixmapChanged();
+	void sigCardPixmapSizeChanged();
 
 protected:
 	const QScopedPointer<CALInteractiveCardPrivate> d_ptr{ nullptr };

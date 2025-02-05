@@ -32,8 +32,8 @@ public:
 	[[nodiscard]] qreal getExpandMarkWidth() const;
 
 Q_SIGNALS:
-	Q_SIGNAL void sigExpandIconRotateChanged();
-	Q_SIGNAL void sigExpandMarkWidthChanged();
+	 void sigExpandIconRotateChanged();
+	 void sigExpandMarkWidthChanged();
 
 private:
 	ALThemeType::ThemeMode m_themeMode{};

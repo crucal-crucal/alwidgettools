@@ -61,9 +61,9 @@ void CALWidget::moveToCenter() {
 		return;
 	}
 #if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
-	auto geometry = screen()->availableGeometry();
+	const auto geometry = screen()->availableGeometry();
 #else
-	auto geometry = qApp->screenAt(this->geometry().center())->geometry();
+	const auto geometry = qApp->screenAt(this->geometry().center())->geometry();
 #endif
 	setGeometry((geometry.left() + geometry.right() - width()) / 2, (geometry.top() + geometry.bottom() - height()) / 2, width(), height());
 }

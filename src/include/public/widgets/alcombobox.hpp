@@ -25,7 +25,7 @@ public:
 	[[nodiscard]] int getBorderRadius() const;
 
 Q_SIGNALS:
-	Q_SIGNAL void sigBorderRadiusChanged();
+	void sigBorderRadiusChanged();
 
 protected:
 	const QScopedPointer<CALComboBoxPrivate> d_ptr{ nullptr };

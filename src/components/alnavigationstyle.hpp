@@ -62,13 +62,13 @@ public:
 	void navigationNodeStateChanged(const QVariantMap& data);
 
 Q_SIGNALS:
-	Q_SIGNAL void sigOpacityChanged();
-	Q_SIGNAL void sigRotateChanged();
-	Q_SIGNAL void sigItemHeightChanged();
-	Q_SIGNAL void sigLastSelectMarkTopChanged();
-	Q_SIGNAL void sigLastSelectMarkBottomChanged();
-	Q_SIGNAL void sigSelectMarkTopChanged();
-	Q_SIGNAL void sigSelectMarkBottomChanged();
+	 void sigOpacityChanged();
+	 void sigRotateChanged();
+	 void sigItemHeightChanged();
+	 void sigLastSelectMarkTopChanged();
+	 void sigLastSelectMarkBottomChanged();
+	 void sigSelectMarkTopChanged();
+	 void sigSelectMarkBottomChanged();
 
 private:
 	qreal m_opacity{};

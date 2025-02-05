@@ -48,8 +48,8 @@ public:
 	[[nodiscard]] QString getCurrentColorRgb() const;
 
 Q_SIGNALS:
-	Q_SIGNAL void sigCurrentColorChanged();
-	Q_SIGNAL void sigColorSelected(const QColor& color);
+	void sigCurrentColorChanged();
+	void sigColorSelected(const QColor& color);
 
 protected:
 	const QScopedPointer<CALColorDialogPrivate> d_ptr{ nullptr };

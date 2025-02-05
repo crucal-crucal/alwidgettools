@@ -41,8 +41,8 @@ public:
 	Q_SLOT void slotUpdateSwitchButtonText() const;
 
 Q_SIGNALS:
-	Q_SIGNAL void sigZoomRatioChanged();
-	Q_SIGNAL void sigPixOpacityChanged();
+	void sigZoomRatioChanged();
+	void sigPixOpacityChanged();
 
 protected:
 	CALCalendar* const q_ptr{ nullptr };

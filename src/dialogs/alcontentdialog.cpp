@@ -56,7 +56,7 @@ CALContentDialog::CALContentDialog(QWidget* parent): CALBaseDialog(parent), d_pt
 	d->closeButton->setFixedHeight(38);
 	d->closeButton->setBorderRadius(6);
 	connect(d->closeButton, &CALPushButton::clicked, this, [=]() {
-		emit sigCloseButtonClicked();
+		Q_EMIT sigCloseButtonClicked();
 		slotCloseButtonClicked();
 		this->close();
 	});
@@ -67,7 +67,7 @@ CALContentDialog::CALContentDialog(QWidget* parent): CALBaseDialog(parent), d_pt
 	d->cancelButton->setFixedHeight(38);
 	d->cancelButton->setBorderRadius(6);
 	connect(d->cancelButton, &CALPushButton::clicked, this, [=]() {
-		emit sigCancelButtonClicked();
+		Q_EMIT sigCancelButtonClicked();
 		slotCancelButtonClicked();
 		this->close();
 	});

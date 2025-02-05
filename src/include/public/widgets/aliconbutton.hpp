@@ -71,15 +71,15 @@ public:
 	void setToolTip(const QString& tooltip);
 
 Q_SIGNALS:
-	Q_SIGNAL void sigBorderRadiusChanged();
-	Q_SIGNAL void sigOpacityChanged();
-	Q_SIGNAL void sigLightHoverColorChanged();
-	Q_SIGNAL void sigDarkHoverColorChanged();
-	Q_SIGNAL void sigLightIconColorChanged();
-	Q_SIGNAL void sigDarkIconColorChanged();
-	Q_SIGNAL void sigLightHoverIconColorChanged();
-	Q_SIGNAL void sigDarkHoverIconColorChanged();
-	Q_SIGNAL void sigIsSelectedChanged();
+	void sigBorderRadiusChanged();
+	void sigOpacityChanged();
+	void sigLightHoverColorChanged();
+	void sigDarkHoverColorChanged();
+	void sigLightIconColorChanged();
+	void sigDarkIconColorChanged();
+	void sigLightHoverIconColorChanged();
+	void sigDarkHoverIconColorChanged();
+	void sigIsSelectedChanged();
 
 protected:
 	const QScopedPointer<CALIconButtonPrivate> d_ptr{ nullptr };

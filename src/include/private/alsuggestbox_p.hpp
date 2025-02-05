@@ -36,10 +36,10 @@ public:
 	[[nodiscard]] ALIcon::IconType getIconType() const;
 
 Q_SIGNALS:
-	Q_SIGNAL void sigAwesomeIconChanged();
-	Q_SIGNAL void sigFluentIconChanged();
-	Q_SIGNAL void sigSuggestTextChanged();
-	Q_SIGNAL void sigSuggestDataChanged();
+	void sigAwesomeIconChanged();
+	void sigFluentIconChanged();
+	void sigSuggestTextChanged();
+	void sigSuggestDataChanged();
 
 private:
 	ALIcon::IconType m_iconType{};

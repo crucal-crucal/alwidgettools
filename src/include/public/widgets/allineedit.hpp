@@ -27,11 +27,11 @@ public:
 	[[nodiscard]] bool isClearButtonEnable() const;
 
 Q_SIGNALS:
-	Q_SIGNAL void sigBorderRadiusChanged();
-	Q_SIGNAL void sigIsClearButtonEnableChanged();
-	Q_SIGNAL void sigFocusIn(const QString& text);
-	Q_SIGNAL void sigFocusOut(const QString& text);
-	Q_SIGNAL void sigWmFocusOut(const QString& text);
+	void sigBorderRadiusChanged();
+	void sigIsClearButtonEnableChanged();
+	void sigFocusIn(const QString& text);
+	void sigFocusOut(const QString& text);
+	void sigWmFocusOut(const QString& text);
 
 protected:
 	const QScopedPointer<CALLineEditPrivate> d_ptr{ nullptr };

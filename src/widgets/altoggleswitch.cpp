@@ -36,7 +36,7 @@ void CALToggleSwitchPrivate::startPosAnimation(const qreal startX, const qreal e
 	circleAnimation->setEasingCurve(QEasingCurve::InOutSine);
 	circleAnimation->start(QAbstractAnimation::DeleteWhenStopped);
 	isToggled = isToggle;
-	emit q->sigToggleChanged(isToggle);
+	Q_EMIT q->sigToggleChanged(isToggle);
 }
 
 void CALToggleSwitchPrivate::startRadiusAnimation(const qreal startRadius, const qreal endRadius) {

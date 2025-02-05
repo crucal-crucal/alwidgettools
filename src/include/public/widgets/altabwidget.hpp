@@ -25,7 +25,7 @@ public:
 	[[nodiscard]] bool getIsTransparent() const;
 
 Q_SIGNALS:
-	Q_SIGNAL void sigIsTransparentChanged();
+	void sigIsTransparentChanged();
 
 protected:
 	const QScopedPointer<CALTabWidgetPrivate> d_ptr{ nullptr };

@@ -34,7 +34,7 @@ CALToolTipPrivate::~CALToolTipPrivate() = default;
 void CALToolTipPrivate::setOpacity(const qreal opacity) {
 	if (this->opacity != opacity) {
 		this->opacity = opacity;
-		emit sigOpacityChanged();
+		Q_EMIT sigOpacityChanged();
 	}
 }
 
@@ -172,7 +172,7 @@ void CALToolTip::setBorderRadius(const qreal borderRadius) {
 
 	if (d->borderRadius != borderRadius) {
 		d->borderRadius = borderRadius;
-		emit sigBorderRadiusChanged();
+		Q_EMIT sigBorderRadiusChanged();
 	}
 }
 
@@ -187,7 +187,7 @@ void CALToolTip::setDisplayMsec(const int displayMsec) {
 
 	if (d->displayMsec != displayMsec) {
 		d->displayMsec = displayMsec;
-		emit sigDisplayMsecChanged();
+		Q_EMIT sigDisplayMsecChanged();
 	}
 }
 
@@ -202,7 +202,7 @@ void CALToolTip::setShowDelayMsec(const int delayMsec) {
 
 	if (d->showDelayMsec != delayMsec) {
 		d->showDelayMsec = delayMsec;
-		emit sigShowDelayMsecChanged();
+		Q_EMIT sigShowDelayMsecChanged();
 	}
 }
 
@@ -217,7 +217,7 @@ void CALToolTip::setHideDelayMsec(const int delayMsec) {
 
 	if (d->hideDelayMsec != delayMsec) {
 		d->hideDelayMsec = delayMsec;
-		emit sigHideDelayMsecChanged();
+		Q_EMIT sigHideDelayMsecChanged();
 	}
 }
 
@@ -231,7 +231,7 @@ void CALToolTip::setToolTip(const QString& tooltip) {
 	Q_D(CALToolTip);
 
 	d->toolTipText->setText(tooltip);
-	emit sigToolTipChanged();
+	Q_EMIT sigToolTipChanged();
 }
 
 QString CALToolTip::getToolTip() const {
@@ -255,7 +255,7 @@ void CALToolTip::setCustomWidget(QWidget* customWidget) {
 	d->toolTipText->hide();
 	d->mainVLayout->addWidget(customWidget);
 	d->customWidget = customWidget;
-	emit sigCustomWidgetChanged();
+	Q_EMIT sigCustomWidgetChanged();
 }
 
 QWidget* CALToolTip::getCustomWidget() const {

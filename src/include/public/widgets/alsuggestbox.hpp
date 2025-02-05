@@ -35,9 +35,9 @@ public:
 	void removeSuggestion(int index);
 
 Q_SIGNALS:
-	Q_SIGNAL void sigBorderRadiusChanged();
-	Q_SIGNAL void sigCaseSensitivityChanged();
-	Q_SIGNAL void sigSuggestionClicked(const QString& suggestText, const QVariantMap& suggestData);
+	void sigBorderRadiusChanged();
+	void sigCaseSensitivityChanged();
+	void sigSuggestionClicked(const QString& suggestText, const QVariantMap& suggestData);
 
 protected:
 	const QScopedPointer<CALSuggestBoxPrivate> d_ptr{ nullptr };

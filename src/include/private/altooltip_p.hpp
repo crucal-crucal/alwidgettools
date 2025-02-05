@@ -25,7 +25,7 @@ public:
 	[[nodiscard]] qreal getOpacity() const;
 
 Q_SIGNALS:
-	Q_SIGNAL void sigOpacityChanged();
+	void sigOpacityChanged();
 
 protected:
 	CALToolTip* const q_ptr{ nullptr };

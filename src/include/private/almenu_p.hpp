@@ -26,7 +26,7 @@ public:
 	[[nodiscard]] int getAnimationImagePosY() const;
 
 Q_SIGNALS:
-	Q_SIGNAL void onAnimationImagePosYChanged();
+	void onAnimationImagePosYChanged();
 
 protected:
 	CALMenu* const q_ptr{ nullptr };

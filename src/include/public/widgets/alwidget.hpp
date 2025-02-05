@@ -47,15 +47,15 @@ public:
 	[[nodiscard]] QColor getAppBarBackground() const;
 
 Q_SIGNALS:
-	Q_SIGNAL void sigIsStayTopChanged();
-	Q_SIGNAL void sigIsFixedSizeChanged();
-	Q_SIGNAL void sigIsDefaultClosedChanged();
-	Q_SIGNAL void sigAppBarHeightChanged();
-	Q_SIGNAL void sigAppBarBackgroundChanged();
-	Q_SIGNAL void sigRouteBackButtonClicked();
-	Q_SIGNAL void sigNavigationButtonClicked();
-	Q_SIGNAL void sigThemeChangeButtonClicked();
-	Q_SIGNAL void sigCloseButtonClicked();
+	void sigIsStayTopChanged();
+	void sigIsFixedSizeChanged();
+	void sigIsDefaultClosedChanged();
+	void sigAppBarHeightChanged();
+	void sigAppBarBackgroundChanged();
+	void sigRouteBackButtonClicked();
+	void sigNavigationButtonClicked();
+	void sigThemeChangeButtonClicked();
+	void sigCloseButtonClicked();
 
 protected:
 	const QScopedPointer<CALWidgetPrivate> d_ptr{ nullptr };

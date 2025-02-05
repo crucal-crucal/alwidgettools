@@ -80,22 +80,22 @@ public:
 	[[nodiscard]] QSize getCardPixmapSize() const;
 
 Q_SIGNALS:
-	Q_SIGNAL void sigBorderRadiusChanged();
-	Q_SIGNAL void sigBrushAlphaChanged();
-	Q_SIGNAL void sigTitlePixelSizeChanged();
-	Q_SIGNAL void sigSubTitlePixelSizeChanged();
-	Q_SIGNAL void sigTitleSpacingChanged();
-	Q_SIGNAL void sigSubTitleSpacingChanged();
-	Q_SIGNAL void sigCardPixmapBorderRadiusChanged();
-	Q_SIGNAL void sigMainOpacityChanged();
-	Q_SIGNAL void sigNoiseOpacityChanged();
-	Q_SIGNAL void sigBorderWidthChanged();
-	Q_SIGNAL void sigTitleChanged();
-	Q_SIGNAL void sigSubTitleChanged();
-	Q_SIGNAL void sigUrlChanged();
-	Q_SIGNAL void sigCardPixmapChanged();
-	Q_SIGNAL void sigCardPixmapSizeChanged();
-	Q_SIGNAL void sigOpenError(const QString& errMsg);
+	void sigBorderRadiusChanged();
+	void sigBrushAlphaChanged();
+	void sigTitlePixelSizeChanged();
+	void sigSubTitlePixelSizeChanged();
+	void sigTitleSpacingChanged();
+	void sigSubTitleSpacingChanged();
+	void sigCardPixmapBorderRadiusChanged();
+	void sigMainOpacityChanged();
+	void sigNoiseOpacityChanged();
+	void sigBorderWidthChanged();
+	void sigTitleChanged();
+	void sigSubTitleChanged();
+	void sigUrlChanged();
+	void sigCardPixmapChanged();
+	void sigCardPixmapSizeChanged();
+	void sigOpenError(const QString& errMsg);
 
 protected:
 	const QScopedPointer<CALAcrylicUrlCardPrivate> d_ptr{ nullptr };

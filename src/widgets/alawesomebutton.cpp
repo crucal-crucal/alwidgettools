@@ -104,7 +104,7 @@ void CALAwesomeButton::setBorderRadius(const int radius) {
 
 	if (d->borderRaius != radius) {
 		d->borderRaius = radius;
-		emit sigBorderRadiusChanged(radius);
+		Q_EMIT sigBorderRadiusChanged(radius);
 		update();
 	}
 }
@@ -118,7 +118,7 @@ void CALAwesomeButton::setLightHoverColor(const QColor& color) {
 
 	if (d->lightHoverColor != color) {
 		d->lightHoverColor = color;
-		emit sigLightHoverColorChanged(color);
+		Q_EMIT sigLightHoverColorChanged(color);
 		update();
 	}
 }
@@ -132,7 +132,7 @@ void CALAwesomeButton::setDarkHoverColor(const QColor& color) {
 
 	if (d->darkHoverColor != color) {
 		d->darkHoverColor = color;
-		emit sigDarkHoverColorChanged(color);
+		Q_EMIT sigDarkHoverColorChanged(color);
 		update();
 	}
 }
@@ -146,7 +146,7 @@ void CALAwesomeButton::setLightIconColor(const QColor& color) {
 
 	if (d->lightIconColor != color) {
 		d->lightIconColor = color;
-		emit sigLightIconColorChanged(color);
+		Q_EMIT sigLightIconColorChanged(color);
 		update();
 	}
 }
@@ -160,7 +160,7 @@ void CALAwesomeButton::setDarkIconColor(const QColor& color) {
 
 	if (d->darkIconColor != color) {
 		d->darkIconColor = color;
-		emit sigDarkIconColorChanged(color);
+		Q_EMIT sigDarkIconColorChanged(color);
 		update();
 	}
 }
@@ -174,7 +174,7 @@ void CALAwesomeButton::setLigntSelectedColor(const QColor& color) {
 
 	if (d->ligntSelectedColor != color) {
 		d->ligntSelectedColor = color;
-		emit sigLigntSelectedColorChanged(color);
+		Q_EMIT sigLigntSelectedColorChanged(color);
 		update();
 	}
 }
@@ -188,7 +188,7 @@ void CALAwesomeButton::setDarkSelectedColor(const QColor& color) {
 
 	if (d->darkSelectedColor != color) {
 		d->darkSelectedColor = color;
-		emit sigDarkSelectedColorChanged(color);
+		Q_EMIT sigDarkSelectedColorChanged(color);
 		update();
 	}
 }
@@ -202,7 +202,7 @@ void CALAwesomeButton::setIsSelected(const bool isSelected) {
 
 	if (d->isSelected != isSelected) {
 		d->isSelected = isSelected;
-		emit sigIsSelectedChanged(isSelected);
+		Q_EMIT sigIsSelectedChanged(isSelected);
 	}
 }
 

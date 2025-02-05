@@ -57,7 +57,7 @@ void CALScrollBarPrivate::slotRangeChanged(const int min, const int max) {
 
 void CALScrollBarPrivate::setTargetMaximum(const int targetMaximum) {
 	this->targetMaximum = targetMaximum;
-	emit sigTargetMaximumChanged();
+	Q_EMIT sigTargetMaximumChanged();
 }
 
 int CALScrollBarPrivate::getTargetMaximum() const {
@@ -207,7 +207,7 @@ void CALScrollBar::setIsAnimation(const bool isAnimation) {
 	Q_D(CALScrollBar);
 
 	d->isAnimation = isAnimation;
-	emit sigIsAnimationChanged();
+	Q_EMIT sigIsAnimationChanged();
 }
 
 bool CALScrollBar::getIsAnimation() const {
@@ -218,7 +218,7 @@ void CALScrollBar::setSpeedLimit(const qreal speedLimit) {
 	Q_D(CALScrollBar);
 
 	d->speedLimit = speedLimit;
-	emit sigSpeedLimitChanged();
+	Q_EMIT sigSpeedLimitChanged();
 }
 
 qreal CALScrollBar::getSpeedLimit() const {

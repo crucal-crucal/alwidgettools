@@ -39,12 +39,12 @@ public:
 	[[nodiscard]] int getMarkWidth() const;
 
 Q_SIGNALS:
-	Q_SIGNAL void sigPovitClicked(int index);
-	Q_SIGNAL void sigPovitDoubleClicked(int index);
-	Q_SIGNAL void sigTextPixelSizeChanged();
-	Q_SIGNAL void sigCurrentIndexChanged();
-	Q_SIGNAL void sigPovitSpacingChanged();
-	Q_SIGNAL void sigMarkWidthChanged();
+	void sigPovitClicked(int index);
+	void sigPovitDoubleClicked(int index);
+	void sigTextPixelSizeChanged();
+	void sigCurrentIndexChanged();
+	void sigPovitSpacingChanged();
+	void sigMarkWidthChanged();
 
 protected:
 	const QScopedPointer<CALPovitPrivate> d_ptr{ nullptr };

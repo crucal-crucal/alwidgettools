@@ -30,8 +30,8 @@ public:
 	[[nodiscard]] int getHeaderMargin() const;
 
 Q_SIGNALS:
-	Q_SIGNAL void sigItemHeightChanged();
-	Q_SIGNAL void sigHeaderMarginChanged();
+	 void sigItemHeightChanged();
+	 void sigHeaderMarginChanged();
 
 private:
 	ALThemeType::ThemeMode m_themeMode{};

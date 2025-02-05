@@ -56,17 +56,17 @@ public:
 	[[nodiscard]] QString getCardButtonText() const;
 
 Q_SIGNALS:
-	Q_SIGNAL void sigPopularCardClicked();
-	Q_SIGNAL void sigPopularCardButtonClicked();
-	Q_SIGNAL void sigBorderRadiusChanged();
-	Q_SIGNAL void sigCardFloatAreaChanged();
-	Q_SIGNAL void sigCardPixmapChanged();
-	Q_SIGNAL void sigCardFloatPixmapChanged();
-	Q_SIGNAL void sigTitleChanged();
-	Q_SIGNAL void sigSubTitleChanged();
-	Q_SIGNAL void sigInteractiveTipsChanged();
-	Q_SIGNAL void sigDetailedTextChanged();
-	Q_SIGNAL void sigCardButtonTextChanged();
+	void sigPopularCardClicked();
+	void sigPopularCardButtonClicked();
+	void sigBorderRadiusChanged();
+	void sigCardFloatAreaChanged();
+	void sigCardPixmapChanged();
+	void sigCardFloatPixmapChanged();
+	void sigTitleChanged();
+	void sigSubTitleChanged();
+	void sigInteractiveTipsChanged();
+	void sigDetailedTextChanged();
+	void sigCardButtonTextChanged();
 
 protected:
 	const QScopedPointer<CALPopularCardPrivate> d_ptr{ nullptr };

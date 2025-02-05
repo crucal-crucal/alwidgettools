@@ -44,9 +44,9 @@ public:
 	[[nodiscard]] bool hasFlag(const ContextMenuFlag& flag) const;
 
 Q_SIGNALS:
-	Q_SIGNAL void sigIsAnimationChanged();
-	Q_SIGNAL void sigRangeAnimationFinished();
-	Q_SIGNAL void sigSpeedLimitChanged();
+	void sigIsAnimationChanged();
+	void sigRangeAnimationFinished();
+	void sigSpeedLimitChanged();
 
 protected:
 	const QScopedPointer<CALScrollBarPrivate> d_ptr{ nullptr };

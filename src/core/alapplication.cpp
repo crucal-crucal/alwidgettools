@@ -130,18 +130,34 @@ CALApplication* CALApplication::instance() {
 	return CALSingleton<CALApplication>::instance();
 }
 
-void CALApplication::init() {
+void CALApplication::initializeApplication() {
 	Q_D(CALApplication);
 
-	const QString applicationDirPath = QApplication::applicationDirPath();
-	QResource::registerResource(applicationDirPath + QDir::separator() + "alwidgettoolsstyle.dll");
 	QApplication::setAttribute(Qt::AA_DontCreateNativeWidgetSiblings);
-	QFontDatabase::addApplicationFont(":alwidgettools/font/ALAwesome.ttf");
-	QFontDatabase::addApplicationFont(":alwidgettools/font/ALFluent.ttf");
-	QFontDatabase::addApplicationFont(":alwidgettools/font/segoe_slboot_EX.ttf");
-	QFontDatabase::addApplicationFont(":alwidgettools/font/segoen_slboot_EX.ttf");
-	d->translator->load(":alwidgettools/translation/zh_CN.qm");
-	QApplication::installTranslator(d->translator);
+
+	/// register resource
+	if (!QResource::registerResource(QApplication::applicationDirPath() + QDir::separator() + "alwidgettoolsresource.dll")) {
+		qWarning() << "Failed to register alwidgettoolsresource.dll";
+	}
+	/// add font
+	const QStringList fonts = {
+		":alwidgettools/font/ALAwesome.ttf",
+		":alwidgettools/font/ALFluent.ttf",
+		":alwidgettools/font/segoe_slboot_EX.ttf",
+		":alwidgettools/font/segoen_slboot_EX.ttf"
+	};
+	for (const auto& font : fonts) {
+		if (-1 == QFontDatabase::addApplicationFont(font)) {
+			qWarning() << "Failed to load font:" << font;
+		}
+	}
+	/// load & install translation
+	if (!d->translator->load(":alwidgettools/translation/zh_CN.qm")) {
+		qWarning() << "Failed to load zh_CN.qm";
+	}
+	if (!QApplication::installTranslator(d->translator)) {
+		qWarning() << "Failed to install translator";
+	}
 
 	QFont font = QApplication::font();
 	font.setPixelSize(13);
@@ -174,9 +190,8 @@ bool CALApplication::containsCursorToItem(const QWidget* item) {
 		return false;
 	}
 
-	const auto point = item->window()->mapFromGlobal(QCursor::pos());
 	const auto rect = QRectF(item->mapTo(item->window(), QPoint(0, 0)), item->size());
-	return rect.contains(point);
+	return rect.contains(item->window()->mapFromGlobal(QCursor::pos()));
 }
 
 void CALApplication::setIsEnableMica(const bool enable) {

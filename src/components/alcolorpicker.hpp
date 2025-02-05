@@ -22,7 +22,7 @@ public:
 	[[nodiscard]] QColor getSelectedColor() const;
 
 Q_SIGNALS:
-	Q_SIGNAL void sigSelectedColorChanged(const QColor& color);
+	 void sigSelectedColorChanged(const QColor& color);
 
 protected:
 	void mousePressEvent(QMouseEvent* event) override;

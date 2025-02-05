@@ -47,7 +47,7 @@ CALToolButton::~CALToolButton() {
 
 void CALToolButton::setBorderRadius(const int borderRadius) {
 	d_func()->style->setBorderRadius(borderRadius);
-	emit sigBorderRadiusChanged();
+	Q_EMIT sigBorderRadiusChanged();
 }
 
 int CALToolButton::getBorderRadius() const {
@@ -56,7 +56,7 @@ int CALToolButton::getBorderRadius() const {
 
 void CALToolButton::setIsSelected(const bool isSelected) {
 	d_func()->style->setIsSelected(isSelected);
-	emit sigSelectedChanged();
+	Q_EMIT sigSelectedChanged();
 }
 
 bool CALToolButton::getIsSelected() const {

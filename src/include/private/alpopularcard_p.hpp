@@ -29,8 +29,8 @@ public:
 	[[nodiscard]] qreal getHoverOpacity() const;
 
 Q_SIGNALS:
-	Q_SIGNAL void sigHoverYOffsetChanged();
-	Q_SIGNAL void sigHoverOpacityChanged();
+	void sigHoverYOffsetChanged();
+	void sigHoverOpacityChanged();
 
 protected:
 	CALPopularCard* const q_ptr{ nullptr };

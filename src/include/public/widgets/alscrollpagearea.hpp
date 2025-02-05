@@ -23,7 +23,7 @@ public:
 	[[nodiscard]] qreal getBorderRadius() const;
 
 Q_SIGNALS:
-	Q_SIGNAL void sigBorderRadiusChanged();
+	void sigBorderRadiusChanged();
 
 protected:
 	const QScopedPointer<CALScrollPageAreaPrivate> d_ptr{ nullptr };

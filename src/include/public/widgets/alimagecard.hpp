@@ -47,10 +47,10 @@ public:
 	[[nodiscard]] QImage getCardImage() const;
 
 Q_SIGNALS:
-	Q_SIGNAL void sigIsPreserveAspectCropChanged();
-	Q_SIGNAL void sigBorderRadiusChanged();
-	Q_SIGNAL void sigMaximumAspectRatioChanged();
-	Q_SIGNAL void sigCardImageChanged();
+	void sigIsPreserveAspectCropChanged();
+	void sigBorderRadiusChanged();
+	void sigMaximumAspectRatioChanged();
+	void sigCardImageChanged();
 
 protected:
 	const QScopedPointer<CALImageCardPrivate> d_ptr{ nullptr };

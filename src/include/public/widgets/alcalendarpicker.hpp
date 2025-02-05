@@ -26,8 +26,8 @@ public:
 	[[nodiscard]] qreal getBorderRadius() const;
 
 Q_SIGNALS:
-	Q_SIGNAL void sigBorderRadiusChanged();
-	Q_SIGNAL void sigSelectedDateChanged(const QDate& date);
+	void sigBorderRadiusChanged();
+	void sigSelectedDateChanged(const QDate& date);
 
 protected:
 	const QScopedPointer<CALCalendarPickerPrivate> d_ptr{ nullptr };

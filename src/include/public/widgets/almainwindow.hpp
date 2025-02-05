@@ -318,18 +318,18 @@ public:
 	[[nodiscard]] static ALThemeType::ThemeMode getThemeMode();
 
 Q_SIGNALS:
-	Q_SIGNAL void sigUserInfoCardClicked();
-	Q_SIGNAL void sigCloseButtonClicked();
-	Q_SIGNAL void sigNavigationNodeClicked(const ALNavigationType::NavigationNodeType& nodeType, const QString& nodeKey);
-	Q_SIGNAL void sigCustomWidgetChanged();
-	Q_SIGNAL void sigIsStayTopChanged();
-	Q_SIGNAL void sigIsFixedSizeChanged();
-	Q_SIGNAL void sigIsDefaultClosedChanged();
-	Q_SIGNAL void sigIsCenterStackedWidgetTransparentChanged();
-	Q_SIGNAL void sigAppBarHeightChanged();
-	Q_SIGNAL void sigCustomWidgetMaximumWidthChanged();
-	Q_SIGNAL void sigThemeChangeTimeChanged();
-	Q_SIGNAL void sigNavigationDisplayModeChanged();
+	void sigUserInfoCardClicked();
+	void sigCloseButtonClicked();
+	void sigNavigationNodeClicked(const ALNavigationType::NavigationNodeType& nodeType, const QString& nodeKey);
+	void sigCustomWidgetChanged();
+	void sigIsStayTopChanged();
+	void sigIsFixedSizeChanged();
+	void sigIsDefaultClosedChanged();
+	void sigIsCenterStackedWidgetTransparentChanged();
+	void sigAppBarHeightChanged();
+	void sigCustomWidgetMaximumWidthChanged();
+	void sigThemeChangeTimeChanged();
+	void sigNavigationDisplayModeChanged();
 
 protected:
 	const QScopedPointer<CALMainWindowPrivate> d_ptr{ nullptr };

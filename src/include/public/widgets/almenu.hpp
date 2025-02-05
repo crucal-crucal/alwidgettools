@@ -46,7 +46,7 @@ public:
 	[[nodiscard]] bool isHasIcon() const;
 
 Q_SIGNALS:
-	Q_SIGNAL void sigMenuShow();
+	void sigMenuShow();
 
 protected:
 	const QScopedPointer<CALMenuPrivate> d_ptr{ nullptr };

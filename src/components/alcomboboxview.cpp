@@ -18,7 +18,7 @@ CALComboBoxView::~CALComboBoxView() = default;
 void CALComboBoxView::mousePressEvent(QMouseEvent* event) {
 	QModelIndex index = indexAt(event->pos());
 	if (index.isValid()) {
-		emit sigItemPressed(index);
+		Q_EMIT sigItemPressed(index);
 	}
 	event->ignore();
 }

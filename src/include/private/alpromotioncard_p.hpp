@@ -33,9 +33,9 @@ public:
 	[[nodiscard]] qreal getPressOpacity() const;
 
 Q_SIGNALS:
-	Q_SIGNAL void sigPressRadiusChanged();
-	Q_SIGNAL void sigHoverOpacityChanged();
-	Q_SIGNAL void sigPressOpacityChanged();
+	void sigPressRadiusChanged();
+	void sigHoverOpacityChanged();
+	void sigPressOpacityChanged();
 
 protected:
 	CALPromotionCard* const q_ptr{ nullptr };

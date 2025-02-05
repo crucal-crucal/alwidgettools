@@ -6,7 +6,7 @@
 
 #ifdef Q_OS_WIN
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-#define Q_TAKEOVER_NATIVEEVENT_H bool nativeEvent(const QByteArray& eventType, void* message, qintptr* result) override;
+#define AL_TAKEOVER_NATIVEEVENT_H bool nativeEvent(const QByteArray& eventType, void* message, qintptr* result) override;
 #else
 #define AL_TAKEOVER_NATIVEEVENT_H bool nativeEvent(const QByteArray& eventType, void* message, long* result) override;
 #endif
@@ -19,25 +19,25 @@
  * @brief 定义处理本地事件，允许通过 takeOverNativeEvent 接管事件
  * @param CALAppBar pointer to the CALAppBar object
  */
-#define CALAPPBAR_HANDLE(CALAppBar)                                           \
-	if (CALAppBar) {                                                          \
+#define CALAPPBAR_HANDLE(CALAppBar)                                             \
+	if (CALAppBar) {                                                            \
 		int ret = (CALAppBar)->takeOverNativeEvent(eventType, message, result); \
-		if (ret == -1) {                                                      \
-			return QWidget::nativeEvent(eventType, message, result);          \
-		}                                                                     \
-		return static_cast<bool>(ret);										  \
-	}                                                                         \
+		if (ret == -1) {                                                        \
+			return QWidget::nativeEvent(eventType, message, result);            \
+		}                                                                       \
+		return static_cast<bool>(ret);										    \
+	}                                                                           \
 	return QWidget::nativeEvent(eventType, message, result);
 #endif
 
 #ifdef Q_OS_WIN
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-#define Q_TAKEOVER_NATIVEEVENT_CPP(Class, CALAppBar)                                       \
+#define AL_TAKEOVER_NATIVEEVENT_CPP(Class, CALAppBar)                                      \
     bool Class::nativeEvent(const QByteArray& eventType, void* message, qintptr* result) { \
         CALAPPBAR_HANDLE(CALAppBar)                                                        \
     }
 #else
-#define AL_TAKEOVER_NATIVEEVENT_CPP(Class, CALAppBar)                                    \
+#define AL_TAKEOVER_NATIVEEVENT_CPP(Class, CALAppBar)                                   \
     bool Class::nativeEvent(const QByteArray& eventType, void* message, long* result) { \
         CALAPPBAR_HANDLE(CALAppBar)                                                     \
     }
@@ -114,17 +114,17 @@ public:
 #endif
 
 Q_SIGNALS:
-	Q_SIGNAL void sigIsStayTopChanged();
-	Q_SIGNAL void sigIsFixedSizeChanged();
-	Q_SIGNAL void sigIsDefaultClosedChanged();
-	Q_SIGNAL void sigIsOnlyAllowMinAndCloseChanged();
-	Q_SIGNAL void sigAppBarHeightChanged();
-	Q_SIGNAL void sigCustomWidgetMaximumWidthChanged();
-	Q_SIGNAL void sigRouteBackButtonClicked();
-	Q_SIGNAL void sigNavigationButtonClicked();
-	Q_SIGNAL void sigThemeChangeButtonClicked();
-	Q_SIGNAL void sigCloseButtonClicked();
-	Q_SIGNAL void sigCustomWidgetChanged();
+	void sigIsStayTopChanged();
+	void sigIsFixedSizeChanged();
+	void sigIsDefaultClosedChanged();
+	void sigIsOnlyAllowMinAndCloseChanged();
+	void sigAppBarHeightChanged();
+	void sigCustomWidgetMaximumWidthChanged();
+	void sigRouteBackButtonClicked();
+	void sigNavigationButtonClicked();
+	void sigThemeChangeButtonClicked();
+	void sigCloseButtonClicked();
+	void sigCustomWidgetChanged();
 
 protected:
 	const QScopedPointer<CALAppBarPrivate> d_ptr{ nullptr };

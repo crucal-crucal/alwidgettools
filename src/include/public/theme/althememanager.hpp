@@ -48,7 +48,7 @@ public:
 	[[nodiscard]] const QColor& getThemeColor(const ALThemeType::ThemeMode& mode, const ALThemeType::ThemeColor& color) const;
 
 Q_SIGNALS:
-	Q_SIGNAL void sigThemeModeChanged(const ALThemeType::ThemeMode& mode);
+	void sigThemeModeChanged(const ALThemeType::ThemeMode& mode);
 
 protected:
 	const QScopedPointer<CALThemeManagerPrivate> d_ptr{ nullptr };

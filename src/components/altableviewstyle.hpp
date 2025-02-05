@@ -28,8 +28,8 @@ public:
 	[[nodiscard]] int getCurrentHoverRow() const;
 
 Q_SIGNALS:
-	Q_SIGNAL void sigHeaderMarginChanged();
-	Q_SIGNAL void sigCurrentHoverRowChanged();
+	 void sigHeaderMarginChanged();
+	 void sigCurrentHoverRowChanged();
 
 private:
 	ALThemeType::ThemeMode m_themeMode{};

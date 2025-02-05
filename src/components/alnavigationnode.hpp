@@ -83,17 +83,17 @@ public:
 	[[nodiscard]] ALIcon::IconType getIconType() const;
 
 Q_SIGNALS:
-	Q_SIGNAL void sigChildrenNodesChanged();
-	Q_SIGNAL void sigAwesomeIconChanged();
-	Q_SIGNAL void sigFluentIconChanged();
-	Q_SIGNAL void sigModelIndexChanged();
-	Q_SIGNAL void sigKeyPointsChanged();
-	Q_SIGNAL void sigDepthChanged();
-	Q_SIGNAL void sigIsRootNodeChanged();
-	Q_SIGNAL void sigIsFooterNodeChanged();
-	Q_SIGNAL void sigIsHasFooterNodeChanged();
-	Q_SIGNAL void sigIsExpanderNodeChanged();
-	Q_SIGNAL void sigIsVisibleChanged();
+	 void sigChildrenNodesChanged();
+	 void sigAwesomeIconChanged();
+	 void sigFluentIconChanged();
+	 void sigModelIndexChanged();
+	 void sigKeyPointsChanged();
+	 void sigDepthChanged();
+	 void sigIsRootNodeChanged();
+	 void sigIsFooterNodeChanged();
+	 void sigIsHasFooterNodeChanged();
+	 void sigIsExpanderNodeChanged();
+	 void sigIsVisibleChanged();
 
 private:
 	CALNavigationNode* m_parentNode{ nullptr };

@@ -23,9 +23,9 @@ public:
 	[[nodiscard]] int getHeaderMargin() const;
 
 Q_SIGNALS:
-	Q_SIGNAL void sigTableViewShow();
-	Q_SIGNAL void sigTableViewHide();
-	Q_SIGNAL void sigHeaderMarginChanged();
+	void sigTableViewShow();
+	void sigTableViewHide();
+	void sigHeaderMarginChanged();
 
 protected:
 	const QScopedPointer<CALTableViewPrivate> d_ptr{ nullptr };

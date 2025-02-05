@@ -22,7 +22,7 @@ public:
 	[[nodiscard]] qreal getExpandMarkWidth() const;
 
 Q_SIGNALS:
-	Q_SIGNAL void sigExpandMarkWidthChanged();
+	 void sigExpandMarkWidthChanged();
 
 private:
 	ALThemeType::ThemeMode m_themeMode{};

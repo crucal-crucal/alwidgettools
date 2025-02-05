@@ -37,8 +37,8 @@ public:
 	void setToolTip(const QString& tooltip);
 
 Q_SIGNALS:
-	Q_SIGNAL void sigBorderRadiusChanged();
-	Q_SIGNAL void sigSelectedChanged();
+	void sigBorderRadiusChanged();
+	void sigSelectedChanged();
 
 protected:
 	const QScopedPointer<CALToolButtonPrivate> d_ptr{ nullptr };

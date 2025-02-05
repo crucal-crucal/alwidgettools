@@ -75,7 +75,7 @@ void CALComboBox::setBorderRadius(const int borderRadius) {
 	Q_D(CALComboBox);
 
 	d->borderRadius = borderRadius;
-	emit sigBorderRadiusChanged();
+	Q_EMIT sigBorderRadiusChanged();
 }
 
 int CALComboBox::getBorderRadius() const {

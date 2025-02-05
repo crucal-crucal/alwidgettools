@@ -32,7 +32,7 @@ public:
 	void setTitleVisible(bool isVisible);
 
 Q_SIGNALS:
-	Q_SIGNAL void sigCustomWidgetChanged();
+	void sigCustomWidgetChanged();
 
 protected:
 	const QScopedPointer<CALScrollPagePrivate> d_ptr{ nullptr };

@@ -69,8 +69,8 @@ public:
 	[[nodiscard]] QVariant data(const QModelIndex& index, int role) const override;
 
 Q_SIGNALS:
-	Q_SIGNAL void sigCurrentYearMonthChanged(const QString& date);
-	Q_SIGNAL void sigDisplayModeChanged();
+	 void sigCurrentYearMonthChanged(const QString& date);
+	 void sigDisplayModeChanged();
 
 protected:
 	[[nodiscard]] int rowCount(const QModelIndex& parent) const override;

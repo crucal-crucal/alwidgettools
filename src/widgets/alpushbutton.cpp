@@ -78,7 +78,7 @@ void CALPushButton::setBorderRadius(const qreal borderRadius) {
 	Q_D(CALPushButton);
 
 	d->borderRadius = borderRadius;
-	emit sigBorderRadiusChanged();
+	Q_EMIT sigBorderRadiusChanged();
 }
 
 qreal CALPushButton::getBorderRadius() const {
@@ -87,7 +87,7 @@ qreal CALPushButton::getBorderRadius() const {
 
 void CALPushButton::setLightDefaultColor(const QColor& defaultColor) {
 	d_func()->lightDefaultColor = defaultColor;
-	emit sigLightDefaultColorChanged();
+	Q_EMIT sigLightDefaultColorChanged();
 }
 
 QColor CALPushButton::getLightDefaultColor() const {
@@ -98,7 +98,7 @@ void CALPushButton::setDarkDefaultColor(const QColor& defaultColor) {
 	Q_D(CALPushButton);
 
 	d->darkDefaultColor = defaultColor;
-	emit sigDarkDefaultColorChanged();
+	Q_EMIT sigDarkDefaultColorChanged();
 }
 
 QColor CALPushButton::getDarkDefaultColor() const {
@@ -118,7 +118,7 @@ void CALPushButton::setDarkHoverColor(const QColor& hoverColor) {
 	Q_D(CALPushButton);
 
 	d->darkHoverColor = hoverColor;
-	emit sigDarkHoverColorChanged();
+	Q_EMIT sigDarkHoverColorChanged();
 }
 
 QColor CALPushButton::getDarkHoverColor() const {
@@ -138,7 +138,7 @@ void CALPushButton::setDarkPressedColor(const QColor& pressedColor) {
 	Q_D(CALPushButton);
 
 	d->darkPressedColor = pressedColor;
-	emit sigDarkPressedColorChanged();
+	Q_EMIT sigDarkPressedColorChanged();
 }
 
 QColor CALPushButton::getDarkPressedColor() const {

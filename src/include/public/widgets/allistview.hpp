@@ -27,8 +27,8 @@ public:
 	[[nodiscard]] bool getIsTransparent() const;
 
 Q_SIGNALS:
-	Q_SIGNAL void sigItemHeightChanged();
-	Q_SIGNAL void sigIsTransparentChanged();
+	void sigItemHeightChanged();
+	void sigIsTransparentChanged();
 
 protected:
 	const QScopedPointer<CALListViewPrivate> d_ptr{ nullptr };
