@@ -136,8 +136,14 @@ void CALApplication::initializeApplication() {
 	QApplication::setAttribute(Qt::AA_DontCreateNativeWidgetSiblings);
 
 	/// register resource
-	if (!QResource::registerResource(QApplication::applicationDirPath() + QDir::separator() + "alwidgettoolsresource.dll")) {
-		qWarning() << "Failed to register alwidgettoolsresource.dll";
+	if (!QResource::registerResource(QApplication::applicationDirPath() + QDir::separator() +
+#ifdef Q_OS_WIN
+		"libalwidgettoolsresource.dll"
+#else
+		"libalwidgettoolsresource.so"
+#endif
+		)) {
+		qWarning() << "Failed to register libalwidgettoolsresource";
 	}
 	/// add font
 	const QStringList fonts = {

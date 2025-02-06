@@ -99,7 +99,11 @@ file(GLOB EXPORT_HEADERS
         ${CMAKE_CURRENT_SOURCE_DIR}/include/public/widgets/*.hpp
 )
 
-set(EXPORT_RESOURCE_FILE ${CMAKE_SOURCE_DIR}/resource/alwidgettoolsresource.dll)
+if (UNIX)
+    set(EXPORT_RESOURCE_FILE ${CMAKE_SOURCE_DIR}/resource/libalwidgettoolsresource.so)
+else ()
+    set(EXPORT_RESOURCE_FILE ${CMAKE_SOURCE_DIR}/resource/libalwidgettoolsresource.dll)
+endif ()
 
 # Set the include directories for the target, with proper interface handling for build and installation
 # 设置目标的包含目录，对于安装时和构建时的路径使用不同的变量
@@ -117,6 +121,10 @@ install(TARGETS ${TARGET_NAME}
         LIBRARY DESTINATION lib
         RUNTIME DESTINATION bin
 )
+
+if (WIN32)
+    install(FILES $<TARGET_PDB_FILE:${TARGET_NAME}> DESTINATION pdb OPTIONAL)
+endif ()
 
 # Install the public headers
 # 安装公共头文件

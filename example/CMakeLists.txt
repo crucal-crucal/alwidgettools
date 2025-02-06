@@ -28,13 +28,22 @@ set_target_properties(${TARGET_NAME} PROPERTIES
         WIN32_EXECUTABLE FALSE
 )
 
-add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E echo "Copying alwidgettools.rcc file from ${CMAKE_SOURCE_DIR}/resource/alwidgettoolsresource.dll to $<TARGET_FILE_DIR:${TARGET_NAME}>/alwidgettoolsresource.dll"
-        COMMAND ${CMAKE_COMMAND} -E copy
-        ${CMAKE_SOURCE_DIR}/resource/alwidgettoolsresource.dll
-        $<TARGET_FILE_DIR:${TARGET_NAME}>/alwidgettoolsresource.dll
-        COMMAND ${CMAKE_COMMAND} -E echo "Copying example.rcc file from ${CMAKE_SOURCE_DIR}/example/resource/example.rcc to $<TARGET_FILE_DIR:${TARGET_NAME}>/example.rcc"
-        COMMAND ${CMAKE_COMMAND} -E copy
-        ${CMAKE_SOURCE_DIR}/example/resource/example.rcc
-        $<TARGET_FILE_DIR:${TARGET_NAME}>/example.rcc
+if (WIN32)
+    set(RESOURCE_SUFFIX ".dll")
+else ()
+    set(RESOURCE_SUFFIX ".so")
+endif ()
+
+set(RESOURCE_FILES
+        "${CMAKE_SOURCE_DIR}/resource/libalwidgettoolsresource${RESOURCE_SUFFIX}"
+        "${CMAKE_SOURCE_DIR}/example/resource/example.rcc"
 )
+
+foreach(RESOURCE_FILE ${RESOURCE_FILES})
+    get_filename_component(FILENAME ${RESOURCE_FILE} NAME)
+    add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E echo "Copying ${FILENAME} to $<TARGET_FILE_DIR:${TARGET_NAME}>/${FILENAME}"
+            COMMAND ${CMAKE_COMMAND} -E copy ${RESOURCE_FILE} $<TARGET_FILE_DIR:${TARGET_NAME}>/${FILENAME}
+    )
+endforeach()
+
