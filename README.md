@@ -26,7 +26,7 @@ add copy the dll file to your execute directory
 ```angular2html
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy
-        ${ALWIDGETTOOLS_PATH}/bin/alwidgettoolsstyle.dll
+        ${ALWIDGETTOOLS_PATH}/bin/libalwidgettoolsresource.dll
         $<TARGET_FILE_DIR:${PROJECT_NAME}>
 
         COMMAND ${CMAKE_COMMAND} -E copy
