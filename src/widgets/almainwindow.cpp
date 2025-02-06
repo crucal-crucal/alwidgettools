@@ -175,7 +175,7 @@ void CALMainWindowPrivate::slotNavigationNodeAdded(const ALNavigationType::Navig
 
 void CALMainWindowPrivate::invokableWMWindowClickedEvent(const QVariantMap& data) {
 	if (const auto actionType = data.value("WMClickType").value<ALAppBarType::WMMouseActionType>();
-		actionType == ALAppBarType::WMLBUTTONDBLCLK || actionType == ALAppBarType::WMLBUTTONUP || actionType == ALAppBarType::WMNCLBUTTONDOWN) {
+		actionType & ALAppBarType::WMLBUTTONDBLCLK || actionType & ALAppBarType::WMLBUTTONUP || actionType & ALAppBarType::WMNCLBUTTONDOWN) {
 		if (CALApplication::containsCursorToItem(navigationBar)) {
 			return;
 		}

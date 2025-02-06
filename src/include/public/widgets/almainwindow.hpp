@@ -61,7 +61,7 @@ public:
 	 * @param awesomeIcon 扩展节点 icon \enum ALIcon::AweSomeIcon
 	 * @return \enum ALNavigationType::NodeOperateReturnType
 	 */
-	ALNavigationType::NodeOperateReturnType addExpanderNode(const QString& expanderTitle, QString& expanderKey, const ALIcon::AweSomeIcon& awesomeIcon = ALIcon::AweSomeIcon::None) const;
+	ALNavigationType::NodeOperateReturnType addExpanderNode(const QString& expanderTitle, QString& expanderKey, const ALIcon::AweSomeIcon& awesomeIcon) const;
 
 	/**
 	 * @brief 添加扩展节点
@@ -80,7 +80,7 @@ public:
 	 * @param awesomeIcon 扩展节点图标 \enum ALIcon::AweSomeIcon
 	 * @return \enum ALNavigationType::NodeOperateReturnType
 	 */
-	ALNavigationType::NodeOperateReturnType addExpanderNode(const QString& expanderTitle, QString& expanderKey, const QString& targetExpanderKey, const ALIcon::AweSomeIcon& awesomeIcon = ALIcon::AweSomeIcon::None) const;
+	ALNavigationType::NodeOperateReturnType addExpanderNode(const QString& expanderTitle, QString& expanderKey, const QString& targetExpanderKey, const ALIcon::AweSomeIcon& awesomeIcon) const;
 
 	/**
 	 * @brief 添加扩展节点，并指定目标扩展节点键
@@ -99,7 +99,7 @@ public:
 	 * @param awesomeIcon 节点图标 \enum ALIcon::AweSomeIcon
 	 * @return \enum ALNavigationType::NodeOperateReturnType
 	 */
-	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QWidget* page, const ALIcon::AweSomeIcon& awesomeIcon = ALIcon::AweSomeIcon::None) const;
+	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QWidget* page, const ALIcon::AweSomeIcon& awesomeIcon) const;
 
 	/**
 	 * @brief 添加页面节点
@@ -118,7 +118,7 @@ public:
 	 * @param awesomeIcon 节点图标 \enum ALIcon::AweSomeIcon
 	 * @return \enum ALNavigationType::NodeOperateReturnType
 	 */
-	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QWidget* page, const QString& targetExpanderKey, const ALIcon::AweSomeIcon& awesomeIcon = ALIcon::AweSomeIcon::None) const;
+	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QWidget* page, const QString& targetExpanderKey, const ALIcon::AweSomeIcon& awesomeIcon) const;
 
 	/**
 	 * @brief 添加页面节点，并指定目标扩展节点键
@@ -138,7 +138,7 @@ public:
 	 * @param awesomeIcon 节点图标 \enum ALIcon::AweSomeIcon
 	 * @return \enum ALNavigationType::NodeOperateReturnType
 	 */
-	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QWidget* page, int keyPoints = 0, const ALIcon::AweSomeIcon& awesomeIcon = ALIcon::AweSomeIcon::None) const;
+	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QWidget* page, int keyPoints, const ALIcon::AweSomeIcon& awesomeIcon) const;
 
 	/**
 	 * @brief 添加页面节点，并设置关键点数
@@ -148,7 +148,7 @@ public:
 	 * @param fluentIcon 扩展节点图标 \enum ALIcon::FluentIcon
 	 * @return \enum ALNavigationType::NodeOperateReturnType
 	 */
-	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QWidget* page, int keyPoints = 0, const ALIcon::FluentIcon& fluentIcon = ALIcon::FluentIcon::None) const;
+	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QWidget* page, int keyPoints, const ALIcon::FluentIcon& fluentIcon = ALIcon::FluentIcon::None) const;
 
 	/**
 	 * @brief 添加页面节点，并指定目标扩展节点键和关键点数
@@ -180,7 +180,7 @@ public:
 	 * @param awesomeIcon 节点图标 \enum ALIcon::AweSomeIcon
 	 * @return \enum ALNavigationType::NodeOperateReturnType
 	 */
-	ALNavigationType::NodeOperateReturnType addFooterNode(const QString& footerTitle, QString& footerKey, int keyPoints = 0, const ALIcon::AweSomeIcon& awesomeIcon = ALIcon::AweSomeIcon::None) const;
+	ALNavigationType::NodeOperateReturnType addFooterNode(const QString& footerTitle, QString& footerKey, int keyPoints, const ALIcon::AweSomeIcon& awesomeIcon) const;
 
 	/**
 	 * @brief 添加页脚节点
@@ -190,7 +190,7 @@ public:
 	 * @param fluentIcon 扩展节点图标 \enum ALIcon::FluentIcon
 	 * @return \enum ALNavigationType::NodeOperateReturnType
 	 */
-	ALNavigationType::NodeOperateReturnType addFooterNode(const QString& footerTitle, QString& footerKey, int keyPoints = 0, const ALIcon::FluentIcon& fluentIcon = ALIcon::FluentIcon::None) const;
+	ALNavigationType::NodeOperateReturnType addFooterNode(const QString& footerTitle, QString& footerKey, int keyPoints, const ALIcon::FluentIcon& fluentIcon = ALIcon::FluentIcon::None) const;
 
 	/**
 	 * @brief 添加页脚节点，并指定页面控件
@@ -201,7 +201,7 @@ public:
 	 * @param awesomeIcon 节点图标 \enum ALIcon::AweSomeIcon
 	 * @return \enum ALNavigationType::NodeOperateReturnType
 	 */
-	ALNavigationType::NodeOperateReturnType addFooterNode(const QString& footerTitle, QWidget* page, QString& footerKey, int keyPoints = 0, const ALIcon::AweSomeIcon& awesomeIcon = ALIcon::AweSomeIcon::None) const;
+	ALNavigationType::NodeOperateReturnType addFooterNode(const QString& footerTitle, QWidget* page, QString& footerKey, int keyPoints, const ALIcon::AweSomeIcon& awesomeIcon) const;
 
 	/**
 	 * @brief 添加页脚节点，并指定页面控件
@@ -212,7 +212,7 @@ public:
 	 * @param fluentIcon 扩展节点图标 \enum ALIcon::FluentIcon
 	 * @return \enum ALNavigationType::NodeOperateReturnType
 	 */
-	ALNavigationType::NodeOperateReturnType addFooterNode(const QString& footerTitle, QWidget* page, QString& footerKey, int keyPoints = 0, const ALIcon::FluentIcon& fluentIcon = ALIcon::FluentIcon::None) const;
+	ALNavigationType::NodeOperateReturnType addFooterNode(const QString& footerTitle, QWidget* page, QString& footerKey, int keyPoints, const ALIcon::FluentIcon& fluentIcon = ALIcon::FluentIcon::None) const;
 
 	/**
 	 * @brief 设置节点关键点数

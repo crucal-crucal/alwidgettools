@@ -55,8 +55,8 @@ void MainWindow::initWindow() {
 }
 
 void MainWindow::initEdgeLayout() {
-#if 1
 	/// menuBar
+#if 0
 	const auto menuBar = new CALMenuBar(this);
 	menuBar->setFixedHeight(30);
 	const auto customWidget = new QWidget(this);
@@ -83,6 +83,7 @@ void MainWindow::initEdgeLayout() {
 	resizeDocks({ logDockWidget }, { 200 }, Qt::Horizontal);
 #endif
 	/// toolBar
+#if 1
 	const auto toolBar = new CALToolBar(tr("Toolbar"), this);
 	toolBar->setAllowedAreas(Qt::TopToolBarArea | Qt::BottomToolBarArea);
 	toolBar->setToolBarSpacing(3);
@@ -101,7 +102,7 @@ void MainWindow::initEdgeLayout() {
 	toolbutton3->setText(tr("Wifi"));
 	toolBar->addWidget(toolbutton3);
 	this->addToolBar(Qt::TopToolBarArea, toolBar);
-
+#endif
 	/// status bar
 	const auto statusBar = new CALStatusBar(this);
 	const auto textLabel = new CALText(tr("status bar example"), statusBar);
@@ -114,7 +115,7 @@ void MainWindow::initContent() {
 	/// pageNode
 	// home
 	m_home = new E_Home(this);
-	addPageNode(m_home->windowTitle(), m_home, ALIcon::FluentIcon::Home);
+	addPageNode(m_home->windowTitle(), m_home);
 	// card
 	m_card = new E_Card(this);
 	addPageNode(m_card->windowTitle(), m_card, ALIcon::FluentIcon::QuickNote);
@@ -180,6 +181,7 @@ void MainWindow::initContent() {
 	connect(this, &MainWindow::sigNavigationNodeClicked, this, [=](const ALNavigationType::NavigationNodeType& nodeType, const QString& nodeKey) {
 		if (nodeKey == aboutKey) {
 			m_about->resize(400, 400);
+			m_about->moveToCenter();
 			m_about->show();
 		}
 	});
