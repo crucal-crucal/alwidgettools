@@ -38,7 +38,7 @@ ALNavigationType::NodeOperateReturnType CALFooterModel::addFooterNode(const QStr
 	return ALNavigationType::Success;
 }
 
-ALNavigationType::NodeOperateReturnType CALFooterModel::addFooterNode(const QString& footerTitle, QString& footerKey, bool isHasFooterPage, int keyPoints, const ALIcon::FluentIcon& fluenticon) {
+ALNavigationType::NodeOperateReturnType CALFooterModel::addFooterNode(const QString& footerTitle, QString& footerKey, const bool isHasFooterPage, const int keyPoints, const ALIcon::FluentIcon& fluenticon) {
 	if (m_listFooterNodes.count() >= FOOTER_NODE_LIMIT) {
 		return ALNavigationType::FooterUpperLimit;
 	}

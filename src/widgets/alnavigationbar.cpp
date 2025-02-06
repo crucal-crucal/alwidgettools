@@ -823,11 +823,11 @@ ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QStr
 		CALNavigationNode* node = d->navigationModel->getNavigationNode(pageKey);
 		if (CALNavigationNode* originalNode = node->getOriginalNode(); d->mapCompactMenu.contains(originalNode)) {
 			CALMenu* menu = d->mapCompactMenu.value(originalNode);
-			const QAction* action = menu->addAction(node->getAwesomeIcon(), node->getNodeTitle());
+			const QAction* action = menu->addAction(node->getFluentIcon(), node->getNodeTitle());
 			connect(action, &QAction::triggered, this, [=]() { d->slotTreeViewClicked(node->getModelIndex()); });
 		} else {
 			const auto menu = new CALMenu(const_cast<CALNavigationBar*>(this));
-			const QAction* action = menu->addAction(node->getAwesomeIcon(), node->getNodeTitle());
+			const QAction* action = menu->addAction(node->getFluentIcon(), node->getNodeTitle());
 			connect(action, &QAction::triggered, this, [=]() { d->slotTreeViewClicked(node->getModelIndex()); });
 			d->mapCompactMenu.insert(originalNode, menu);
 		}
@@ -923,11 +923,11 @@ ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QStr
 		CALNavigationNode* node = d->navigationModel->getNavigationNode(pageKey);
 		if (CALNavigationNode* originalNode = node->getOriginalNode(); d->mapCompactMenu.contains(originalNode)) {
 			CALMenu* menu = d->mapCompactMenu.value(originalNode);
-			const QAction* action = menu->addAction(node->getAwesomeIcon(), node->getNodeTitle());
+			const QAction* action = menu->addAction(node->getFluentIcon(), node->getNodeTitle());
 			connect(action, &QAction::triggered, this, [=]() { d->slotTreeViewClicked(node->getModelIndex()); });
 		} else {
 			const auto menu = new CALMenu(const_cast<CALNavigationBar*>(this));
-			const QAction* action = menu->addAction(node->getAwesomeIcon(), node->getNodeTitle());
+			const QAction* action = menu->addAction(node->getFluentIcon(), node->getNodeTitle());
 			connect(action, &QAction::triggered, this, [=]() { d->slotTreeViewClicked(node->getModelIndex()); });
 			d->mapCompactMenu.insert(originalNode, menu);
 		}
