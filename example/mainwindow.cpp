@@ -115,7 +115,7 @@ void MainWindow::initContent() {
 	/// pageNode
 	// home
 	m_home = new E_Home(this);
-	addPageNode(m_home->windowTitle(), m_home);
+	addPageNode(m_home->windowTitle(), m_home, ALIcon::FluentIcon::Home);
 	// card
 	m_card = new E_Card(this);
 	addPageNode(m_card->windowTitle(), m_card, ALIcon::FluentIcon::QuickNote);
