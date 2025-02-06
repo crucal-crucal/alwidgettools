@@ -16,7 +16,7 @@ file(GLOB ORIGIN
         theme/*.cpp
         widgets/*.cpp
 )
-file(GLOB INCLUDE
+file(GLOB PUBLIC_INCLUDE
         include/public/al/*.hpp
         include/public/core/*.hpp
         include/public/dialogs/*.hpp
@@ -28,7 +28,7 @@ file(GLOB COMPONENTS components/*.hpp components/*.cpp)
 
 # Organize the files in Visual Studio source groups (optional for IDE users)
 # 在 Visual Studio 中将文件分组（这对使用 IDE 的开发者有帮助）
-source_group(include FILES ${INCLUDE})
+source_group(include FILES ${PUBLIC_INCLUDE})
 source_group(private FILES ${PRIVATE_INCLUDE})
 source_group(components FILES ${COMPONENTS})
 
@@ -39,7 +39,6 @@ set(CMAKE_INSTALL_PREFIX ${CMAKE_BINARY_DIR}/install CACHE PATH "Install path" F
 # 选择静态库或动态库
 option(CALWIDGETTOOLS_BUILD_STATIC_LIB "Build static library." OFF)
 
-set(SOURCES ${ORIGIN} ${INCLUDE} ${PRIVATE_INCLUDE} ${COMPONENTS})
 # Set the library type based on the option
 # 根据选项设置库类型
 if (CALWIDGETTOOLS_BUILD_STATIC_LIB)
@@ -62,7 +61,10 @@ include_directories(components)
 # 定义库目标（根据 LIB_TYPE 选择是静态库还是动态库）
 add_library(${TARGET_NAME} ${LIB_TYPE}
         include/public/al/alwidgettoolsdef.hpp
-        ${SOURCES}
+        ${ORIGIN}
+        ${PUBLIC_INCLUDE}
+        ${PRIVATE_INCLUDE}
+        ${COMPONENTS}
 )
 
 # Platform-specific adjustments
@@ -73,44 +75,32 @@ elseif (MSVC)
 endif ()
 
 # Link necessary libraries based on platform
+target_link_libraries(${TARGET_NAME} PUBLIC Qt5::Widgets)
 if (WIN32)
     target_link_libraries(${TARGET_NAME} PUBLIC
-            Qt5::Widgets
             D3D11
             DXGI
-    )
-else ()
-    target_link_libraries(${TARGET_NAME} PUBLIC
-            Qt5::Widgets
     )
 endif ()
 # Define compile-time library definition for the target
 target_compile_definitions(${TARGET_NAME} PRIVATE CALWIDGETTOOLS_LIB)
 
 #######  Installation commands  #######
-
-# Define the export headers and resource file to be installed
-# 定义需要安装的头文件和资源文件
-file(GLOB EXPORT_HEADERS
-        ${CMAKE_CURRENT_SOURCE_DIR}/include/public/al/*.hpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/include/public/core/*.hpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/include/public/dialogs/*.hpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/include/public/theme/*.hpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/include/public/widgets/*.hpp
-)
-
-if (UNIX)
-    set(EXPORT_RESOURCE_FILE ${CMAKE_SOURCE_DIR}/resource/libalwidgettoolsresource.so)
-else ()
-    set(EXPORT_RESOURCE_FILE ${CMAKE_SOURCE_DIR}/resource/libalwidgettoolsresource.dll)
-endif ()
+set(EXPORT_RESOURCE_FILE ${CMAKE_SOURCE_DIR}/resource/libalwidgettoolsresource${CMAKE_SHARED_LIBRARY_SUFFIX})
 
 # Set the include directories for the target, with proper interface handling for build and installation
 # 设置目标的包含目录，对于安装时和构建时的路径使用不同的变量
-target_include_directories(${TARGET_NAME} PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/components>
+target_include_directories(${TARGET_NAME}
+        PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/public/al>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/public/core>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/public/dialogs>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/public/theme>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/public/widgets>
         $<INSTALL_INTERFACE:include>
+        PRIVATE
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/private>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/components>
 )
 
 # Install the compiled library and resources
@@ -128,18 +118,12 @@ endif ()
 
 # Install the public headers
 # 安装公共头文件
-install(FILES ${EXPORT_HEADERS} DESTINATION include)
+install(FILES ${PUBLIC_INCLUDE} DESTINATION include)
 
 # Install the resource file (e.g., Qt .rcc file)
 # 安装资源文件（例如 Qt 的 .rcc 文件
 install(FILES ${EXPORT_RESOURCE_FILE}
         DESTINATION bin
-)
-
-# Install the target itself (if needed in the build directory)
-# 安装目标本身（如果需要在构建目录中）
-install(TARGETS ${TARGET_NAME}
-        RUNTIME DESTINATION ${CMAKE_BINARY_DIR}
 )
 
 ####### Use CMake's helpers to write package version and config files #######
