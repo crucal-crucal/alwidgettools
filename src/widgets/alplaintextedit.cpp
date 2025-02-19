@@ -3,6 +3,7 @@
 #include <QClipboard>
 #include <QGuiApplication>
 #include <QPropertyAnimation>
+#include <QTimer>
 
 #include "alapplication.hpp"
 #include "alplaintextedit_p.hpp"
@@ -47,8 +48,21 @@ void CALPlainTextEditPrivate::invokableWMWindowClickedEvent(const QVariantMap& d
 void CALPlainTextEditPrivate::slotThemeChanged(const ALThemeType::ThemeMode& mode) {
 	Q_Q(CALPlainTextEdit);
 
+	themeMode = mode;
+	if (q->isVisible()) {
+		changeTheme();
+	} else {
+		QTimer::singleShot(1, this, [this] {
+			changeTheme();
+		});
+	}
+}
+
+void CALPlainTextEditPrivate::changeTheme() {
+	Q_Q(CALPlainTextEdit);
+
 	QPalette palette;
-	if (mode == ALThemeType::Light) {
+	if (themeMode == ALThemeType::Light) {
 		palette.setColor(QPalette::Text, Qt::black);
 		palette.setColor(QPalette::PlaceholderText, QColor(0x00, 0x00, 0x00, 128));
 	} else {
@@ -56,7 +70,6 @@ void CALPlainTextEditPrivate::slotThemeChanged(const ALThemeType::ThemeMode& mod
 		palette.setColor(QPalette::PlaceholderText, QColor(0xBA, 0xBA, 0xBA));
 	}
 	q->setPalette(palette);
-	themeMode = mode;
 }
 
 /**
@@ -91,7 +104,7 @@ void CALPlainTextEdit::focusInEvent(QFocusEvent* event) {
 
 	if (event->reason() == Qt::MouseFocusReason) {
 		const auto markAnimation = new QPropertyAnimation(d->style, "expandMarkWidth");
-		connect(markAnimation, &QPropertyAnimation::valueChanged, this, [=]() { this->update(); });
+		connect(markAnimation, &QPropertyAnimation::valueChanged, this, [this]() { this->update(); });
 		markAnimation->setDuration(300);
 		markAnimation->setEasingCurve(QEasingCurve::InOutSine);
 		markAnimation->setStartValue(d->style->getExpandMarkWidth());
@@ -107,7 +120,7 @@ void CALPlainTextEdit::focusOutEvent(QFocusEvent* event) {
 
 	if (event->reason() != Qt::PopupFocusReason) {
 		const auto markAnimation = new QPropertyAnimation(d->style, "expandMarkWidth");
-		connect(markAnimation, &QPropertyAnimation::valueChanged, this, [=]() { this->update(); });
+		connect(markAnimation, &QPropertyAnimation::valueChanged, this, [this]() { this->update(); });
 		markAnimation->setDuration(300);
 		markAnimation->setEasingCurve(QEasingCurve::InOutSine);
 		markAnimation->setStartValue(d->style->getExpandMarkWidth());
@@ -154,7 +167,7 @@ void CALPlainTextEdit::contextMenuEvent(QContextMenuEvent* event) {
 	if (!isReadOnly()) {
 		action = menu->addAction(ALIcon::AweSomeIcon::DeleteLeft, tr("delete"));
 		action->setEnabled(!isReadOnly() && !toPlainText().isEmpty() && !textCursor().selectedText().isEmpty());
-		connect(action, &QAction::triggered, this, [=]() {
+		connect(action, &QAction::triggered, this, [this]() {
 			if (!textCursor().selectedText().isEmpty()) {
 				textCursor().deleteChar();
 			}

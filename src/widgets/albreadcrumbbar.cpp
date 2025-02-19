@@ -48,7 +48,7 @@ CALBreadcrumbBar::CALBreadcrumbBar(QWidget* parent): QWidget(parent), d_ptr(new 
 
 	d->listDelegate = new CALBreadcrumbBarDelegate(this);
 	d->listView->setItemDelegate(d->listDelegate);
-	connect(d->listView, &CALBaseListView::clicked, this, [=](const QModelIndex& index) {
+	connect(d->listView, &CALBaseListView::clicked, this, [this, d](const QModelIndex& index) {
 		if (d->isAutoRemove) {
 			if (d->listModel->getBreadcrumbListCount() != 1 && index.row() != d->listModel->getBreadcrumbListCount() * 2 - 2 && index.data(Qt::DisplayRole).toString() != ">") {
 				Q_EMIT sigBreadcrumbClicked(index.data(Qt::DisplayRole).toString(), d->listModel->getBreadcrumbList());
@@ -74,7 +74,7 @@ CALBreadcrumbBar::CALBreadcrumbBar(QWidget* parent): QWidget(parent), d_ptr(new 
 	properties.setScrollMetric(QScrollerProperties::FrameRate, QScrollerProperties::Fps60);
 	scroller->setScrollerProperties(properties);
 
-	connect(scroller, &QScroller::stateChanged, this, [=](const QScroller::State& newState) {
+	connect(scroller, &QScroller::stateChanged, this, [d](const QScroller::State& newState) {
 		if (newState == QScroller::Pressed) {
 			d->listDelegate->setPressIndex(d->listView->indexAt(d->listView->mapFromGlobal(QCursor::pos())));
 			d->listView->viewport()->update();

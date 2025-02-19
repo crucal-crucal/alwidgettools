@@ -46,11 +46,11 @@ CALDockWidget::CALDockWidget(QWidget* parent, const Qt::WindowFlags flags): QDoc
 	d->themeMode = ALTheme->getThemeMode();
 	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, d, &CALDockWidgetPrivate::slotThemeModeChanged);
 	d->isEanbleMica = alApp->getIsEnableMica();
-	connect(alApp, &CALApplication::sigIsEnableMicaChanged, this, [=]() {
+	connect(alApp, &CALApplication::sigIsEnableMicaChanged, this, [d, this]() {
 		d->isEanbleMica = alApp->getIsEnableMica();
 		update();
 	});
-	connect(this, &CALDockWidget::topLevelChanged, this, [=](const bool topLevel) {
+	connect(this, &CALDockWidget::topLevelChanged, this, [this](const bool topLevel) {
 		alApp->syncMica(this, topLevel);
 		d_func()->titleBar->changeFloatButtonIcon(topLevel);
 	});

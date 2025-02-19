@@ -38,7 +38,7 @@ CALInteractiveCard::CALInteractiveCard(QWidget* parent): QPushButton(parent), d_
 	setMinimumSize(270, 80);
 	setMouseTracking(true);
 	d->themeMode = ALTheme->getThemeMode();
-	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { d->themeMode = mode; });
+	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [d](const ALThemeType::ThemeMode& mode) { d->themeMode = mode; });
 }
 
 CALInteractiveCard::~CALInteractiveCard() = default;

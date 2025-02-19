@@ -54,7 +54,7 @@ void CALScrollPagePrivate::switchCentralStackIndex(const int targetIndex, const 
 	lastWidgetAnimation->setDuration(280);
 
 	const auto targetWidgetAnimation = new QPropertyAnimation(targetWidget, "pos");
-	connect(targetWidgetAnimation, &QPropertyAnimation::finished, this, [=]() { centralStackedWidget->setCurrentIndex(targetIndex); });
+	connect(targetWidgetAnimation, &QPropertyAnimation::finished, this, [this, targetIndex]() { centralStackedWidget->setCurrentIndex(targetIndex); });
 	targetWidgetAnimation->setEasingCurve(QEasingCurve::InQuart);
 	targetWidgetAnimation->setDuration(280);
 
@@ -81,7 +81,7 @@ CALScrollPage::CALScrollPage(QWidget* parent): QWidget(parent), d_ptr(new CALScr
 	d->isGrabGesture = false;
 	d->breadcrumbBar = new CALBreadcrumbBar(this);
 	d->breadcrumbBar->setTextPixelSize(28);
-	connect(d->breadcrumbBar, &CALBreadcrumbBar::sigBreadcrumbClicked, this, [=](const QString& breadcrumb, const QStringList& lastBreadcrumbList) {
+	connect(d->breadcrumbBar, &CALBreadcrumbBar::sigBreadcrumbClicked, this, [d](const QString& breadcrumb, const QStringList& lastBreadcrumbList) {
 		if (d->mapCentralWidget.contains(breadcrumb)) {
 			const int widgetIndex = d->mapCentralWidget.value(breadcrumb);
 			d->switchCentralStackIndex(widgetIndex, d->navigationTargetIndex);

@@ -62,7 +62,7 @@ void CALPromotionViewPrivate::onPromationCardClicked(CALPromotionCard* clickedCa
 			startHorizontalCardPixmapRatioAnimation(card, card->getHorizontalCardPixmapRatio(), 1);
 		} else {
 			if (QRect targetGeometry(leftPadding + cardExpandWidth + cardSpacing * i + cardCollapseWidth * (i - 2), 0, cardCollapseWidth, q->height() - bottomMargin); isRightToLeft && targetGeometry.x() > card->x()) {
-				connect(geometryAnimation, &QPropertyAnimation::valueChanged, this, [=]() {
+				connect(geometryAnimation, &QPropertyAnimation::valueChanged, this, [this, q, card, geometryAnimation, originIndex, targetGeometry]() {
 					if (card->geometry().right() <= 0) {
 						geometryAnimation->pause();
 						const qreal timeRatio = geometryAnimation->currentTime() / 650.0;
@@ -176,9 +176,9 @@ CALPromotionView::CALPromotionView(QWidget* parent): QWidget(parent), d_ptr(new 
 	d->isAutoScroll = false;
 	d->isAllowSwitch = true;
 	d->themeMode = ALTheme->getThemeMode();
-	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { d->themeMode = mode; });
+	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [d](const ALThemeType::ThemeMode& mode) { d->themeMode = mode; });
 	d->autoScrollTimer = new QTimer(this);
-	connect(d->autoScrollTimer, &QTimer::timeout, this, [=]() {
+	connect(d->autoScrollTimer, &QTimer::timeout, this, [this, d]() {
 		if (isVisible() && d->listPromotionCard.count() > 2) {
 			d->onPromationCardClicked(d->listPromotionCard.at(d->getAdjacentIndex(Qt::LeftToRight, d->currentIndex)));
 		}
@@ -273,7 +273,7 @@ void CALPromotionView::appendPromotionCard(CALPromotionCard* card) {
 	card->setMaximumSize(10000, 10000);
 	card->setParent(this);
 	d->listPromotionCard.append(card);
-	connect(card, &CALPromotionCard::sigPromotionCardClicked, this, [=]() { d->onPromationCardClicked(card); });
+	connect(card, &CALPromotionCard::sigPromotionCardClicked, this, [card, d]() { d->onPromationCardClicked(card); });
 	d->updatePromotionCardGrometry();
 }
 
@@ -283,7 +283,7 @@ void CALPromotionView::wheelEvent(QWheelEvent* event) {
 	if (d->isAllowSwitch) {
 		d->autoScrollTimer->stop();
 		d->isAllowSwitch = false;
-		QTimer::singleShot(400, this, [=] {
+		QTimer::singleShot(400, this, [d] {
 			d->isAllowSwitch = true;
 			d->autoScrollTimer->start(d->autoScrollInterval);
 		});

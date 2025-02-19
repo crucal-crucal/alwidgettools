@@ -69,7 +69,7 @@ void CALApplicationPrivate::initMicaBaseImage(const QImage& img) {
 	const auto initThread = new QThread;
 	const auto initObject = new CALMicaBaseInitObject(this);
 	connect(initThread, &QThread::finished, initObject, &QObject::deleteLater);
-	connect(initObject, &CALMicaBaseInitObject::sigInitFinished, initThread, [=]() {
+	connect(initObject, &CALMicaBaseInitObject::sigInitFinished, initThread, [q, this, initThread]() {
 		Q_EMIT q->sigIsEnableMicaChanged();
 		updateAllMicaWidget();
 		initThread->quit();

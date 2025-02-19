@@ -60,6 +60,7 @@ private:
 
 	ALThemeType::ThemeMode themeMode{};
 	ALNavigationType::NavigationDisplayMode currentDisplayMode{};
+	QMap<QString, QString> mapSuggestKey{};
 	QMap<QString, const QMetaObject*> mapPageMeta{};
 	QMap<CALNavigationNode*, CALMenu*> mapCompactMenu{};
 	QList<CALNavigationNode*> listLastExpandedNodes{};

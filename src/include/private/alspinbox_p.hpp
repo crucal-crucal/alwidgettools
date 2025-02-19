@@ -23,8 +23,10 @@ protected:
 	CALSpinBox* const q_ptr{ nullptr };
 
 private:
+	ALThemeType::ThemeMode themeMode{};
 	CALSpinBoxStyle* style{ nullptr };
 
 	CALMenu* createStandardContextMenu();
+	void changeTheme();
 };
 }

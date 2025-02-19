@@ -43,7 +43,7 @@ void CALLineEditStyle::drawPrimitive(const PrimitiveElement pe, const QStyleOpti
 				path.lineTo(lineEditRect.width() - 6, lineEditRect.height());
 				path.arcTo(QRectF(lineEditRect.width() - 12, lineEditRect.height() - 12, 12, 12), -90, 45);
 				path.lineTo(6 - 3 * std::sqrt(2), lineEditRect.height() - (6 - 3 * std::sqrt(2)));
-				path.arcTo(QRectF(0, lineEditRect.height() - 12, 12, 12), 270, 45);
+				path.arcTo(QRectF(0, lineEditRect.height() - 12, 12, 12), 225, 45);
 				path.closeSubpath();
 				p->drawPath(path);
 				p->restore();

@@ -21,8 +21,8 @@ CALMaskWidget::~CALMaskWidget() = default;
 
 void CALMaskWidget::doMaskAnimation(const int endValue) {
 	const auto opacityAnimation = new QPropertyAnimation(this, "maskAlpha");
-	connect(opacityAnimation, &QPropertyAnimation::valueChanged, this, [=](const QVariant& value) { this->update(); });
-	connect(opacityAnimation, &QPropertyAnimation::finished, this, [=]() { this->setVisible(endValue != 0); });
+	connect(opacityAnimation, &QPropertyAnimation::valueChanged, this, [this](const QVariant&) { this->update(); });
+	connect(opacityAnimation, &QPropertyAnimation::finished, this, [this, endValue]() { this->setVisible(endValue != 0); });
 	opacityAnimation->setEasingCurve(QEasingCurve::InOutSine);
 	opacityAnimation->setDuration(250);
 	opacityAnimation->setStartValue(m_MaskAlpha);

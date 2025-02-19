@@ -26,9 +26,20 @@ void CALLCDNumberPrivate::slotThemeModeChanged(const ALThemeType::ThemeMode& mod
 	Q_Q(CALLCDNumber);
 
 	themeMode = mode;
-	q->foregroundRole();
+	if (q->isVisible()) {
+		changeTheme();
+	} else {
+		QTimer::singleShot(1, this, [this] {
+			changeTheme();
+		});
+	}
+}
+
+void CALLCDNumberPrivate::changeTheme() {
+	Q_Q(CALLCDNumber);
+
 	QPalette palette = q->palette();
-	palette.setColor(QPalette::WindowText, ALThemeColor(themeMode, ALThemeType::BasicText));
+	palette.setColor(QPalette::WindowText, ALThemeColor(q->d_ptr->themeMode, ALThemeType::BasicText));
 	q->setPalette(palette);
 }
 
@@ -47,7 +58,7 @@ CALLCDNumber::CALLCDNumber(QWidget* parent): QLCDNumber(parent), d_ptr(new CALLC
 	d->lcdNumberStyle = new CALLCDNumberStyle(style());
 	setStyle(d->lcdNumberStyle);
 	d->clockTimer = new QTimer(this);
-	connect(d->clockTimer, &QTimer::timeout, this, [=]() { display(QDateTime::currentDateTime().toString(d->autoClockFormat)); });
+	connect(d->clockTimer, &QTimer::timeout, this, [this, d]() { display(QDateTime::currentDateTime().toString(d->autoClockFormat)); });
 	d->slotThemeModeChanged(ALTheme->getThemeMode());
 	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, d, &CALLCDNumberPrivate::slotThemeModeChanged);
 }

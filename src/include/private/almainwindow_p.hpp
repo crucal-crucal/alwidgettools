@@ -33,6 +33,7 @@ public:
 	Q_SLOT void slotThemeModeChanged(const ALThemeType::ThemeMode& mode);
 	Q_SLOT void slotNavigationNodeClicked(const ALNavigationType::NavigationNodeType& nodeType, const QString& nodeKey);
 	Q_SLOT void slotNavigationNodeAdded(const ALNavigationType::NavigationNodeType& nodeType, const QString& nodeKey, QWidget* page);
+	Q_SLOT void slotNavigationNodeRemoved(const ALNavigationType::NavigationNodeType& nodeType, const QString& nodeKey);
 	Q_INVOKABLE void invokableWMWindowClickedEvent(const QVariantMap& data);
 
 protected:
@@ -54,7 +55,7 @@ private:
 	bool isWMClickedAnimatinoFinished{};
 	QImage lightBaseImage{};
 	QImage darkBaseImage{};
-	QMap<QString, int> routeMap{};
+	QMap<QString, QWidget*> routeMap{};
 
 	CALEvent* focusEvent{ nullptr };
 	CALNavigationBar* navigationBar{ nullptr };

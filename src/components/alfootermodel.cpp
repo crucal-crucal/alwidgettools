@@ -74,6 +74,19 @@ CALNavigationNode* CALFooterModel::getNavigationNode(const QString& footerKey) {
 	return resNode;
 }
 
+bool CALFooterModel::removeNavigationNode(const QString& footerKey) {
+	bool bRet{ false };
+
+	for (auto& node : m_listFooterNodes) {
+		if (node->getNodeKey() == footerKey) {
+			bRet = m_listFooterNodes.removeOne(node);
+			break;
+		}
+	}
+
+	return bRet;
+}
+
 void CALFooterModel::setSelectedNode(CALNavigationNode* node) {
 	m_selectedNode = node;
 }

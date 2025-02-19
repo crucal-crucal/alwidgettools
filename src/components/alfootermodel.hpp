@@ -21,6 +21,7 @@ public:
 	ALNavigationType::NodeOperateReturnType addFooterNode(const QString& footerTitle, QString& footerKey, bool isHasFooterPage, int keyPoints = 0, const ALIcon::FluentIcon& fluenticon = ALIcon::FluentIcon::None);
 	[[nodiscard]] int getFooterNodeCount() const;
 	CALNavigationNode* getNavigationNode(const QString& footerKey);
+	bool removeNavigationNode(const QString& footerKey);
 
 	void setSelectedNode(CALNavigationNode* node);
 	[[nodiscard]] CALNavigationNode* getSelectedNode() const;

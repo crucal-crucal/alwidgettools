@@ -55,8 +55,8 @@ CALIconButton::CALIconButton(const QPixmap& pix, QWidget* parent): QPushButton(p
 	d->isAlphaAnimationFinished = true;
 	d->borderRadius = 0;
 	d->themeMode = ALTheme->getThemeMode();
-	connect(this, &CALIconButton::sigIsSelectedChanged, this, [=]() { update(); });
-	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) {
+	connect(this, &CALIconButton::sigIsSelectedChanged, this, [this]() { update(); });
+	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [this, d](const ALThemeType::ThemeMode& mode) {
 		d->themeMode = mode;
 		update();
 	});
@@ -85,8 +85,8 @@ CALIconButton::CALIconButton(const ALIcon::AweSomeIcon& icon, const int& pixelSi
 	this->setFont(iconFont);
 	setProperty(ALIcon::iconProperty, QChar(static_cast<unsigned short>(icon)));
 	this->setText(QChar(static_cast<unsigned short>(icon)));
-	connect(this, &CALIconButton::sigIsSelectedChanged, this, [=]() { update(); });
-	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) {
+	connect(this, &CALIconButton::sigIsSelectedChanged, this, [this]() { update(); });
+	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [this, d](const ALThemeType::ThemeMode& mode) {
 		d->themeMode = mode;
 		update();
 	});
@@ -119,8 +119,8 @@ CALIconButton::CALIconButton(const ALIcon::FluentIcon& icon, const int& pixelSiz
 	this->setFont(iconFont);
 	setProperty(ALIcon::iconProperty, QChar(static_cast<unsigned short>(icon)));
 	this->setText(QChar(static_cast<unsigned short>(icon)));
-	connect(this, &CALIconButton::sigIsSelectedChanged, this, [=]() { update(); });
-	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) {
+	connect(this, &CALIconButton::sigIsSelectedChanged, this, [this]() { update(); });
+	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [this, d](const ALThemeType::ThemeMode& mode) {
 		d->themeMode = mode;
 		update();
 	});
@@ -252,8 +252,8 @@ bool CALIconButton::event(QEvent* event) {
 			if (isEnabled() && !d->isSelected) {
 				d->isAlphaAnimationFinished = false;
 				const auto alphaAnimation = new QPropertyAnimation(d, "hoverAlpha");
-				connect(alphaAnimation, &QPropertyAnimation::valueChanged, this, [=]() { update(); });
-				connect(alphaAnimation, &QPropertyAnimation::finished, this, [=]() { d->isAlphaAnimationFinished = true; });
+				connect(alphaAnimation, &QPropertyAnimation::valueChanged, this, [this]() { update(); });
+				connect(alphaAnimation, &QPropertyAnimation::finished, this, [d]() { d->isAlphaAnimationFinished = true; });
 				alphaAnimation->setDuration(175);
 				alphaAnimation->setStartValue(d->hoverAlpha);
 				alphaAnimation->setEndValue(d->themeMode == ALThemeType::Light ? d->lightHoverColor.alpha() : d->darkHoverColor.alpha());
@@ -265,8 +265,8 @@ bool CALIconButton::event(QEvent* event) {
 			if (isEnabled() && !d->isSelected) {
 				d->isAlphaAnimationFinished = false;
 				const auto alphaAnimation = new QPropertyAnimation(d, "hoverAlpha");
-				connect(alphaAnimation, &QPropertyAnimation::valueChanged, this, [=]() { update(); });
-				connect(alphaAnimation, &QPropertyAnimation::finished, this, [=]() { d->isAlphaAnimationFinished = true; });
+				connect(alphaAnimation, &QPropertyAnimation::valueChanged, this, [this]() { update(); });
+				connect(alphaAnimation, &QPropertyAnimation::finished, this, [d]() { d->isAlphaAnimationFinished = true; });
 				alphaAnimation->setDuration(175);
 				alphaAnimation->setStartValue(d->hoverAlpha);
 				alphaAnimation->setEndValue(0);

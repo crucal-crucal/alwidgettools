@@ -107,14 +107,14 @@ void CALNavigationBarPrivate::slotTreeViewClicked(const QModelIndex& index, cons
 				// 记录跳转
 				if (isLogRoute) {
 					QVariantMap routeData{};
-					QStringList pageKeyList{};
+					QString pageKey{};
 					if (selectedNode) {
-						pageKeyList.append(selectedNode->getNodeKey());
+						pageKey.append(selectedNode->getNodeKey());
 					} else if (footerModel->getSelectedNode()) {
-						pageKeyList.append(footerModel->getSelectedNode()->getNodeKey());
+						pageKey.append(footerModel->getSelectedNode()->getNodeKey());
 					}
 
-					routeData.insert("CALPageKey", pageKeyList);
+					routeData.insert("CALPageKey", pageKey);
 					CALNavigationRouter::instance()->navigationRoute(this, "invokableNavigationRouteBack", routeData);
 				}
 				Q_EMIT q->sigNavigationNodeClicked(ALNavigationType::PageNode, node->getNodeKey());
@@ -169,15 +169,13 @@ void CALNavigationBarPrivate::slotFooterViewClicked(const QModelIndex& index, co
 		// 记录跳转
 		if (isLogRoute && node->getIsHasFooterNode()) {
 			QVariantMap routaData{};
-			QStringList pageKeyList{};
+			QString pageKey{};
 			if (selectedNode) {
-				pageKeyList.append(selectedNode->getNodeKey());
-			} else {
-				if (navigationModel->getSelectedNode()) {
-					pageKeyList.append(navigationModel->getSelectedNode()->getNodeKey());
-				}
+				pageKey.append(selectedNode->getNodeKey());
+			} else if (navigationModel->getSelectedNode()) {
+				pageKey.append(navigationModel->getSelectedNode()->getNodeKey());
 			}
-			routaData.insert("CALPageKey", pageKeyList);
+			routaData.insert("CALPageKey", pageKey);
 			CALNavigationRouter::instance()->navigationRoute(this, "invokableNavigationRouteBack", routaData);
 		}
 		Q_EMIT q->sigNavigationNodeClicked(ALNavigationType::FooterNode, node->getNodeKey());
@@ -290,11 +288,13 @@ void CALNavigationBarPrivate::addStackedPage(QWidget* page, const QString& pageK
 	QVariantMap suggestData{};
 	suggestData.insert("CALNodeType", "Stacked");
 	suggestData.insert("CALPageKey", pageKey);
+	QString suggestKey{};
 	if (node->getIconType() == ALIcon::Awesome) {
-		navigationSuggestBox->addSuggestion(node->getAwesomeIcon(), node->getNodeTitle(), suggestData);
+		suggestKey = navigationSuggestBox->addSuggestion(node->getAwesomeIcon(), node->getNodeTitle(), suggestData);
 	} else {
-		navigationSuggestBox->addSuggestion(node->getFluentIcon(), node->getNodeTitle(), suggestData);
+		suggestKey = navigationSuggestBox->addSuggestion(node->getFluentIcon(), node->getNodeTitle(), suggestData);
 	}
+	mapSuggestKey.insert(pageKey, suggestKey);
 }
 
 void CALNavigationBarPrivate::addFooterPage(QWidget* page, const QString& footKey) {
@@ -309,11 +309,13 @@ void CALNavigationBarPrivate::addFooterPage(QWidget* page, const QString& footKe
 	QVariantMap suggestData{};
 	suggestData.insert("CALNodeType", "Footer");
 	suggestData.insert("CALPageKey", footKey);
+	QString suggestKey{};
 	if (node->getIconType() == ALIcon::Awesome) {
-		navigationSuggestBox->addSuggestion(node->getAwesomeIcon(), node->getNodeTitle(), suggestData);
+		suggestKey = navigationSuggestBox->addSuggestion(node->getAwesomeIcon(), node->getNodeTitle(), suggestData);
 	} else {
-		navigationSuggestBox->addSuggestion(node->getFluentIcon(), node->getNodeTitle(), suggestData);
+		suggestKey = navigationSuggestBox->addSuggestion(node->getFluentIcon(), node->getNodeTitle(), suggestData);
 	}
+	mapSuggestKey.insert(footKey, suggestKey);
 }
 
 void CALNavigationBarPrivate::raiseNavigationBar() {
@@ -969,6 +971,35 @@ ALNavigationType::NodeOperateReturnType CALNavigationBar::addFooterNode(const QS
 	return resType;
 }
 
+bool CALNavigationBar::removeNavigationNode(const QString& nodeKey) {
+	bool bRet{ true };
+
+	Q_D(CALNavigationBar);
+
+	const CALNavigationNode* node = d->navigationModel->getNavigationNode(nodeKey);
+	if (!node) {
+		node = d->footerModel->getNavigationNode(nodeKey);
+	}
+	if (!node) {
+		return false;
+	}
+
+	if (node->getIsFooterNode()) {
+		Q_EMIT sigNavigationNodeRemoved(ALNavigationType::FooterNode, nodeKey);
+		bRet &= d->footerModel->removeNavigationNode(nodeKey);
+		d->footerView->setFixedHeight(40 * d->footerModel->getFooterNodeCount());
+	} else {
+		QStringList removeKeyList = d->navigationModel->removeNavigationNode(nodeKey);
+		d->initNodeModelIndex({});
+		for (const auto& removeKey : removeKeyList) {
+			Q_EMIT sigNavigationNodeRemoved(ALNavigationType::PageNode, removeKey);
+		}
+	}
+	bRet &= d->navigationSuggestBox->removeSuggestion(d->mapSuggestKey.value(nodeKey));
+
+	return bRet;
+}
+
 void CALNavigationBar::setIsTransparent(const bool isTransparent) {
 	d_func()->isTransparent = isTransparent;
 	Q_EMIT sigIsTransparentChanged();
@@ -982,7 +1013,13 @@ void CALNavigationBar::setNodeKeyPoints(const QString& nodeKey, const int keyPoi
 	Q_D(CALNavigationBar);
 
 	CALNavigationNode* node = d->navigationModel->getNavigationNode(nodeKey);
-	if (!node || node->getIsExpanderNode() || keyPoints < 0) {
+	if (!node) {
+		node = d->footerModel->getNavigationNode(nodeKey);
+	} else if (node->getIsExpanderNode() || keyPoints < 0) {
+		return;
+	}
+
+	if (!node) {
 		return;
 	}
 
@@ -991,8 +1028,16 @@ void CALNavigationBar::setNodeKeyPoints(const QString& nodeKey, const int keyPoi
 }
 
 int CALNavigationBar::getNodeKeyPoints(const QString& nodeKey) const {
-	const CALNavigationNode* node = d_func()->navigationModel->getNavigationNode(nodeKey);
-	if (!node || node->getIsExpanderNode()) {
+	Q_D(const CALNavigationBar);
+
+	const CALNavigationNode* node = d->navigationModel->getNavigationNode(nodeKey);
+	if (!node) {
+		node = d->footerModel->getNavigationNode(nodeKey);
+	} else if (node->getIsExpanderNode()) {
+		return -1;
+	}
+
+	if (!node) {
 		return -1;
 	}
 

@@ -54,7 +54,7 @@ void CALMainWindowPrivate::slotNavigationButtonClicked() {
 		navigationBar->move(-navigationBar->width(), navigationBar->pos().y());
 		navigationBar->resize(navigationBar->width(), centerStackedWidget->height() + 1);
 		const auto navigationMoveAnimation = new QPropertyAnimation(navigationBar, "pos");
-		connect(navigationMoveAnimation, &QPropertyAnimation::finished, this, [=]() { isNavigationBarExpanded = true; });
+		connect(navigationMoveAnimation, &QPropertyAnimation::finished, this, [this]() { isNavigationBarExpanded = true; });
 		navigationMoveAnimation->setEasingCurve(QEasingCurve::InOutSine);
 		navigationMoveAnimation->setDuration(300);
 		navigationMoveAnimation->setStartValue(navigationBar->pos());
@@ -72,7 +72,7 @@ void CALMainWindowPrivate::slotThemeReadyChange() {
 	if (!themeAnimationWidget) {
 		const QPoint centerPos = q->rect().center();
 		themeAnimationWidget = new CALThemeAnimationWidget(q);
-		connect(themeAnimationWidget, &CALThemeAnimationWidget::sigAnimationFinished, this, [=]() {
+		connect(themeAnimationWidget, &CALThemeAnimationWidget::sigAnimationFinished, this, [this]() {
 			appBar->setIsOnlyAllowMinAndClose(false);
 			themeAnimationWidget = nullptr;
 		});
@@ -139,13 +139,17 @@ void CALMainWindowPrivate::slotThemeModeChanged(const ALThemeType::ThemeMode& mo
 }
 
 void CALMainWindowPrivate::slotNavigationNodeClicked(const ALNavigationType::NavigationNodeType& nodeType, const QString& nodeKey) {
-	const int nodeIndex = routeMap.value(nodeKey);
-	if (nodeIndex == -1 || (navigationTargetIndex == nodeIndex || centerStackedWidget->count() <= nodeIndex)) {
+	QWidget* page = routeMap.value(nodeKey);
+	if (!page) {
+		return;
+	}
+	const int nodeIndex = centerStackedWidget->indexOf(page);
+	if (navigationTargetIndex == nodeIndex || centerStackedWidget->count() <= nodeIndex) {
 		return;
 	}
 
 	navigationTargetIndex = nodeIndex;
-	QTimer::singleShot(180, this, [=]() {
+	QTimer::singleShot(180, this, [this, nodeIndex]() {
 		QWidget* currentWidget = centerStackedWidget->widget(nodeIndex);
 		centerStackedWidget->setCurrentIndex(nodeIndex);
 		const auto currentWidgetAnimation = new QPropertyAnimation(currentWidget, "pos");
@@ -161,15 +165,28 @@ void CALMainWindowPrivate::slotNavigationNodeClicked(const ALNavigationType::Nav
 
 void CALMainWindowPrivate::slotNavigationNodeAdded(const ALNavigationType::NavigationNodeType& nodeType, const QString& nodeKey, QWidget* page) {
 	if (nodeType == ALNavigationType::PageNode) {
-		routeMap.insert(nodeKey, centerStackedWidget->count());
+		routeMap.insert(nodeKey, page);
 		centerStackedWidget->addWidget(page);
 	} else {
+		routeMap.insert(nodeKey, page);
 		if (page) {
-			routeMap.insert(nodeKey, centerStackedWidget->count());
 			centerStackedWidget->addWidget(page);
-		} else {
-			routeMap.insert(nodeKey, -1);
 		}
+	}
+}
+
+void CALMainWindowPrivate::slotNavigationNodeRemoved(const ALNavigationType::NavigationNodeType& nodeType, const QString& nodeKey) {
+	Q_Q(CALMainWindow);
+
+	if (!routeMap.contains(nodeKey)) {
+		return;
+	}
+
+	QWidget* page = routeMap.value(nodeKey);
+	routeMap.remove(nodeKey);
+	centerStackedWidget->removeWidget(page);
+	if (const QWidget* currentWidget = centerStackedWidget->currentWidget()) {
+		q->navigation(currentWidget->property("CALPageKey").toString());
 	}
 }
 
@@ -287,6 +304,8 @@ CALMainWindow::CALMainWindow(QWidget* parent): QMainWindow(parent), d_ptr(new CA
 	connect(d->navigationBar, &CALNavigationBar::sigNavigationNodeClicked, d, &CALMainWindowPrivate::slotNavigationNodeClicked);
 	// 新增窗口
 	connect(d->navigationBar, &CALNavigationBar::sigNavigationNodeAdded, d, &CALMainWindowPrivate::slotNavigationNodeAdded);
+	// 删除窗口
+	connect(d->navigationBar, &CALNavigationBar::sigNavigationNodeRemoved, d, &CALMainWindowPrivate::slotNavigationNodeRemoved);
 
 	/// center stacked widget
 	d->centerStackedWidget = new CALCenterStackedWidget(this);
@@ -439,6 +458,10 @@ ALNavigationType::NodeOperateReturnType CALMainWindow::addFooterNode(const QStri
 
 ALNavigationType::NodeOperateReturnType CALMainWindow::addFooterNode(const QString& footerTitle, QWidget* page, QString& footerKey, const int keyPoints, const ALIcon::FluentIcon& fluentIcon) const {
 	return d_func()->navigationBar->addFooterNode(footerTitle, page, footerKey, keyPoints, fluentIcon);
+}
+
+bool CALMainWindow::removeNavigationNode(const QString& nodeKey) {
+	return d_func()->navigationBar->removeNavigationNode(nodeKey);
 }
 
 void CALMainWindow::setNodeKeyPoints(const QString& nodeKey, const int keyPoints) {

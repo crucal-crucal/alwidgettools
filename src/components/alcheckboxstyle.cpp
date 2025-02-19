@@ -64,7 +64,7 @@ void CALCheckBoxStyle::drawControl(const ControlElement element, const QStyleOpt
 				}
 				// 文字绘制
 				p->setPen(ALThemeColor(m_themeMode, isEnable ? ALThemeType::BasicText : ALThemeType::BasicTextDisable));
-				const QRect textRect(checkRect.right() + 10, checkBoxRect.y(), checkBoxRect.width(), checkBoxRect.height());
+				const QRect textRect(checkRect.right() + 10, checkBoxRect.y(), checkBoxRect.width(), checkBoxRect.height() - 5);
 				p->drawText(textRect, Qt::AlignLeft | Qt::AlignVCenter, bopt->text);
 				p->restore();
 			}

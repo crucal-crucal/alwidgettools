@@ -59,7 +59,7 @@ CALCalendarPicker::CALCalendarPicker(QWidget* parent): QPushButton(parent), d_pt
 	connect(d->calendar, &CALCalendar::sigSelectedDateChanged, d, &CALCalendarPickerPrivate::slotCanendarSelectedDateChanged);
 	d->calendarPickerContainer->hide();
 	d->themeMode = ALTheme->getThemeMode();
-	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { d->themeMode = mode; });
+	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [d](const ALThemeType::ThemeMode& mode) { d->themeMode = mode; });
 
 	const auto containerVLayout = new QVBoxLayout(d->calendarPickerContainer);
 	containerVLayout->setContentsMargins(6, 6, 6, 6);

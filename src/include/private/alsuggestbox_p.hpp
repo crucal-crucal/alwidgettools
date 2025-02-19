@@ -15,6 +15,7 @@ class CALSuggestion final : public QObject {
 	Q_PROPERTY(ALIcon::AweSomeIcon awesomeIcon READ getAwesomeIcon WRITE setAwesomeIcon NOTIFY sigAwesomeIconChanged)
 	Q_PROPERTY(ALIcon::FluentIcon fluentIcon READ getFluentIcon WRITE setFluentIcon NOTIFY sigFluentIconChanged)
 	Q_PROPERTY(QString suggestText READ getSuggestText WRITE setSuggestText NOTIFY sigSuggestTextChanged)
+	Q_PROPERTY(QString suggestKey READ getSuggestKey WRITE setSuggestKey NOTIFY sigSuggestKeyChanged)
 	Q_PROPERTY(QVariantMap suggestData READ getSuggestData WRITE setSuggestData NOTIFY sigSuggestDataChanged)
 
 public:
@@ -30,6 +31,9 @@ public:
 	void setSuggestText(const QString& text);
 	[[nodiscard]] QString getSuggestText() const;
 
+	void setSuggestKey(const QString& key);
+	[[nodiscard]] QString getSuggestKey() const;
+
 	void setSuggestData(const QVariantMap& data);
 	[[nodiscard]] QVariantMap getSuggestData() const;
 
@@ -39,11 +43,13 @@ Q_SIGNALS:
 	void sigAwesomeIconChanged();
 	void sigFluentIconChanged();
 	void sigSuggestTextChanged();
+	void sigSuggestKeyChanged();
 	void sigSuggestDataChanged();
 
 private:
 	ALIcon::IconType m_iconType{};
 	QString m_suggestText{};
+	QString m_suggestKey{};
 	QVariantMap m_suggestData{};
 };
 

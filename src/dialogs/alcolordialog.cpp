@@ -439,7 +439,7 @@ CALColorDialog::CALColorDialog(QWidget* parent): QDialog(parent), d_ptr(new CALC
 	d->overButton->setDarkHoverColor(ALThemeColor(ALThemeType::Dark, ALThemeType::PrimaryHover));
 	d->overButton->setDarkPressedColor(ALThemeColor(ALThemeType::Dark, ALThemeType::PrimaryPress));
 	d->overButton->setDarkTextColor(Qt::white);
-	connect(d->overButton, &CALPushButton::clicked, this, [=]() {
+	connect(d->overButton, &CALPushButton::clicked, this, [d, this]() {
 		Q_EMIT sigColorSelected(d->currentColor);
 		close();
 	});
@@ -462,7 +462,7 @@ CALColorDialog::CALColorDialog(QWidget* parent): QDialog(parent), d_ptr(new CALC
 	mainVLayout->addStretch();
 	/// theme
 	d->themeMode = ALTheme->getThemeMode();
-	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { d->themeMode = mode; });
+	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [d](const ALThemeType::ThemeMode& mode) { d->themeMode = mode; });
 	setCurrentColor(QColor(0x80, 0xFF, 0xEF));
 }
 

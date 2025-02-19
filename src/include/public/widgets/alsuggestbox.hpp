@@ -28,11 +28,11 @@ public:
 
 	void setPlaceholderText(const QString& placaHolderText);
 
-	void addSuggestion(const QString& suggestText, const QVariantMap& suggestData = {});
-	void addSuggestion(const ALIcon::AweSomeIcon& awesomeIcon, const QString& suggestText, const QVariantMap& suggestData = {});
-	void addSuggestion(const ALIcon::FluentIcon& fluentIcon, const QString& suggestText, const QVariantMap& suggestData = {});
-	void removeSuggestion(const QString& suggestText);
-	void removeSuggestion(int index);
+	QString addSuggestion(const QString& suggestText, const QVariantMap& suggestData = {});
+	QString addSuggestion(const ALIcon::AweSomeIcon& awesomeIcon, const QString& suggestText, const QVariantMap& suggestData = {});
+	QString addSuggestion(const ALIcon::FluentIcon& fluentIcon, const QString& suggestText, const QVariantMap& suggestData = {});
+	bool removeSuggestion(const QString& suggestKey);
+	bool removeSuggestion(int index);
 
 Q_SIGNALS:
 	void sigBorderRadiusChanged();

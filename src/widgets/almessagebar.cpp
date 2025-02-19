@@ -204,11 +204,11 @@ void CALMessageBarPrivate::invokableMessageBarEnd(const QVariantMap& eventData) 
 
 	CALMessageBarManager::instance()->postMessageBarEndEvent(q);
 	const auto barFinishedOpacityAnimation = new QPropertyAnimation(this, "opacity");
-	connect(barFinishedOpacityAnimation, &QPropertyAnimation::valueChanged, this, [=]() {
+	connect(barFinishedOpacityAnimation, &QPropertyAnimation::valueChanged, this, [this, q]() {
 		closeButton->setOpacity(opacity);
 		q->update();
 	});
-	connect(barFinishedOpacityAnimation, &QPropertyAnimation::finished, this, [=]() { q->deleteLater(); });
+	connect(barFinishedOpacityAnimation, &QPropertyAnimation::finished, this, [q]() { q->deleteLater(); });
 	barFinishedOpacityAnimation->setDuration(300);
 	barFinishedOpacityAnimation->setEasingCurve(QEasingCurve::InOutSine);
 	barFinishedOpacityAnimation->setStartValue(1);
@@ -222,8 +222,8 @@ void CALMessageBarPrivate::invokableOtherMessageBarEnd(const QVariantMap& eventD
 	isMessageBarEventAnimationStart = true;
 	const qreal targetPosY = eventData.value("TargetPosY").toReal();
 	const auto closePosAnimation = new QPropertyAnimation(this, "MessageBarCloseY");
-	connect(closePosAnimation, &QPropertyAnimation::valueChanged, this, [=](const QVariant& value) { q->move(q->pos().x(), value.toInt()); });
-	connect(closePosAnimation, &QPropertyAnimation::finished, this, [=]() {
+	connect(closePosAnimation, &QPropertyAnimation::valueChanged, this, [q](const QVariant& value) { q->move(q->pos().x(), value.toInt()); });
+	connect(closePosAnimation, &QPropertyAnimation::finished, this, [this, q]() {
 		isMessageBarEventAnimationStart = false;
 		if (CALMessageBarManager::instance()->getMessageBarEventCount(q) > 1) {
 			CALMessageBarManager::instance()->requestMessageBarEvent(q);

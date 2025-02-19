@@ -198,13 +198,11 @@ void CALMenu::showEvent(QShowEvent* event) {
 	}
 	d->animationPix = this->grab(this->rect());
 	const auto posAnimation = new QPropertyAnimation(d, "animationImagePosY");
-	connect(posAnimation, &QPropertyAnimation::finished, this, [=]() {
+	connect(posAnimation, &QPropertyAnimation::finished, this, [this, d]() {
 		d->animationPix = QPixmap();
 		update();
 	});
-	connect(posAnimation, &QPropertyAnimation::valueChanged, this, [=](const QVariant& value) {
-		update();
-	});
+	connect(posAnimation, &QPropertyAnimation::valueChanged, this, [this](const QVariant&) { update(); });
 	posAnimation->setEasingCurve(QEasingCurve::OutCubic);
 	posAnimation->setDuration(400);
 	int targetPosY = height();

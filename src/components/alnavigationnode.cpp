@@ -167,11 +167,11 @@ void CALNavigationNode::setChildVisible(const bool isVisible) { // NOLINT
 }
 
 bool CALNavigationNode::getIsHasChild() const {
-	return m_childrenNodes.count() > 0;
+	return !m_childrenNodes.isEmpty();
 }
 
 bool CALNavigationNode::getIsHasPageChild() const { // NOLINT
-	if (m_childrenNodes.count() == 0) {
+	if (m_childrenNodes.isEmpty()) {
 		return false;
 	}
 
@@ -191,6 +191,16 @@ void CALNavigationNode::addChildNode(CALNavigationNode* childNode) {
 	if (m_isExpanderNode) {
 		m_childrenNodes.append(childNode);
 	}
+}
+
+bool CALNavigationNode::removeChildNode(CALNavigationNode* childNode) {
+	bool bRet{ false };
+
+	if (m_isExpanderNode) {
+		bRet = m_childrenNodes.removeOne(childNode);
+	}
+
+	return bRet;
 }
 
 bool CALNavigationNode::getIsChildHasKeyPoints() const { // NOLINT
@@ -219,7 +229,7 @@ CALNavigationNode* CALNavigationNode::getOriginalNode() {
 }
 
 bool CALNavigationNode::getIsChildNode(CALNavigationNode* node) { // NOLINT
-	if (m_childrenNodes.count() > 0) {
+	if (!m_childrenNodes.isEmpty()) {
 		if (m_childrenNodes.contains(node)) {
 			return true;
 		}

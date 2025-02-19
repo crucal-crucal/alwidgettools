@@ -190,20 +190,20 @@ void MainWindow::initContent() {
 	QString settingKey{};
 	addFooterNode(m_settings->windowTitle(), m_settings, settingKey, 0, ALIcon::AweSomeIcon::GearComplex);
 	// home conntection
-	connect(m_home, &E_Home::sigToggleSwitchCardClicked, this, [=]() { this->navigation(m_toggleSwitchExample->property("CALPageKey").toString()); });
-	connect(m_home, &E_Home::sigSpinBoxCardClicked, this, [=]() { this->navigation(m_spinBoxExample->property("CALPageKey").toString()); });
-	connect(m_home, &E_Home::sigSliderCardClicked, this, [=]() { this->navigation(m_sliderExample->property("CALPageKey").toString()); });
-	connect(m_home, &E_Home::sigRadioButtonCardClicked, this, [=]() { this->navigation(m_radioButtonExample->property("CALPageKey").toString()); });
-	connect(m_home, &E_Home::sigProgressBarCardClicked, this, [=]() { this->navigation(m_progressBarExample->property("CALPageKey").toString()); });
-	connect(m_home, &E_Home::sigPlainTextEditCardClicked, this, [=]() { this->navigation(m_plainTextEditExample->property("CALPageKey").toString()); });
-	connect(m_home, &E_Home::sigMutiSelectComboBoxCardClicked, this, [=]() { this->navigation(m_multiSelectComboboxExample->property("CALPageKey").toString()); });
-	connect(m_home, &E_Home::sigMessageBarCardClicked, this, [=]() { this->navigation(m_messageBarExample->property("CALPageKey").toString()); });
-	connect(m_home, &E_Home::sigCircularProgressCardClicked, this, [=]() { this->navigation(m_circularProgressExample->property("CALPageKey").toString()); });
-	connect(m_home, &E_Home::sigCheckBoxCardClicked, this, [=]() { this->navigation(m_checkboxExample->property("CALPageKey").toString()); });
-	connect(m_home, &E_Home::sigTabWidgetCardClicked, this, [=]() { this->navigation(m_tabWidgetExample->property("CALPageKey").toString()); });
-	connect(m_home, &E_Home::sigListViewCardClicked, this, [=]() { this->navigation(m_listView->property("CALPageKey").toString()); });
-	connect(m_home, &E_Home::sigTableViewCardClicked, this, [=]() { this->navigation(m_tableView->property("CALPageKey").toString()); });
-	connect(m_home, &E_Home::sigTreeViewCardClicked, this, [=]() { this->navigation(m_treeView->property("CALPageKey").toString()); });
+	connect(m_home, &E_Home::sigToggleSwitchCardClicked, this, [this]() { this->navigation(m_toggleSwitchExample->property("CALPageKey").toString()); });
+	connect(m_home, &E_Home::sigSpinBoxCardClicked, this, [this]() { this->navigation(m_spinBoxExample->property("CALPageKey").toString()); });
+	connect(m_home, &E_Home::sigSliderCardClicked, this, [this]() { this->navigation(m_sliderExample->property("CALPageKey").toString()); });
+	connect(m_home, &E_Home::sigRadioButtonCardClicked, this, [this]() { this->navigation(m_radioButtonExample->property("CALPageKey").toString()); });
+	connect(m_home, &E_Home::sigProgressBarCardClicked, this, [this]() { this->navigation(m_progressBarExample->property("CALPageKey").toString()); });
+	connect(m_home, &E_Home::sigPlainTextEditCardClicked, this, [this]() { this->navigation(m_plainTextEditExample->property("CALPageKey").toString()); });
+	connect(m_home, &E_Home::sigMutiSelectComboBoxCardClicked, this, [this]() { this->navigation(m_multiSelectComboboxExample->property("CALPageKey").toString()); });
+	connect(m_home, &E_Home::sigMessageBarCardClicked, this, [this]() { this->navigation(m_messageBarExample->property("CALPageKey").toString()); });
+	connect(m_home, &E_Home::sigCircularProgressCardClicked, this, [this]() { this->navigation(m_circularProgressExample->property("CALPageKey").toString()); });
+	connect(m_home, &E_Home::sigCheckBoxCardClicked, this, [this]() { this->navigation(m_checkboxExample->property("CALPageKey").toString()); });
+	connect(m_home, &E_Home::sigTabWidgetCardClicked, this, [this]() { this->navigation(m_tabWidgetExample->property("CALPageKey").toString()); });
+	connect(m_home, &E_Home::sigListViewCardClicked, this, [this]() { this->navigation(m_listView->property("CALPageKey").toString()); });
+	connect(m_home, &E_Home::sigTableViewCardClicked, this, [this]() { this->navigation(m_tableView->property("CALPageKey").toString()); });
+	connect(m_home, &E_Home::sigTreeViewCardClicked, this, [this]() { this->navigation(m_treeView->property("CALPageKey").toString()); });
 }
 
 void MainWindow::showEvent(QShowEvent* event) {

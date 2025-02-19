@@ -281,8 +281,8 @@ CALAppBar::CALAppBar(QWidget* parent): QWidget(parent), d_ptr(new CALAppBarPriva
 	d->stayTopButton->setFixedSize(d->appBarHeight, d->appBarHeight);
 	d->stayTopButton->setToolTip(tr("Stay Top"));
 	d->buttonMap[ALAppBarType::StayTopButtonHint] = d->stayTopButton;
-	connect(d->stayTopButton, &CALToolButton::clicked, this, [=]() { this->setIsStayTop(!this->getIsStayTop()); });
-	connect(d->stayTopButton, &CALToolButton::sigSelectedChanged, this, [=]() { d->stayTopButton->setToolTip(d->stayTopButton->getIsSelected() ? tr("Cancel Stay Top") : tr("Stay Top")); });
+	connect(d->stayTopButton, &CALToolButton::clicked, this, [this]() { this->setIsStayTop(!this->getIsStayTop()); });
+	connect(d->stayTopButton, &CALToolButton::sigSelectedChanged, this, [d]() { d->stayTopButton->setToolTip(d->stayTopButton->getIsSelected() ? tr("Cancel Stay Top") : tr("Stay Top")); });
 	connect(this, &CALAppBar::sigIsStayTopChanged, d, &CALAppBarPrivate::slotStayTopButtonClicked);
 
 	// 图标

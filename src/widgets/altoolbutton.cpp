@@ -133,9 +133,7 @@ bool CALToolButton::eventFilter(QObject* watched, QEvent* event) {
 			case QEvent::Show: {
 				//指示器动画
 				const auto rotateAnimation = new QPropertyAnimation(d->style, "expandIconRotate");
-				connect(rotateAnimation, &QPropertyAnimation::valueChanged, this, [=](const QVariant& value) {
-					update();
-				});
+				connect(rotateAnimation, &QPropertyAnimation::valueChanged, this, [this](const QVariant&) { update(); });
 				rotateAnimation->setDuration(300);
 				rotateAnimation->setEasingCurve(QEasingCurve::InOutSine);
 				rotateAnimation->setStartValue(d->style->getExpandIconRotate());
@@ -146,9 +144,7 @@ bool CALToolButton::eventFilter(QObject* watched, QEvent* event) {
 			case QEvent::Hide: {
 				//指示器动画
 				const auto rotateAnimation = new QPropertyAnimation(d->style, "expandIconRotate");
-				connect(rotateAnimation, &QPropertyAnimation::valueChanged, this, [=](const QVariant& value) {
-					update();
-				});
+				connect(rotateAnimation, &QPropertyAnimation::valueChanged, this, [=](const QVariant&) { update(); });
 				rotateAnimation->setDuration(300);
 				rotateAnimation->setEasingCurve(QEasingCurve::InOutSine);
 				rotateAnimation->setStartValue(d->style->getExpandIconRotate());

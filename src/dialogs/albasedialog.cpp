@@ -80,7 +80,7 @@ CALBaseDialog::CALBaseDialog(QWidget* parent): QDialog(parent), d_ptr(new CALBas
 	connect(d->fadeOutAnimation, &QPropertyAnimation::finished, this, &QDialog::close);
 
 	d->themeMode = ALTheme->getThemeMode();
-	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { d->themeMode = mode; });
+	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [d](const ALThemeType::ThemeMode& mode) { d->themeMode = mode; });
 }
 
 CALBaseDialog::~CALBaseDialog() {

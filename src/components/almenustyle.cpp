@@ -20,7 +20,7 @@ CALMenuStyle::CALMenuStyle(QStyle* style): QProxyStyle(style) {
 	m_shadowBorderWidth = 6;
 	m_menuItemHeight = 32;
 	m_themeMode = ALTheme->getThemeMode();
-	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { m_themeMode = mode; });
+	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [this](const ALThemeType::ThemeMode& mode) { m_themeMode = mode; });
 }
 
 CALMenuStyle::~CALMenuStyle() = default;

@@ -36,7 +36,7 @@ void CALPovitView::doCurrentIndexChangedAnimation(const QModelIndex& index) {
 	if (index.row() >= 0) {
 		const QRect newIndexRect = visualRect(index);
 		const auto markXAnimation = new QPropertyAnimation(this, "markX");
-		connect(markXAnimation, &QPropertyAnimation::valueChanged, this, [=]() { update(); });
+		connect(markXAnimation, &QPropertyAnimation::valueChanged, this, [this]() { update(); });
 		markXAnimation->setDuration(300);
 		markXAnimation->setEasingCurve(QEasingCurve::InOutSine);
 		if (m_style->getCurrentIndex() >= 0) {
@@ -57,7 +57,7 @@ void CALPovitView::doCurrentIndexChangedAnimation(const QModelIndex& index) {
 	} else {
 		const QRect newIndexRect = visualRect(model()->index(m_style->getCurrentIndex(), 0));
 		const auto markXAnimation = new QPropertyAnimation(this, "markX");
-		connect(markXAnimation, &QPropertyAnimation::valueChanged, this, [=]() { update(); });
+		connect(markXAnimation, &QPropertyAnimation::valueChanged, this, [this]() { update(); });
 		markXAnimation->setDuration(300);
 		markXAnimation->setEasingCurve(QEasingCurve::InOutSine);
 		markXAnimation->setStartValue(m_markX);

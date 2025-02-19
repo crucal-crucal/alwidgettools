@@ -30,7 +30,7 @@ CALScrollPageArea::CALScrollPageArea(QWidget* parent): QWidget(parent), d_ptr(ne
 	d->borderRadius = 6;
 	setFixedHeight(75);
 	d->themeMode = ALTheme->getThemeMode();
-	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { d->themeMode = mode; });
+	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [d](const ALThemeType::ThemeMode& mode) { d->themeMode = mode; });
 }
 
 CALScrollPageArea::~CALScrollPageArea() = default;

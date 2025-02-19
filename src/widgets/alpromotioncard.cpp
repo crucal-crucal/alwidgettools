@@ -70,7 +70,7 @@ void CALPromotionCardPrivate::startHoverOpacityAnimation(const bool isVisiable) 
 	Q_Q(CALPromotionCard);
 
 	const auto opacityAnimation = new QPropertyAnimation(this, "hoverOpacity");
-	connect(opacityAnimation, &QPropertyAnimation::valueChanged, this, [=]() { q->update(); });
+	connect(opacityAnimation, &QPropertyAnimation::valueChanged, this, [q]() { q->update(); });
 	opacityAnimation->setDuration(250);
 	opacityAnimation->setStartValue(hoverOpacity);
 	opacityAnimation->setEndValue(isVisiable ? 1 : 0);
@@ -288,8 +288,8 @@ bool CALPromotionCard::event(QEvent* event) {
 		case QEvent::MouseButtonPress: {
 			const auto mouseEvent = dynamic_cast<QMouseEvent*>(event);
 			const auto opacityAnimation = new QPropertyAnimation(d, "pressOpacity");
-			connect(opacityAnimation, &QPropertyAnimation::valueChanged, this, [=]() { update(); });
-			connect(opacityAnimation, &QPropertyAnimation::finished, this, [=]() { d->isPressAnimationFinished = true; });
+			connect(opacityAnimation, &QPropertyAnimation::valueChanged, this, [this]() { update(); });
+			connect(opacityAnimation, &QPropertyAnimation::finished, this, [d]() { d->isPressAnimationFinished = true; });
 			opacityAnimation->setEasingCurve(QEasingCurve::InQuad);
 			opacityAnimation->setDuration(300);
 			opacityAnimation->setStartValue(1);
@@ -297,7 +297,7 @@ bool CALPromotionCard::event(QEvent* event) {
 			opacityAnimation->start(QAbstractAnimation::DeleteWhenStopped);
 
 			const auto pressAnimation = new QPropertyAnimation(d, "pressRadius");
-			connect(pressAnimation, &QPropertyAnimation::valueChanged, this, [=](const QVariant& value) { d->pressGradient->setRadius(value.toReal()); });
+			connect(pressAnimation, &QPropertyAnimation::valueChanged, this, [d](const QVariant& value) { d->pressGradient->setRadius(value.toReal()); });
 			pressAnimation->setEasingCurve(QEasingCurve::InQuad);
 			pressAnimation->setDuration(300);
 			pressAnimation->setStartValue(30);

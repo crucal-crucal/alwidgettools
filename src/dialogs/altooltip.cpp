@@ -48,18 +48,18 @@ bool CALToolTipPrivate::eventFilter(QObject* watched, QEvent* event) {
 	switch (event->type()) {
 		// case QEvent::Enter:
 		case QEvent::ToolTip: {
-			QTimer::singleShot(showDelayMsec, this, [=]() {
+			QTimer::singleShot(showDelayMsec, this, [this]() {
 				doShowAnimation();
 			});
 			if (displayMsec > -1) {
-				QTimer::singleShot(displayMsec, this, [=]() {
+				QTimer::singleShot(displayMsec, this, [q]() {
 					q->hide();
 				});
 			}
 			break;
 		}
 		case QEvent::Leave: {
-			QTimer::singleShot(hideDelayMsec, this, [=]() {
+			QTimer::singleShot(hideDelayMsec, this, [q]() {
 				q->hide();
 			});
 			break;
@@ -157,7 +157,7 @@ CALToolTip::CALToolTip(QWidget* parent): QWidget(parent), d_ptr(new CALToolTipPr
 	d->mainVLayout->addWidget(d->toolTipText);
 
 	d->themeMode = ALTheme->getThemeMode();
-	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) {
+	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [d, this](const ALThemeType::ThemeMode& mode) {
 		d->themeMode = mode;
 		update();
 	});

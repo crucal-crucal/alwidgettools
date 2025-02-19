@@ -35,7 +35,7 @@ CALComboBox::CALComboBox(QWidget* parent): QComboBox(parent), d_ptr(new CALCombo
 	d->borderRadius = 3;
 	d->isAllowHidePopup = false;
 	d->themeMode = ALTheme->getThemeMode();
-	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { d->themeMode = mode; });
+	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [d](const ALThemeType::ThemeMode& mode) { d->themeMode = mode; });
 	setObjectName("CALComboBox");
 	setFixedHeight(35);
 	d->comboBoxStyle = new CALComboBoxStyle(style());
@@ -107,7 +107,7 @@ void CALComboBox::showPopup() {
 				layout->takeAt(0);
 			}
 			const auto fixedSizeAnimation = new QPropertyAnimation(container, "maximumHeight");
-			connect(fixedSizeAnimation, &QPropertyAnimation::valueChanged, this, [=](const QVariant& value) { container->setFixedHeight(value.toInt()); });
+			connect(fixedSizeAnimation, &QPropertyAnimation::valueChanged, this, [container](const QVariant& value) { container->setFixedHeight(value.toInt()); });
 			fixedSizeAnimation->setStartValue(1);
 			fixedSizeAnimation->setEndValue(containerHeight);
 			fixedSizeAnimation->setEasingCurve(QEasingCurve::OutCubic);
@@ -115,7 +115,7 @@ void CALComboBox::showPopup() {
 			fixedSizeAnimation->start(QAbstractAnimation::DeleteWhenStopped);
 
 			const auto viewPosAnimation = new QPropertyAnimation(view(), "pos");
-			connect(viewPosAnimation, &QPropertyAnimation::finished, this, [=]() {
+			connect(viewPosAnimation, &QPropertyAnimation::finished, this, [this, d, layout]() {
 				d->isAllowHidePopup = true;
 				layout->addWidget(view());
 			});

@@ -29,5 +29,7 @@ private:
 	ALThemeType::ThemeMode themeMode{};
 	CALPlainTextEditStyle* style{ nullptr };
 	CALEvent* focusEvent{ nullptr };
+
+	void changeTheme();
 };
 }

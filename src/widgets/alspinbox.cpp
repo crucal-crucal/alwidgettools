@@ -4,6 +4,7 @@
 #include <QContextMenuEvent>
 #include <QGuiApplication>
 #include <QLineEdit>
+#include <QTimer>
 
 #include "almenu.hpp"
 #include "alspinboxstyle.hpp"
@@ -64,7 +65,7 @@ CALMenu* CALSpinBoxPrivate::createStandardContextMenu() {
 	if (!lineEdit->isReadOnly()) {
 		action = menu->addAction(ALIcon::AweSomeIcon::DeleteLeft, tr("delete"));
 		action->setEnabled(!lineEdit->isReadOnly() && !lineEdit->text().isEmpty() && lineEdit->hasSelectedText());
-		connect(action, &QAction::triggered, this, [=]() {
+		connect(action, &QAction::triggered, this, [lineEdit]() {
 			if (lineEdit->hasSelectedText()) {
 				lineEdit->setText(lineEdit->text().remove(lineEdit->selectionStart(), lineEdit->selectionEnd() - lineEdit->selectionStart()));
 			}
@@ -80,6 +81,15 @@ CALMenu* CALSpinBoxPrivate::createStandardContextMenu() {
 	return menu;
 }
 
+void CALSpinBoxPrivate::changeTheme() {
+	Q_Q(CALSpinBox);
+
+	QPalette palette;
+	palette.setColor(QPalette::Base, Qt::transparent);
+	palette.setColor(QPalette::Text, ALThemeColor(themeMode, ALThemeType::BasicText));
+	q->lineEdit()->setPalette(palette);
+}
+
 /**
  * \class CALSpinBox
  * @param parent pointer to the parent class
@@ -93,11 +103,15 @@ CALSpinBox::CALSpinBox(QWidget* parent): QSpinBox(parent), d_ptr(new CALSpinBoxP
 	d->style = new CALSpinBoxStyle(style());
 	setStyle(d->style);
 	setFixedSize(120, 30);
-	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) {
-		QPalette palette;
-		palette.setColor(QPalette::Base, Qt::transparent);
-		palette.setColor(QPalette::Text, ALThemeColor(mode, ALThemeType::BasicText));
-		lineEdit()->setPalette(palette);
+	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [d, this](const ALThemeType::ThemeMode& mode) {
+		d->themeMode = mode;
+		if (isVisible()) {
+			d->changeTheme();
+		} else {
+			QTimer::singleShot(1, this, [d] {
+				d->changeTheme();
+			});
+		}
 	});
 }
 

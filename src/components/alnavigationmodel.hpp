@@ -17,11 +17,11 @@ public:
 	explicit CALNavigationModel(QObject* parent = nullptr);
 	~CALNavigationModel() override;
 
-	QModelIndex parent(const QModelIndex& child) const override;
-	QModelIndex index(int row, int column, const QModelIndex& parent) const override;
-	int rowCount(const QModelIndex& parent) const override;
-	int columnCount(const QModelIndex& parent) const override;
-	QVariant data(const QModelIndex& index, int role) const override;
+	[[nodiscard]] QModelIndex parent(const QModelIndex& child) const override;
+	[[nodiscard]] QModelIndex index(int row, int column, const QModelIndex& parent) const override;
+	[[nodiscard]] int rowCount(const QModelIndex& parent) const override;
+	[[nodiscard]] int columnCount(const QModelIndex& parent) const override;
+	[[nodiscard]] QVariant data(const QModelIndex& index, int role) const override;
 
 	ALNavigationType::NodeOperateReturnType addExpanderNode(const QString& expanderTitle, QString& expanderKey, const ALIcon::AweSomeIcon& awewomeIcon);
 	ALNavigationType::NodeOperateReturnType addExpanderNode(const QString& expanderTitle, QString& expanderKey, const ALIcon::FluentIcon& fluentIcon);
@@ -36,9 +36,11 @@ public:
 	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QString& pageKey, const QString& targetExpanderKey, int keyPoints, const ALIcon::AweSomeIcon& awewomeIcon);
 	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QString& pageKey, const QString& targetExpanderKey, int keyPoints, const ALIcon::FluentIcon& fluentIcon);
 
-	CALNavigationNode* getNavigationNode(const QString& nodeKey) const;
-	QList<CALNavigationNode*> getRootExpanderNodes() const;
-	QList<CALNavigationNode*> getRootExpandedNodes() const;
+	QStringList removeNavigationNode(const QString& nodeKey);
+
+	[[nodiscard]] CALNavigationNode* getNavigationNode(const QString& nodeKey) const;
+	[[nodiscard]] QList<CALNavigationNode*> getRootExpanderNodes() const;
+	[[nodiscard]] QList<CALNavigationNode*> getRootExpandedNodes() const;
 
 	void setSelectedNode(CALNavigationNode* node);
 	[[nodiscard]] CALNavigationNode* getSelectedNode() const;
@@ -47,7 +49,7 @@ public:
 	[[nodiscard]] CALNavigationNode* getSelectedExpandedNode() const;
 
 private:
-	mutable QMap<QString, CALNavigationNode*> m_mapNodes{};
+	QMap<QString, CALNavigationNode*> m_mapNodes{};
 	CALNavigationNode* m_rootNode{ nullptr };
 	CALNavigationNode* m_selectedNode{ nullptr };
 	CALNavigationNode* m_selectedExpandedNode{ nullptr };

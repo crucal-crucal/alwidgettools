@@ -42,6 +42,8 @@ public:
 	ALNavigationType::NodeOperateReturnType addFooterNode(const QString& footerTitle, QWidget* page, QString& footerKey, int keyPoints = 0, const ALIcon::AweSomeIcon& awewomeIcon = ALIcon::AweSomeIcon::None);
 	ALNavigationType::NodeOperateReturnType addFooterNode(const QString& footerTitle, QWidget* page, QString& footerKey, int keyPoints = 0, const ALIcon::FluentIcon& fluentIcon = ALIcon::FluentIcon::None);
 
+	bool removeNavigationNode(const QString& nodeKey);
+
 	void setIsTransparent(bool isTransparent);
 	[[nodiscard]] bool getIsTransparent() const;
 
@@ -56,6 +58,7 @@ Q_SIGNALS:
 	void sigUserInfoCardClicked();
 	void sigNavigationNodeClicked(const ALNavigationType::NavigationNodeType& nodeType, const QString& nodeKey);
 	void sigNavigationNodeAdded(const ALNavigationType::NavigationNodeType& nodeType, const QString& nodeKey, QWidget* page);
+	void sigNavigationNodeRemoved(const ALNavigationType::NavigationNodeType& nodeType, const QString& nodeKey);
 
 protected:
 	const QScopedPointer<CALNavigationBarPrivate> d_ptr{ nullptr };

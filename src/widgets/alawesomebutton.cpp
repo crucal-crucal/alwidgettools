@@ -50,7 +50,7 @@ CALAwesomeButton::CALAwesomeButton(const ALIcon::AweSomeIcon& iconType, QWidget*
 	this->setFont(d->iconFont);
 	d->iconType = iconType;
 	this->setText(QChar(static_cast<ushort>(iconType)));
-	connect(this, &CALAwesomeButton::sigIsSelectedChanged, this, [=]() { this->update(); });
+	connect(this, &CALAwesomeButton::sigIsSelectedChanged, this, [this]() { this->update(); });
 }
 
 /**
@@ -67,7 +67,7 @@ CALAwesomeButton::CALAwesomeButton(const ALIcon::AweSomeIcon& iconType, const in
 	this->setFont(d->iconFont);
 	d->iconType = iconType;
 	this->setText(QChar(static_cast<unsigned short>(iconType)));
-	connect(this, &CALAwesomeButton::sigIsSelectedChanged, this, [=]() { this->update(); });
+	connect(this, &CALAwesomeButton::sigIsSelectedChanged, this, [this]() { this->update(); });
 }
 
 /**

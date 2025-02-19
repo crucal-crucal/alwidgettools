@@ -358,6 +358,32 @@ ALNavigationType::NodeOperateReturnType CALNavigationModel::addPageNode(const QS
 	return ALNavigationType::TargetNodeTypeError;
 }
 
+QStringList CALNavigationModel::removeNavigationNode(const QString& nodeKey) { // NOLINT
+	QStringList removeKeyList{};
+
+	if (!m_mapNodes.contains(nodeKey)) {
+		return removeKeyList;
+	}
+
+	CALNavigationNode* node = m_mapNodes.value(nodeKey);
+	CALNavigationNode* parentNode = node->getParentNode();
+	if (node->getIsExpanderNode()) {
+		QList<CALNavigationNode*> childNodeList = node->getChildrenNodes();
+		for (const auto& childNode : childNodeList) {
+			QList<QString> childRemoveKeyList = removeNavigationNode(childNode->getNodeKey());
+			removeKeyList.append(childRemoveKeyList);
+		}
+	} else {
+		removeKeyList.append(node->getNodeKey());
+	}
+	beginRemoveRows(parentNode->getModelIndex(), parentNode->getChildrenNodes().count(), parentNode->getChildrenNodes().count());
+	parentNode->removeChildNode(node);
+	m_mapNodes.remove(node->getNodeKey());
+	endRemoveRows();
+
+	return removeKeyList;
+}
+
 CALNavigationNode* CALNavigationModel::getNavigationNode(const QString& nodeKey) const {
 	return m_mapNodes.value(nodeKey, nullptr);
 }

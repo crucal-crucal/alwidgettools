@@ -57,7 +57,7 @@ CALPovit::CALPovit(QWidget* parent): QWidget(parent), d_ptr(new CALPovitPrivate(
 	d->view->setModel(d->model);
 	d->view->setStyle(d->style);
 	d->view->setPovitStyle(d->style);
-	connect(d->view, &CALPovitView::clicked, this, [=](const QModelIndex& index) {
+	connect(d->view, &CALPovitView::clicked, this, [this, d](const QModelIndex& index) {
 		if (index.row() != d->style->getCurrentIndex()) {
 			Q_EMIT sigCurrentIndexChanged();
 		}
@@ -65,9 +65,7 @@ CALPovit::CALPovit(QWidget* parent): QWidget(parent), d_ptr(new CALPovitPrivate(
 		d->style->setCurrentIndex(index.row());
 		Q_EMIT sigPovitClicked(index.row());
 	});
-	connect(d->view, &CALPovitView::doubleClicked, this, [=](const QModelIndex& index) {
-		Q_EMIT sigPovitDoubleClicked(index.row());
-	});
+	connect(d->view, &CALPovitView::doubleClicked, this, [this](const QModelIndex& index) { Q_EMIT sigPovitDoubleClicked(index.row()); });
 
 	QFont textFont = this->font();
 	textFont.setLetterSpacing(QFont::AbsoluteSpacing, 0.5);
@@ -84,7 +82,7 @@ CALPovit::CALPovit(QWidget* parent): QWidget(parent), d_ptr(new CALPovitPrivate(
 	properties.setScrollMetric(QScrollerProperties::FrameRate, QScrollerProperties::Fps60);
 	scroller->setScrollerProperties(properties);
 
-	connect(scroller, &QScroller::stateChanged, this, [=](const QScroller::State& newState) {
+	connect(scroller, &QScroller::stateChanged, this, [d](const QScroller::State& newState) {
 		if (newState == QScroller::Pressed) {
 			d->style->setPressIndex(d->view->indexAt(d->view->mapFromGlobal(QCursor::pos())));
 			d->view->viewport()->update();

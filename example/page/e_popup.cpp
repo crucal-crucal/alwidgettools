@@ -5,7 +5,10 @@
 #include "alcolordialog.hpp"
 #include "alcalendar.hpp"
 #include "alcalendarpicker.hpp"
+#include "alcheckbox.hpp"
+#include "aldrawerarea.hpp"
 #include "alpushbutton.hpp"
+#include "alroller.hpp"
 #include "alscrollpagearea.hpp"
 #include "altext.hpp"
 
@@ -27,6 +30,10 @@ E_Popup::E_Popup(QWidget* parent): E_BasePage(parent) {
 	initCalendarPickerArea();
 	/// calendar
 	initCalendarArea();
+	/// drawerArea
+	initDrawerAreaArea();
+	/// rollerArea
+	initRollerArea();
 
 	mainVLayout->addStretch();
 	addCentralWidget(centralWidget, true, true, 0);
@@ -84,4 +91,52 @@ void E_Popup::initCalendarPickerArea() {
 void E_Popup::initCalendarArea() {
 	const auto calendar = new CALCalendar(this);
 	mainVLayout->addWidget(calendar);
+}
+
+void E_Popup::initDrawerAreaArea() {
+	const auto drawer = new CALDrawerArea(this);
+	const auto drawerHeader = new QWidget(this);
+	const auto drawerHeaderHLayout = new QHBoxLayout(drawerHeader);
+	const auto drawerIcon = new CALText(this);
+	drawerIcon->setAttribute(Qt::WA_TransparentForMouseEvents);
+	drawerIcon->setTextPixelSize(15);
+	drawerIcon->setFluentIcon(ALIcon::FluentIcon::Message);
+	drawerIcon->setFixedSize(25, 25);
+	const auto drawerText = new CALText("CALDrawerArea", this);
+	drawerText->setAttribute(Qt::WA_TransparentForMouseEvents);
+	drawerText->setTextPixelSize(15);
+	drawerHeaderHLayout->addWidget(drawerIcon);
+	drawerHeaderHLayout->addWidget(drawerText);
+	drawerHeaderHLayout->addStretch();
+	drawer->setDrawerHeader(drawerHeader);
+
+	for (int i = 0; i < 3; ++i) {
+		const auto drawerWidget = new QWidget(this);
+		const auto drawerWidgetHLayout = new QHBoxLayout(drawerWidget);
+		const auto drawerCheckBox = new CALCheckBox(QString("test interface %1").arg(i), this);
+		drawerWidgetHLayout->addSpacing(60);
+		drawerWidgetHLayout->addWidget(drawerCheckBox);
+		drawer->addDrawer(drawerWidget);
+	}
+
+	mainVLayout->addWidget(drawer);
+}
+
+void E_Popup::initRollerArea() {
+	const auto roller = new CALRoller(this);
+	QStringList rollerItemList{};
+	for (int i = 0; i < 100; ++i) {
+		rollerItemList.append(QString::number(i));
+	}
+	roller->setItemList(rollerItemList);
+	const auto rollerArea = new CALScrollPageArea(this);
+	rollerArea->setFixedHeight(220);
+	const auto rollerHLayout = new QHBoxLayout(rollerArea);
+	const auto rollerText = new CALText("CALRoller", this);
+	rollerText->setTextPixelSize(15);
+	rollerHLayout->addWidget(rollerText);
+	rollerHLayout->addWidget(roller);
+	rollerHLayout->addStretch();
+
+	mainVLayout->addWidget(rollerArea);
 }

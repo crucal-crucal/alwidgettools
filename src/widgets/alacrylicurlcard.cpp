@@ -58,7 +58,7 @@ CALAcrylicUrlCard::CALAcrylicUrlCard(QWidget* parent): QPushButton(parent), d_pt
 	d->cardPixMode = ALCardPixType::Ellipse;
 	d->noisePix = QPixmap(":alwidgettools/image/noise.png");
 	d->themeMode = ALTheme->getThemeMode();
-	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { d->themeMode = mode; });
+	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [d](const ALThemeType::ThemeMode& mode) { d->themeMode = mode; });
 
 	setFixedSize(180, 200);
 	connect(this, &CALAcrylicUrlCard::clicked, d, &CALAcrylicUrlCardPrivate::slotArcylicUrlCardClicked);

@@ -24,8 +24,11 @@ protected:
 
 private:
 	ALThemeType::ThemeMode themeMode{};
-	bool isWrapAnyWhere{};
 	ALTextType::TextStyle textStyle{};
+	ALIcon::IconType iconType{};
+	bool isWrapAnyWhere{};
 	qreal textSpacing{};
+
+	void changeTheme();
 };
 }

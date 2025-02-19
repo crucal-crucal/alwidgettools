@@ -33,7 +33,7 @@ CALToolBar::CALToolBar(QWidget* parent): QToolBar(parent), d_ptr(new CALToolBarP
 
 	d->shadowBorderWidth = 6;
 	d->themeMode = ALTheme->getThemeMode();
-	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) {
+	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [this, d](const ALThemeType::ThemeMode& mode) {
 		d->themeMode = mode;
 		if (this->isFloating()) {
 			update();
@@ -46,7 +46,7 @@ CALToolBar::CALToolBar(QWidget* parent): QToolBar(parent), d_ptr(new CALToolBarP
 	layout()->setSpacing(10);
 	layout()->setContentsMargins(3, 3, 3, 3);
 	setAttribute(Qt::WA_TranslucentBackground);
-	connect(this, &CALToolBar::topLevelChanged, this, [=](const bool topLevel) {
+	connect(this, &CALToolBar::topLevelChanged, this, [this, d](const bool topLevel) {
 		if (topLevel) {
 			layout()->setContentsMargins(d->shadowBorderWidth + 3, d->shadowBorderWidth + 3, d->shadowBorderWidth + 3, d->shadowBorderWidth + 3);
 		} else {

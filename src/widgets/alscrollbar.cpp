@@ -33,13 +33,13 @@ void CALScrollBarPrivate::slotRangeChanged(const int min, const int max) {
 
 	if (q->isVisible() && isAnimation && max != 0) {
 		const auto rangeSmoothAnimation = new QPropertyAnimation(this, "targetMaximum");
-		connect(rangeSmoothAnimation, &QPropertyAnimation::valueChanged, this, [=](const QVariant& value) {
+		connect(rangeSmoothAnimation, &QPropertyAnimation::valueChanged, this, [q](const QVariant& value) {
 			q->blockSignals(true);
 			q->setMaximum(value.toInt());
 			q->blockSignals(false);
 			q->update();
 		});
-		connect(rangeSmoothAnimation, &QPropertyAnimation::finished, this, [=]() {
+		connect(rangeSmoothAnimation, &QPropertyAnimation::finished, this, [q]() {
 			Q_EMIT q->sigRangeAnimationFinished();
 		});
 		rangeSmoothAnimation->setEasingCurve(QEasingCurve::OutSine);
@@ -165,10 +165,10 @@ CALScrollBar::CALScrollBar(QWidget* parent): QScrollBar(parent), d_ptr(new CALSc
 	d->slideSmoothAnimation = new QPropertyAnimation(this, "value");
 	d->slideSmoothAnimation->setEasingCurve(QEasingCurve::OutSine);
 	d->slideSmoothAnimation->setDuration(300);
-	connect(d->slideSmoothAnimation, &QPropertyAnimation::finished, this, [=]() { d->scrollValue = value(); });
+	connect(d->slideSmoothAnimation, &QPropertyAnimation::finished, this, [this, d]() { d->scrollValue = value(); });
 
 	d->expandTimer = new QTimer(this);
-	connect(d->expandTimer, &QTimer::timeout, this, [=]() {
+	connect(d->expandTimer, &QTimer::timeout, this, [this, d, scrollBarStyle]() {
 		d->expandTimer->stop();
 		d->isExpand = underMouse();
 		scrollBarStyle->startExpandAnimation(d->isExpand);
@@ -196,9 +196,9 @@ CALScrollBar::CALScrollBar(QScrollBar* originScrollBar, QAbstractScrollArea* par
 	d->originScrollBar = originScrollBar;
 	d->initAllConfig();
 
-	connect(d->originScrollBar, &QScrollBar::valueChanged, this, [=](const int value) { CALScrollBarPrivate::handleScrollBarValueChanged(this, value); });
-	connect(d->originScrollBar, &QScrollBar::rangeChanged, this, [=](const int min, const int max) { d->handleScrollBarRangeChanged(min, max); });
-	connect(this, &QScrollBar::valueChanged, this, [=](const int value) { CALScrollBarPrivate::handleScrollBarValueChanged(d->originScrollBar, value); });
+	connect(d->originScrollBar, &QScrollBar::valueChanged, this, [this](const int value) { CALScrollBarPrivate::handleScrollBarValueChanged(this, value); });
+	connect(d->originScrollBar, &QScrollBar::rangeChanged, this, [d](const int min, const int max) { d->handleScrollBarRangeChanged(min, max); });
+	connect(this, &QScrollBar::valueChanged, this, [d](const int value) { CALScrollBarPrivate::handleScrollBarValueChanged(d->originScrollBar, value); });
 }
 
 CALScrollBar::~CALScrollBar() = default;

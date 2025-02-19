@@ -38,10 +38,10 @@ CALWidget::CALWidget(QWidget* parent): QWidget(parent), d_ptr(new CALWidgetPriva
 	connect(d->appBar, &CALAppBar::sigCloseButtonClicked, this, &CALWidget::sigCloseButtonClicked);
 	/// theme
 	d->themeMode = ALTheme->getThemeMode();
-	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { d->themeMode = mode; });
+	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [d](const ALThemeType::ThemeMode& mode) { d->themeMode = mode; });
 	/// mica
 	d->isEanbleMica = alApp->getIsEnableMica();
-	connect(alApp, &CALApplication::sigIsEnableMicaChanged, this, [=]() {
+	connect(alApp, &CALApplication::sigIsEnableMicaChanged, this, [d, this]() {
 		d->isEanbleMica = alApp->getIsEnableMica();
 		update();
 	});

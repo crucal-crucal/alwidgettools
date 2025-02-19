@@ -190,13 +190,13 @@ void CALCalendarPrivate::doSwitchAnimation(const bool isZoomIn) {
 	isSwitchAnimationFinished = false;
 	calendarDelegate->setIsTransparent(true);
 	const auto oldPixZoomAnimation = new QPropertyAnimation(this, "zoomRatio");
-	connect(oldPixZoomAnimation, &QPropertyAnimation::valueChanged, this, [=]() { q->update(); });
-	connect(oldPixZoomAnimation, &QPropertyAnimation::finished, this, [=]() {
+	connect(oldPixZoomAnimation, &QPropertyAnimation::valueChanged, this, [q]() { q->update(); });
+	connect(oldPixZoomAnimation, &QPropertyAnimation::finished, this, [this, q, isZoomIn]() {
 		isDrawNewPix = true;
 		const auto newPixZoomAnimation = new QPropertyAnimation(this, "zoomRatio");
 		newPixZoomAnimation->setEasingCurve(QEasingCurve::OutCubic);
-		connect(newPixZoomAnimation, &QPropertyAnimation::valueChanged, this, [=]() { q->update(); });
-		connect(newPixZoomAnimation, &QPropertyAnimation::finished, this, [=]() {
+		connect(newPixZoomAnimation, &QPropertyAnimation::valueChanged, this, [q]() { q->update(); });
+		connect(newPixZoomAnimation, &QPropertyAnimation::finished, this, [this]() {
 			if (calendarModel->getDisplayMode() == ALCalendarMode::DayMode) {
 				calendarTitleView->setVisible(true);
 			}
@@ -216,7 +216,7 @@ void CALCalendarPrivate::doSwitchAnimation(const bool isZoomIn) {
 	oldPixZoomAnimation->start(QAbstractAnimation::DeleteWhenStopped);
 
 	const auto oldPixOpacityAnimation = new QPropertyAnimation(this, "pixOpacity");
-	connect(oldPixOpacityAnimation, &QPropertyAnimation::finished, this, [=]() {
+	connect(oldPixOpacityAnimation, &QPropertyAnimation::finished, this, [this]() {
 		const auto newPixOpacityAnimation = new QPropertyAnimation(this, "pixOpacity");
 		newPixOpacityAnimation->setStartValue(0);
 		newPixOpacityAnimation->setEndValue(1);
@@ -247,7 +247,7 @@ CALCalendar::CALCalendar(QWidget* parent): QWidget(parent), d_ptr(new CALCalenda
 	d->isSwitchAnimationFinished = true;
 	d->isDrawNewPix = false;
 	d->themeMode = ALTheme->getThemeMode();
-	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { d->themeMode = mode; });
+	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [d](const ALThemeType::ThemeMode& mode) { d->themeMode = mode; });
 	/// title
 	d->calendarTitleModel = new CALCalendarTitleModel(this);
 	d->calendarTitleDelegate = new CALCalendarTitleDelegate(this);

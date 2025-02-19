@@ -45,7 +45,7 @@ CALPushButton::CALPushButton(QWidget* parent): QPushButton(parent), d_ptr(new CA
 	d->darkTextColor = ALThemeColor(ALThemeType::Dark, ALThemeType::BasicText);
 	d->lightBorderColor = ALThemeColor(ALThemeType::Light, ALThemeType::BasicBorder);
 	d->darkBorderColor = ALThemeColor(ALThemeType::Dark, ALThemeType::BasicBorder);
-	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { d->themeMode = mode; });
+	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [d](const ALThemeType::ThemeMode& mode) { d->themeMode = mode; });
 
 	setMouseTracking(true);
 	setFixedHeight(30);

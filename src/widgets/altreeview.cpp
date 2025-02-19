@@ -34,12 +34,12 @@ CALTreeView::CALTreeView(QWidget* parent): QTreeView(parent), d_ptr(new CALTreeV
 
 	d->horizontalScrollBar = new CALScrollBar(this);
 	d->horizontalScrollBar->setIsAnimation(true);
-	connect(d->horizontalScrollBar, &CALScrollBar::sigRangeAnimationFinished, this, [=]() { doItemsLayout(); });
+	connect(d->horizontalScrollBar, &CALScrollBar::sigRangeAnimationFinished, this, [this]() { doItemsLayout(); });
 	setHorizontalScrollBar(d->horizontalScrollBar);
 	setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
 	d->verticalScrollBar = new CALScrollBar(this);
 	d->verticalScrollBar->setIsAnimation(true);
-	connect(d->verticalScrollBar, &CALScrollBar::sigRangeAnimationFinished, this, [=]() { doItemsLayout(); });
+	connect(d->verticalScrollBar, &CALScrollBar::sigRangeAnimationFinished, this, [this]() { doItemsLayout(); });
 	setVerticalScrollBar(d->verticalScrollBar);
 	setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
 	d->style = new CALTreeViewStyle(style());

@@ -32,7 +32,7 @@ CALImageCard::CALImageCard(QWidget* parent): QWidget(parent), d_ptr(new CALImage
 	d->maximumAspectRatio = 2.2;
 	d->isPreserveAspectCrop = true;
 	d->themeMode = ALTheme->getThemeMode();
-	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { d->themeMode = mode; });
+	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [d](const ALThemeType::ThemeMode& mode) { d->themeMode = mode; });
 	setMinimumSize(350, 260);
 }
 

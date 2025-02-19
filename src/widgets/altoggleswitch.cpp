@@ -27,7 +27,7 @@ void CALToggleSwitchPrivate::startPosAnimation(const qreal startX, const qreal e
 	Q_Q(CALToggleSwitch);
 
 	const auto circleAnimation = new QPropertyAnimation(q, "circleCenterX");
-	connect(circleAnimation, &QPropertyAnimation::valueChanged, q, [=](const QVariant& value) {
+	connect(circleAnimation, &QPropertyAnimation::valueChanged, q, [this, q](const QVariant& value) {
 		this->circleCenterX = value.toReal();
 		q->update();
 	});
@@ -43,7 +43,7 @@ void CALToggleSwitchPrivate::startRadiusAnimation(const qreal startRadius, const
 	Q_Q(CALToggleSwitch);
 
 	const auto circleRadiusAnimation = new QPropertyAnimation(q, "circleRadius");
-	connect(circleRadiusAnimation, &QPropertyAnimation::valueChanged, q, [=](const QVariant& value) {
+	connect(circleRadiusAnimation, &QPropertyAnimation::valueChanged, q, [this, q](const QVariant& value) {
 		this->circleRadius = value.toReal();
 		q->update();
 	});
@@ -72,6 +72,7 @@ void CALToggleSwitchPrivate::adjustCircleCenterX() {
 CALToggleSwitch::CALToggleSwitch(QWidget* parent) : QWidget(parent), d_ptr(new CALToggleSwitchPrivate(this, this)) {
 	Q_D(CALToggleSwitch);
 
+	setObjectName("CALToggleSwitch");
 	setMouseTracking(true);
 	setFixedSize(44, 22);
 	d->margin = 1;
@@ -82,7 +83,7 @@ CALToggleSwitch::CALToggleSwitch(QWidget* parent) : QWidget(parent), d_ptr(new C
 	d->isLeftButtonPress = false;
 	d->isMousePressMove = false;
 	d->themeMode = ALTheme->getThemeMode();
-	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { d->themeMode = mode; });
+	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [d](const ALThemeType::ThemeMode& mode) { d->themeMode = mode; });
 	setProperty("circleCenterX", 0.01);
 	setProperty("circleRadius", 0.01);
 }

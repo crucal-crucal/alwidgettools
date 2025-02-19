@@ -215,6 +215,13 @@ public:
 	ALNavigationType::NodeOperateReturnType addFooterNode(const QString& footerTitle, QWidget* page, QString& footerKey, int keyPoints, const ALIcon::FluentIcon& fluentIcon = ALIcon::FluentIcon::None) const;
 
 	/**
+	 * @brief 删除节点
+	 * @param nodeKey 添加节点时获取到的节点 key
+	 * @return 是否删除成功
+	 */
+	bool removeNavigationNode(const QString& nodeKey);
+
+	/**
 	 * @brief 设置节点关键点数
 	 * @param nodeKey 节点 key
 	 * @param keyPoints 关键点数

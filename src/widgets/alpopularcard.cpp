@@ -74,7 +74,7 @@ CALPopularCard::CALPopularCard(QWidget* parent): QWidget(parent), d_ptr(new CALP
 	d->floatTimer = new QTimer(this);
 	connect(d->floatTimer, &QTimer::timeout, d, &CALPopularCardPrivate::showFloater);
 	d->themeMode = ALTheme->getThemeMode();
-	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { d->themeMode = mode; });
+	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [d](const ALThemeType::ThemeMode& mode) { d->themeMode = mode; });
 
 	setObjectName("CALPopularCard");
 	setStyleSheet("#CALPopularCard { background-color: transparent; }");

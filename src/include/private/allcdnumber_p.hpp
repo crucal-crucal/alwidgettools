@@ -31,5 +31,7 @@ private:
 	QString autoClockFormat{};
 	QTimer* clockTimer{ nullptr };
 	CALLCDNumberStyle* lcdNumberStyle{ nullptr };
+
+	void changeTheme();
 };
 }

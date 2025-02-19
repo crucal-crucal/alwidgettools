@@ -13,4 +13,6 @@ private:
 	void initColorDialogArea();
 	void initCalendarPickerArea();
 	void initCalendarArea();
+	void initDrawerAreaArea();
+	void initRollerArea();
 };

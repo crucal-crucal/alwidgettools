@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <QMetaEnum>
 #include <QPropertyAnimation>
+#include <QUuid>
 #include <QVBoxLayout>
 
 #include "albaselistview.hpp"
@@ -27,6 +28,7 @@ namespace AL {
 CALSuggestion::CALSuggestion(QObject* parent): QObject(parent) {
 	m_iconType = ALIcon::None;
 	m_suggestText = "";
+	m_suggestKey = QUuid::createUuid().toString().remove("{").remove("}").remove("-");
 	m_suggestData = QVariantMap();
 }
 
@@ -59,6 +61,15 @@ void CALSuggestion::setSuggestText(const QString& text) {
 
 QString CALSuggestion::getSuggestText() const {
 	return m_suggestText;
+}
+
+void CALSuggestion::setSuggestKey(const QString& key) {
+	m_suggestKey = key;
+	Q_EMIT sigSuggestKeyChanged();
+}
+
+QString CALSuggestion::getSuggestKey() const {
+	return m_suggestKey;
 }
 
 void CALSuggestion::setSuggestData(const QVariantMap& data) {
@@ -150,8 +161,8 @@ void CALSuggestBoxPrivate::startSizeAnimation(const QSize& oldSize, const QSize&
 
 	shadowVLayout->removeWidget(searchView);
 	const auto sizeAnimation = new QPropertyAnimation(searchViewContainer, "size");
-	connect(sizeAnimation, &QPropertyAnimation::valueChanged, this, [=]() { searchView->resize(searchViewContainer->size()); });
-	connect(sizeAnimation, &QPropertyAnimation::finished, this, [=]() { shadowVLayout->addWidget(searchView); });
+	connect(sizeAnimation, &QPropertyAnimation::valueChanged, this, [this]() { searchView->resize(searchViewContainer->size()); });
+	connect(sizeAnimation, &QPropertyAnimation::finished, this, [this]() { shadowVLayout->addWidget(searchView); });
 	sizeAnimation->setDuration(300);
 	sizeAnimation->setEasingCurve(QEasingCurve::InOutSine);
 	sizeAnimation->setStartValue(oldSize);
@@ -281,50 +292,64 @@ void CALSuggestBox::setPlaceholderText(const QString& placaHolderText) {
 	d_func()->searchLineEdit->setPlaceholderText(placaHolderText);
 }
 
-void CALSuggestBox::addSuggestion(const QString& suggestText, const QVariantMap& suggestData) {
+QString CALSuggestBox::addSuggestion(const QString& suggestText, const QVariantMap& suggestData) {
 	const auto suggest = new CALSuggestion(this);
 	suggest->setSuggestText(suggestText);
 	suggest->setSuggestData(suggestData);
 	d_func()->suggestionVector.append(suggest);
+
+	return suggest->getSuggestKey();
 }
 
-void CALSuggestBox::addSuggestion(const ALIcon::AweSomeIcon& awesomeIcon, const QString& suggestText, const QVariantMap& suggestData) {
+QString CALSuggestBox::addSuggestion(const ALIcon::AweSomeIcon& awesomeIcon, const QString& suggestText, const QVariantMap& suggestData) {
 	const auto suggest = new CALSuggestion(this);
 	suggest->setAwesomeIcon(awesomeIcon);
 	suggest->setSuggestText(suggestText);
 	suggest->setSuggestData(suggestData);
 	d_func()->suggestionVector.append(suggest);
+
+	return suggest->getSuggestKey();
 }
 
-void CALSuggestBox::addSuggestion(const ALIcon::FluentIcon& fluentIcon, const QString& suggestText, const QVariantMap& suggestData) {
+QString CALSuggestBox::addSuggestion(const ALIcon::FluentIcon& fluentIcon, const QString& suggestText, const QVariantMap& suggestData) {
 	const auto suggest = new CALSuggestion(this);
 	suggest->setFluentIcon(fluentIcon);
 	suggest->setSuggestText(suggestText);
 	suggest->setSuggestData(suggestData);
 	d_func()->suggestionVector.append(suggest);
+
+	return suggest->getSuggestKey();
 }
 
-void CALSuggestBox::removeSuggestion(const QString& suggestText) {
+bool CALSuggestBox::removeSuggestion(const QString& suggestKey) {
+	bool bRet{ false };
+
 	Q_D(CALSuggestBox);
 
 	for (const auto& suggest : d->suggestionVector) {
-		if (suggest->getSuggestText() == suggestText) {
-			d->suggestionVector.removeOne(suggest);
+		if (suggest->getSuggestKey() == suggestKey) {
+			bRet = d->suggestionVector.removeOne(suggest);
 			suggest->deleteLater();
 			break;
 		}
 	}
+
+	return bRet;
 }
 
-void CALSuggestBox::removeSuggestion(const int index) {
+bool CALSuggestBox::removeSuggestion(const int index) {
+	bool bRet{ false };
+
 	Q_D(CALSuggestBox);
 
 	if (index >= d->suggestionVector.count()) {
-		return;
+		return bRet;
 	}
 
 	CALSuggestion* suggest = d->suggestionVector[index];
-	d->suggestionVector.removeOne(suggest);
+	bRet = d->suggestionVector.removeOne(suggest);
 	suggest->deleteLater();
+
+	return bRet;
 }
 }

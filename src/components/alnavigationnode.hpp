@@ -73,6 +73,7 @@ public:
 	[[nodiscard]] bool getIsHasPageChild() const;
 
 	void addChildNode(CALNavigationNode* childNode);
+	bool removeChildNode(CALNavigationNode* childNode);
 
 	[[nodiscard]] bool getIsChildHasKeyPoints() const;
 

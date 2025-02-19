@@ -116,7 +116,7 @@ void CALLineEdit::focusInEvent(QFocusEvent* event) {
 	if (event->reason() == Qt::MouseFocusReason) {
 		setIsClearButtonEnable(d->isClearButtonEnable);
 		const auto markAnimation = new QPropertyAnimation(d, "expandMarkWidth");
-		connect(markAnimation, &QPropertyAnimation::valueChanged, this, [=]() { update(); });
+		connect(markAnimation, &QPropertyAnimation::valueChanged, this, [this]() { update(); });
 		markAnimation->setDuration(300);
 		markAnimation->setEasingCurve(QEasingCurve::InOutSine);
 		markAnimation->setStartValue(d->expandMarkWidth);
@@ -134,7 +134,7 @@ void CALLineEdit::focusOutEvent(QFocusEvent* event) {
 	if (event->reason() == Qt::PopupFocusReason) {
 		setIsClearButtonEnable(d->isClearButtonEnable);
 		const auto markAnimation = new QPropertyAnimation(d, "expandMarkWidth");
-		connect(markAnimation, &QPropertyAnimation::valueChanged, this, [=]() { update(); });
+		connect(markAnimation, &QPropertyAnimation::valueChanged, this, [this]() { update(); });
 		markAnimation->setDuration(300);
 		markAnimation->setEasingCurve(QEasingCurve::InOutSine);
 		markAnimation->setStartValue(d->expandMarkWidth);
@@ -195,7 +195,7 @@ void CALLineEdit::contextMenuEvent(QContextMenuEvent* event) {
 	if (!isReadOnly()) {
 		action = menu->addAction(ALIcon::AweSomeIcon::DeleteLeft, tr("delete"));
 		action->setEnabled(!isReadOnly() && !text().isEmpty() && hasSelectedText());
-		connect(action, &QAction::triggered, this, [=]() {
+		connect(action, &QAction::triggered, this, [this]() {
 			if (hasSelectedText()) {
 				setText(text().remove(selectionStart(), selectionEnd() - selectionStart()));
 			}

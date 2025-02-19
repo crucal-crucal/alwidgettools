@@ -4,6 +4,7 @@
 #include <QContextMenuEvent>
 #include <QGuiApplication>
 #include <QLineEdit>
+#include <QTimer>
 
 #include "almenu.hpp"
 #include "alspinboxstyle.hpp"
@@ -32,7 +33,7 @@ CALMenu* CALDoubleSpinBoxPrivate::createStandardContextMenu() {
 	const auto menu = new CALMenu(q);
 	menu->setMenuItemHeight(27);
 	menu->setAttribute(Qt::WA_DeleteOnClose);
-	QAction* action{ nullptr };
+	QAction* action;
 	if (!lineEdit->isReadOnly()) {
 		action = menu->addAction(ALIcon::AweSomeIcon::ArrowRotateLeft, tr("Undo"), QKeySequence::Undo);
 		action->setEnabled(lineEdit->isUndoAvailable());
@@ -64,7 +65,7 @@ CALMenu* CALDoubleSpinBoxPrivate::createStandardContextMenu() {
 	if (!lineEdit->isReadOnly()) {
 		action = menu->addAction(ALIcon::AweSomeIcon::DeleteLeft, tr("delete"));
 		action->setEnabled(!lineEdit->isReadOnly() && !lineEdit->text().isEmpty() && lineEdit->hasSelectedText());
-		connect(action, &QAction::triggered, this, [=]() {
+		connect(action, &QAction::triggered, this, [lineEdit]() {
 			if (lineEdit->hasSelectedText()) {
 				lineEdit->setText(lineEdit->text().remove(lineEdit->selectionStart(), lineEdit->selectionEnd() - lineEdit->selectionStart()));
 			}
@@ -80,6 +81,15 @@ CALMenu* CALDoubleSpinBoxPrivate::createStandardContextMenu() {
 	return menu;
 }
 
+void CALDoubleSpinBoxPrivate::changeTheme() {
+	Q_Q(CALDoubleSpinBox);
+
+	QPalette palette;
+	palette.setColor(QPalette::Base, Qt::transparent);
+	palette.setColor(QPalette::Text, ALThemeColor(themeMode, ALThemeType::BasicText));
+	q->lineEdit()->setPalette(palette);
+}
+
 /**
  * \class CALDoubleSpinBox
  * @param parent pointer to the parent class
@@ -92,11 +102,15 @@ CALDoubleSpinBox::CALDoubleSpinBox(QWidget* parent): QDoubleSpinBox(parent), d_p
 	setFixedSize(120, 30);
 	lineEdit()->setAlignment(Qt::AlignCenter);
 	lineEdit()->setStyleSheet("background-color: transparent;");
-	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) {
-		QPalette palette;
-		palette.setColor(QPalette::Base, Qt::transparent);
-		palette.setColor(QPalette::Text, ALThemeColor(mode, ALThemeType::BasicText));
-		lineEdit()->setPalette(palette);
+	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [d, this](const ALThemeType::ThemeMode& mode) {
+		d->themeMode = mode;
+		if (isVisible()) {
+			d->changeTheme();
+		} else {
+			QTimer::singleShot(1, this, [d] {
+				d->changeTheme();
+			});
+		}
 	});
 }
 

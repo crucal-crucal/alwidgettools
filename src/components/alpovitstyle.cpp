@@ -17,7 +17,7 @@ CALPovitStyle::CALPovitStyle(QStyle* style) {
 	m_currentIndex = -1;
 	m_povitSpacing = 5;
 	m_themeMode = ALTheme->getThemeMode();
-	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { m_themeMode = mode; });
+	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [this](const ALThemeType::ThemeMode& mode) { m_themeMode = mode; });
 }
 
 CALPovitStyle::~CALPovitStyle() = default;
