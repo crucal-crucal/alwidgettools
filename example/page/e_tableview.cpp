@@ -44,7 +44,7 @@ void E_TableView::initTableViewArea() {
 	tableView->horizontalHeader()->setMinimumSectionSize(64);
 	tableView->verticalHeader()->setMinimumSectionSize(46);
 	tableView->setFixedHeight(390);
-	connect(tableView, &CALTableView::sigTableViewShow, this, [=]() {
+	connect(tableView, &CALTableView::sigTableViewShow, this, [tableView]() {
 		tableView->setColumnWidth(0, 110);
 		tableView->setColumnWidth(1, 120);
 		tableView->setColumnWidth(2, 130);

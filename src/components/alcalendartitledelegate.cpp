@@ -14,7 +14,7 @@ namespace AL {
  */
 CALCalendarTitleDelegate::CALCalendarTitleDelegate(QObject* parent): QStyledItemDelegate(parent) {
 	m_themeMode = ALTheme->getThemeMode();
-	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { m_themeMode = mode; });
+	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [this](const ALThemeType::ThemeMode& mode) { m_themeMode = mode; });
 }
 
 CALCalendarTitleDelegate::~CALCalendarTitleDelegate() = default;

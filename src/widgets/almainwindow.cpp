@@ -198,7 +198,7 @@ void CALMainWindowPrivate::invokableWMWindowClickedEvent(const QVariantMap& data
 		}
 		if (isNavigationBarExpanded) {
 			const auto navigationMoveAnimation = new QPropertyAnimation(navigationBar, "pos");
-			connect(navigationMoveAnimation, &QPropertyAnimation::valueChanged, this, [=]() {
+			connect(navigationMoveAnimation, &QPropertyAnimation::valueChanged, this, [this, navigationMoveAnimation]() {
 				if (isNavigationDisplayModeChanged) {
 					navigationBar->setIsTransparent(true);
 					isWMClickedAnimatinoFinished = true;
@@ -206,7 +206,7 @@ void CALMainWindowPrivate::invokableWMWindowClickedEvent(const QVariantMap& data
 					navigationMoveAnimation->deleteLater();
 				}
 			});
-			connect(navigationMoveAnimation, &QPropertyAnimation::finished, this, [=]() {
+			connect(navigationMoveAnimation, &QPropertyAnimation::finished, this, [this]() {
 				navigationBar->setIsTransparent(true);
 				if (!isNavigationDisplayModeChanged) {
 					navigationBar->setDisplayMode(ALNavigationType::Minimal, false);
@@ -333,13 +333,13 @@ CALMainWindow::CALMainWindow(QWidget* parent): QMainWindow(parent), d_ptr(new CA
 	setStyle(new CALMainWindowStyle(style()));
 
 	/// Delay rendering
-	QTimer::singleShot(1, this, [=]() {
+	QTimer::singleShot(1, this, [this, d]() {
 		QPalette palette = this->palette();
 		palette.setBrush(QPalette::Window, ALThemeColor(d->themeMode, ALThemeType::WindowBase));
 		this->setPalette(palette);
 	});
 	alApp->syncMica(this);
-	connect(alApp, &CALApplication::sigIsEnableMicaChanged, this, [=]() { d->slotThemeModeChanged(d->themeMode); });
+	connect(alApp, &CALApplication::sigIsEnableMicaChanged, this, [d]() { d->slotThemeModeChanged(d->themeMode); });
 }
 
 AL_TAKEOVER_NATIVEEVENT_CPP(CALMainWindow, d_func()->appBar)

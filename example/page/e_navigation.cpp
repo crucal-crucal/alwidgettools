@@ -42,9 +42,7 @@ void E_Navigation::initBreadCrumbBarArea() {
 	breadcrumbBar->setBreadcrumbList(breadcrumbBarList);
 	const auto resetButton = new CALPushButton(tr("reset"), this);
 	resetButton->setFixedSize(60, 32);
-	connect(resetButton, &CALPushButton::clicked, this, [=]() {
-		breadcrumbBar->setBreadcrumbList(breadcrumbBarList);
-	});
+	connect(resetButton, &CALPushButton::clicked, this, [breadcrumbBar, breadcrumbBarList]() { breadcrumbBar->setBreadcrumbList(breadcrumbBarList); });
 
 	const auto breadcrumbBarTextHLayout = new QHBoxLayout;
 	breadcrumbBarTextHLayout->addWidget(breadcrumbBarText);

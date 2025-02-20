@@ -1,4 +1,4 @@
-#include "aldrawerarea.hpp"
+﻿#include "aldrawerarea.hpp"
 
 #include <QVBoxLayout>
 

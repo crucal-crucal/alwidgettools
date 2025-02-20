@@ -291,7 +291,7 @@ CALAppBar::CALAppBar(QWidget* parent): QWidget(parent), d_ptr(new CALAppBarPriva
 	d->iconLabel->setPixmap(parent->windowIcon().pixmap(18, 18));
 	d->iconLabel->setVisible(!parent->windowIcon().isNull());
 	d->iconLabelVLayout->setContentsMargins(parent->windowIcon().isNull() ? 0 : 10, 0, 0, 0);
-	connect(parent, &QWidget::windowIconChanged, this, [=](const QIcon& icon) {
+	connect(parent, &QWidget::windowIconChanged, this, [d](const QIcon& icon) {
 		d->iconLabel->setPixmap(icon.pixmap(18, 18));
 		d->iconLabel->setVisible(!icon.isNull());
 		d->iconLabelVLayout->setContentsMargins(icon.isNull() ? 0 : 10, 0, 0, 0);
@@ -305,7 +305,7 @@ CALAppBar::CALAppBar(QWidget* parent): QWidget(parent), d_ptr(new CALAppBarPriva
 	d->titleLabel->setText(parent->windowTitle());
 	d->titleLabel->setVisible(!parent->windowTitle().isEmpty());
 	d->titleLabelVLayout->setContentsMargins(parent->windowTitle().isEmpty() ? 0 : 10, 0, 0, 0);
-	connect(parent, &QWidget::windowTitleChanged, this, [=](const QString& title) {
+	connect(parent, &QWidget::windowTitleChanged, this, [d](const QString& title) {
 		d->titleLabel->setText(title);
 		d->titleLabel->setVisible(!title.isEmpty());
 		d->titleLabelVLayout->setContentsMargins(title.isEmpty() ? 0 : 10, 0, 0, 0);
@@ -318,7 +318,7 @@ CALAppBar::CALAppBar(QWidget* parent): QWidget(parent), d_ptr(new CALAppBarPriva
 	d->themeChangeButton->setToolTip(ALTheme->getThemeMode() == ALThemeType::Light ? tr("Switch to dark theme") : tr("Switch to light theme"));
 	d->buttonMap[ALAppBarType::ThemeChangeButtonHint] = d->themeChangeButton;
 	connect(d->themeChangeButton, &CALToolButton::clicked, this, &CALAppBar::sigThemeChangeButtonClicked);
-	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { d->slotThemeModeChanged(mode); });
+	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, d, &CALAppBarPrivate::slotThemeModeChanged);
 
 	// 最小化
 	d->minButton = new CALToolButton(this);
@@ -364,7 +364,7 @@ CALAppBar::CALAppBar(QWidget* parent): QWidget(parent), d_ptr(new CALAppBarPriva
 
 #ifdef Q_OS_WIN
 	for (int i = 0; i < QApplication::screens().count(); ++i) {
-		connect(QApplication::screens().at(i), &QScreen::logicalDotsPerInchChanged, this, [=] {
+		connect(QApplication::screens().at(i), &QScreen::logicalDotsPerInchChanged, this, [d] {
 			if (d->isFixedSize) {
 				auto hwnd = reinterpret_cast<HWND>(d->currentWinID); // NOLINT
 				SetWindowPos(hwnd, nullptr, 0, 0, 0, 0, SWP_NOZORDER | SWP_NOOWNERZORDER | SWP_NOMOVE | SWP_FRAMECHANGED);
@@ -372,7 +372,7 @@ CALAppBar::CALAppBar(QWidget* parent): QWidget(parent), d_ptr(new CALAppBarPriva
 		});
 	}
 	//主屏幕变更处理
-	connect(dynamic_cast<QApplication*>(QCoreApplication::instance()), &QApplication::primaryScreenChanged, this, [=]() {
+	connect(dynamic_cast<QApplication*>(QCoreApplication::instance()), &QApplication::primaryScreenChanged, this, [d]() {
 		auto hwnd = reinterpret_cast<HWND>(d->currentWinID); // NOLINT
 		::SetWindowPos(hwnd, nullptr, 0, 0, 0, 0, SWP_NOZORDER | SWP_NOOWNERZORDER | SWP_NOMOVE | SWP_NOSIZE | SWP_FRAMECHANGED);
 		::RedrawWindow(hwnd, nullptr, nullptr, RDW_INVALIDATE | RDW_UPDATENOW);
@@ -676,7 +676,7 @@ void CALAppBar::closeWindow() {
 	Q_D(CALAppBar);
 
 	const auto closeOpacityAnimation = new QPropertyAnimation(window(), "windowOpacity");
-	connect(closeOpacityAnimation, &QPropertyAnimation::finished, this, [=]() { window()->close(); });
+	connect(closeOpacityAnimation, &QPropertyAnimation::finished, this, [this]() { window()->close(); });
 	closeOpacityAnimation->setStartValue(1);
 	closeOpacityAnimation->setEndValue(0);
 	closeOpacityAnimation->setEasingCurve(QEasingCurve::InOutSine);

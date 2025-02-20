@@ -13,7 +13,7 @@ CALLCDNumberStyle::CALLCDNumberStyle(QStyle* parent) {
 	m_isTransparent = false;
 	m_borderRadius = 6;
 	m_themeMode = ALTheme->getThemeMode();
-	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { m_themeMode = mode; });
+	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [this](const ALThemeType::ThemeMode& mode) { m_themeMode = mode; });
 }
 
 CALLCDNumberStyle::~CALLCDNumberStyle() = default;

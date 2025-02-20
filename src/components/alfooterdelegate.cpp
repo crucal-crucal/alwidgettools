@@ -20,7 +20,7 @@ namespace AL {
  */
 CALFooterDelegate::CALFooterDelegate(QObject* parent): QStyledItemDelegate(parent) {
 	themeMode = ALTheme->getThemeMode();
-	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { themeMode = mode; });
+	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [this](const ALThemeType::ThemeMode& mode) { themeMode = mode; });
 	setProperty("lastSelectMarkTop", 10.0);
 	setProperty("lastSelectMarkBottom", 10.0);
 	setProperty("selectMarkTop", 10.0);
@@ -29,7 +29,7 @@ CALFooterDelegate::CALFooterDelegate(QObject* parent): QStyledItemDelegate(paren
 	m_lastSelectMarkTopAnimation = new QPropertyAnimation(this, "lastSelectMarkTop");
 	m_lastSelectMarkTopAnimation->setDuration(300);
 	m_lastSelectMarkTopAnimation->setEasingCurve(QEasingCurve::InOutSine);
-	connect(m_lastSelectMarkTopAnimation, &QPropertyAnimation::valueChanged, this, [=](const QVariant& value) {
+	connect(m_lastSelectMarkTopAnimation, &QPropertyAnimation::valueChanged, this, [this](const QVariant& value) {
 		m_lastSelectMarkTop = value.toReal();
 		m_listView->viewport()->update();
 	});
@@ -37,11 +37,11 @@ CALFooterDelegate::CALFooterDelegate(QObject* parent): QStyledItemDelegate(paren
 	m_selectMarkBottomAnimation = new QPropertyAnimation(this, "selectMarkBottom");
 	m_selectMarkBottomAnimation->setDuration(300);
 	m_selectMarkBottomAnimation->setEasingCurve(QEasingCurve::InOutSine);
-	connect(m_selectMarkBottomAnimation, &QPropertyAnimation::valueChanged, this, [=](const QVariant& value) {
+	connect(m_selectMarkBottomAnimation, &QPropertyAnimation::valueChanged, this, [this](const QVariant& value) {
 		m_selectMarkBottom = value.toReal();
 		m_listView->viewport()->update();
 	});
-	connect(m_lastSelectMarkTopAnimation, &QPropertyAnimation::finished, this, [=]() {
+	connect(m_lastSelectMarkTopAnimation, &QPropertyAnimation::finished, this, [this]() {
 		m_isSelectMarkDisplay = true;
 		m_lastSelectedNode = nullptr;
 		m_selectMarkBottomAnimation->setStartValue(0);
@@ -53,7 +53,7 @@ CALFooterDelegate::CALFooterDelegate(QObject* parent): QStyledItemDelegate(paren
 	m_lastSelectMarkBottomAnimation = new QPropertyAnimation(this, "lastSelectMarkBottom");
 	m_lastSelectMarkBottomAnimation->setDuration(300);
 	m_lastSelectMarkBottomAnimation->setEasingCurve(QEasingCurve::InOutSine);
-	connect(m_lastSelectMarkBottomAnimation, &QPropertyAnimation::valueChanged, this, [=](const QVariant& value) {
+	connect(m_lastSelectMarkBottomAnimation, &QPropertyAnimation::valueChanged, this, [this](const QVariant& value) {
 		m_lastSelectMarkBottom = value.toReal();
 		m_listView->viewport()->update();
 	});
@@ -61,11 +61,11 @@ CALFooterDelegate::CALFooterDelegate(QObject* parent): QStyledItemDelegate(paren
 	m_selectMarkTopAnimation = new QPropertyAnimation(this, "selectMarkTop");
 	m_selectMarkTopAnimation->setDuration(300);
 	m_selectMarkTopAnimation->setEasingCurve(QEasingCurve::InOutSine);
-	connect(m_selectMarkTopAnimation, &QPropertyAnimation::valueChanged, this, [=](const QVariant& value) {
+	connect(m_selectMarkTopAnimation, &QPropertyAnimation::valueChanged, this, [this](const QVariant& value) {
 		m_selectMarkTop = value.toReal();
 		m_listView->viewport()->update();
 	});
-	connect(m_lastSelectMarkBottomAnimation, &QPropertyAnimation::finished, this, [=]() {
+	connect(m_lastSelectMarkBottomAnimation, &QPropertyAnimation::finished, this, [this]() {
 		m_isSelectMarkDisplay = true;
 		m_lastSelectedNode = nullptr;
 		m_selectMarkTopAnimation->setStartValue(0);

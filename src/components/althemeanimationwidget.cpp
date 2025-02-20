@@ -22,11 +22,11 @@ void CALThemeAnimationWidget::startAnimation(const int mesc) {
 	const auto themeChangeAnimation = new QPropertyAnimation(this, "radius");
 	themeChangeAnimation->setDuration(mesc);
 	themeChangeAnimation->setEasingCurve(QEasingCurve::InOutSine);
-	connect(themeChangeAnimation, &QPropertyAnimation::finished, this, [=]() {
+	connect(themeChangeAnimation, &QPropertyAnimation::finished, this, [this]() {
 		Q_EMIT sigAnimationFinished();
 		this->deleteLater();
 	});
-	connect(themeChangeAnimation, &QPropertyAnimation::valueChanged, this, [=]() { this->update(); });
+	connect(themeChangeAnimation, &QPropertyAnimation::valueChanged, this, [this]() { this->update(); });
 	themeChangeAnimation->setStartValue(0.0);
 	themeChangeAnimation->setEndValue(m_endRadius);
 	themeChangeAnimation->start(QAbstractAnimation::DeleteWhenStopped);

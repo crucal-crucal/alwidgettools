@@ -10,6 +10,7 @@
 namespace AL {
 class CALLineEdit;
 class CALListView;
+class CALText;
 }
 
 class E_IconModel;
@@ -30,6 +31,7 @@ private:
 	QMetaEnum m_metaEnum{};
 	AL::CALLineEdit* m_searchEdit{ nullptr };
 	AL::CALListView* m_iconListView{ nullptr };
+	AL::CALText* m_iconCountText{ nullptr };
 	E_IconModel* m_iconModel{ nullptr };
 	E_IconDelegate* m_iconDelegate{ nullptr };
 };

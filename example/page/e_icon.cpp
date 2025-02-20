@@ -7,6 +7,7 @@
 #include "allineedit.hpp"
 #include "allistview.hpp"
 #include "almessagebar.hpp"
+#include "altext.hpp"
 
 #include "e_icondelegate.hpp"
 #include "e_iconmodel.hpp"
@@ -21,7 +22,7 @@ E_Icon::E_Icon(const QMetaEnum& metaEnum, QWidget* parent): E_BasePage(parent), 
 	m_iconListView->setFlow(QListView::LeftToRight);
 	m_iconListView->setViewMode(QListView::IconMode);
 	m_iconListView->setResizeMode(QListView::Adjust);
-	connect(m_iconListView, &CALListView::clicked, this, [=](const QModelIndex& index) {
+	connect(m_iconListView, &CALListView::clicked, this, [this](const QModelIndex& index) {
 		const QString iconName = m_iconModel->getIconNameFromModelIndex(index);
 		if (iconName.isEmpty()) {
 			return;
@@ -40,6 +41,9 @@ E_Icon::E_Icon(const QMetaEnum& metaEnum, QWidget* parent): E_BasePage(parent), 
 	m_searchEdit->setFixedSize(300, 35);
 	connect(m_searchEdit, &CALLineEdit::textEdited, this, &E_Icon::slotSearchEditTextChanged);
 	connect(m_searchEdit, &CALLineEdit::sigFocusIn, this, &E_Icon::slotSearchEditTextChanged);
+
+	m_iconCountText = new CALText(tr("icon count: ") + QString::number(metaEnum.keyCount()), this);
+	m_iconCountText->setTextPixelSize(17);
 }
 
 E_Icon::~E_Icon() = default;
@@ -47,16 +51,22 @@ E_Icon::~E_Icon() = default;
 void E_Icon::init() {
 	const auto centralWidget = new QWidget(this);
 	centralWidget->setWindowTitle(this->windowTitle());
+	const auto titleHLayout = new QHBoxLayout;
+	titleHLayout->setContentsMargins(0, 0, 20, 0);
+	titleHLayout->addWidget(m_searchEdit);
+	titleHLayout->addStretch();
+	titleHLayout->addWidget(m_iconCountText);
 	mainVLayout = new QVBoxLayout(centralWidget);
 	mainVLayout->setContentsMargins(0, 0, 0, 0);
 	mainVLayout->addSpacing(13);
-	mainVLayout->addWidget(m_searchEdit);
+	mainVLayout->addLayout(titleHLayout);
 	mainVLayout->addWidget(m_iconListView);
 	addCentralWidget(centralWidget, true, true, 0);
 }
 
 void E_Icon::slotSearchEditTextChanged(const QString& searchText) const {
 	if (searchText.isEmpty()) {
+		m_iconCountText->setText(tr("icon count: ") + QString::number(m_metaEnum.keyCount()));
 		m_iconModel->setIsSearchMode(false);
 		m_iconModel->setSearchKeyList({});
 		m_iconListView->clearSelection();
@@ -70,6 +80,7 @@ void E_Icon::slotSearchEditTextChanged(const QString& searchText) const {
 			searchKeyList.append(key);
 		}
 	}
+	m_iconCountText->setText(tr("icon count: ") + QString::number(searchKeyList.count()));
 	m_iconModel->setSearchKeyList(searchKeyList);
 	m_iconModel->setIsSearchMode(true);
 	m_iconListView->clearSelection();

@@ -79,7 +79,7 @@ int CALSliderStyle::styleHint(const StyleHint stylehint, const QStyleOption* opt
 void CALSliderStyle::startRadiusAnimation(const qreal startRadius, const qreal endRadius, QWidget* widget) const {
 	const auto style = const_cast<CALSliderStyle*>(this);
 	const auto circleRadiusAnimation = new QPropertyAnimation(style, "circleRadius");
-	connect(circleRadiusAnimation, &QPropertyAnimation::valueChanged, style, [=](const QVariant& value) {
+	connect(circleRadiusAnimation, &QPropertyAnimation::valueChanged, style, [this, widget](const QVariant& value) {
 		this->m_circleRadius = value.toReal();
 		widget->update();
 	});

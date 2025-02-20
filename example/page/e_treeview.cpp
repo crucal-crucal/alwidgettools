@@ -60,7 +60,7 @@ void E_TreeView::initTreeViewArea() {
 	itemHeightSlider->setValue(350);
 	const auto itemHeightValueText = new CALText("35", this);
 	itemHeightValueText->setTextPixelSize(15);
-	connect(itemHeightSlider, &CALSlider::valueChanged, this, [=](const int value) {
+	connect(itemHeightSlider, &CALSlider::valueChanged, this, [itemHeightValueText, treeView](const int value) {
 		itemHeightValueText->setText(QString::number(value / 10));
 		treeView->setItemHeight(value / 10);
 	});
@@ -77,7 +77,7 @@ void E_TreeView::initTreeViewArea() {
 	headerMarginSlider->setValue(50);
 	const auto headerMarginValueText = new CALText("5", this);
 	headerMarginValueText->setTextPixelSize(15);
-	connect(headerMarginSlider, &CALSlider::valueChanged, this, [=](const int value) {
+	connect(headerMarginSlider, &CALSlider::valueChanged, this, [headerMarginValueText, treeView](const int value) {
 		headerMarginValueText->setText(QString::number(value / 10));
 		treeView->setHeaderMargin(value / 10);
 	});
@@ -94,7 +94,7 @@ void E_TreeView::initTreeViewArea() {
 	indentationSlider->setValue(200);
 	const auto indentationValueText = new CALText("20", this);
 	indentationValueText->setTextPixelSize(15);
-	connect(indentationSlider, &CALSlider::valueChanged, this, [=](const int value) {
+	connect(indentationSlider, &CALSlider::valueChanged, this, [indentationValueText, treeView](const int value) {
 		indentationValueText->setText(QString::number(value / 10));
 		treeView->setIndentation(value / 10);
 	});
@@ -108,11 +108,11 @@ void E_TreeView::initTreeViewArea() {
 	expandCollapseHLayout->setContentsMargins(0, 0, 0, 0);
 	const auto expandButton = new CALPushButton(tr("Expand All"), this);
 	expandButton->setFixedWidth(80);
-	connect(expandButton, &CALPushButton::clicked, this, [=]() { treeView->expandAll(); });
+	connect(expandButton, &CALPushButton::clicked, this, [treeView]() { treeView->expandAll(); });
 	// collapseAll
 	const auto collapseButton = new CALPushButton(tr("Collapse All"), this);
 	collapseButton->setFixedWidth(80);
-	connect(collapseButton, &CALPushButton::clicked, this, [=]() { treeView->collapseAll(); });
+	connect(collapseButton, &CALPushButton::clicked, this, [treeView]() { treeView->collapseAll(); });
 	expandCollapseHLayout->addWidget(expandButton);
 	expandCollapseHLayout->addWidget(collapseButton);
 	expandCollapseHLayout->addStretch();

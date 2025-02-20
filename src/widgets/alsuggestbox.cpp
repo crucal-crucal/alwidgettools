@@ -179,7 +179,7 @@ void CALSuggestBoxPrivate::startExpandAnimation() {
 	isCloseAnimationFinished = true;
 	isExpandAnimationFinished = false;
 	const auto expandAnimation = new QPropertyAnimation(searchView, "pos");
-	connect(expandAnimation, &QPropertyAnimation::finished, this, [=]() {
+	connect(expandAnimation, &QPropertyAnimation::finished, this, [this]() {
 		isExpandAnimationFinished = true;
 		searchView->clearSelection();
 	});
@@ -204,7 +204,7 @@ void CALSuggestBoxPrivate::startCloseAnimation() {
 	sizeAnimation->setEndValue(QSize(searchViewContainer->width(), 0));
 	sizeAnimation->start(QAbstractAnimation::DeleteWhenStopped);
 	const auto closeAnimation = new QPropertyAnimation(searchView, "pos");
-	connect(closeAnimation, &QPropertyAnimation::finished, this, [=]() {
+	connect(closeAnimation, &QPropertyAnimation::finished, this, [this]() {
 		isCloseAnimationFinished = true;
 		searchModel->clearSearchNode();
 		searchViewContainer->hide();

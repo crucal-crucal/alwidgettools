@@ -19,7 +19,7 @@ CALTreeViewStyle::CALTreeViewStyle(QStyle* style) {
 	m_itemHeight = 35;
 	m_headerMargin = 5;
 	m_themeMode = ALTheme->getThemeMode();
-	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { m_themeMode = mode; });
+	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [this](const ALThemeType::ThemeMode& mode) { m_themeMode = mode; });
 }
 
 CALTreeViewStyle::~CALTreeViewStyle() = default;

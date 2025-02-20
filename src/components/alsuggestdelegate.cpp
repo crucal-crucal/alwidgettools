@@ -18,7 +18,7 @@ namespace AL {
  */
 CALSuggestDelegate::CALSuggestDelegate(QObject* parent): QStyledItemDelegate(parent) {
 	themeMode = ALTheme->getThemeMode();
-	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { themeMode = mode; });
+	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [this](const ALThemeType::ThemeMode& mode) { themeMode = mode; });
 }
 
 CALSuggestDelegate::~CALSuggestDelegate() = default;

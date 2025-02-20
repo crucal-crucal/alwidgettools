@@ -19,7 +19,7 @@ CALListViewStyle::CALListViewStyle(QStyle* style) {
 	m_isTransparent = false;
 	m_leftPadding = 11;
 	m_themeMode = ALTheme->getThemeMode();
-	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { m_themeMode = mode; });
+	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [this](const ALThemeType::ThemeMode& mode) { m_themeMode = mode; });
 }
 
 CALListViewStyle::~CALListViewStyle() = default;

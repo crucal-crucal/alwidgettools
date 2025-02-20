@@ -17,7 +17,7 @@ CALSuggestBoxSearchViewContainer::CALSuggestBoxSearchViewContainer(QWidget* pare
 	setObjectName("CALSuggestBoxSearchViewContainer");
 	setStyleSheet("#CALSuggestBoxSearchViewContainer { background-color: tranparent; } ");
 	themeMode = ALTheme->getThemeMode();
-	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { themeMode = mode; });
+	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [this](const ALThemeType::ThemeMode& mode) { themeMode = mode; });
 }
 
 CALSuggestBoxSearchViewContainer::~CALSuggestBoxSearchViewContainer() = default;

@@ -39,7 +39,7 @@ E_ProgressBar_Example::E_ProgressBar_Example(QWidget* parent): E_BasePage(parent
 	progressBarType->addItem("DeterminateProgress");
 	progressBarType->addItem("IndeterminateProgress");
 	progressBarType->setCurrentText(QString(metaEnum.valueToKey(progressBar->getProgressType())));
-	connect(progressBarType, &CALComboBox::currentTextChanged, this, [=](const QString& type) {
+	connect(progressBarType, &CALComboBox::currentTextChanged, this, [metaEnum, progressBar](const QString& type) {
 		if (metaEnum.isValid()) {
 			if (const int value = metaEnum.keyToValue(type.toLocal8Bit().constData()); value != -1) {
 				progressBar->setProgressType(static_cast<ALProgressType::ProgressType>(value));

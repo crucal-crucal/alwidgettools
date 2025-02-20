@@ -20,7 +20,7 @@ CALComboBoxStyle::CALComboBoxStyle(QStyle* style): QProxyStyle(style) {
 	m_expandMarkWidth = 0;
 	m_shadowBorderWidth = 6;
 	m_themeMode = ALTheme->getThemeMode();
-	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { m_themeMode = mode; });
+	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [this](const ALThemeType::ThemeMode& mode) { m_themeMode = mode; });
 }
 
 CALComboBoxStyle::~CALComboBoxStyle() = default;

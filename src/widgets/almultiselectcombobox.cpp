@@ -55,9 +55,7 @@ void CALMultiSelectComboBoxPrivate::onItemPressed(const QModelIndex& index) {
 	}
 	refreshCurrentIndexs();
 	const auto markAnimation = new QPropertyAnimation(this, "expandMarkWidth");
-	connect(markAnimation, &QPropertyAnimation::valueChanged, this, [=](const QVariant& value) {
-		q->update();
-	});
+	connect(markAnimation, &QPropertyAnimation::valueChanged, this, [q](const QVariant&) { q->update(); });
 	markAnimation->setDuration(300);
 	markAnimation->setEasingCurve(QEasingCurve::InOutSine);
 	markAnimation->setStartValue(expandMarkWidth);
@@ -151,7 +149,7 @@ CALMultiSelectComboBox::CALMultiSelectComboBox(QWidget* parent): QComboBox(paren
 	d->expandIconRotate = 0;
 	d->expandMarkWidth = 0;
 	d->themeMode = ALTheme->getThemeMode();
-	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { d->themeMode = mode; });
+	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [d](const ALThemeType::ThemeMode& mode) { d->themeMode = mode; });
 	setFixedHeight(35);
 
 	d->comboBoxStyle = new CALComboBoxStyle(style());
@@ -372,7 +370,7 @@ void CALMultiSelectComboBox::showPopup() {
 				layout->takeAt(0);
 			}
 			const auto fixedSizeAnimation = new QPropertyAnimation(container, "maximumHeight");
-			connect(fixedSizeAnimation, &QPropertyAnimation::valueChanged, this, [=](const QVariant& value) { container->setFixedHeight(value.toInt()); });
+			connect(fixedSizeAnimation, &QPropertyAnimation::valueChanged, this, [container](const QVariant& value) { container->setFixedHeight(value.toInt()); });
 			fixedSizeAnimation->setStartValue(1);
 			fixedSizeAnimation->setEndValue(containerHeight);
 			fixedSizeAnimation->setEasingCurve(QEasingCurve::OutCubic);
@@ -380,7 +378,7 @@ void CALMultiSelectComboBox::showPopup() {
 			fixedSizeAnimation->start(QAbstractAnimation::DeleteWhenStopped);
 
 			const auto viewPosAnimation = new QPropertyAnimation(view(), "pos");
-			connect(viewPosAnimation, &QPropertyAnimation::finished, this, [=]() {
+			connect(viewPosAnimation, &QPropertyAnimation::finished, this, [this, d, layout]() {
 				d->isAllowHidePopup = true;
 				layout->addWidget(view());
 			});
@@ -393,7 +391,7 @@ void CALMultiSelectComboBox::showPopup() {
 		}
 		//指示器动画
 		const auto rotateAnimation = new QPropertyAnimation(d, "expandIconRotate");
-		connect(rotateAnimation, &QPropertyAnimation::valueChanged, this, [=](const QVariant& value) { update(); });
+		connect(rotateAnimation, &QPropertyAnimation::valueChanged, this, [this](const QVariant&) { update(); });
 		rotateAnimation->setDuration(300);
 		rotateAnimation->setEasingCurve(QEasingCurve::InOutSine);
 		rotateAnimation->setStartValue(d->expandIconRotate);
@@ -429,26 +427,24 @@ void CALMultiSelectComboBox::hidePopup() {
 					layout->takeAt(0);
 				}
 				const auto viewPosAnimation = new QPropertyAnimation(view(), "pos");
-				connect(viewPosAnimation, &QPropertyAnimation::finished, this, [=]() {
+				connect(viewPosAnimation, &QPropertyAnimation::finished, this, [this, layout]() {
 					layout->addWidget(view());
 					QMouseEvent focusEvent(QEvent::MouseButtonPress, QPoint(-1, -1), QPoint(-1, -1), Qt::NoButton, Qt::NoButton, Qt::NoModifier);
 					QApplication::sendEvent(parentWidget(), &focusEvent);
 				});
 				const QPoint viewPos = view()->pos();
-				connect(viewPosAnimation, &QPropertyAnimation::finished, this, [=]() { view()->move(viewPos); });
+				connect(viewPosAnimation, &QPropertyAnimation::finished, this, [this, viewPos]() { view()->move(viewPos); });
 				viewPosAnimation->setStartValue(viewPos);
 				viewPosAnimation->setEndValue(QPoint(viewPos.x(), viewPos.y() - view()->height()));
 				viewPosAnimation->setEasingCurve(QEasingCurve::InCubic);
 				viewPosAnimation->start(QAbstractAnimation::DeleteWhenStopped);
 
 				const auto fixedSizeAnimation = new QPropertyAnimation(container, "maximumHeight");
-				connect(fixedSizeAnimation, &QPropertyAnimation::finished, this, [=]() {
+				connect(fixedSizeAnimation, &QPropertyAnimation::finished, this, [this, container, containerHeight]() {
 					QComboBox::hidePopup();
 					container->setFixedHeight(containerHeight);
 				});
-				connect(fixedSizeAnimation, &QPropertyAnimation::valueChanged, this, [=](const QVariant& value) {
-					container->setFixedHeight(value.toInt());
-				});
+				connect(fixedSizeAnimation, &QPropertyAnimation::valueChanged, this, [container](const QVariant& value) { container->setFixedHeight(value.toInt()); });
 				fixedSizeAnimation->setStartValue(container->height());
 				fixedSizeAnimation->setEndValue(1);
 				fixedSizeAnimation->setEasingCurve(QEasingCurve::InCubic);
@@ -457,9 +453,7 @@ void CALMultiSelectComboBox::hidePopup() {
 			}
 			//指示器动画
 			const auto rotateAnimation = new QPropertyAnimation(d, "expandIconRotate");
-			connect(rotateAnimation, &QPropertyAnimation::valueChanged, this, [=](const QVariant& value) {
-				update();
-			});
+			connect(rotateAnimation, &QPropertyAnimation::valueChanged, this, [this](const QVariant&) { update(); });
 			rotateAnimation->setDuration(300);
 			rotateAnimation->setEasingCurve(QEasingCurve::InOutSine);
 			rotateAnimation->setStartValue(d->expandIconRotate);

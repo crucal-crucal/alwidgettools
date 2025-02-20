@@ -17,7 +17,7 @@ namespace AL {
 CALMenuBarStyle::CALMenuBarStyle(QStyle* style) {
 	m_menubarItemMargin = 0;
 	m_themeMode = ALTheme->getThemeMode();
-	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { m_themeMode = mode; });
+	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [this](const ALThemeType::ThemeMode& mode) { m_themeMode = mode; });
 }
 
 CALMenuBarStyle::~CALMenuBarStyle() = default;

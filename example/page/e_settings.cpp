@@ -68,7 +68,7 @@ void E_Settings::initThemeSwitchArea() {
 	themeSwitchHLayout->addWidget(themeSwitchText);
 	themeSwitchHLayout->addStretch();
 	themeSwitchHLayout->addWidget(themeComboBox);
-	connect(themeComboBox, &CALComboBox::currentTextChanged, this, [=](const QString& type) {
+	connect(themeComboBox, &CALComboBox::currentTextChanged, this, [metaEnum](const QString& type) {
 		if (metaEnum.isValid()) {
 			if (const int value = metaEnum.keyToValue(type.toLocal8Bit().constData()); value != -1) {
 				const auto mode = static_cast<ALThemeType::ThemeMode>(value);
@@ -79,7 +79,7 @@ void E_Settings::initThemeSwitchArea() {
 			}
 		}
 	});
-	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) {
+	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [metaEnum, themeComboBox](const ALThemeType::ThemeMode& mode) {
 		if (metaEnum.isValid()) {
 			if (const char* key = metaEnum.valueToKey(static_cast<int>(mode))) {
 				themeComboBox->blockSignals(true);
@@ -110,7 +110,7 @@ void E_Settings::initMicaSwitchArea() {
 	micaSwitchHLayout->addWidget(micaSwitchText);
 	micaSwitchHLayout->addStretch();
 	micaSwitchHLayout->addWidget(micaSwitchButton);
-	connect(micaSwitchButton, &CALToggleSwitch::sigToggleChanged, this, [=](const bool toggled) {
+	connect(micaSwitchButton, &CALToggleSwitch::sigToggleChanged, this, [](const bool toggled) {
 		alApp->setIsEnableMica(toggled);
 		CALMessageBar::success(tr("mica switch"), toggled ? tr("open mica mode success") : tr("close mica mode success"), 2000, ALMessageBarType::Top);
 	});
@@ -131,7 +131,7 @@ void E_Settings::initLogSwitchArea() {
 	logSwitchHLayout->addWidget(logSwitchText);
 	logSwitchHLayout->addStretch();
 	logSwitchHLayout->addWidget(logSwitchButton);
-	connect(logSwitchButton, &CALToggleSwitch::sigToggleChanged, this, [=](const bool toggled) {
+	connect(logSwitchButton, &CALToggleSwitch::sigToggleChanged, this, [](const bool toggled) {
 		CALLog::instance()->setMessageLogEnable(toggled);
 		CALMessageBar::success(tr("log switch"), toggled ? tr("open log success") : tr("close log success"), 2000, ALMessageBarType::Top);
 		if (toggled) {
@@ -166,7 +166,7 @@ void E_Settings::initNavigationDisplayModeArea() {
 		const auto radioButton = new CALRadioButton(this);
 		radioButton->setText(key);
 		radioButton->setChecked(m_mainWindow->getNavigationDisplayMode() == static_cast<ALNavigationType::NavigationDisplayMode>(value));
-		connect(radioButton, &CALRadioButton::toggled, this, [=](const bool checked) {
+		connect(radioButton, &CALRadioButton::toggled, this, [this, radioButton, value](const bool checked) {
 			if (checked) {
 				m_mainWindow->setNavigationDisplayMode(static_cast<ALNavigationType::NavigationDisplayMode>(value));
 				if (m_mainWindow->getIsNavigationBarEnable()) {

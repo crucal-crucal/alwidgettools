@@ -12,7 +12,7 @@
 namespace AL {
 CALTabBarStyle::CALTabBarStyle(QStyle* style) {
 	m_themeMode = ALTheme->getThemeMode();
-	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { m_themeMode = mode; });
+	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [this](const ALThemeType::ThemeMode& mode) { m_themeMode = mode; });
 }
 
 CALTabBarStyle::~CALTabBarStyle() = default;

@@ -10,7 +10,7 @@
 using namespace AL;
 
 E_BasePage::E_BasePage(QWidget* parent): CALScrollPage(parent) {
-	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=]() {
+	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [this, parent]() {
 		if (!parent) {
 			update();
 		}
@@ -53,7 +53,7 @@ void E_BasePage::createCustomWidget(const QString& desText) {
 	themeButton->setFixedSize(35, 35);
 	themeButton->setIsTransparent(false);
 	themeButton->setAweSomeIcon(ALIcon::AweSomeIcon::MoonStars);
-	connect(themeButton, &CALToolButton::clicked, this, [=]() { ALTheme->setThemeMode(ALTheme->getThemeMode() == ALThemeType::Light ? ALThemeType::Dark : ALThemeType::Light); });
+	connect(themeButton, &CALToolButton::clicked, this, []() { ALTheme->setThemeMode(ALTheme->getThemeMode() == ALThemeType::Light ? ALThemeType::Dark : ALThemeType::Light); });
 
 	const auto buttonLayout = new QHBoxLayout;
 	buttonLayout->addWidget(documentationButton);

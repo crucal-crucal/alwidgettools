@@ -43,7 +43,7 @@ E_CircularProgress_Example::E_CircularProgress_Example(QWidget* parent): E_BaseP
 		circularProgressType->addItem(metaEnum.key(i));
 	}
 	circularProgressType->setCurrentText(QString(metaEnum.valueToKey(circularProgress->getProgressType())));
-	connect(circularProgressType, &CALComboBox::currentTextChanged, this, [=](const QString& type) {
+	connect(circularProgressType, &CALComboBox::currentTextChanged, this, [metaEnum, circularProgress](const QString& type) {
 		if (metaEnum.isValid()) {
 			if (const int value = metaEnum.keyToValue(type.toLocal8Bit().constData()); value != -1) {
 				circularProgress->setProgressType(static_cast<ALProgressType::ProgressType>(value));

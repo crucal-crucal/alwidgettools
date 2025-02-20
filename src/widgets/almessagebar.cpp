@@ -250,11 +250,11 @@ void CALMessageBarPrivate::slotCloseButtonClicked() {
 	isNormalDisplay = false;
 	CALMessageBarManager::instance()->forcePostMessageBarEndEvent(q);
 	const auto opacityAnimation = new QPropertyAnimation(this, "opacity");
-	connect(opacityAnimation, &QPropertyAnimation::valueChanged, this, [=]() {
+	connect(opacityAnimation, &QPropertyAnimation::valueChanged, this, [this, q]() {
 		closeButton->setOpacity(opacity);
 		q->update();
 	});
-	connect(opacityAnimation, &QPropertyAnimation::finished, this, [=]() { q->deleteLater(); });
+	connect(opacityAnimation, &QPropertyAnimation::finished, this, [q]() { q->deleteLater(); });
 	opacityAnimation->setEasingCurve(QEasingCurve::InOutSine);
 	opacityAnimation->setStartValue(opacity);
 	opacityAnimation->setEndValue(0);
@@ -282,13 +282,13 @@ void CALMessageBarPrivate::invokableMessageBarCreate(const int displayMsec) {
 	calculateInitialPos(startX, startY, endX, endY);
 	// 划入动画
 	const auto barPosAnimation = new QPropertyAnimation(q, "pos");
-	connect(barPosAnimation, &QPropertyAnimation::finished, q, [=]() {
+	connect(barPosAnimation, &QPropertyAnimation::finished, q, [this, q, displayMsec]() {
 		isNormalDisplay = true;
 		isMessageBarCreateAnimationFinished = true;
 		if (CALMessageBarManager::instance()->getMessageBarEventCount(q) > 1) {
 			CALMessageBarManager::instance()->requestMessageBarEvent(q);
 		}
-		QTimer::singleShot(displayMsec, q, [=]() {
+		QTimer::singleShot(displayMsec, q, [this, q]() {
 			isReadyToEnd = true;
 			CALMessageBarManager::instance()->requestMessageBarEvent(q);
 		});

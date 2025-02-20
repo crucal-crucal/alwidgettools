@@ -24,7 +24,7 @@ CALScrollBarStyle::CALScrollBarStyle(QStyle* style): QProxyStyle(style) {
 	m_sliderExtent = 2.4;
 	m_sliderMargin = 2.5;
 	m_themeMode = ALTheme->getThemeMode();
-	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { m_themeMode = mode; });
+	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [this](const ALThemeType::ThemeMode& mode) { m_themeMode = mode; });
 }
 
 CALScrollBarStyle::~CALScrollBarStyle() = default;
@@ -138,7 +138,7 @@ void CALScrollBarStyle::startExpandAnimation(const bool isExpand) {
 	if (isExpand) {
 		m_isExpand = true;
 		const auto opacityAnimation = new QPropertyAnimation(this, "opacity");
-		connect(opacityAnimation, &QPropertyAnimation::valueChanged, this, [=]() { m_scrollBar->update(); });
+		connect(opacityAnimation, &QPropertyAnimation::valueChanged, this, [this]() { m_scrollBar->update(); });
 		opacityAnimation->setDuration(250);
 		opacityAnimation->setEasingCurve(QEasingCurve::InOutSine);
 		opacityAnimation->setStartValue(m_opacity);
@@ -153,8 +153,8 @@ void CALScrollBarStyle::startExpandAnimation(const bool isExpand) {
 		extentAnimation->start(QAbstractAnimation::DeleteWhenStopped);
 	} else {
 		const auto opacityAnimation = new QPropertyAnimation(this, "opacity");
-		connect(opacityAnimation, &QPropertyAnimation::finished, this, [=]() { m_isExpand = false; });
-		connect(opacityAnimation, &QPropertyAnimation::valueChanged, this, [=]() { m_scrollBar->update(); });
+		connect(opacityAnimation, &QPropertyAnimation::finished, this, [this]() { m_isExpand = false; });
+		connect(opacityAnimation, &QPropertyAnimation::valueChanged, this, [this]() { m_scrollBar->update(); });
 		opacityAnimation->setDuration(250);
 		opacityAnimation->setEasingCurve(QEasingCurve::InOutSine);
 		opacityAnimation->setStartValue(m_opacity);

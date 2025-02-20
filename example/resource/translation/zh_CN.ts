@@ -66,6 +66,13 @@
         <source>search icon</source>
         <translation type="unfinished">搜索图标</translation>
     </message>
+    <message>
+        <location filename="../../page/e_icon.cpp" line="45"/>
+        <location filename="../../page/e_icon.cpp" line="69"/>
+        <location filename="../../page/e_icon.cpp" line="83"/>
+        <source>icon count: </source>
+        <translation type="unfinished">图标数量: </translation>
+    </message>
 </context>
 <context>
     <name>E_MessageBar_Example</name>

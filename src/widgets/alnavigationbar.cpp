@@ -444,18 +444,18 @@ void CALNavigationBarPrivate::doNavigationBarWidthAnimation(const ALNavigationTy
 
 	switch (displayMode) {
 		case ALNavigationType::Minimal: {
-			connect(navigationBarWidthAnimation, &QPropertyAnimation::valueChanged, this, [=](const QVariant& value) { q->setFixedWidth(value.toInt()); });
+			connect(navigationBarWidthAnimation, &QPropertyAnimation::valueChanged, this, [q](const QVariant& value) { q->setFixedWidth(value.toInt()); });
 			navigationBarWidthAnimation->setEndValue(0);
 			break;
 		}
 		case ALNavigationType::Compact: {
-			connect(navigationBarWidthAnimation, &QPropertyAnimation::valueChanged, this, [=](const QVariant& value) { q->setFixedWidth(value.toInt()); });
+			connect(navigationBarWidthAnimation, &QPropertyAnimation::valueChanged, this, [q](const QVariant& value) { q->setFixedWidth(value.toInt()); });
 			navigationBarWidthAnimation->setEndValue(47);
 			break;
 		}
 		case ALNavigationType::Maximal: {
-			connect(navigationBarWidthAnimation, &QPropertyAnimation::finished, this, [=]() { resetLayout(); });
-			connect(navigationBarWidthAnimation, &QPropertyAnimation::valueChanged, this, [=](const QVariant& value) { q->setFixedWidth(value.toInt()); });
+			connect(navigationBarWidthAnimation, &QPropertyAnimation::finished, this, [this]() { resetLayout(); });
+			connect(navigationBarWidthAnimation, &QPropertyAnimation::valueChanged, this, [q](const QVariant& value) { q->setFixedWidth(value.toInt()); });
 			navigationBarWidthAnimation->setEndValue(300);
 			break;
 		}
@@ -469,7 +469,7 @@ void CALNavigationBarPrivate::doNavigationBarWidthAnimation(const ALNavigationTy
 
 void CALNavigationBarPrivate::doNavigationViewWidthAnimation(const bool isAnimation) {
 	const auto navigationViewWidthAnimation = new QPropertyAnimation(this, "navigationViewWidth");
-	connect(navigationViewWidthAnimation, &QPropertyAnimation::valueChanged, this, [=](const QVariant& value) { navigationView->setColumnWidth(0, value.toInt()); });
+	connect(navigationViewWidthAnimation, &QPropertyAnimation::valueChanged, this, [this](const QVariant& value) { navigationView->setColumnWidth(0, value.toInt()); });
 	navigationViewWidthAnimation->setEasingCurve(QEasingCurve::OutCubic);
 	navigationViewWidthAnimation->setStartValue(navigationView->columnWidth(0));
 	navigationViewWidthAnimation->setEndValue(40);
@@ -483,7 +483,7 @@ void CALNavigationBarPrivate::doNavigationButtonAnimation(const bool isCompact, 
 	const QPoint navigationButtonPos = navigationButton->pos();
 	navigationButtonAnimation->setStartValue(navigationButtonPos);
 	if (isCompact) {
-		connect(navigationButtonAnimation, &QPropertyAnimation::finished, this, [=]() { resetLayout(); });
+		connect(navigationButtonAnimation, &QPropertyAnimation::finished, this, [this]() { resetLayout(); });
 		navigationButtonAnimation->setEndValue(isShowUserCard ? QPoint(0, 56) : navigationButtonPos);
 		navigationButtonAnimation->setEasingCurve(QEasingCurve::OutCubic);
 		navigationButtonAnimation->setDuration(isAnimation ? 285 : 0);
@@ -515,7 +515,7 @@ void CALNavigationBarPrivate::doSearchButtonAnimation(const bool isCompact, cons
 
 void CALNavigationBarPrivate::doUserButtonAnimation(const bool isCompact, const bool isAnimation) {
 	const auto userButtonAnimation = new QPropertyAnimation(userButton, "geometry");
-	connect(userButtonAnimation, &QPropertyAnimation::valueChanged, this, [=](const QVariant& value) { userButton->setFixedSize(value.toRect().size()); });
+	connect(userButtonAnimation, &QPropertyAnimation::valueChanged, this, [this](const QVariant& value) { userButton->setFixedSize(value.toRect().size()); });
 	if (isCompact) {
 		userInfoCard->setVisible(false);
 		userButton->setVisible(isShowUserCard);
@@ -525,7 +525,7 @@ void CALNavigationBarPrivate::doUserButtonAnimation(const bool isCompact, const 
 		userButtonAnimation->setDuration(isAnimation ? 285 : 0);
 		userButtonAnimation->start(QAbstractAnimation::DeleteWhenStopped);
 	} else {
-		connect(userButtonAnimation, &QPropertyAnimation::finished, this, [=]() {
+		connect(userButtonAnimation, &QPropertyAnimation::finished, this, [this]() {
 			userInfoCard->setVisible(isShowUserCard);
 			userButton->setFixedSize(36, 36);
 			userButton->setGeometry(QRect(3, 10, 36, 36));
@@ -605,7 +605,7 @@ CALNavigationBar::CALNavigationBar(QWidget* parent): QWidget(parent), d_ptr(new 
 	d->navigationSuggestBoxHLayout->addWidget(d->navigationSuggestBox);
 
 	/// search jump
-	connect(d->navigationSuggestBox, &CALSuggestBox::sigSuggestionClicked, this, [=](const QString& suggestText, const QVariantMap& suggestData) {
+	connect(d->navigationSuggestBox, &CALSuggestBox::sigSuggestionClicked, this, [d](const QString&, const QVariantMap& suggestData) {
 		if (suggestData.value("CALNodeType").toString() == "Stacked") {
 			if (const CALNavigationNode* node = d->navigationModel->getNavigationNode(suggestData.value("CALPageKey").toString())) {
 				d->slotTreeViewClicked(node->getModelIndex());
@@ -623,7 +623,7 @@ CALNavigationBar::CALNavigationBar(QWidget* parent): QWidget(parent), d_ptr(new 
 	// view
 	d->navigationView = new CALNavigationView(this);
 	d->navigationView->setModel(d->navigationModel);
-	connect(d->navigationView, &CALNavigationView::sigNavigationClicked, this, [=](const QModelIndex& index) { d->slotTreeViewClicked(index); });
+	connect(d->navigationView, &CALNavigationView::sigNavigationClicked, this, [d](const QModelIndex& index) { d->slotTreeViewClicked(index); });
 	connect(d->navigationView, &CALNavigationView::sigNavigationOpenNewWindow, d, &CALNavigationBarPrivate::slotNavigationOpenNewWindow);
 
 	/// footer model, and delegate
@@ -637,19 +637,19 @@ CALNavigationBar::CALNavigationBar(QWidget* parent): QWidget(parent), d_ptr(new 
 	d->footerDelegate = new CALFooterDelegate(this);
 	d->footerDelegate->setCALBaseListView(d->footerView);
 	d->footerView->setItemDelegate(d->footerDelegate);
-	connect(d->footerView, &CALBaseListView::sigMousePress, this, [=](const QModelIndex& index) {
+	connect(d->footerView, &CALBaseListView::sigMousePress, this, [d](const QModelIndex& index) {
 		d->footerDelegate->setPressIndex(index);
 		d->footerView->viewport()->update();
 	});
-	connect(d->footerView, &CALBaseListView::sigMouseRelease, this, [=](const QModelIndex& index) {
+	connect(d->footerView, &CALBaseListView::sigMouseRelease, this, [d](const QModelIndex&) {
 		d->footerDelegate->setPressIndex({});
 		d->footerView->viewport()->update();
 	});
-	connect(d->footerView, &CALBaseListView::sigMouseDoubleClick, this, [=](const QModelIndex& index) {
+	connect(d->footerView, &CALBaseListView::sigMouseDoubleClick, this, [d](const QModelIndex& index) {
 		d->footerDelegate->setPressIndex(index);
 		d->footerView->viewport()->update();
 	});
-	connect(d->footerView, &CALBaseListView::clicked, this, [=](const QModelIndex& index) { d->slotFooterViewClicked(index); });
+	connect(d->footerView, &CALBaseListView::clicked, this, [d](const QModelIndex& index) { d->slotFooterViewClicked(index); });
 
 	/// main layout
 	const auto mainVLayout = new QVBoxLayout(this);
@@ -665,7 +665,7 @@ CALNavigationBar::CALNavigationBar(QWidget* parent): QWidget(parent), d_ptr(new 
 
 	/// theme
 	d->themeMode = ALTheme->getThemeMode();
-	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { d->themeMode = mode; });
+	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [d](const ALThemeType::ThemeMode& mode) { d->themeMode = mode; });
 }
 
 CALNavigationBar::~CALNavigationBar() = default;
@@ -794,11 +794,11 @@ ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QStr
 		if (CALNavigationNode* originalNode = node->getOriginalNode(); d->mapCompactMenu.contains(originalNode)) {
 			CALMenu* menu = d->mapCompactMenu.value(originalNode);
 			const QAction* action = menu->addAction(node->getAwesomeIcon(), node->getNodeTitle());
-			connect(action, &QAction::triggered, this, [=]() { d->slotTreeViewClicked(node->getModelIndex()); });
+			connect(action, &QAction::triggered, this, [d, node]() { d->slotTreeViewClicked(node->getModelIndex()); });
 		} else {
 			const auto menu = new CALMenu(const_cast<CALNavigationBar*>(this));
 			const QAction* action = menu->addAction(node->getAwesomeIcon(), node->getNodeTitle());
-			connect(action, &QAction::triggered, this, [=]() { d->slotTreeViewClicked(node->getModelIndex()); });
+			connect(action, &QAction::triggered, this, [d, node]() { d->slotTreeViewClicked(node->getModelIndex()); });
 			d->mapCompactMenu.insert(originalNode, menu);
 		}
 		d->addStackedPage(page, pageKey);
@@ -826,11 +826,11 @@ ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QStr
 		if (CALNavigationNode* originalNode = node->getOriginalNode(); d->mapCompactMenu.contains(originalNode)) {
 			CALMenu* menu = d->mapCompactMenu.value(originalNode);
 			const QAction* action = menu->addAction(node->getFluentIcon(), node->getNodeTitle());
-			connect(action, &QAction::triggered, this, [=]() { d->slotTreeViewClicked(node->getModelIndex()); });
+			connect(action, &QAction::triggered, this, [d, node]() { d->slotTreeViewClicked(node->getModelIndex()); });
 		} else {
 			const auto menu = new CALMenu(const_cast<CALNavigationBar*>(this));
 			const QAction* action = menu->addAction(node->getFluentIcon(), node->getNodeTitle());
-			connect(action, &QAction::triggered, this, [=]() { d->slotTreeViewClicked(node->getModelIndex()); });
+			connect(action, &QAction::triggered, this, [d, node]() { d->slotTreeViewClicked(node->getModelIndex()); });
 			d->mapCompactMenu.insert(originalNode, menu);
 		}
 		d->addStackedPage(page, pageKey);
@@ -894,11 +894,11 @@ ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QStr
 		if (CALNavigationNode* originalNode = node->getOriginalNode(); d->mapCompactMenu.contains(originalNode)) {
 			CALMenu* menu = d->mapCompactMenu.value(originalNode);
 			const QAction* action = menu->addAction(node->getAwesomeIcon(), node->getNodeTitle());
-			connect(action, &QAction::triggered, this, [=]() { d->slotTreeViewClicked(node->getModelIndex()); });
+			connect(action, &QAction::triggered, this, [d, node]() { d->slotTreeViewClicked(node->getModelIndex()); });
 		} else {
 			const auto menu = new CALMenu(const_cast<CALNavigationBar*>(this));
 			const QAction* action = menu->addAction(node->getAwesomeIcon(), node->getNodeTitle());
-			connect(action, &QAction::triggered, this, [=]() { d->slotTreeViewClicked(node->getModelIndex()); });
+			connect(action, &QAction::triggered, this, [d, node]() { d->slotTreeViewClicked(node->getModelIndex()); });
 			d->mapCompactMenu.insert(originalNode, menu);
 		}
 		d->addStackedPage(page, pageKey);
@@ -926,11 +926,11 @@ ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QStr
 		if (CALNavigationNode* originalNode = node->getOriginalNode(); d->mapCompactMenu.contains(originalNode)) {
 			CALMenu* menu = d->mapCompactMenu.value(originalNode);
 			const QAction* action = menu->addAction(node->getFluentIcon(), node->getNodeTitle());
-			connect(action, &QAction::triggered, this, [=]() { d->slotTreeViewClicked(node->getModelIndex()); });
+			connect(action, &QAction::triggered, this, [d, node]() { d->slotTreeViewClicked(node->getModelIndex()); });
 		} else {
 			const auto menu = new CALMenu(const_cast<CALNavigationBar*>(this));
 			const QAction* action = menu->addAction(node->getFluentIcon(), node->getNodeTitle());
-			connect(action, &QAction::triggered, this, [=]() { d->slotTreeViewClicked(node->getModelIndex()); });
+			connect(action, &QAction::triggered, this, [d, node]() { d->slotTreeViewClicked(node->getModelIndex()); });
 			d->mapCompactMenu.insert(originalNode, menu);
 		}
 		d->addStackedPage(page, pageKey);

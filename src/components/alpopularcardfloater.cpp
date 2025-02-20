@@ -47,7 +47,7 @@ CALPopularCardFloater::CALPopularCardFloater(CALPopularCard* card, CALPopularCar
 	connect(m_overButton, &CALPushButton::clicked, m_card, &CALPopularCard::sigPopularCardButtonClicked);
 
 	m_themeMode = ALTheme->getThemeMode();
-	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { m_themeMode = mode; });
+	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [this](const ALThemeType::ThemeMode& mode) { m_themeMode = mode; });
 }
 
 CALPopularCardFloater::~CALPopularCardFloater() = default;
@@ -60,7 +60,7 @@ void CALPopularCardFloater::showFloater() {
 
 	// geometry animation
 	const auto geometryAnimation = new QPropertyAnimation(this, "geometry");
-	connect(geometryAnimation, &QPropertyAnimation::valueChanged, this, [=]() { update(); });
+	connect(geometryAnimation, &QPropertyAnimation::valueChanged, this, [this]() { update(); });
 	geometryAnimation->setDuration(300);
 	geometryAnimation->setEasingCurve(QEasingCurve::OutQuad);
 	const auto cardGeometry = QRect(m_card->mapTo(m_cardPrivate->cardFloatArea, QPoint(0, 0)), m_card->size());
@@ -87,12 +87,12 @@ void CALPopularCardFloater::hideFloater() {
 	m_isHideAnimationFinished = false;
 	// geometry animation
 	const auto geometryAnimation = new QPropertyAnimation(this, "geometry");
-	connect(geometryAnimation, &QPropertyAnimation::finished, this, [=]() {
+	connect(geometryAnimation, &QPropertyAnimation::finished, this, [this]() {
 		m_cardPrivate->isFloating = false;
 		setVisible(false);
 		m_card->update();
 	});
-	connect(geometryAnimation, &QPropertyAnimation::valueChanged, this, [=]() { geometryAnimation->setEndValue(QRect(m_card->mapTo(m_cardPrivate->cardFloatArea, QPoint(0, 0)), m_card->size())); });
+	connect(geometryAnimation, &QPropertyAnimation::valueChanged, this, [this, geometryAnimation]() { geometryAnimation->setEndValue(QRect(m_card->mapTo(m_cardPrivate->cardFloatArea, QPoint(0, 0)), m_card->size())); });
 	geometryAnimation->setDuration(300);
 	geometryAnimation->setEasingCurve(QEasingCurve::InOutSine);
 	geometryAnimation->setStartValue(geometry());
@@ -106,7 +106,7 @@ void CALPopularCardFloater::hideFloater() {
 	opacityAnimation->start(QAbstractAnimation::DeleteWhenStopped);
 	// hover animation
 	const auto hoverAnimation = new QPropertyAnimation(this, "hoverYOffset");
-	connect(hoverAnimation, &QPropertyAnimation::valueChanged, this, [=]() { update(); });
+	connect(hoverAnimation, &QPropertyAnimation::valueChanged, this, [this]() { update(); });
 	hoverAnimation->setDuration(300);
 	hoverAnimation->setStartValue(m_hoverYOffset);
 	hoverAnimation->setEndValue(0);

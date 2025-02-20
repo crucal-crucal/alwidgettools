@@ -15,7 +15,7 @@ CALTableViewStyle::CALTableViewStyle(QStyle* style) {
 	m_headerMargin = 6;
 	m_currentHoverRow = -1;
 	m_themeMode = ALTheme->getThemeMode();
-	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { m_themeMode = mode; });
+	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [this](const ALThemeType::ThemeMode& mode) { m_themeMode = mode; });
 }
 
 CALTableViewStyle::~CALTableViewStyle() = default;

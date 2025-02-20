@@ -58,7 +58,7 @@ void E_Home::initTitleCardArea() {
 	urlCard1->setSubTitle("A Qt Widget Library");
 	urlCard1->setCardPixmap(QPixmap(":example/promotion/promotion2.jpg"));
 	urlCard1->setUrl("https://github.com/Al-Wu/alwidgettools");
-	connect(urlCard1, &CALAcrylicUrlCard::sigOpenError, this, [=](const QString& errMsg) { CALMessageBar::error(tr("open error"), errMsg, 2000, ALMessageBarType::Top, window()); });
+	connect(urlCard1, &CALAcrylicUrlCard::sigOpenError, this, [this](const QString& errMsg) { CALMessageBar::error(tr("open error"), errMsg, 2000, ALMessageBarType::Top, window()); });
 	const auto urlCard2 = new CALAcrylicUrlCard(this);
 	urlCard2->setCardPixmapSize({ 62, 62 });
 	urlCard2->setFixedSize(195, 225);
@@ -69,7 +69,7 @@ void E_Home::initTitleCardArea() {
 	urlCard2->setSubTitle("A Qt Widget Library");
 	urlCard2->setCardPixmap(QPixmap(":example/promotion/promotion3.jpg"));
 	urlCard2->setUrl("https://github.com/Al-Wu/alwidgettools");
-	connect(urlCard2, &CALAcrylicUrlCard::sigOpenError, this, [=](const QString& errMsg) { CALMessageBar::error(tr("open error"), errMsg, 2000, ALMessageBarType::Top, window()); });
+	connect(urlCard2, &CALAcrylicUrlCard::sigOpenError, this, [this](const QString& errMsg) { CALMessageBar::error(tr("open error"), errMsg, 2000, ALMessageBarType::Top, window()); });
 	const auto cardScrollArea = new CALScrollArea(this);
 	cardScrollArea->setWidgetResizable(true);
 	cardScrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);

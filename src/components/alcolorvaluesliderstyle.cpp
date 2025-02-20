@@ -19,7 +19,7 @@ CALColorValueSliderStyle::CALColorValueSliderStyle(QStyle* style) {
 	m_baseGradient = new QLinearGradient(0, 0, 100, 100);
 	setProperty("circleRadius", 0.01);
 	m_themeMode = ALTheme->getThemeMode();
-	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { m_themeMode = mode; });
+	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [this](const ALThemeType::ThemeMode& mode) { m_themeMode = mode; });
 }
 
 CALColorValueSliderStyle::~CALColorValueSliderStyle() = default;
@@ -137,7 +137,7 @@ int CALColorValueSliderStyle::styleHint(const StyleHint stylehint, const QStyleO
 void CALColorValueSliderStyle::startRadiusAnimation(const qreal startRadius, const qreal endRadius, QWidget* widget) const {
 	const auto style = const_cast<CALColorValueSliderStyle*>(this);
 	const auto circleRadiusAnimatino = new QPropertyAnimation(style, "circleRadius");
-	connect(circleRadiusAnimatino, &QPropertyAnimation::valueChanged, style, [=](const QVariant& value) {
+	connect(circleRadiusAnimatino, &QPropertyAnimation::valueChanged, style, [this, widget](const QVariant& value) {
 		m_circleRadius = value.toReal();
 		widget->update();
 	});

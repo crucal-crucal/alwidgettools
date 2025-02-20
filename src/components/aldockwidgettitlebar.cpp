@@ -34,9 +34,9 @@ CALDockWidgetTitleBar::CALDockWidgetTitleBar(QWidget* parent): QWidget(parent) {
 	connect(m_closeButton, &CALIconButton::clicked, this, &CALDockWidgetTitleBar::slotCloseButtonClicked);
 
 	setVisibleFromFeatures(m_dockWidget->features());
-	connect(m_dockWidget, &CALDockWidget::featuresChanged, this, [=](const QDockWidget::DockWidgetFeatures& features) { setVisibleFromFeatures(features); });
-	connect(m_dockWidget, &CALDockWidget::windowTitleChanged, this, [=](const QString& title) { m_titleLabel->setText(title); });
-	connect(m_dockWidget, &CALDockWidget::windowIconChanged, this, [=](const QIcon& icon) { m_iconLabel->setPixmap(icon.pixmap(QSize(18, 18))); });
+	connect(m_dockWidget, &CALDockWidget::featuresChanged, this, [this](const QDockWidget::DockWidgetFeatures& features) { setVisibleFromFeatures(features); });
+	connect(m_dockWidget, &CALDockWidget::windowTitleChanged, this, [this](const QString& title) { m_titleLabel->setText(title); });
+	connect(m_dockWidget, &CALDockWidget::windowIconChanged, this, [this](const QIcon& icon) { m_iconLabel->setPixmap(icon.pixmap(QSize(18, 18))); });
 
 	const auto mainHLayout = new QHBoxLayout(this);
 	mainHLayout->setContentsMargins(0, 0, 0, 0);
@@ -51,7 +51,7 @@ CALDockWidgetTitleBar::CALDockWidgetTitleBar(QWidget* parent): QWidget(parent) {
 	mainHLayout->addWidget(m_closeButton);
 
 	m_themeMode = ALTheme->getThemeMode();
-	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { m_themeMode = mode; });
+	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [this](const ALThemeType::ThemeMode& mode) { m_themeMode = mode; });
 }
 
 CALDockWidgetTitleBar::~CALDockWidgetTitleBar() = default;

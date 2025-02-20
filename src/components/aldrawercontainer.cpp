@@ -1,4 +1,4 @@
-#include "aldrawercontainer.hpp"
+ï»¿#include "aldrawercontainer.hpp"
 
 #include <QGraphicsOpacityEffect>
 #include <QPainter>
@@ -99,7 +99,7 @@ void CALDrawerContainer::paintEvent(QPaintEvent* event) {
 	painter.setBrush(ALThemeColor(m_themeMode, ALThemeType::BasicBaseAlpha));
 	const QRect foregroundRect(1, 1 - 2 * m_borderRadius, width() - 2, height() - 2 + 2 * m_borderRadius);
 	painter.drawRoundedRect(foregroundRect, m_borderRadius, m_borderRadius);
-	/// ·Ö¸îÏß»æÖÆ
+	/// åˆ†å‰²çº¿ç»˜åˆ¶
 	int drawerHeight = 0;
 	for (const auto& widget : m_drawerWidgetList) {
 		drawerHeight += widget->height();

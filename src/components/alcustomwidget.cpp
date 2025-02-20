@@ -25,13 +25,13 @@ CALCustomWidget::CALCustomWidget(QWidget* parent): QDialog(parent) {
 	m_mainVLayout->setContentsMargins(0, 0, 0, 0);
 
 	m_themeMode = ALTheme->getThemeMode();
-	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) {
+	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [this](const ALThemeType::ThemeMode& mode) {
 		m_themeMode = mode;
 		update();
 	});
 
 	m_isEnableMica = alApp->getIsEnableMica();
-	connect(alApp, &CALApplication::sigIsEnableMicaChanged, this, [=]() {
+	connect(alApp, &CALApplication::sigIsEnableMicaChanged, this, [this]() {
 		m_isEnableMica = alApp->getIsEnableMica();
 		update();
 	});

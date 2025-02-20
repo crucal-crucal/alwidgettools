@@ -22,7 +22,7 @@ CALToolButtonStyle::CALToolButtonStyle(QStyle* style) {
 	m_borderRadius = 4;
 	m_iconType = ALIcon::None;
 	m_themeMode = ALTheme->getThemeMode();
-	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { m_themeMode = mode; });
+	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [this](const ALThemeType::ThemeMode& mode) { m_themeMode = mode; });
 }
 
 CALToolButtonStyle::~CALToolButtonStyle() = default;

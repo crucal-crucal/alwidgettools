@@ -23,10 +23,10 @@ CALCustomTabWidget::CALCustomTabWidget(QWidget* parent): CALCustomWidget(parent)
 	originTabBar->hide();
 	m_customTabBar = new CALTabBar(this);
 	m_customTabBar->setObjectName("CALCustomTabBar");
-	connect(m_customTabBar, &CALTabBar::tabMoved, this, [=](const int form, const int to) { m_customTabWidget->tabBar()->moveTab(form, to); });
-	connect(m_customTabBar, &CALTabBar::currentChanged, this, [=](const int index) { m_customTabWidget->setCurrentIndex(index); });
+	connect(m_customTabBar, &CALTabBar::tabMoved, this, [this](const int form, const int to) { m_customTabWidget->tabBar()->moveTab(form, to); });
+	connect(m_customTabBar, &CALTabBar::currentChanged, this, [this](const int index) { m_customTabWidget->setCurrentIndex(index); });
 	connect(m_customTabBar, &CALTabBar::tabCloseRequested, originTabBar, &QTabBar::tabCloseRequested);
-	connect(m_customTabWidget, &CALTabWidget::currentChanged, this, [=](const int index) {
+	connect(m_customTabWidget, &CALTabWidget::currentChanged, this, [this](const int index) {
 		if (index == -1) {
 			close();
 		}

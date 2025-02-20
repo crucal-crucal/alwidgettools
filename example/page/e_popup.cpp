@@ -54,7 +54,7 @@ void E_Popup::initColorDialogArea() {
 	colorDialogButton->setLightPressedColor(colorDialog->getCurrentColorRgb());
 	colorDialogButton->setDarkPressedColor(colorDialog->getCurrentColorRgb());
 	connect(colorDialogButton, &CALPushButton::clicked, colorDialog, &CALColorDialog::exec);
-	connect(colorDialog, &CALColorDialog::sigColorSelected, this, [=](const QColor& color) {
+	connect(colorDialog, &CALColorDialog::sigColorSelected, this, [colorDialogButton, colorDialog, colorText](const QColor& color) {
 		colorDialogButton->setLightDefaultColor(color);
 		colorDialogButton->setDarkDefaultColor(color);
 		colorDialogButton->setLightHoverColor(color);

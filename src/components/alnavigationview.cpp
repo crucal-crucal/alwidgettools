@@ -29,7 +29,7 @@ CALNavigationView::CALNavigationView(QWidget* parent): QTreeView(parent) {
 	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
 	const auto vertivalScrollBar = new CALScrollBar(this);
-	connect(vertivalScrollBar, &CALScrollBar::sigRangeAnimationFinished, this, [=]() { doItemsLayout(); });
+	connect(vertivalScrollBar, &CALScrollBar::sigRangeAnimationFinished, this, [this]() { doItemsLayout(); });
 	setVerticalScrollBar(vertivalScrollBar);
 	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
@@ -51,7 +51,7 @@ CALNavigationView::CALNavigationView(QWidget* parent): QTreeView(parent) {
 	properties.setScrollMetric(QScrollerProperties::FrameRate, QScrollerProperties::Fps60);
 	scroller->setScrollerProperties(properties);
 
-	connect(scroller, &QScroller::stateChanged, this, [=](const QScroller::State& newState) {
+	connect(scroller, &QScroller::stateChanged, this, [this](const QScroller::State& newState) {
 		if (newState == QScroller::Pressed) {
 			m_navigationStyle->setPressIndex(indexAt(mapFromGlobal(QCursor::pos())));
 			viewport()->update();
@@ -80,7 +80,7 @@ void CALNavigationView::slotCustomContextMenuRequested(const QPoint& pos) {
 		CALMenu menu;
 		menu.setMenuItemHeight(27);
 		const QAction* openAction = menu.addAction(ALIcon::AweSomeIcon::ObjectGroup, tr("Opens in a new window"));
-		connect(openAction, &QAction::triggered, this, [=]() { Q_EMIT sigNavigationOpenNewWindow(posNode->getNodeKey()); });
+		connect(openAction, &QAction::triggered, this, [this, posNode]() { Q_EMIT sigNavigationOpenNewWindow(posNode->getNodeKey()); });
 		menu.exec(mapToGlobal(pos));
 	}
 }

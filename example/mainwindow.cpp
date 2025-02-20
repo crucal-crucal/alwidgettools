@@ -176,9 +176,9 @@ void MainWindow::initContent() {
 	// about
 	m_about = new E_About;
 	QString aboutKey{};
-	addFooterNode(m_about->windowTitle(), nullptr, aboutKey, 0, ALIcon::AweSomeIcon::User);
+	addFooterNode(m_about->windowTitle(), nullptr, aboutKey, 0, ALIcon::FluentIcon::OtherUser);
 	m_about->hide();
-	connect(this, &MainWindow::sigNavigationNodeClicked, this, [=](const ALNavigationType::NavigationNodeType& nodeType, const QString& nodeKey) {
+	connect(this, &MainWindow::sigNavigationNodeClicked, this, [this, aboutKey](const ALNavigationType::NavigationNodeType&, const QString& nodeKey) {
 		if (nodeKey == aboutKey) {
 			m_about->resize(400, 400);
 			m_about->moveToCenter();
@@ -188,7 +188,7 @@ void MainWindow::initContent() {
 	// settings
 	m_settings = new E_Settings(this);
 	QString settingKey{};
-	addFooterNode(m_settings->windowTitle(), m_settings, settingKey, 0, ALIcon::AweSomeIcon::GearComplex);
+	addFooterNode(m_settings->windowTitle(), m_settings, settingKey, 0, ALIcon::FluentIcon::Settings);
 	// home conntection
 	connect(m_home, &E_Home::sigToggleSwitchCardClicked, this, [this]() { this->navigation(m_toggleSwitchExample->property("CALPageKey").toString()); });
 	connect(m_home, &E_Home::sigSpinBoxCardClicked, this, [this]() { this->navigation(m_spinBoxExample->property("CALPageKey").toString()); });

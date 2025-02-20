@@ -21,7 +21,7 @@ CALCalendarDelegate::CALCalendarDelegate(CALCalendarModel* calendarModel, QObjec
 	m_itemHeight = m_itemWidth = 42;
 	m_nowDate = QDate::currentDate();
 	m_themeMode = ALTheme->getThemeMode();
-	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { m_themeMode = mode; });
+	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [this](const ALThemeType::ThemeMode& mode) { m_themeMode = mode; });
 	connect(m_calendarModel, &CALCalendarModel::sigDisplayModeChanged, this, &CALCalendarDelegate::slotCalendarModelDisplayModeChanged);
 }
 

@@ -69,7 +69,7 @@ void CALApplicationPrivate::initMicaBaseImage(const QImage& img) {
 	const auto initThread = new QThread;
 	const auto initObject = new CALMicaBaseInitObject(this);
 	connect(initThread, &QThread::finished, initObject, &QObject::deleteLater);
-	connect(initObject, &CALMicaBaseInitObject::sigInitFinished, initThread, [q, this, initThread]() {
+	connect(initObject, &CALMicaBaseInitObject::sigInitFinished, initThread, [this, q, initThread]() {
 		Q_EMIT q->sigIsEnableMicaChanged();
 		updateAllMicaWidget();
 		initThread->quit();
@@ -86,14 +86,12 @@ QRect CALApplicationPrivate::calculateWindowVirtualGeometry(const QWidget* widge
 	const QRect geometry = widget->geometry();
 	qreal xImageRatio, yImageRatio;
 	QRect relativaGeometry;
-	if (QApplication::screens().count() > 1) {
-		if (const QScreen* currentScreen = QApplication::screenAt(geometry.topLeft())) {
-			const QRect screenGeometry = currentScreen->geometry();
-			xImageRatio = static_cast<qreal>(lightBaseImage.width()) / screenGeometry.width();
-			yImageRatio = static_cast<qreal>(lightBaseImage.height()) / screenGeometry.height();
-			relativaGeometry = QRect((geometry.x() - screenGeometry.x()) * xImageRatio, (geometry.y() - screenGeometry.y()) * yImageRatio, geometry.width() * xImageRatio, geometry.height() * yImageRatio); // NOLINT
-			return relativaGeometry;
-		}
+	if (const QScreen* currentScreen = QApplication::screenAt(geometry.topLeft()); QApplication::screens().count() > 1 && currentScreen) {
+		const QRect screenGeometry = currentScreen->geometry();
+		xImageRatio = static_cast<qreal>(lightBaseImage.width()) / screenGeometry.width();
+		yImageRatio = static_cast<qreal>(lightBaseImage.height()) / screenGeometry.height();
+		relativaGeometry = QRect((geometry.x() - screenGeometry.x()) * xImageRatio, (geometry.y() - screenGeometry.y()) * yImageRatio, geometry.width() * xImageRatio, geometry.height() * yImageRatio); // NOLINT
+		return relativaGeometry;
 	}
 	const QRect primaryScreenGeometry = QApplication::primaryScreen()->availableGeometry();
 	xImageRatio = static_cast<qreal>(lightBaseImage.width()) / primaryScreenGeometry.width();
@@ -142,7 +140,7 @@ void CALApplication::initializeApplication() {
 #else
 		"libalwidgettoolsresource.so"
 #endif
-		)) {
+	)) {
 		qWarning() << "Failed to register libalwidgettoolsresource";
 	}
 	/// add font

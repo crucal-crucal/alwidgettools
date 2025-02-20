@@ -19,7 +19,7 @@ CALCalendarPickerContainer::CALCalendarPickerContainer(QWidget* parent): QWidget
 	setObjectName("CALCalendarPickerContainer");
 	setStyleSheet("#CALCalendarPickerContainer { background-color: transparent; }");
 	m_themeMode = ALTheme->getThemeMode();
-	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [=](const ALThemeType::ThemeMode& mode) { m_themeMode = mode; });
+	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [this](const ALThemeType::ThemeMode& mode) { m_themeMode = mode; });
 }
 
 CALCalendarPickerContainer::~CALCalendarPickerContainer() = default;

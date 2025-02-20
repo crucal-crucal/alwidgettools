@@ -1,4 +1,4 @@
-#include "alpopularcard.hpp"
+ï»¿#include "alpopularcard.hpp"
 
 #include <QEvent>
 #include <QPainter>
@@ -186,7 +186,7 @@ bool CALPopularCard::event(QEvent* event) {
 		case QEvent::Enter: {
 			d->floatTimer->start(450);
 			const auto hoverAnimation = new QPropertyAnimation(d, "hoverYOffset");
-			connect(hoverAnimation, &QPropertyAnimation::valueChanged, this, [=]() { update(); });
+			connect(hoverAnimation, &QPropertyAnimation::valueChanged, this, [this]() { update(); });
 			hoverAnimation->setDuration(130);
 			hoverAnimation->setStartValue(d->hoverYOffset);
 			hoverAnimation->setEndValue(6);
@@ -201,7 +201,7 @@ bool CALPopularCard::event(QEvent* event) {
 		case QEvent::Leave: {
 			d->floatTimer->stop();
 			const auto hoverAnimation = new QPropertyAnimation(d, "hoverYOffset");
-			connect(hoverAnimation, &QPropertyAnimation::valueChanged, this, [=]() { update(); });
+			connect(hoverAnimation, &QPropertyAnimation::valueChanged, this, [this]() { update(); });
 			hoverAnimation->setDuration(130);
 			hoverAnimation->setStartValue(d->hoverYOffset);
 			hoverAnimation->setEndValue(0);
@@ -217,11 +217,11 @@ bool CALPopularCard::event(QEvent* event) {
 			if (d->isFloating) {
 				const QPoint globalPos = QCursor::pos();
 				const QRect thisRect = rect();
-				// Èç¹ûÊó±ê²»ÔÚ this »ò floater ÇøÓòÄÚ£¬²¢ÇÒ isFloating Îª true
+				// å¦‚æžœé¼ æ ‡ä¸åœ¨ this æˆ– floater åŒºåŸŸå†…ï¼Œå¹¶ä¸” isFloating ä¸º true
 				if (const QRect floaterRect = d->floater->rect(); !thisRect.contains(mapFromGlobal(globalPos)) && !floaterRect.contains(mapFromGlobal(globalPos))) {
 					d->floatTimer->stop();
 					const auto hoverAnimation = new QPropertyAnimation(d, "hoverYOffset");
-					connect(hoverAnimation, &QPropertyAnimation::valueChanged, this, [=]() { update(); });
+					connect(hoverAnimation, &QPropertyAnimation::valueChanged, this, [this]() { update(); });
 					hoverAnimation->setDuration(130);
 					hoverAnimation->setStartValue(d->hoverYOffset);
 					hoverAnimation->setEndValue(0);
@@ -308,7 +308,7 @@ void CALPopularCard::paintEvent(QPaintEvent* event) {
 		font.setWeight(QFont::DemiBold);
 		font.setPixelSize(12);
 		painter.setFont(font);
-		//¸²¸Ç±³¾°»æÖÆ
+		//è¦†ç›–èƒŒæ™¯ç»˜åˆ¶
 		const QRectF tipRect(foregroundRect.right() - d->textHSpacing - tipWidth, foregroundRect.bottom() - d->textHSpacing - tipHeight, foregroundRect.width() / 2 - d->textHSpacing, tipHeight);
 		painter.setPen(Qt::NoPen);
 		painter.setBrush(ALThemeColor(d->themeMode, ALThemeType::BasicBaseDeep));
@@ -317,7 +317,7 @@ void CALPopularCard::paintEvent(QPaintEvent* event) {
 		baseRect.adjust(-7, -3, 4, 3);
 		d->interactiveTipsBaseRect = baseRect;
 		painter.drawRoundedRect(baseRect, 6, 6);
-		//ÎÄ×Ö»æÖÆ
+		//æ–‡å­—ç»˜åˆ¶
 		painter.setPen(ALThemeColor(d->themeMode, ALThemeType::BasicText));
 		painter.drawText(tipRect, Qt::AlignLeft | Qt::AlignVCenter | Qt::TextSingleLine | Qt::TextWordWrap, d->interactiveTips);
 	} else {

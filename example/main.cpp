@@ -33,7 +33,7 @@ int main(int argc, char* argv[]) {
 	alApp->setMicaImagePath(":example/control/mica.jpg");
 
 	MainWindow widget;
-	QObject::connect(&widget, &MainWindow::destroyed, [=]() {
+	QObject::connect(&widget, &MainWindow::destroyed, [exampleTranslator]() {
 		if (exampleTranslator) {
 			exampleTranslator->deleteLater();
 		}
