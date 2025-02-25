@@ -46,5 +46,6 @@ private:
 	qreal borderRadius{};
 
 	void doShowAnimation();
+	void updatePos();
 };
 }

@@ -81,8 +81,8 @@ void E_Icon::slotSearchEditTextChanged(const QString& searchText) const {
 		}
 	}
 	m_iconCountText->setText(tr("icon count: ") + QString::number(searchKeyList.count()));
-	m_iconModel->setSearchKeyList(searchKeyList);
 	m_iconModel->setIsSearchMode(true);
+	m_iconModel->setSearchKeyList(searchKeyList);
 	m_iconListView->clearSelection();
 	m_iconListView->scrollTo(m_iconModel->index(0, 0));
 	m_iconListView->viewport()->update();

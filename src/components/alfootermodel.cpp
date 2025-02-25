@@ -74,6 +74,19 @@ CALNavigationNode* CALFooterModel::getNavigationNode(const QString& footerKey) {
 	return resNode;
 }
 
+CALNavigationNode* CALFooterModel::getNavigationNode(const QModelIndex& index) {
+	if (!index.isValid()) {
+		return nullptr;
+	}
+
+	const int row = index.row();
+	if (row < 0 || row >= m_listFooterNodes.count()) {
+		return nullptr;
+	}
+
+	return m_listFooterNodes.at(row);
+}
+
 bool CALFooterModel::removeNavigationNode(const QString& footerKey) {
 	bool bRet{ false };
 

@@ -48,20 +48,16 @@ bool CALToolTipPrivate::eventFilter(QObject* watched, QEvent* event) {
 	switch (event->type()) {
 		// case QEvent::Enter:
 		case QEvent::ToolTip: {
-			QTimer::singleShot(showDelayMsec, this, [this]() {
-				doShowAnimation();
-			});
-			if (displayMsec > -1) {
-				QTimer::singleShot(displayMsec, this, [q]() {
-					q->hide();
-				});
+			if (!q->isVisible()) {
+				QTimer::singleShot(showDelayMsec, this, [this]() { doShowAnimation(); });
+				if (displayMsec > -1) {
+					QTimer::singleShot(displayMsec, this, [q]() { q->hide(); });
+				}
 			}
 			break;
 		}
 		case QEvent::Leave: {
-			QTimer::singleShot(hideDelayMsec, this, [q]() {
-				q->hide();
-			});
+			QTimer::singleShot(hideDelayMsec, this, [q]() { q->hide(); });
 			break;
 		}
 		case QEvent::Hide: {
@@ -70,26 +66,8 @@ bool CALToolTipPrivate::eventFilter(QObject* watched, QEvent* event) {
 		}
 		case QEvent::HoverMove:
 		case QEvent::MouseMove: {
-			if (q->isVisible()) {
-				const QPoint cursorPoint = QCursor::pos();
-				const QScreen* screen = QGuiApplication::screenAt(cursorPoint);
-				if (!screen) {
-					qWarning() << "Failed to get the screen!";
-					break;
-				}
-
-				const QRect availableGeometry = screen->availableGeometry();
-
-				// 计算新位置，确保 Tooltip 不会超出可视区域
-				int newX = qMin(cursorPoint.x() + 10, availableGeometry.right() - q->width());
-				int newY = qMin(cursorPoint.y(), availableGeometry.bottom() - q->height());
-
-				// 防止 Tooltip 显示在屏幕外的情况
-				newX = qMax(newX, availableGeometry.left());
-				newY = qMax(newY, availableGeometry.top());
-
-				q->move(newX, newY);
-			}
+			updatePos();
+			break;
 		}
 		default: break;
 	}
@@ -98,6 +76,10 @@ bool CALToolTipPrivate::eventFilter(QObject* watched, QEvent* event) {
 
 void CALToolTipPrivate::doShowAnimation() {
 	Q_Q(CALToolTip);
+
+	if (toolTipText->text().isEmpty()) {
+		return;
+	}
 
 	const QPoint cursorPoint = QCursor::pos();
 	const QScreen* screen = QGuiApplication::screenAt(cursorPoint);
@@ -125,6 +107,31 @@ void CALToolTipPrivate::doShowAnimation() {
 	showAnimation->setStartValue(0);
 	showAnimation->setEndValue(1);
 	showAnimation->start(QAbstractAnimation::DeleteWhenStopped);
+}
+
+void CALToolTipPrivate::updatePos() {
+	Q_Q(CALToolTip);
+
+	if (q->isVisible()) {
+		const QPoint cursorPoint = QCursor::pos();
+		const QScreen* screen = QGuiApplication::screenAt(cursorPoint);
+		if (!screen) {
+			qWarning() << "Failed to get the screen!";
+			return;
+		}
+
+		const QRect availableGeometry = screen->availableGeometry();
+
+		// 计算新位置，确保 Tooltip 不会超出可视区域
+		int newX = qMin(cursorPoint.x() + 10, availableGeometry.right() - q->width());
+		int newY = qMin(cursorPoint.y(), availableGeometry.bottom() - q->height());
+
+		// 防止 Tooltip 显示在屏幕外的情况
+		newX = qMax(newX, availableGeometry.left());
+		newY = qMax(newY, availableGeometry.top());
+
+		q->move(newX, newY);
+	}
 }
 
 /**
@@ -230,6 +237,7 @@ int CALToolTip::getHideDelayMsec() const {
 void CALToolTip::setToolTip(const QString& tooltip) {
 	Q_D(CALToolTip);
 
+	resize(fontMetrics().horizontalAdvance(tooltip), height());
 	d->toolTipText->setText(tooltip);
 	Q_EMIT sigToolTipChanged();
 }
@@ -262,6 +270,10 @@ QWidget* CALToolTip::getCustomWidget() const {
 	Q_D(const CALToolTip);
 
 	return d->customWidget;
+}
+
+void CALToolTip::updatePos() {
+	d_func()->updatePos();
 }
 
 void CALToolTip::paintEvent(QPaintEvent* event) {

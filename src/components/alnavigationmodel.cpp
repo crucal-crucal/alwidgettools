@@ -376,7 +376,7 @@ QStringList CALNavigationModel::removeNavigationNode(const QString& nodeKey) { /
 	} else {
 		removeKeyList.append(node->getNodeKey());
 	}
-	beginRemoveRows(parentNode->getModelIndex(), parentNode->getChildrenNodes().count(), parentNode->getChildrenNodes().count());
+	beginRemoveRows(parentNode->getModelIndex(), parentNode->getChildrenNodes().count() - 1, parentNode->getChildrenNodes().count() - 1);
 	parentNode->removeChildNode(node);
 	m_mapNodes.remove(node->getNodeKey());
 	endRemoveRows();

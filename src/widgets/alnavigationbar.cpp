@@ -6,7 +6,6 @@
 #include <QPainterPath>
 #include <QPropertyAnimation>
 
-#include "altoolbutton.hpp"
 #include "albaselistview.hpp"
 #include "alcustomwidget.hpp"
 #include "alfooterdelegate.hpp"
@@ -21,6 +20,8 @@
 #include "alnavigationview.hpp"
 #include "alsuggestbox.hpp"
 #include "althememanager.hpp"
+#include "altoolbutton.hpp"
+#include "altooltip.hpp"
 
 /**
  * @brief \namespace AL
@@ -49,7 +50,9 @@ int CALNavigationBarPrivate::getNavigationViewWidth() const {
 }
 
 void CALNavigationBarPrivate::slotNavigationButtonClicked() {
-	q_func()->setDisplayMode(currentDisplayMode == ALNavigationType::Compact ? ALNavigationType::Maximal : ALNavigationType::Compact);
+	const bool isCompact = currentDisplayMode == ALNavigationType::Compact;
+	navigationButton->setToolTip(isCompact ? tr("collapse") : tr("expand"));
+	q_func()->setDisplayMode(isCompact ? ALNavigationType::Maximal : ALNavigationType::Compact);
 }
 
 void CALNavigationBarPrivate::slotNavigationOpenNewWindow(const QString& nodeKey) {
@@ -580,6 +583,7 @@ CALNavigationBar::CALNavigationBar(QWidget* parent): QWidget(parent), d_ptr(new 
 	d->navigationButton->setFixedSize(40, 38);
 	d->navigationButton->setAweSomeIcon(ALIcon::AweSomeIcon::Bars);
 	d->navigationButton->setBorderRadius(8);
+	d->navigationButton->setToolTip(tr("collapse"));
 	connect(d->navigationButton, &CALToolButton::clicked, d, &CALNavigationBarPrivate::slotNavigationButtonClicked);
 	// search button
 	d->searchButton = new CALToolButton(this);
@@ -587,6 +591,7 @@ CALNavigationBar::CALNavigationBar(QWidget* parent): QWidget(parent), d_ptr(new 
 	d->searchButton->setAweSomeIcon(ALIcon::AweSomeIcon::MagnifyingGlass);
 	d->searchButton->setBorderRadius(8);
 	d->searchButton->setVisible(false);
+	d->searchButton->setToolTip(tr("search"));
 	connect(d->searchButton, &CALToolButton::clicked, d, &CALNavigationBarPrivate::slotNavigationButtonClicked);
 	// navigation suggest box
 	d->navigationSuggestBox = new CALSuggestBox(this);
@@ -626,13 +631,24 @@ CALNavigationBar::CALNavigationBar(QWidget* parent): QWidget(parent), d_ptr(new 
 	connect(d->navigationView, &CALNavigationView::sigNavigationClicked, this, [d](const QModelIndex& index) { d->slotTreeViewClicked(index); });
 	connect(d->navigationView, &CALNavigationView::sigNavigationOpenNewWindow, d, &CALNavigationBarPrivate::slotNavigationOpenNewWindow);
 
-	/// footer model, and delegate
+	/// footer model, view, tooltip and delegate
 	// model
 	d->footerModel = new CALFooterModel(this);
 	// view
 	d->footerView = new CALBaseListView(this);
 	d->footerView->setFixedHeight(0);
 	d->footerView->setModel(d->footerModel);
+	connect(d->footerView, &CALBaseListView::sigMouseMove, this, [d](const QModelIndex& index) {
+		if (const auto posNode = d->footerModel->getNavigationNode(index); posNode && d->currentDisplayMode == ALNavigationType::Compact) {
+			d->footerToolTip->setToolTip(posNode->getNodeTitle());
+			d->footerToolTip->updatePos();
+			d->footerToolTip->show();
+		} else {
+			d->footerToolTip->hide();
+		}
+	});
+	// tooltip
+	d->footerToolTip = new CALToolTip(d->footerView);
 	// delegate
 	d->footerDelegate = new CALFooterDelegate(this);
 	d->footerDelegate->setCALBaseListView(d->footerView);

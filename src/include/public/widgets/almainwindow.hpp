@@ -336,7 +336,7 @@ Q_SIGNALS:
 	void sigAppBarHeightChanged();
 	void sigCustomWidgetMaximumWidthChanged();
 	void sigThemeChangeTimeChanged();
-	void sigNavigationDisplayModeChanged();
+	void sigNavigationDisplayModeChanged(const ALNavigationType::NavigationDisplayMode& displayMode);
 
 protected:
 	const QScopedPointer<CALMainWindowPrivate> d_ptr{ nullptr };

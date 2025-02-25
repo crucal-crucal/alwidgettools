@@ -49,4 +49,10 @@ void CALBaseListView::mouseDoubleClickEvent(QMouseEvent* event) {
 
 	QListView::mouseDoubleClickEvent(event);
 }
+
+void CALBaseListView::mouseMoveEvent(QMouseEvent* event) {
+	Q_EMIT sigMouseMove(indexAt(event->pos()));
+
+	QListView::mouseMoveEvent(event);
+}
 }

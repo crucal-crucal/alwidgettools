@@ -25,6 +25,7 @@ class CALFooterModel;
 class CALFooterDelegate;
 class CALIconButton;
 class CALToolButton;
+class CALToolTip;
 
 class CALNavigationBarPrivate final : public QObject {
 	Q_OBJECT
@@ -74,6 +75,7 @@ private:
 	CALToolButton* navigationButton{ nullptr };
 	CALNavigationModel* navigationModel{ nullptr };
 	CALNavigationView* navigationView{ nullptr };
+	CALToolTip* footerToolTip{ nullptr };
 	CALBaseListView* footerView{ nullptr };
 	CALFooterModel* footerModel{ nullptr };
 	CALFooterDelegate* footerDelegate{ nullptr };

@@ -45,6 +45,8 @@ public:
 	void setCustomWidget(QWidget* customWidget);
 	[[nodiscard]] QWidget* getCustomWidget() const;
 
+	void updatePos();
+
 Q_SIGNALS:
 	void sigBorderRadiusChanged();
 	void sigDisplayMsecChanged();

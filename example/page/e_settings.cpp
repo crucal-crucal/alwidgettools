@@ -44,6 +44,14 @@ E_Settings::E_Settings(QWidget* parent): E_BasePage(parent) {
 
 E_Settings::~E_Settings() = default;
 
+void E_Settings::setNavigationBarDisPlayMode(const ALNavigationType::NavigationDisplayMode& mode) const {
+	if (const auto radioButton = mapNavigationDisplayModeWithRadioButton.value(mode)) {
+		radioButton->blockSignals(true);
+		radioButton->setChecked(true);
+		radioButton->blockSignals(false);
+	}
+}
+
 void E_Settings::initThemeSwitchArea() {
 	const QMetaObject& metaObject = ALThemeType::staticMetaObject;
 	const QMetaEnum metaEnum = metaObject.enumerator(metaObject.indexOfEnumerator("ThemeMode"));
@@ -166,6 +174,7 @@ void E_Settings::initNavigationDisplayModeArea() {
 		const auto radioButton = new CALRadioButton(this);
 		radioButton->setText(key);
 		radioButton->setChecked(m_mainWindow->getNavigationDisplayMode() == static_cast<ALNavigationType::NavigationDisplayMode>(value));
+		mapNavigationDisplayModeWithRadioButton.insert(static_cast<ALNavigationType::NavigationDisplayMode>(value), radioButton);
 		connect(radioButton, &CALRadioButton::toggled, this, [this, radioButton, value](const bool checked) {
 			if (checked) {
 				m_mainWindow->setNavigationDisplayMode(static_cast<ALNavigationType::NavigationDisplayMode>(value));

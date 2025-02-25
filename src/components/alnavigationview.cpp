@@ -6,6 +6,7 @@
 #include "almenu.hpp"
 #include "alnavigationstyle.hpp"
 #include "alscrollbar.hpp"
+#include "altooltip.hpp"
 
 /**
  * @brief \namespace AL
@@ -35,6 +36,7 @@ CALNavigationView::CALNavigationView(QWidget* parent): QTreeView(parent) {
 	setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 	const auto floatVerticalScrollBar = new CALScrollBar(vertivalScrollBar, this);
 	floatVerticalScrollBar->setIsAnimation(true);
+	floatVerticalScrollBar->installEventFilter(this);
 
 	m_navigationStyle = new CALNavigationStyle(this->style());
 	m_navigationStyle->setNavigationView(this);
@@ -62,6 +64,8 @@ CALNavigationView::CALNavigationView(QWidget* parent): QTreeView(parent) {
 
 	setContextMenuPolicy(Qt::CustomContextMenu);
 	connect(this, &CALNavigationView::customContextMenuRequested, this, &CALNavigationView::slotCustomContextMenuRequested);
+
+	m_compactToolTip = new CALToolTip(this);
 }
 
 CALNavigationView::~CALNavigationView() = default;
@@ -99,5 +103,50 @@ void CALNavigationView::mouseDoubleClickEvent(QMouseEvent* event) {
 	m_navigationStyle->setPressIndex(indexAt(event->pos()));
 	viewport()->update();
 	QTreeView::mouseDoubleClickEvent(event);
+}
+
+void CALNavigationView::mouseMoveEvent(QMouseEvent* event) {
+	if (width() <= 60) {
+		const QModelIndex posIndex = indexAt(event->pos());
+		if (!posIndex.isValid()) {
+			m_compactToolTip->hide();
+			return;
+		}
+		const auto posNode = static_cast<CALNavigationNode*>(posIndex.internalPointer());
+		m_compactToolTip->setToolTip(posNode->getNodeTitle());
+		m_compactToolTip->updatePos();
+		m_compactToolTip->show();
+	} else {
+		m_compactToolTip->hide();
+	}
+
+	QTreeView::mouseMoveEvent(event);
+}
+
+bool CALNavigationView::eventFilter(QObject* watched, QEvent* event) {
+	switch (event->type()) {
+		case QEvent::MouseMove:
+		case QEvent::HoverMove: {
+			if (width() <= 60) {
+				const QModelIndex posIndex = indexAt(mapToGlobal(QCursor::pos()));
+				if (!posIndex.isValid()) {
+					m_compactToolTip->hide();
+					break;
+				}
+				const auto posNode = static_cast<CALNavigationNode*>(posIndex.internalPointer());
+				m_compactToolTip->setToolTip(posNode->getNodeTitle());
+				m_compactToolTip->updatePos();
+				m_compactToolTip->show();
+			} else {
+				m_compactToolTip->hide();
+			}
+			break;
+		}
+		default: {
+			break;
+		}
+	}
+
+	return QTreeView::eventFilter(watched, event);
 }
 }

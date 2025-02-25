@@ -2,6 +2,19 @@
 <!DOCTYPE TS>
 <TS version="2.1">
 <context>
+    <name>AL::CALAcrylicUrlCardPrivate</name>
+    <message>
+        <location filename="../../src/widgets/alacrylicurlcard.cpp" line="31"/>
+        <source>URL is invalid</source>
+        <translation type="unfinished">链接无效</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/alacrylicurlcard.cpp" line="36"/>
+        <source>Failed to open URL</source>
+        <translation type="unfinished">无法打开链接</translation>
+    </message>
+</context>
+<context>
     <name>AL::CALAppBar</name>
     <message>
         <location filename="../../src/widgets/alappbar.cpp" line="265"/>
@@ -297,6 +310,32 @@
     </message>
 </context>
 <context>
+    <name>AL::CALNavigationBar</name>
+    <message>
+        <location filename="../../src/widgets/alnavigationbar.cpp" line="586"/>
+        <source>collapse</source>
+        <translation type="unfinished">收起</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/alnavigationbar.cpp" line="594"/>
+        <source>search</source>
+        <translation type="unfinished">搜索</translation>
+    </message>
+</context>
+<context>
+    <name>AL::CALNavigationBarPrivate</name>
+    <message>
+        <location filename="../../src/widgets/alnavigationbar.cpp" line="54"/>
+        <source>collapse</source>
+        <translation type="unfinished">收起</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/alnavigationbar.cpp" line="54"/>
+        <source>expand</source>
+        <translation type="unfinished">展开</translation>
+    </message>
+</context>
+<context>
     <name>AL::CALNavigationView</name>
     <message>
         <location filename="../../src/components/alnavigationview.cpp" line="79"/>
@@ -340,6 +379,14 @@
         <location filename="../../src/widgets/alplaintextedit.cpp" line="163"/>
         <source>select all</source>
         <translation type="unfinished">全选</translation>
+    </message>
+</context>
+<context>
+    <name>AL::CALPopularCardFloater</name>
+    <message>
+        <location filename="../../src/components/alpopularcardfloater.cpp" line="32"/>
+        <source>get</source>
+        <translation type="unfinished">获取</translation>
     </message>
 </context>
 <context>

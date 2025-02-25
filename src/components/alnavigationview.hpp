@@ -8,6 +8,7 @@
 namespace AL {
 class CALScrollBar;
 class CALNavigationStyle;
+class CALToolTip;
 
 class CALNavigationView final : public QTreeView {
 	Q_OBJECT
@@ -27,8 +28,11 @@ Q_SIGNALS:
 protected:
 	void mouseReleaseEvent(QMouseEvent* event) override;
 	void mouseDoubleClickEvent(QMouseEvent* event) override;
+	void mouseMoveEvent(QMouseEvent* event) override;
+	bool eventFilter(QObject* watched, QEvent* event) override;
 
 private:
 	CALNavigationStyle* m_navigationStyle{ nullptr };
+	CALToolTip* m_compactToolTip{ nullptr };
 };
 }

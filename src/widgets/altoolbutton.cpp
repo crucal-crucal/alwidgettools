@@ -131,7 +131,7 @@ bool CALToolButton::eventFilter(QObject* watched, QEvent* event) {
 	if (watched == menu()) {
 		switch (event->type()) {
 			case QEvent::Show: {
-				//指示器动画
+				// 指示器动画
 				const auto rotateAnimation = new QPropertyAnimation(d->style, "expandIconRotate");
 				connect(rotateAnimation, &QPropertyAnimation::valueChanged, this, [this](const QVariant&) { update(); });
 				rotateAnimation->setDuration(300);
@@ -142,7 +142,7 @@ bool CALToolButton::eventFilter(QObject* watched, QEvent* event) {
 				break;
 			}
 			case QEvent::Hide: {
-				//指示器动画
+				// 指示器动画
 				const auto rotateAnimation = new QPropertyAnimation(d->style, "expandIconRotate");
 				connect(rotateAnimation, &QPropertyAnimation::valueChanged, this, [this](const QVariant&) { update(); });
 				rotateAnimation->setDuration(300);

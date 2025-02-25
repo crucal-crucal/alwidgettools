@@ -592,7 +592,7 @@ int CALMainWindow::getThemeChangeTime() const {
 
 void CALMainWindow::setNavigationDisplayMode(const ALNavigationType::NavigationDisplayMode& mode) {
 	d_func()->navigationDisplayMode = mode;
-	Q_EMIT sigNavigationDisplayModeChanged();
+	Q_EMIT sigNavigationDisplayModeChanged(mode);
 }
 
 ALNavigationType::NavigationDisplayMode CALMainWindow::getNavigationDisplayMode() const {

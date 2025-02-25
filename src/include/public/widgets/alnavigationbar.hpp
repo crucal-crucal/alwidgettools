@@ -59,6 +59,7 @@ Q_SIGNALS:
 	void sigNavigationNodeClicked(const ALNavigationType::NavigationNodeType& nodeType, const QString& nodeKey);
 	void sigNavigationNodeAdded(const ALNavigationType::NavigationNodeType& nodeType, const QString& nodeKey, QWidget* page);
 	void sigNavigationNodeRemoved(const ALNavigationType::NavigationNodeType& nodeType, const QString& nodeKey);
+	void sigNavigationDisplayModeChanged(const ALNavigationType::NavigationDisplayMode& displayMode);
 
 protected:
 	const QScopedPointer<CALNavigationBarPrivate> d_ptr{ nullptr };

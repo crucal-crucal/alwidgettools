@@ -149,7 +149,7 @@ void CALThemeManager::drawEffectShadow(QPainter* painter, const QRect& widgetRec
 	for (int i = 0; i < shadowBorderWidth; ++i) {
 		path.addRoundedRect(shadowBorderWidth - i, shadowBorderWidth - i, widgetRect.width() - (shadowBorderWidth - i) * 2, widgetRect.height() - (shadowBorderWidth - i) * 2, borderRadius + i, borderRadius + i);
 		const int alpha = 1 * (shadowBorderWidth - i + 1);
-		color.setAlpha(alpha > 255 ? 255 : alpha);
+		color.setAlpha(qMin(255, alpha));
 		painter->setPen(color);
 		painter->drawPath(path);
 	}
