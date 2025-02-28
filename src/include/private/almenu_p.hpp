@@ -16,7 +16,7 @@ class CALMenuPrivate final : public QObject {
 	Q_DISABLE_COPY(CALMenuPrivate)
 	Q_DECLARE_PUBLIC(CALMenu)
 
-	Q_PROPERTY(int animationImagePosY READ getAnimationImagePosY WRITE setAnimationImagePosY NOTIFY onAnimationImagePosYChanged)
+	Q_PROPERTY(int animationImagePosY READ getAnimationImagePosY WRITE setAnimationImagePosY NOTIFY sigAnimationImagePosYChanged)
 
 public:
 	explicit CALMenuPrivate(CALMenu* q, QObject* parent = nullptr);
@@ -26,7 +26,7 @@ public:
 	[[nodiscard]] int getAnimationImagePosY() const;
 
 Q_SIGNALS:
-	void onAnimationImagePosYChanged();
+	void sigAnimationImagePosYChanged();
 
 protected:
 	CALMenu* const q_ptr{ nullptr };

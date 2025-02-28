@@ -24,7 +24,7 @@ CALMenuPrivate::~CALMenuPrivate() = default;
 
 void CALMenuPrivate::setAnimationImagePosY(const int pos) {
 	animationImagePosY = pos;
-	Q_EMIT onAnimationImagePosYChanged();
+	Q_EMIT sigAnimationImagePosYChanged();
 }
 
 int CALMenuPrivate::getAnimationImagePosY() const {
