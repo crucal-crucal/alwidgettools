@@ -1,6 +1,7 @@
 ﻿#include "alstatusbarstyle.hpp"
 
 #include <QPainter>
+#include <QStatusBar>
 #include <QStyleOption>
 
 #include "althememanager.hpp"
@@ -35,13 +36,15 @@ void CALStatusBarStyle::drawPrimitive(const PrimitiveElement pe, const QStyleOpt
 		}
 		case QStyle::PE_FrameStatusBarItem: {
 			/// Space character
-			const QRect statusBarItemRect = opt->rect;
-			p->save();
-			p->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);
-			p->setPen(Qt::NoPen);
-			p->setBrush(ALThemeColor(m_themeMode, ALThemeType::PrimaryNormal));
-			p->drawRoundedRect(QRectF(statusBarItemRect.right(), statusBarItemRect.y() + statusBarItemRect.height() * 0.1, 3, statusBarItemRect.height() * 0.8), 2, 2);
-			p->restore();
+			if (const auto statusBar = qobject_cast<const QStatusBar*>(w->parentWidget()); statusBar && statusBar->isSizeGripEnabled()) {
+				const QRect statusBarItemRect = opt->rect;
+				p->save();
+				p->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);
+				p->setPen(Qt::NoPen);
+				p->setBrush(ALThemeColor(m_themeMode, ALThemeType::PrimaryNormal));
+				p->drawRoundedRect(QRectF(statusBarItemRect.right(), statusBarItemRect.y() + statusBarItemRect.height() * 0.1, 3, statusBarItemRect.height() * 0.8), 2, 2);
+				p->restore();
+			}
 			return;
 		}
 		default: {
