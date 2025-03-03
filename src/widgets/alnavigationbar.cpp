@@ -75,89 +75,26 @@ void CALNavigationBarPrivate::invokableNavigationRouteBack(const QVariantMap& ro
 }
 
 void CALNavigationBarPrivate::slotTreeViewClicked(const QModelIndex& index, const bool isLogRoute) {
-	Q_Q(CALNavigationBar);
-
-	if (index.isValid()) {
-		const auto node = static_cast<CALNavigationNode*>(index.internalPointer());
-		if (!node) {
-			return;
-		}
-		if (node->getIsExpanderNode()) {
-			if (currentDisplayMode == ALNavigationType::Compact) {
-				if (node->getIsHasPageChild()) {
-					// 展开菜单
-					if (CALMenu* menu = mapCompactMenu.value(node)) {
-						const QPoint nodeTopRight = navigationView->mapToGlobal(navigationView->visualRect(node->getModelIndex()).topRight());
-						menu->popup(QPoint(nodeTopRight.x() + 10, nodeTopRight.y()));
-					}
-				}
-			} else {
-				if (node->getIsHasChild()) {
-					QVariantMap data;
-					const bool isExpanded = navigationView->isExpanded(index);
-					data.insert(isExpanded ? "Collapse" : "Expand", QVariant::fromValue(node));
-					node->setIsExpanded(!isExpanded);
-					navigationView->navigationNodeStateChanged(data);
-					isExpanded ? navigationView->collapse(index) : navigationView->expand(index);
-				}
-			}
-		} else {
-			if (node->getKeyPoints()) {
-				node->setKeyPoints(0);
-				navigationView->update();
-			}
-			if (const CALNavigationNode* selectedNode = navigationModel->getSelectedNode(); selectedNode != node) {
-				// 记录跳转
-				if (isLogRoute) {
-					QVariantMap routeData{};
-					QString pageKey{};
-					if (selectedNode) {
-						pageKey.append(selectedNode->getNodeKey());
-					} else if (footerModel->getSelectedNode()) {
-						pageKey.append(footerModel->getSelectedNode()->getNodeKey());
-					}
-
-					routeData.insert("CALPageKey", pageKey);
-					CALNavigationRouter::instance()->navigationRoute(this, "invokableNavigationRouteBack", routeData);
-				}
-				Q_EMIT q->sigNavigationNodeClicked(ALNavigationType::PageNode, node->getNodeKey());
-
-				if (footerModel->getSelectedNode()) {
-					footerView->clearSelection();
-					QVariantMap footerPostData{};
-					footerPostData.insert("SelectMarkChanged", true);
-					footerPostData.insert("LastSelectedNode", QVariant::fromValue(footerModel->getSelectedNode()));
-					footerPostData.insert("SelectedNode", QVariant::fromValue(nullptr));
-					footerModel->setSelectedNode(nullptr);
-					footerDelegate->navigationNodeStateChange(footerPostData);
-				}
-				QVariantMap postData{};
-				postData.insert("SelectMarkChanged", true);
-				postData.insert("LastSelectedNode", QVariant::fromValue(navigationModel->getSelectedExpandedNode() ? navigationModel->getSelectedExpandedNode() : navigationModel->getSelectedNode()));
-				if (currentDisplayMode == ALNavigationType::Compact) {
-					if (CALNavigationNode* originNode = node->getOriginalNode(); originNode == node) {
-						postData.insert("SelectedNode", QVariant::fromValue(node));
-					} else {
-						if (originNode == navigationModel->getSelectedExpandedNode()) {
-							navigationModel->setSelectedNode(node);
-							resetNodeSelected();
-							return;
-						}
-						navigationModel->setSelectedExpandedNode(originNode);
-						postData.insert("SelectedNode", QVariant::fromValue(originNode));
-					}
-				} else {
-					postData.insert("SelectedNode", QVariant::fromValue(node));
-				}
-				navigationModel->setSelectedNode(node);
-				navigationView->navigationNodeStateChanged(postData);
-				if (!node->getIsVisible() && currentDisplayMode != ALNavigationType::Compact) {
-					expandSelectedNodeParent();
-				}
-			}
-		}
-		resetNodeSelected();
+	if (!index.isValid()) {
+		return;
 	}
+
+	const auto node = static_cast<CALNavigationNode*>(index.internalPointer());
+	if (!node) {
+		return;
+	}
+
+	if (node->getIsExpanderNode()) {
+		if (currentDisplayMode == ALNavigationType::Compact) {
+			handleExpanderNodeInCompactMode(node);
+		} else {
+			handleExpanderNodeInNormalMode(node, index);
+		}
+	} else {
+		handlePageNodeSelection(node, isLogRoute);
+	}
+
+	resetNodeSelected();
 }
 
 void CALNavigationBarPrivate::slotFooterViewClicked(const QModelIndex& index, const bool isLogRoute) {
@@ -238,18 +175,12 @@ void CALNavigationBarPrivate::resetNodeSelected() const {
 			postData.insert("LastSelectedNode", QVariant::fromValue(navigationModel->getSelectedNode()));
 			postData.insert("SelectedNode", QVariant::fromValue(parentNode));
 			navigationView->navigationNodeStateChanged(postData);
-		} else {
-			// 多级节点
-			if (navigationModel->getSelectedExpandedNode() != parentNode) {
-				// 同一起源点展开, 收起时 Mark 变化
-				if (navigationModel->getSelectedExpandedNode()->getOriginalNode() == parentNode->getOriginalNode()) {
-					QVariantMap postData{};
-					postData.insert("SelectMarkChanged", true);
-					postData.insert("LastSelectedNode", QVariant::fromValue(navigationModel->getSelectedExpandedNode()));
-					postData.insert("SelectedNode", QVariant::fromValue(parentNode));
-					navigationView->navigationNodeStateChanged(postData);
-				}
-			}
+		} else if (navigationModel->getSelectedExpandedNode() != parentNode && navigationModel->getSelectedExpandedNode()->getOriginalNode() == parentNode->getOriginalNode()) { // 多级节点, 同一起源点展开, 收起时 Mark 变化
+			QVariantMap postData{};
+			postData.insert("SelectMarkChanged", true);
+			postData.insert("LastSelectedNode", QVariant::fromValue(navigationModel->getSelectedExpandedNode()));
+			postData.insert("SelectedNode", QVariant::fromValue(parentNode));
+			navigationView->navigationNodeStateChanged(postData);
 		}
 		navigationModel->setSelectedExpandedNode(parentNode);
 		navigationView->selectionModel()->select(parentNode->getModelIndex(), QItemSelectionModel::Select);
@@ -542,6 +473,110 @@ void CALNavigationBarPrivate::doUserButtonAnimation(const bool isCompact, const 
 	}
 }
 
+void CALNavigationBarPrivate::handleExpanderNodeInCompactMode(CALNavigationNode* node) const {
+	if (!node->getIsHasPageChild()) {
+		return;
+	}
+
+	if (CALMenu* menu = mapCompactMenu.value(node)) {
+		const QPoint nodeTopRight = navigationView->mapToGlobal(navigationView->visualRect(node->getModelIndex()).topRight());
+		menu->popup(QPoint(nodeTopRight.x() + 10, nodeTopRight.y()));
+	}
+}
+
+void CALNavigationBarPrivate::handleExpanderNodeInNormalMode(CALNavigationNode* node, const QModelIndex& index) const {
+	if (!node->getIsHasChild()) {
+		return;
+	}
+
+	QVariantMap data;
+	const bool isExpanded = navigationView->isExpanded(index);
+	data.insert(isExpanded ? "Collapse" : "Expand", QVariant::fromValue(node));
+	node->setIsExpanded(!isExpanded);
+	navigationView->navigationNodeStateChanged(data);
+	isExpanded ? navigationView->collapse(index) : navigationView->expand(index);
+}
+
+void CALNavigationBarPrivate::logNavigationRoute(const CALNavigationNode* selectedNode) {
+	QVariantMap routeData{};
+	QString pageKey{};
+
+	if (selectedNode) {
+		pageKey.append(selectedNode->getNodeKey());
+	} else if (footerModel->getSelectedNode()) {
+		pageKey.append(footerModel->getSelectedNode()->getNodeKey());
+	}
+
+	routeData.insert("CALPageKey", pageKey);
+	CALNavigationRouter::instance()->navigationRoute(this, "invokableNavigationRouteBack", routeData);
+}
+
+void CALNavigationBarPrivate::clearFooterSelection() const {
+	if (!footerModel->getSelectedNode()) {
+		return;
+	}
+
+	footerView->clearSelection();
+	QVariantMap footerPostData{};
+	footerPostData.insert("SelectMarkChanged", true);
+	footerPostData.insert("LastSelectedNode", QVariant::fromValue(footerModel->getSelectedNode()));
+	footerPostData.insert("SelectedNode", QVariant::fromValue(nullptr));
+	footerModel->setSelectedNode(nullptr);
+	footerDelegate->navigationNodeStateChange(footerPostData);
+}
+
+void CALNavigationBarPrivate::updateNodeSelection(CALNavigationNode* node) const {
+	QVariantMap postData{};
+	postData.insert("SelectMarkChanged", true);
+	postData.insert("LastSelectedNode", QVariant::fromValue(navigationModel->getSelectedExpandedNode() ? navigationModel->getSelectedExpandedNode() : navigationModel->getSelectedNode()));
+
+	if (currentDisplayMode == ALNavigationType::Compact) {
+		handleCompactModeSelection(node, postData);
+	} else {
+		postData.insert("SelectedNode", QVariant::fromValue(node));
+	}
+	navigationModel->setSelectedNode(node);
+	navigationView->navigationNodeStateChanged(postData);
+
+	if (!node->getIsVisible() && currentDisplayMode != ALNavigationType::Compact) {
+		expandSelectedNodeParent();
+	}
+}
+
+void CALNavigationBarPrivate::handleCompactModeSelection(CALNavigationNode* node, QVariantMap& postData) const {
+	if (CALNavigationNode* originNode = node->getOriginalNode(); originNode == node) {
+		postData.insert("SelectedNode", QVariant::fromValue(node));
+	} else {
+		if (originNode == navigationModel->getSelectedExpandedNode()) {
+			navigationModel->setSelectedNode(node);
+			resetNodeSelected();
+			return;
+		}
+		navigationModel->setSelectedExpandedNode(originNode);
+		postData.insert("SelectedNode", QVariant::fromValue(originNode));
+	}
+}
+
+void CALNavigationBarPrivate::handlePageNodeSelection(CALNavigationNode* node, const bool isLogRoute) {
+	if (node->getKeyPoints()) {
+		node->setKeyPoints(0);
+		navigationView->update();
+	}
+
+	const CALNavigationNode* selectedNode = navigationModel->getSelectedNode();
+	if (selectedNode == node) {
+		return;
+	}
+
+	if (isLogRoute) {
+		logNavigationRoute(selectedNode);
+	}
+
+	Q_EMIT q_func()->sigNavigationNodeClicked(ALNavigationType::PageNode, node->getNodeKey());
+	clearFooterSelection();
+	updateNodeSelection(node);
+}
+
 /**
  * @brief \class CALNavigationBar
  * @param parent pointer to the parent class
@@ -709,10 +744,10 @@ void CALNavigationBar::setUserInfoCardSubTitle(const QString& subTitle) {
 	d_func()->userInfoCard->setSubTitle(subTitle);
 }
 
-ALNavigationType::NodeOperateReturnType CALNavigationBar::addExpanderNode(const QString& expanderTitle, QString& expanderKey, const ALIcon::AweSomeIcon& awewomeIcon) {
+ALNavigationType::NodeOperateReturnType CALNavigationBar::addExpanderNode(const QString& expanderTitle, QString& expanderKey, const ALIcon::AweSomeIcon& awesomeIcon) {
 	Q_D(CALNavigationBar);
 
-	const ALNavigationType::NodeOperateReturnType resType = d->navigationModel->addExpanderNode(expanderTitle, expanderKey, awewomeIcon);
+	const ALNavigationType::NodeOperateReturnType resType = d->navigationModel->addExpanderNode(expanderTitle, expanderKey, awesomeIcon);
 	if (resType == ALNavigationType::Success) {
 		d->initNodeModelIndex({});
 		d->resetNodeSelected();
@@ -733,10 +768,10 @@ ALNavigationType::NodeOperateReturnType CALNavigationBar::addExpanderNode(const 
 	return resType;
 }
 
-ALNavigationType::NodeOperateReturnType CALNavigationBar::addExpanderNode(const QString& expanderTitle, QString& expanderKey, const QString& targetExpanderKey, const ALIcon::AweSomeIcon& awewomeIcon) {
+ALNavigationType::NodeOperateReturnType CALNavigationBar::addExpanderNode(const QString& expanderTitle, QString& expanderKey, const QString& targetExpanderKey, const ALIcon::AweSomeIcon& awesomeIcon) {
 	Q_D(CALNavigationBar);
 
-	const ALNavigationType::NodeOperateReturnType resType = d->navigationModel->addExpanderNode(expanderTitle, expanderKey, targetExpanderKey, awewomeIcon);
+	const ALNavigationType::NodeOperateReturnType resType = d->navigationModel->addExpanderNode(expanderTitle, expanderKey, targetExpanderKey, awesomeIcon);
 	if (resType == ALNavigationType::Success) {
 		d->initNodeModelIndex({});
 		d->resetNodeSelected();
@@ -757,14 +792,14 @@ ALNavigationType::NodeOperateReturnType CALNavigationBar::addExpanderNode(const 
 	return resType;
 }
 
-ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QString& pageTitle, QWidget* page, const ALIcon::AweSomeIcon& awewomeIcon) {
+ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QString& pageTitle, QWidget* page, const ALIcon::AweSomeIcon& awesomeIcon) {
 	Q_D(CALNavigationBar);
 	if (!page) {
 		return ALNavigationType::PageInvalid;
 	}
 
 	QString pageKey{};
-	const ALNavigationType::NodeOperateReturnType resType = d->navigationModel->addPageNode(pageTitle, pageKey, awewomeIcon);
+	const ALNavigationType::NodeOperateReturnType resType = d->navigationModel->addPageNode(pageTitle, pageKey, awesomeIcon);
 	if (resType == ALNavigationType::Success) {
 		d->mapPageMeta.insert(pageKey, page->metaObject());
 		d->addStackedPage(page, pageKey);
@@ -793,7 +828,7 @@ ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QStr
 	return resType;
 }
 
-ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QString& pageTitle, QWidget* page, const QString& targetExpanderKey, const ALIcon::AweSomeIcon& awewomeIcon) {
+ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QString& pageTitle, QWidget* page, const QString& targetExpanderKey, const ALIcon::AweSomeIcon& awesomeIcon) {
 	Q_D(CALNavigationBar);
 	if (!page) {
 		return ALNavigationType::PageInvalid;
@@ -803,7 +838,7 @@ ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QStr
 	}
 
 	QString pageKey{};
-	const ALNavigationType::NodeOperateReturnType resType = d->navigationModel->addPageNode(pageTitle, pageKey, targetExpanderKey, awewomeIcon);
+	const ALNavigationType::NodeOperateReturnType resType = d->navigationModel->addPageNode(pageTitle, pageKey, targetExpanderKey, awesomeIcon);
 	if (resType == ALNavigationType::Success) {
 		d->mapPageMeta.insert(pageKey, page->metaObject());
 		CALNavigationNode* node = d->navigationModel->getNavigationNode(pageKey);
@@ -857,14 +892,14 @@ ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QStr
 	return resType;
 }
 
-ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QString& pageTitle, QWidget* page, const int keyPoints, const ALIcon::AweSomeIcon& awewomeIcon) {
+ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QString& pageTitle, QWidget* page, const int keyPoints, const ALIcon::AweSomeIcon& awesomeIcon) {
 	Q_D(CALNavigationBar);
 	if (!page) {
 		return ALNavigationType::PageInvalid;
 	}
 
 	QString pageKey{};
-	const ALNavigationType::NodeOperateReturnType resType = d->navigationModel->addPageNode(pageTitle, pageKey, keyPoints, awewomeIcon);
+	const ALNavigationType::NodeOperateReturnType resType = d->navigationModel->addPageNode(pageTitle, pageKey, keyPoints, awesomeIcon);
 	if (resType == ALNavigationType::Success) {
 		d->mapPageMeta.insert(pageKey, page->metaObject());
 		d->addStackedPage(page, pageKey);
@@ -893,7 +928,7 @@ ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QStr
 	return resType;
 }
 
-ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QString& pageTitle, QWidget* page, const QString& targetExpanderKey, const int keyPoints, const ALIcon::AweSomeIcon& awewomeIcon) {
+ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QString& pageTitle, QWidget* page, const QString& targetExpanderKey, const int keyPoints, const ALIcon::AweSomeIcon& awesomeIcon) {
 	Q_D(CALNavigationBar);
 	if (!page) {
 		return ALNavigationType::PageInvalid;
@@ -903,7 +938,7 @@ ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QStr
 	}
 
 	QString pageKey{};
-	const ALNavigationType::NodeOperateReturnType resType = d->navigationModel->addPageNode(pageTitle, pageKey, targetExpanderKey, keyPoints, awewomeIcon);
+	const ALNavigationType::NodeOperateReturnType resType = d->navigationModel->addPageNode(pageTitle, pageKey, targetExpanderKey, keyPoints, awesomeIcon);
 	if (resType == ALNavigationType::Success) {
 		d->mapPageMeta.insert(pageKey, page->metaObject());
 		CALNavigationNode* node = d->navigationModel->getNavigationNode(pageKey);
@@ -957,18 +992,18 @@ ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QStr
 	return resType;
 }
 
-ALNavigationType::NodeOperateReturnType CALNavigationBar::addFooterNode(const QString& footerTitle, QString& footerKey, const int keyPoints, const ALIcon::AweSomeIcon& awewomeIcon) {
-	return addFooterNode(footerTitle, nullptr, footerKey, keyPoints, awewomeIcon);
+ALNavigationType::NodeOperateReturnType CALNavigationBar::addFooterNode(const QString& footerTitle, QString& footerKey, const int keyPoints, const ALIcon::AweSomeIcon& awesomeIcon) {
+	return addFooterNode(footerTitle, nullptr, footerKey, keyPoints, awesomeIcon);
 }
 
 ALNavigationType::NodeOperateReturnType CALNavigationBar::addFooterNode(const QString& footerTitle, QString& footerKey, const int keyPoints, const ALIcon::FluentIcon& fluentIcon) {
 	return addFooterNode(footerTitle, nullptr, footerKey, keyPoints, fluentIcon);
 }
 
-ALNavigationType::NodeOperateReturnType CALNavigationBar::addFooterNode(const QString& footerTitle, QWidget* page, QString& footerKey, const int keyPoints, const ALIcon::AweSomeIcon& awewomeIcon) {
+ALNavigationType::NodeOperateReturnType CALNavigationBar::addFooterNode(const QString& footerTitle, QWidget* page, QString& footerKey, const int keyPoints, const ALIcon::AweSomeIcon& awesomeIcon) {
 	Q_D(CALNavigationBar);
 
-	const auto resType = d->footerModel->addFooterNode(footerTitle, footerKey, page ? true : false, keyPoints, awewomeIcon);
+	const auto resType = d->footerModel->addFooterNode(footerTitle, footerKey, page ? true : false, keyPoints, awesomeIcon);
 	if (resType == ALNavigationType::Success) {
 		d->addFooterPage(page, footerKey);
 	}
