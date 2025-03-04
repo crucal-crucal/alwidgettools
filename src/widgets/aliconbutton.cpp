@@ -6,6 +6,7 @@
 #include <QPainterPath>
 #include <QPropertyAnimation>
 
+#include "alicon.hpp"
 #include "aliconbutton_p.hpp"
 #include "althememanager.hpp"
 #include "altooltip.hpp"
@@ -62,10 +63,10 @@ CALIconButton::CALIconButton(const QPixmap& pix, QWidget* parent): QPushButton(p
 	});
 }
 
-CALIconButton::CALIconButton(const ALIcon::AweSomeIcon& icon, QWidget* parent): CALIconButton(icon, 15, parent) {
+CALIconButton::CALIconButton(const std::unique_ptr<CALIconType>& icon_type, QWidget* parent): CALIconButton(icon_type, 15, parent) {
 }
 
-CALIconButton::CALIconButton(const ALIcon::AweSomeIcon& icon, const int& pixelSize, QWidget* parent): QPushButton(parent), d_ptr(new CALIconButtonPrivate(this, this)) {
+CALIconButton::CALIconButton(const std::unique_ptr<CALIconType>& icon_type, const int& pixelSize, QWidget* parent): QPushButton(parent), d_ptr(new CALIconButtonPrivate(this, this)) {
 	Q_D(CALIconButton);
 
 	d->hoverAlpha = 0;
@@ -79,12 +80,12 @@ CALIconButton::CALIconButton(const ALIcon::AweSomeIcon& icon, const int& pixelSi
 	d->isSelected = false;
 	d->borderRadius = 0;
 	d->themeMode = ALTheme->getThemeMode();
-	d->iconType = ALIcon::Awesome;
+	d->iconType = icon_type->iconType();
 	QFont iconFont(ALIcon::getEnumTypeFontName(d->iconType));
 	iconFont.setPixelSize(pixelSize);
 	this->setFont(iconFont);
-	setProperty(ALIcon::iconProperty, QChar(static_cast<unsigned short>(icon)));
-	this->setText(QChar(static_cast<unsigned short>(icon)));
+	setProperty(ALIcon::iconProperty, QChar(icon_type->value()));
+	this->setText(QChar(icon_type->value()));
 	connect(this, &CALIconButton::sigIsSelectedChanged, this, [this]() { update(); });
 	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [this, d](const ALThemeType::ThemeMode& mode) {
 		d->themeMode = mode;
@@ -92,62 +93,15 @@ CALIconButton::CALIconButton(const ALIcon::AweSomeIcon& icon, const int& pixelSi
 	});
 }
 
-CALIconButton::CALIconButton(const ALIcon::AweSomeIcon& icon, const int& pixelSize, const int& fixedWidth, const int& fixedHeight, QWidget* parent): CALIconButton(icon, pixelSize, parent) {
-	this->setFixedSize(fixedWidth, fixedHeight);
-}
-
-CALIconButton::CALIconButton(const ALIcon::FluentIcon& icon, QWidget* parent): CALIconButton(icon, 15, parent) {
-}
-
-CALIconButton::CALIconButton(const ALIcon::FluentIcon& icon, const int& pixelSize, QWidget* parent): QPushButton(parent), d_ptr(new CALIconButtonPrivate(this, this)) {
-	Q_D(CALIconButton);
-
-	d->hoverAlpha = 0;
-	d->opacity = 1;
-	d->lightHoverColor = ALThemeColor(ALThemeType::Light, ALThemeType::BasicHoverAlpha);
-	d->darkHoverColor = ALThemeColor(ALThemeType::Dark, ALThemeType::BasicHoverAlpha);
-	d->lightIconColor = ALThemeColor(ALThemeType::Light, ALThemeType::BasicText);
-	d->darkIconColor = ALThemeColor(ALThemeType::Dark, ALThemeType::BasicText);
-	d->lightHoverIconColor = ALThemeColor(ALThemeType::Light, ALThemeType::BasicText);
-	d->darkHoverIconColor = ALThemeColor(ALThemeType::Dark, ALThemeType::BasicText);
-	d->isSelected = false;
-	d->borderRadius = 0;
-	d->themeMode = ALTheme->getThemeMode();
-	d->iconType = ALIcon::Fluent;
-	QFont iconFont(ALIcon::getEnumTypeFontName(d->iconType));
-	iconFont.setPixelSize(pixelSize);
-	this->setFont(iconFont);
-	setProperty(ALIcon::iconProperty, QChar(static_cast<unsigned short>(icon)));
-	this->setText(QChar(static_cast<unsigned short>(icon)));
-	connect(this, &CALIconButton::sigIsSelectedChanged, this, [this]() { update(); });
-	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, this, [this, d](const ALThemeType::ThemeMode& mode) {
-		d->themeMode = mode;
-		update();
-	});
-}
-
-CALIconButton::CALIconButton(const ALIcon::FluentIcon& icon, const int& pixelSize, const int& fixedWidth, const int& fixedHeight, QWidget* parent): CALIconButton(icon, pixelSize, parent) {
+CALIconButton::CALIconButton(const std::unique_ptr<CALIconType>& icon_type, const int& pixelSize, const int& fixedWidth, const int& fixedHeight, QWidget* parent): CALIconButton(icon_type, pixelSize, parent) {
 	this->setFixedSize(fixedWidth, fixedHeight);
 }
 
 CALIconButton::~CALIconButton() = default;
 
-void CALIconButton::setAweSomeIcon(const ALIcon::AweSomeIcon& icon) {
-	this->setProperty(ALIcon::iconProperty, QChar(static_cast<unsigned short>(icon)));
-	this->setText(QChar(static_cast<unsigned short>(icon)));
-}
-
-ALIcon::AweSomeIcon CALIconButton::getAweSomeIcon() const {
-	return static_cast<ALIcon::AweSomeIcon>(this->property(ALIcon::iconProperty).toInt());
-}
-
-void CALIconButton::setFluentIcon(const ALIcon::FluentIcon& icon) {
-	this->setProperty(ALIcon::iconProperty, QChar(static_cast<unsigned short>(icon)));
-	this->setText(QChar(static_cast<unsigned short>(icon)));
-}
-
-ALIcon::FluentIcon CALIconButton::getFluentIcon() const {
-	return static_cast<ALIcon::FluentIcon>(this->property(ALIcon::iconProperty).toInt());
+void CALIconButton::setALIcon(const std::unique_ptr<CALIconType>& icon_type) {
+	this->setProperty(ALIcon::iconProperty, QChar(icon_type->value()));
+	this->setText(QChar(icon_type->value()));
 }
 
 void CALIconButton::setPixmap(const QPixmap& pix) {

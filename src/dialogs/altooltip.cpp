@@ -96,7 +96,7 @@ bool CALToolTipPrivate::eventFilter(QObject* watched, QEvent* event) {
 void CALToolTipPrivate::doShowAnimation() {
 	Q_Q(CALToolTip);
 
-	if (toolTipText->text().isEmpty()) {
+	if (toolTipText->text().isEmpty() && !customWidget) {
 		return;
 	}
 
@@ -132,6 +132,12 @@ void CALToolTipPrivate::updatePos() {
 	Q_Q(CALToolTip);
 
 	if (q->isVisible()) {
+		if (!toolTipText->text().isEmpty()) {
+			q->resize(q->fontMetrics().horizontalAdvance(toolTipText->text()), q->height());
+		} else if (customWidget) {
+			q->resize(customWidget->size());
+		}
+
 		const QPoint cursorPoint = QCursor::pos();
 		const QScreen* screen = QGuiApplication::screenAt(cursorPoint);
 		if (!screen) {

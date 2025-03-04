@@ -29,8 +29,11 @@ public:
 Q_SIGNALS:
 	void sigItemHeightChanged();
 	void sigIsTransparentChanged();
+	void sigMouseOverItem(const QModelIndex& index);
 
 protected:
 	const QScopedPointer<CALListViewPrivate> d_ptr{ nullptr };
+
+	void mouseMoveEvent(QMouseEvent* event) override;
 };
 }

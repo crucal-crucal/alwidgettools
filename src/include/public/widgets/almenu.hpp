@@ -11,6 +11,7 @@
  */
 namespace AL {
 class CALMenuPrivate;
+class CALIconType;
 
 class CALWIDGETTOOLS_EXPORT CALMenu : public QMenu {
 	Q_OBJECT
@@ -32,14 +33,11 @@ public:
 	using QWidget::addAction;
 	QAction* addAction(const QString& text);
 	QAction* addAction(const QIcon& icon, const QString& text);
-	QAction* addAction(const ALIcon::AweSomeIcon& awesomeicon, const QString& text);
-	QAction* addAction(const ALIcon::FluentIcon& fluenticon, const QString& text);
+	QAction* addAction(const std::unique_ptr<CALIconType>& icon_type, const QString& text);
 	QAction* addAction(const QIcon& icon, const QString& text, const QKeySequence& shortcut);
-	QAction* addAction(const ALIcon::AweSomeIcon& awesomeicon, const QString& text, const QKeySequence& shortcut);
-	QAction* addAction(const ALIcon::FluentIcon& fluenticon, const QString& text, const QKeySequence& shortcut);
+	QAction* addAction(const std::unique_ptr<CALIconType>& icon_type, const QString& text, const QKeySequence& shortcut);
 	QAction* addAction(const QIcon& icon, const QString& text, const QObject* receiver, const char* member, const QKeySequence& shortcut = 0);
-	QAction* addAction(const ALIcon::AweSomeIcon& awesomeicon, const QString& text, const QObject* receiver, const char* member, const QKeySequence& shortcut = 0);
-	QAction* addAction(const ALIcon::FluentIcon& fluenticon, const QString& text, const QObject* receiver, const char* member, const QKeySequence& shortcut = 0);
+	QAction* addAction(const std::unique_ptr<CALIconType>& icon_type, const QString& text, const QObject* receiver, const char* member, const QKeySequence& shortcut = 0);
 
 
 	[[nodiscard]] bool isHasChildMenu() const;

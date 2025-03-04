@@ -9,6 +9,7 @@
 #include "alplaintextedit_p.hpp"
 #include "alplaintexteditstyle.hpp"
 #include "aleventbus.hpp"
+#include "alicon.hpp"
 #include "almenu.hpp"
 #include "alscrollbar.hpp"
 #include "althememanager.hpp"
@@ -137,11 +138,11 @@ void CALPlainTextEdit::contextMenuEvent(QContextMenuEvent* event) {
 	menu->setAttribute(Qt::WA_DeleteOnClose);
 	QAction* action;
 	if (!isReadOnly()) {
-		action = menu->addAction(ALIcon::AweSomeIcon::ArrowRotateLeft, tr("Undo"), QKeySequence::Undo);
+		action = menu->addAction(CALIconFactory::createIconType(ALIcon::AweSomeIcon::ArrowRotateLeft), tr("Undo"), QKeySequence::Undo);
 		action->setEnabled(isUndoRedoEnabled() ? document()->isUndoRedoEnabled() : false);
 		connect(action, &QAction::triggered, this, &CALPlainTextEdit::undo);
 
-		action = menu->addAction(ALIcon::AweSomeIcon::ArrowRotateRight, tr("Redo"), QKeySequence::Redo);
+		action = menu->addAction(CALIconFactory::createIconType(ALIcon::AweSomeIcon::ArrowRotateRight), tr("Redo"), QKeySequence::Redo);
 		action->setEnabled(isUndoRedoEnabled() ? document()->isUndoRedoEnabled() : false);
 		connect(action, &QAction::triggered, this, &CALPlainTextEdit::redo);
 		menu->addSeparator();
@@ -149,23 +150,23 @@ void CALPlainTextEdit::contextMenuEvent(QContextMenuEvent* event) {
 
 #ifndef QT_NO_CLIPBOARD
 	if (!isReadOnly()) {
-		action = menu->addAction(ALIcon::AweSomeIcon::KnifeKitchen, tr("Cut"), QKeySequence::Cut);
+		action = menu->addAction(CALIconFactory::createIconType(ALIcon::AweSomeIcon::KnifeKitchen), tr("Cut"), QKeySequence::Cut);
 		action->setEnabled(!isReadOnly() && !textCursor().selectedText().isEmpty());
 		connect(action, &QAction::triggered, this, &CALPlainTextEdit::cut);
 	}
 
-	action = menu->addAction(ALIcon::AweSomeIcon::Copy, tr("Copy"), QKeySequence::Copy);
+	action = menu->addAction(CALIconFactory::createIconType(ALIcon::AweSomeIcon::Copy), tr("Copy"), QKeySequence::Copy);
 	action->setEnabled(!textCursor().selectedText().isEmpty());
 	connect(action, &QAction::triggered, this, &CALPlainTextEdit::copy);
 
 	if (!isReadOnly()) {
-		action = menu->addAction(ALIcon::AweSomeIcon::Paste, tr("Paste"), QKeySequence::Paste);
+		action = menu->addAction(CALIconFactory::createIconType(ALIcon::AweSomeIcon::Paste), tr("Paste"), QKeySequence::Paste);
 		action->setEnabled(!isReadOnly() && !QGuiApplication::clipboard()->text().isEmpty());
 		connect(action, &QAction::triggered, this, &CALPlainTextEdit::paste);
 	}
 #endif
 	if (!isReadOnly()) {
-		action = menu->addAction(ALIcon::AweSomeIcon::DeleteLeft, tr("delete"));
+		action = menu->addAction(CALIconFactory::createIconType(ALIcon::AweSomeIcon::DeleteLeft), tr("delete"));
 		action->setEnabled(!isReadOnly() && !toPlainText().isEmpty() && !textCursor().selectedText().isEmpty());
 		connect(action, &QAction::triggered, this, [this]() {
 			if (!textCursor().selectedText().isEmpty()) {

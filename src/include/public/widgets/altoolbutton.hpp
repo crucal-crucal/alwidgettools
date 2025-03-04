@@ -10,6 +10,7 @@
 namespace AL {
 class CALMenu;
 class CALToolButtonPrivate;
+class CALIconType;
 
 class CALWIDGETTOOLS_EXPORT CALToolButton : public QToolButton {
 	Q_OBJECT
@@ -31,8 +32,7 @@ public:
 	[[nodiscard]] bool getIsTransparent() const;
 
 	void setMenu(CALMenu* menu);
-	void setAweSomeIcon(const ALIcon::AweSomeIcon& awewomeicon);
-	void setFluentIcon(const ALIcon::FluentIcon& fluenticon);
+	void setALIcon(const std::unique_ptr<CALIconType>& icon_type);
 
 	/**
 	 * @brief 安装 CALToolTip 悬浮提示，但前提需要先 setToolTip

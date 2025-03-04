@@ -1,5 +1,7 @@
 ﻿#include "allistview.hpp"
 
+#include <QMouseEvent>
+
 #include "allistviewstyle.hpp"
 #include "allistview_p.hpp"
 #include "alscrollbar.hpp"
@@ -58,5 +60,11 @@ void CALListView::setIsTransparent(const bool isTransparent) {
 
 bool CALListView::getIsTransparent() const {
 	return d_func()->style->getIsTransparent();
+}
+
+void CALListView::mouseMoveEvent(QMouseEvent* event) {
+	Q_EMIT sigMouseOverItem(indexAt(event->pos()));
+
+	QListView::mouseMoveEvent(event);
 }
 }

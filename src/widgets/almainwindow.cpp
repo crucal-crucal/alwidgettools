@@ -196,6 +196,7 @@ void CALMainWindowPrivate::invokableWMWindowClickedEvent(const QVariantMap& data
 		if (CALApplication::containsCursorToItem(navigationBar)) {
 			return;
 		}
+
 		if (isNavigationBarExpanded) {
 			const auto navigationMoveAnimation = new QPropertyAnimation(navigationBar, "pos");
 			connect(navigationMoveAnimation, &QPropertyAnimation::valueChanged, this, [this, navigationMoveAnimation]() {

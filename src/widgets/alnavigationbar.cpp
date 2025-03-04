@@ -10,6 +10,7 @@
 #include "alcustomwidget.hpp"
 #include "alfooterdelegate.hpp"
 #include "alfootermodel.hpp"
+#include "alicon.hpp"
 #include "aliconbutton.hpp"
 #include "alinteractivecard.hpp"
 #include "almenu.hpp"
@@ -592,6 +593,14 @@ CALNavigationBar::CALNavigationBar(QWidget* parent): QWidget(parent), d_ptr(new 
 	d->userInfoCard->setCardPixmap(QPixmap(":alwidgettools/image/crucal.png"));
 	d->userInfoCard->setTitle("crucal");
 	d->userInfoCard->setSubTitle("alwidgettools");
+	// user card tooltip widget
+	const auto card_toolTipWidget = new CALInteractiveCard(this);
+	card_toolTipWidget->setCardPixmap(QPixmap(":alwidgettools/image/crucal.png"));
+	card_toolTipWidget->setTitle("crucal");
+	card_toolTipWidget->setSubTitle("alwidgettools 1.0.0");
+	card_toolTipWidget->setFixedSize(d->userInfoCard->width(), d->userInfoCard->height());
+	const auto toolTip = new CALToolTip(d->userInfoCard);
+	toolTip->setCustomWidget(card_toolTipWidget);
 	connect(d->userInfoCard, &CALInteractiveCard::clicked, this, &CALNavigationBar::sigUserInfoCardClicked);
 	// user button
 	d->userButton = new CALIconButton(QPixmap(":alwidgettools/image/crucal.png"), this);
@@ -616,7 +625,7 @@ CALNavigationBar::CALNavigationBar(QWidget* parent): QWidget(parent), d_ptr(new 
 	// navigation button
 	d->navigationButton = new CALToolButton(this);
 	d->navigationButton->setFixedSize(40, 38);
-	d->navigationButton->setAweSomeIcon(ALIcon::AweSomeIcon::Bars);
+	d->navigationButton->setALIcon(CALIconFactory::createIconType(ALIcon::AweSomeIcon::Bars));
 	d->navigationButton->setBorderRadius(8);
 	d->navigationButton->setToolTip(tr("collapse"));
 	d->navigationButton->installToolTipFilter(200, ALToolTipType::Position::Right);
@@ -624,7 +633,7 @@ CALNavigationBar::CALNavigationBar(QWidget* parent): QWidget(parent), d_ptr(new 
 	// search button
 	d->searchButton = new CALToolButton(this);
 	d->searchButton->setFixedSize(40, 38);
-	d->searchButton->setAweSomeIcon(ALIcon::AweSomeIcon::MagnifyingGlass);
+	d->searchButton->setALIcon(CALIconFactory::createIconType(ALIcon::AweSomeIcon::MagnifyingGlass));
 	d->searchButton->setBorderRadius(8);
 	d->searchButton->setVisible(false);
 	d->searchButton->setToolTip(tr("search"));
@@ -846,11 +855,11 @@ ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QStr
 		CALNavigationNode* node = d->navigationModel->getNavigationNode(pageKey);
 		if (CALNavigationNode* originalNode = node->getOriginalNode(); d->mapCompactMenu.contains(originalNode)) {
 			CALMenu* menu = d->mapCompactMenu.value(originalNode);
-			const QAction* action = menu->addAction(node->getAwesomeIcon(), node->getNodeTitle());
+			const QAction* action = menu->addAction(CALIconFactory::createIconType(node->getAwesomeIcon()), node->getNodeTitle());
 			connect(action, &QAction::triggered, this, [d, node]() { d->slotTreeViewClicked(node->getModelIndex()); });
 		} else {
 			const auto menu = new CALMenu(const_cast<CALNavigationBar*>(this));
-			const QAction* action = menu->addAction(node->getAwesomeIcon(), node->getNodeTitle());
+			const QAction* action = menu->addAction(CALIconFactory::createIconType(node->getAwesomeIcon()), node->getNodeTitle());
 			connect(action, &QAction::triggered, this, [d, node]() { d->slotTreeViewClicked(node->getModelIndex()); });
 			d->mapCompactMenu.insert(originalNode, menu);
 		}
@@ -878,11 +887,11 @@ ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QStr
 		CALNavigationNode* node = d->navigationModel->getNavigationNode(pageKey);
 		if (CALNavigationNode* originalNode = node->getOriginalNode(); d->mapCompactMenu.contains(originalNode)) {
 			CALMenu* menu = d->mapCompactMenu.value(originalNode);
-			const QAction* action = menu->addAction(node->getFluentIcon(), node->getNodeTitle());
+			const QAction* action = menu->addAction(CALIconFactory::createIconType(node->getFluentIcon()), node->getNodeTitle());
 			connect(action, &QAction::triggered, this, [d, node]() { d->slotTreeViewClicked(node->getModelIndex()); });
 		} else {
 			const auto menu = new CALMenu(const_cast<CALNavigationBar*>(this));
-			const QAction* action = menu->addAction(node->getFluentIcon(), node->getNodeTitle());
+			const QAction* action = menu->addAction(CALIconFactory::createIconType(node->getFluentIcon()), node->getNodeTitle());
 			connect(action, &QAction::triggered, this, [d, node]() { d->slotTreeViewClicked(node->getModelIndex()); });
 			d->mapCompactMenu.insert(originalNode, menu);
 		}
@@ -946,11 +955,11 @@ ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QStr
 		CALNavigationNode* node = d->navigationModel->getNavigationNode(pageKey);
 		if (CALNavigationNode* originalNode = node->getOriginalNode(); d->mapCompactMenu.contains(originalNode)) {
 			CALMenu* menu = d->mapCompactMenu.value(originalNode);
-			const QAction* action = menu->addAction(node->getAwesomeIcon(), node->getNodeTitle());
+			const QAction* action = menu->addAction(CALIconFactory::createIconType(node->getAwesomeIcon()), node->getNodeTitle());
 			connect(action, &QAction::triggered, this, [d, node]() { d->slotTreeViewClicked(node->getModelIndex()); });
 		} else {
 			const auto menu = new CALMenu(const_cast<CALNavigationBar*>(this));
-			const QAction* action = menu->addAction(node->getAwesomeIcon(), node->getNodeTitle());
+			const QAction* action = menu->addAction(CALIconFactory::createIconType(node->getAwesomeIcon()), node->getNodeTitle());
 			connect(action, &QAction::triggered, this, [d, node]() { d->slotTreeViewClicked(node->getModelIndex()); });
 			d->mapCompactMenu.insert(originalNode, menu);
 		}
@@ -978,11 +987,11 @@ ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QStr
 		CALNavigationNode* node = d->navigationModel->getNavigationNode(pageKey);
 		if (CALNavigationNode* originalNode = node->getOriginalNode(); d->mapCompactMenu.contains(originalNode)) {
 			CALMenu* menu = d->mapCompactMenu.value(originalNode);
-			const QAction* action = menu->addAction(node->getFluentIcon(), node->getNodeTitle());
+			const QAction* action = menu->addAction(CALIconFactory::createIconType(node->getFluentIcon()), node->getNodeTitle());
 			connect(action, &QAction::triggered, this, [d, node]() { d->slotTreeViewClicked(node->getModelIndex()); });
 		} else {
 			const auto menu = new CALMenu(const_cast<CALNavigationBar*>(this));
-			const QAction* action = menu->addAction(node->getFluentIcon(), node->getNodeTitle());
+			const QAction* action = menu->addAction(CALIconFactory::createIconType(node->getFluentIcon()), node->getNodeTitle());
 			connect(action, &QAction::triggered, this, [d, node]() { d->slotTreeViewClicked(node->getModelIndex()); });
 			d->mapCompactMenu.insert(originalNode, menu);
 		}

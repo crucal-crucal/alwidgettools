@@ -7,8 +7,8 @@
 #include <QStyleOptionSlider>
 #include <QTimer>
 #include <QWheelEvent>
-#include <QDebug>
 
+#include "alicon.hpp"
 #include "almenu.hpp"
 #include "alscrollbarstyle.hpp"
 #include "alscrollbar_p.hpp"
@@ -284,16 +284,16 @@ void CALScrollBar::contextMenuEvent(QContextMenuEvent* event) {
 	const bool horiz = this->orientation() == Qt::Horizontal;
 	QPointer<CALMenu> menu = new CALMenu(this);
 	menu->setMenuItemHeight(27);
-	const QAction* actScrollHere = menu->addAction(hasFlag(CALScrollBar::HasIcon) ? ALIcon::AweSomeIcon::UpDownLeftRight : ALIcon::AweSomeIcon::None, tr("Scroll here"));
+	const QAction* actScrollHere = menu->addAction(CALIconFactory::createIconType(hasFlag(CALScrollBar::HasIcon) ? ALIcon::AweSomeIcon::UpDownLeftRight : ALIcon::AweSomeIcon::None), tr("Scroll here"));
 	menu->addSeparator();
-	const QAction* actScrollTop = menu->addAction(hasFlag(CALScrollBar::HasIcon) ? horiz ? ALIcon::AweSomeIcon::ArrowLeftToLine : ALIcon::AweSomeIcon::ArrowUpToLine : ALIcon::AweSomeIcon::None, horiz ? tr("Left edge") : tr("Top"));
-	const QAction* actScrollBottom = menu->addAction(hasFlag(CALScrollBar::HasIcon) ? horiz ? ALIcon::AweSomeIcon::ArrowRightToLine : ALIcon::AweSomeIcon::ArrowDownToLine : ALIcon::AweSomeIcon::None, horiz ? tr("Right edge") : tr("Bottom"));
+	const QAction* actScrollTop = menu->addAction(CALIconFactory::createIconType(hasFlag(CALScrollBar::HasIcon) ? horiz ? ALIcon::AweSomeIcon::ArrowLeftToLine : ALIcon::AweSomeIcon::ArrowUpToLine : ALIcon::AweSomeIcon::None), horiz ? tr("Left edge") : tr("Top"));
+	const QAction* actScrollBottom = menu->addAction(CALIconFactory::createIconType(hasFlag(CALScrollBar::HasIcon) ? horiz ? ALIcon::AweSomeIcon::ArrowRightToLine : ALIcon::AweSomeIcon::ArrowDownToLine : ALIcon::AweSomeIcon::None), horiz ? tr("Right edge") : tr("Bottom"));
 	menu->addSeparator();
-	const QAction* actPageUp = menu->addAction(hasFlag(CALScrollBar::HasIcon) ? horiz ? ALIcon::AweSomeIcon::AnglesLeft : ALIcon::AweSomeIcon::AnglesUp : ALIcon::AweSomeIcon::None, horiz ? tr("Page left") : tr("Page up"));
-	const QAction* actPageDn = menu->addAction(hasFlag(CALScrollBar::HasIcon) ? horiz ? ALIcon::AweSomeIcon::AnglesRight : ALIcon::AweSomeIcon::AnglesDown : ALIcon::AweSomeIcon::None, horiz ? tr("Page right") : tr("Page down"));
+	const QAction* actPageUp = menu->addAction(CALIconFactory::createIconType(hasFlag(CALScrollBar::HasIcon) ? horiz ? ALIcon::AweSomeIcon::AnglesLeft : ALIcon::AweSomeIcon::AnglesUp : ALIcon::AweSomeIcon::None), horiz ? tr("Page left") : tr("Page up"));
+	const QAction* actPageDn = menu->addAction(CALIconFactory::createIconType(hasFlag(CALScrollBar::HasIcon) ? horiz ? ALIcon::AweSomeIcon::AnglesRight : ALIcon::AweSomeIcon::AnglesDown : ALIcon::AweSomeIcon::None), horiz ? tr("Page right") : tr("Page down"));
 	menu->addSeparator();
-	const QAction* actScrollUp = menu->addAction(hasFlag(CALScrollBar::HasIcon) ? horiz ? ALIcon::AweSomeIcon::AngleLeft : ALIcon::AweSomeIcon::AngleUp : ALIcon::AweSomeIcon::None, horiz ? tr("Scroll left") : tr("Scroll up"));
-	const QAction* actScrollDn = menu->addAction(hasFlag(CALScrollBar::HasIcon) ? horiz ? ALIcon::AweSomeIcon::AngleRight : ALIcon::AweSomeIcon::AngleDown : ALIcon::AweSomeIcon::None, horiz ? tr("Scroll right") : tr("Scroll down"));
+	const QAction* actScrollUp = menu->addAction(CALIconFactory::createIconType(hasFlag(CALScrollBar::HasIcon) ? horiz ? ALIcon::AweSomeIcon::AngleLeft : ALIcon::AweSomeIcon::AngleUp : ALIcon::AweSomeIcon::None), horiz ? tr("Scroll left") : tr("Scroll up"));
+	const QAction* actScrollDn = menu->addAction(CALIconFactory::createIconType(hasFlag(CALScrollBar::HasIcon) ? horiz ? ALIcon::AweSomeIcon::AngleRight : ALIcon::AweSomeIcon::AngleDown : ALIcon::AweSomeIcon::None), horiz ? tr("Scroll right") : tr("Scroll down"));
 	const QAction* actionSelected = menu->exec(event->globalPos());
 	delete menu;
 	if (!actionSelected) {

@@ -11,7 +11,7 @@
 #include <QTimer>
 #include <QVariant>
 
-#include "alawesomebutton.hpp"
+#include "alicon.hpp"
 #include "aliconbutton.hpp"
 #include "almessagebar_p.hpp"
 #include "althememanager.hpp"
@@ -539,7 +539,7 @@ CALMessageBar::CALMessageBar(const ALMessageBarType::PositionPolicy& policy, con
 	setFixedHeight(60);
 	setMouseTracking(true);
 	parent->installEventFilter(this);
-	d->closeButton = new CALIconButton(ALIcon::FluentIcon::ChromeClose, 10, d->closeButtonWidth, 30, this);
+	d->closeButton = new CALIconButton(CALIconFactory::createIconType(ALIcon::FluentIcon::ChromeClose), 10, d->closeButtonWidth, 30, this);
 	switch (d->messageMode) {
 		case ALMessageBarType::Success: {
 			d->closeButton->setLightHoverColor(QColor(0xE6, 0xFC, 0xE3));

@@ -4,6 +4,7 @@
 
 #include "alcontentdialog.hpp"
 #include "aldockwidget.hpp"
+#include "alicon.hpp"
 #include "almenu.hpp"
 #include "almenubar.hpp"
 #include "alstatusbar.hpp"
@@ -90,14 +91,14 @@ void MainWindow::initEdgeLayout() {
 	toolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
 	toolBar->setIconSize(QSize(25, 25));
 	const auto toolbutton1 = new CALToolButton(this);
-	toolbutton1->setAweSomeIcon(ALIcon::AweSomeIcon::BadgeCheck);
+	toolbutton1->setALIcon(CALIconFactory::createIconType(ALIcon::AweSomeIcon::BadgeCheck));
 	toolBar->addWidget(toolbutton1);
 	const auto toolbutton2 = new CALToolButton(this);
-	toolbutton2->setFluentIcon(ALIcon::FluentIcon::Calculator);
+	toolbutton2->setALIcon(CALIconFactory::createIconType(ALIcon::FluentIcon::Calculator));
 	toolBar->addWidget(toolbutton2);
 	toolBar->addSeparator();
 	const auto toolbutton3 = new CALToolButton(this);
-	toolbutton3->setFluentIcon(ALIcon::FluentIcon::Wifi);
+	toolbutton3->setALIcon(CALIconFactory::createIconType(ALIcon::FluentIcon::Wifi));
 	toolbutton3->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	toolbutton3->setText(tr("Wifi"));
 	toolBar->addWidget(toolbutton3);

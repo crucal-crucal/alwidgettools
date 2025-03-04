@@ -19,6 +19,7 @@
 #include "alapplication.hpp"
 #include "altoolbutton.hpp"
 #include "aleventbus.hpp"
+#include "alicon.hpp"
 #include "aliconbutton.hpp"
 #include "alnavigationbar.hpp"
 #include "altext.hpp"
@@ -79,12 +80,12 @@ void CALAppBarPrivate::slotStayTopButtonClicked() const {
 }
 
 void CALAppBarPrivate::slotThemeModeChanged(const ALThemeType::ThemeMode& mode) const {
-	themeChangeButton->setFluentIcon(mode == ALThemeType::Light ? ALIcon::FluentIcon::QuietHours : ALIcon::FluentIcon::Brightness);
+	themeChangeButton->setALIcon(CALIconFactory::createIconType(mode == ALThemeType::Light ? ALIcon::FluentIcon::QuietHours : ALIcon::FluentIcon::Brightness));
 	themeChangeButton->setToolTip(mode == ALThemeType::Light ? tr("Switch to dark theme") : tr("Switch to light theme"));
 }
 
 void CALAppBarPrivate::changeMaxButtonIcon(const bool isMaximized) const {
-	maxButton->setFluentIcon(isMaximized ? ALIcon::FluentIcon::ChromeRestore : ALIcon::FluentIcon::ChromeMaximize);
+	maxButton->setALIcon(CALIconFactory::createIconType(isMaximized ? ALIcon::FluentIcon::ChromeRestore : ALIcon::FluentIcon::ChromeMaximize));
 }
 
 void CALAppBarPrivate::showSystemMenu(const QPoint& point) {
@@ -261,7 +262,7 @@ CALAppBar::CALAppBar(QWidget* parent): QWidget(parent), d_ptr(new CALAppBarPriva
 	setStyleSheet("#CALAppBar { background-color: transparent; }");
 	// 路由跳转
 	d->routeBackButton = new CALToolButton(this);
-	d->routeBackButton->setAweSomeIcon(ALIcon::AweSomeIcon::ArrowLeft);
+	d->routeBackButton->setALIcon(CALIconFactory::createIconType(ALIcon::AweSomeIcon::ArrowLeft));
 	d->routeBackButton->setFixedSize(d->appBarHeight, d->appBarHeight);
 	d->routeBackButton->setEnabled(false);
 	d->routeBackButton->setToolTip(tr("Back"));
@@ -270,7 +271,7 @@ CALAppBar::CALAppBar(QWidget* parent): QWidget(parent), d_ptr(new CALAppBarPriva
 
 	// 导航栏展开
 	d->navigationButton = new CALToolButton(this);
-	d->navigationButton->setAweSomeIcon(ALIcon::AweSomeIcon::Bars);
+	d->navigationButton->setALIcon(CALIconFactory::createIconType(ALIcon::AweSomeIcon::Bars));
 	d->navigationButton->setFixedSize(40, 30);
 	d->navigationButton->setObjectName("CALNavigationButton");
 	d->navigationButton->setToolTip(tr("Navigation"));
@@ -279,7 +280,7 @@ CALAppBar::CALAppBar(QWidget* parent): QWidget(parent), d_ptr(new CALAppBarPriva
 
 	// 置顶
 	d->stayTopButton = new CALToolButton(this);
-	d->stayTopButton->setAweSomeIcon(ALIcon::AweSomeIcon::ArrowUpToArc);
+	d->stayTopButton->setALIcon(CALIconFactory::createIconType(ALIcon::AweSomeIcon::ArrowUpToArc));
 	d->stayTopButton->setFixedSize(d->appBarHeight, d->appBarHeight);
 	d->stayTopButton->setToolTip(tr("Stay Top"));
 	d->stayTopButton->installToolTipFilter(200, ALToolTipType::Position::Top);
@@ -316,7 +317,7 @@ CALAppBar::CALAppBar(QWidget* parent): QWidget(parent), d_ptr(new CALAppBarPriva
 
 	// 主题
 	d->themeChangeButton = new CALToolButton(this);
-	d->themeChangeButton->setFluentIcon(ALIcon::FluentIcon::QuietHours);
+	d->themeChangeButton->setALIcon(CALIconFactory::createIconType(ALIcon::FluentIcon::QuietHours));
 	d->themeChangeButton->setFixedSize(d->appBarHeight, d->appBarHeight);
 	d->themeChangeButton->setToolTip(ALTheme->getThemeMode() == ALThemeType::Light ? tr("Switch to dark theme") : tr("Switch to light theme"));
 	d->themeChangeButton->installToolTipFilter(200, ALToolTipType::Position::Top);
@@ -326,7 +327,7 @@ CALAppBar::CALAppBar(QWidget* parent): QWidget(parent), d_ptr(new CALAppBarPriva
 
 	// 最小化
 	d->minButton = new CALToolButton(this);
-	d->minButton->setFluentIcon(ALIcon::FluentIcon::ChromeMinimize);
+	d->minButton->setALIcon(CALIconFactory::createIconType(ALIcon::FluentIcon::ChromeMinimize));
 	d->minButton->setFixedSize(d->appBarHeight, d->appBarHeight);
 	d->minButton->setToolTip(tr("Minimize"));
 	d->minButton->installToolTipFilter(200, ALToolTipType::Position::Top);
@@ -336,13 +337,13 @@ CALAppBar::CALAppBar(QWidget* parent): QWidget(parent), d_ptr(new CALAppBarPriva
 	// 最大化 & 还原
 	d->maxButton = new CALToolButton(this);
 	d->maxButton->setIconSize({ 18, 18 });
-	d->maxButton->setFluentIcon(ALIcon::FluentIcon::ChromeMaximize);
+	d->maxButton->setALIcon(CALIconFactory::createIconType(ALIcon::FluentIcon::ChromeMaximize));
 	d->maxButton->setFixedSize(d->appBarHeight, d->appBarHeight);
 	d->buttonMap[ALAppBarType::MaximizeButtonHint] = d->maxButton;
 	connect(d->maxButton, &CALToolButton::clicked, d, &CALAppBarPrivate::slotMaxButtonClicked);
 
 	// 关闭
-	d->closeButton = new CALIconButton(ALIcon::FluentIcon::ChromeClose, 14, d->appBarHeight, d->appBarHeight, this);
+	d->closeButton = new CALIconButton(CALIconFactory::createIconType(ALIcon::FluentIcon::ChromeClose), 14, d->appBarHeight, d->appBarHeight, this);
 	d->closeButton->setLightHoverColor(QColor(0xE8, 0x11, 0x23));
 	d->closeButton->setDarkHoverColor(QColor(0xE8, 0x11, 0x23));
 	d->closeButton->setLightHoverIconColor(Qt::white);

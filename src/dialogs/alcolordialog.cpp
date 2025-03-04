@@ -12,6 +12,7 @@
 #include "alcolorpreview.hpp"
 #include "alcolorvaluesliderstyle.hpp"
 #include "alcombobox.hpp"
+#include "alicon.hpp"
 #include "alintvalidator.hpp"
 #include "allineedit.hpp"
 #include "alpushbutton.hpp"
@@ -402,11 +403,11 @@ CALColorDialog::CALColorDialog(QWidget* parent): QDialog(parent), d_ptr(new CALC
 	/// add & remove button
 	d->addCustomColorButton = new CALToolButton(this);
 	d->addCustomColorButton->setIsTransparent(false);
-	d->addCustomColorButton->setAweSomeIcon(ALIcon::AweSomeIcon::Plus);
+	d->addCustomColorButton->setALIcon(CALIconFactory::createIconType(ALIcon::AweSomeIcon::Plus));
 	connect(d->addCustomColorButton, &CALToolButton::clicked, d, &CALColorDialogPrivate::slotAddCustomColorButtonClicked);
 	d->removeCustomColorButton = new CALToolButton(this);
 	d->removeCustomColorButton->setIsTransparent(false);
-	d->removeCustomColorButton->setAweSomeIcon(ALIcon::AweSomeIcon::Minus);
+	d->removeCustomColorButton->setALIcon(CALIconFactory::createIconType(ALIcon::AweSomeIcon::Minus));
 	connect(d->removeCustomColorButton, &CALToolButton::clicked, d, &CALColorDialogPrivate::slotRemoveCustomColorButtonClicked);
 	const auto customColorViewText = new CALText(tr("custom color"), this);
 	customColorViewText->setTextPixelSize(14);

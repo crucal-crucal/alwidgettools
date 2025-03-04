@@ -2,6 +2,7 @@
 
 #include <QHBoxLayout>
 
+#include "alicon.hpp"
 #include "altoolbutton.hpp"
 #include "almenu.hpp"
 #include "altext.hpp"
@@ -32,10 +33,10 @@ void E_BasePage::createCustomWidget(const QString& desText) {
 	documentationButton->setIsTransparent(false);
 	documentationButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	documentationButton->setText("Documentation");
-	documentationButton->setAweSomeIcon(ALIcon::AweSomeIcon::FileDoc);
+	documentationButton->setALIcon(CALIconFactory::createIconType(ALIcon::AweSomeIcon::FileDoc));
 	const auto documentationMenu = new CALMenu(this);
-	documentationMenu->addAction(ALIcon::AweSomeIcon::CardsBlank, "CardsBlank");
-	documentationMenu->addAction(ALIcon::AweSomeIcon::EarthAmericas, "EarthAmericas");
+	documentationMenu->addAction(CALIconFactory::createIconType(ALIcon::AweSomeIcon::CardsBlank), "CardsBlank");
+	documentationMenu->addAction(CALIconFactory::createIconType(ALIcon::AweSomeIcon::EarthAmericas), "EarthAmericas");
 	documentationButton->setMenu(documentationMenu);
 
 	const auto sourceButton = new CALToolButton(this);
@@ -43,16 +44,16 @@ void E_BasePage::createCustomWidget(const QString& desText) {
 	sourceButton->setIsTransparent(false);
 	sourceButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	sourceButton->setText("Source");
-	sourceButton->setAweSomeIcon(ALIcon::AweSomeIcon::NfcSymbol);
+	sourceButton->setALIcon(CALIconFactory::createIconType(ALIcon::AweSomeIcon::NfcSymbol));
 	const auto sourceMenu = new CALMenu(this);
-	sourceMenu->addAction(ALIcon::AweSomeIcon::FireBurner, "FireBurner");
-	sourceMenu->addAction(ALIcon::AweSomeIcon::Galaxy, "Galaxy");
+	sourceMenu->addAction(CALIconFactory::createIconType(ALIcon::AweSomeIcon::FireBurner), "FireBurner");
+	sourceMenu->addAction(CALIconFactory::createIconType(ALIcon::AweSomeIcon::Galaxy), "Galaxy");
 	sourceButton->setMenu(sourceMenu);
 
 	const auto themeButton = new CALToolButton(this);
 	themeButton->setFixedSize(35, 35);
 	themeButton->setIsTransparent(false);
-	themeButton->setAweSomeIcon(ALIcon::AweSomeIcon::MoonStars);
+	themeButton->setALIcon(CALIconFactory::createIconType(ALIcon::AweSomeIcon::MoonStars));
 	connect(themeButton, &CALToolButton::clicked, this, []() { ALTheme->setThemeMode(ALTheme->getThemeMode() == ALThemeType::Light ? ALThemeType::Dark : ALThemeType::Light); });
 
 	const auto buttonLayout = new QHBoxLayout;

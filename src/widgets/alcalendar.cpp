@@ -12,6 +12,7 @@
 #include "alcalendartitledelegate.hpp"
 #include "alcalendartitlemodel.hpp"
 #include "alcalendar_p.hpp"
+#include "alicon.hpp"
 #include "alscrollbar.hpp"
 #include "althememanager.hpp"
 
@@ -288,11 +289,11 @@ CALCalendar::CALCalendar(QWidget* parent): QWidget(parent), d_ptr(new CALCalenda
 	/// up or down button
 	d->upButton = new CALToolButton(this);
 	d->upButton->setFixedSize(36, 36);
-	d->upButton->setAweSomeIcon(ALIcon::AweSomeIcon::CaretUp);
+	d->upButton->setALIcon(CALIconFactory::createIconType(ALIcon::AweSomeIcon::CaretUp));
 	connect(d->upButton, &CALToolButton::clicked, d, &CALCalendarPrivate::slotUpButtonClicked);
 	d->downButton = new CALToolButton(this);
 	d->downButton->setFixedSize(36, 36);
-	d->downButton->setAweSomeIcon(ALIcon::AweSomeIcon::CaretDown);
+	d->downButton->setALIcon(CALIconFactory::createIconType(ALIcon::AweSomeIcon::CaretDown));
 	connect(d->downButton, &CALToolButton::clicked, d, &CALCalendarPrivate::slotDownButtonClicked);
 	/// layout
 	const auto buttonHLayout = new QHBoxLayout;

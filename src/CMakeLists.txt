@@ -44,7 +44,8 @@ option(CALWIDGETTOOLS_BUILD_STATIC_LIB "Build static library." OFF)
 if (CALWIDGETTOOLS_BUILD_STATIC_LIB)
     set(LIB_TYPE STATIC)
 else ()
-    set(LIB_TYPE SHARED)
+    set(LIB_TYPE SHARED
+            include/private/alicon_p.hpp)
 endif ()
 
 # Add include directories for public, private, and component headers

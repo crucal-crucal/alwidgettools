@@ -4,6 +4,7 @@
 #include <QPainter>
 #include <QPropertyAnimation>
 
+#include "alicon.hpp"
 #include "almenustyle.hpp"
 #include "almenu_p.hpp"
 
@@ -86,21 +87,11 @@ QAction* CALMenu::addAction(const QString& text) {
 	return QMenu::addAction(text);
 }
 
-QAction* CALMenu::addAction(const ALIcon::AweSomeIcon& awesomeicon, const QString& text) {
+QAction* CALMenu::addAction(const std::unique_ptr<CALIconType>& icon_type, const QString& text) {
 	const auto action = new QAction(text, this);
-	if (awesomeicon != ALIcon::AweSomeIcon::None) {
-		action->setProperty(ALIcon::iconProperty, QChar(static_cast<unsigned short>(awesomeicon)));
-		action->setProperty(ALIcon::iconTypeProperty, ALIcon::Awesome);
-	}
-	QMenu::addAction(action);
-	return action;
-}
-
-QAction* CALMenu::addAction(const ALIcon::FluentIcon& fluenticon, const QString& text) {
-	const auto action = new QAction(text, this);
-	if (fluenticon != ALIcon::FluentIcon::None) {
-		action->setProperty(ALIcon::iconProperty, QChar(static_cast<unsigned short>(fluenticon)));
-		action->setProperty(ALIcon::iconTypeProperty, ALIcon::Fluent);
+	if (!icon_type->isNull()) {
+		action->setProperty(ALIcon::iconProperty, QChar(icon_type->value()));
+		action->setProperty(ALIcon::iconTypeProperty, icon_type->iconType());
 	}
 	QMenu::addAction(action);
 	return action;
@@ -110,19 +101,10 @@ QAction* CALMenu::addAction(const QIcon& icon, const QString& text) {
 	return QMenu::addAction(icon, text);
 }
 
-QAction* CALMenu::addAction(const ALIcon::AweSomeIcon& awesomeicon, const QString& text, const QKeySequence& shortcut) {
+QAction* CALMenu::addAction(const std::unique_ptr<CALIconType>& icon_type, const QString& text, const QKeySequence& shortcut) {
 	const auto action = new QAction(text, this);
-	action->setProperty(ALIcon::iconProperty, QChar(static_cast<unsigned short>(awesomeicon)));
-	action->setProperty(ALIcon::iconTypeProperty, ALIcon::Awesome);
-	action->setShortcut(shortcut);
-	QMenu::addAction(action);
-	return action;
-}
-
-QAction* CALMenu::addAction(const ALIcon::FluentIcon& fluenticon, const QString& text, const QKeySequence& shortcut) {
-	const auto action = new QAction(text, this);
-	action->setProperty(ALIcon::iconProperty, QChar(static_cast<unsigned short>(fluenticon)));
-	action->setProperty(ALIcon::iconTypeProperty, ALIcon::Fluent);
+	action->setProperty(ALIcon::iconProperty, QChar(icon_type->value()));
+	action->setProperty(ALIcon::iconTypeProperty, icon_type->iconType());
 	action->setShortcut(shortcut);
 	QMenu::addAction(action);
 	return action;
@@ -136,20 +118,10 @@ QAction* CALMenu::addAction(const QIcon& icon, const QString& text, const QKeySe
 	return action;
 }
 
-QAction* CALMenu::addAction(const ALIcon::AweSomeIcon& awesomeicon, const QString& text, const QObject* receiver, const char* member, const QKeySequence& shortcut) {
+QAction* CALMenu::addAction(const std::unique_ptr<CALIconType>& icon_type, const QString& text, const QObject* receiver, const char* member, const QKeySequence& shortcut) {
 	const auto action = new QAction(text, this);
-	action->setProperty(ALIcon::iconProperty, QChar(static_cast<unsigned short>(awesomeicon)));
-	action->setProperty(ALIcon::iconTypeProperty, ALIcon::Awesome);
-	action->setShortcut(shortcut);
-	QObject::connect(action, SIGNAL(triggered(bool)), receiver, member);
-	QMenu::addAction(action);
-	return action;
-}
-
-QAction* CALMenu::addAction(const ALIcon::FluentIcon& fluenticon, const QString& text, const QObject* receiver, const char* member, const QKeySequence& shortcut) {
-	const auto action = new QAction(text, this);
-	action->setProperty(ALIcon::iconProperty, QChar(static_cast<unsigned short>(fluenticon)));
-	action->setProperty(ALIcon::iconTypeProperty, ALIcon::Fluent);
+	action->setProperty(ALIcon::iconProperty, QChar(icon_type->value()));
+	action->setProperty(ALIcon::iconTypeProperty, icon_type->iconType());
 	action->setShortcut(shortcut);
 	QObject::connect(action, SIGNAL(triggered(bool)), receiver, member);
 	QMenu::addAction(action);

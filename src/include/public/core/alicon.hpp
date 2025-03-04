@@ -1,6 +1,8 @@
 ﻿#pragma once
 
+#include <QDebug>
 #include <QIcon>
+#include <QMetaEnum>
 
 #include "alwidgettoolsdef.hpp"
 
@@ -8,6 +10,115 @@
  * @brief \namespace AL
  */
 namespace AL {
+/**
+ * @brief 管理 ALIcon 图标抽象类
+ */
+class CALWIDGETTOOLS_EXPORT CALIconType {
+public:
+	virtual ~CALIconType() = default;
+
+	/**
+	 * @brief 获取图标名称
+	 * @return QString 图标名称
+	 */
+	[[nodiscard]] virtual QString name() const = 0;
+
+	/**
+	 * @brief 获取图标值
+	 * @return int 图标值
+	 */
+	[[nodiscard]] virtual int value() const = 0;
+
+	/**
+	 * @brief 获取图标字体名称
+	 * @return QString 图标字体名称
+	 */
+	[[nodiscard]] virtual QString familyName() const = 0;
+
+	/**
+	 * @brief 获取图标类型
+	 * @return \see \enum ALIcon::IconType
+	 */
+	[[nodiscard]] virtual ALIcon::IconType iconType() const = 0;
+
+	/**
+	 * @brief 是否为空图标
+	 * @return 是否为空
+	 */
+	[[nodiscard]] virtual bool isNull() const = 0;
+};
+
+class CALAwesomeIconTypePrivate;
+
+/**
+ * @brief Awesome Icon 类
+ */
+class CALWIDGETTOOLS_EXPORT CALAwesomeIconType final : public CALIconType {
+public:
+	explicit CALAwesomeIconType(const ALIcon::AweSomeIcon& icon);
+	~CALAwesomeIconType() override;
+	[[nodiscard]] QString name() const override;
+	[[nodiscard]] int value() const override;
+	[[nodiscard]] QString familyName() const override;
+	[[nodiscard]] ALIcon::IconType iconType() const override;
+	[[nodiscard]] bool isNull() const override;
+
+protected:
+	std::unique_ptr<CALAwesomeIconTypePrivate> d_ptr{ nullptr };
+
+	friend class CALAwesomeIconTypePrivate;
+};
+
+class CALFluentIconTypePrivate;
+
+/**
+ * @brief Fluent Icon 类
+ */
+class CALWIDGETTOOLS_EXPORT CALFluentIconType final : public CALIconType {
+public:
+	explicit CALFluentIconType(const ALIcon::FluentIcon& icon);
+	~CALFluentIconType() override;
+	[[nodiscard]] QString name() const override;
+	[[nodiscard]] int value() const override;
+	[[nodiscard]] QString familyName() const override;
+	[[nodiscard]] ALIcon::IconType iconType() const override;
+	[[nodiscard]] bool isNull() const override;
+
+protected:
+	std::unique_ptr<CALFluentIconTypePrivate> d_ptr{ nullptr };
+
+	friend class CALFluentIconTypePrivate;
+};
+
+/**
+ * @brief ALIcon 工厂类，可以通过此类获取图标
+ */
+class CALWIDGETTOOLS_EXPORT CALIconFactory {
+public:
+	static std::unique_ptr<CALIconType> createIconType(const ALIcon::AweSomeIcon& awesomeicon) {
+		return std::make_unique<CALAwesomeIconType>(awesomeicon);
+	}
+
+	static std::unique_ptr<CALIconType> createIconType(const ALIcon::FluentIcon& fluenticon) {
+		return std::make_unique<CALFluentIconType>(fluenticon);
+	}
+
+	static std::unique_ptr<CALIconType> createIconType(const QMetaEnum& metaEnum, const QString& iconName) {
+		if (metaEnum.name() == QMetaEnum::fromType<ALIcon::AweSomeIcon>().name()) {
+			if (int value = metaEnum.keysToValue(iconName.toUtf8().constData()); value != -1) {
+				return std::make_unique<CALAwesomeIconType>(static_cast<ALIcon::AweSomeIcon>(value));
+			}
+		} else if (metaEnum.name() == QMetaEnum::fromType<ALIcon::FluentIcon>().name()) {
+			if (int value = metaEnum.keysToValue(iconName.toUtf8().constData()); value != -1) {
+				return std::make_unique<CALFluentIconType>(static_cast<ALIcon::FluentIcon>(value));
+			}
+		}
+
+		qWarning() << "Failed to create icon type for" << iconName;
+		return nullptr;
+	}
+};
+
 class CALWIDGETTOOLS_EXPORT CALIcon {
 public:
 	/**

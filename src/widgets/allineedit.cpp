@@ -8,6 +8,7 @@
 
 #include "alapplication.hpp"
 #include "aleventbus.hpp"
+#include "alicon.hpp"
 #include "allineeditstyle.hpp"
 #include "allineedit_p.hpp"
 #include "almenu.hpp"
@@ -165,11 +166,11 @@ void CALLineEdit::contextMenuEvent(QContextMenuEvent* event) {
 	menu->setAttribute(Qt::WA_DeleteOnClose);
 	QAction* action;
 	if (!isReadOnly()) {
-		action = menu->addAction(ALIcon::AweSomeIcon::ArrowRotateLeft, tr("Undo"), QKeySequence::Undo);
+		action = menu->addAction(CALIconFactory::createIconType(ALIcon::AweSomeIcon::ArrowRotateLeft), tr("Undo"), QKeySequence::Undo);
 		action->setEnabled(isUndoAvailable());
 		connect(action, &QAction::triggered, this, &CALLineEdit::undo);
 
-		action = menu->addAction(ALIcon::AweSomeIcon::ArrowRotateRight, tr("Redo"), QKeySequence::Redo);
+		action = menu->addAction(CALIconFactory::createIconType(ALIcon::AweSomeIcon::ArrowRotateRight), tr("Redo"), QKeySequence::Redo);
 		action->setEnabled(isRedoAvailable());
 		connect(action, &QAction::triggered, this, &CALLineEdit::redo);
 		menu->addSeparator();
@@ -177,23 +178,23 @@ void CALLineEdit::contextMenuEvent(QContextMenuEvent* event) {
 
 #ifndef QT_NO_CLIPBOARD
 	if (!isReadOnly()) {
-		action = menu->addAction(ALIcon::AweSomeIcon::KnifeKitchen, tr("Cut"), QKeySequence::Cut);
+		action = menu->addAction(CALIconFactory::createIconType(ALIcon::AweSomeIcon::KnifeKitchen), tr("Cut"), QKeySequence::Cut);
 		action->setEnabled(!isReadOnly() && hasSelectedText() && echoMode() == QLineEdit::Normal);
 		connect(action, &QAction::triggered, this, &CALLineEdit::cut);
 	}
 
-	action = menu->addAction(ALIcon::AweSomeIcon::Copy, tr("Copy"), QKeySequence::Copy);
+	action = menu->addAction(CALIconFactory::createIconType(ALIcon::AweSomeIcon::Copy), tr("Copy"), QKeySequence::Copy);
 	action->setEnabled(hasSelectedText() && echoMode() == QLineEdit::Normal);
 	connect(action, &QAction::triggered, this, &CALLineEdit::copy);
 
 	if (!isReadOnly()) {
-		action = menu->addAction(ALIcon::AweSomeIcon::Paste, tr("Paste"), QKeySequence::Paste);
+		action = menu->addAction(CALIconFactory::createIconType(ALIcon::AweSomeIcon::Paste), tr("Paste"), QKeySequence::Paste);
 		action->setEnabled(!isReadOnly() && !QGuiApplication::clipboard()->text().isEmpty());
 		connect(action, &QAction::triggered, this, &CALLineEdit::paste);
 	}
 #endif
 	if (!isReadOnly()) {
-		action = menu->addAction(ALIcon::AweSomeIcon::DeleteLeft, tr("delete"));
+		action = menu->addAction(CALIconFactory::createIconType(ALIcon::AweSomeIcon::DeleteLeft), tr("delete"));
 		action->setEnabled(!isReadOnly() && !text().isEmpty() && hasSelectedText());
 		connect(action, &QAction::triggered, this, [this]() {
 			if (hasSelectedText()) {

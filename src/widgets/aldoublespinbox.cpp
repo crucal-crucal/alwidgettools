@@ -9,6 +9,7 @@
 #include "almenu.hpp"
 #include "alspinboxstyle.hpp"
 #include "aldoublespinbox_p.hpp"
+#include "alicon.hpp"
 #include "althememanager.hpp"
 
 /**
@@ -35,11 +36,11 @@ CALMenu* CALDoubleSpinBoxPrivate::createStandardContextMenu() {
 	menu->setAttribute(Qt::WA_DeleteOnClose);
 	QAction* action;
 	if (!lineEdit->isReadOnly()) {
-		action = menu->addAction(ALIcon::AweSomeIcon::ArrowRotateLeft, tr("Undo"), QKeySequence::Undo);
+		action = menu->addAction(CALIconFactory::createIconType(ALIcon::AweSomeIcon::ArrowRotateLeft), tr("Undo"), QKeySequence::Undo);
 		action->setEnabled(lineEdit->isUndoAvailable());
 		connect(action, &QAction::triggered, lineEdit, &QLineEdit::undo);
 
-		action = menu->addAction(ALIcon::AweSomeIcon::ArrowRotateRight, tr("Redo"), QKeySequence::Redo);
+		action = menu->addAction(CALIconFactory::createIconType(ALIcon::AweSomeIcon::ArrowRotateRight), tr("Redo"), QKeySequence::Redo);
 		action->setEnabled(lineEdit->isRedoAvailable());
 		connect(action, &QAction::triggered, lineEdit, &QLineEdit::redo);
 		menu->addSeparator();
@@ -47,23 +48,23 @@ CALMenu* CALDoubleSpinBoxPrivate::createStandardContextMenu() {
 
 #ifndef QT_NO_CLIPBOARD
 	if (!lineEdit->isReadOnly()) {
-		action = menu->addAction(ALIcon::AweSomeIcon::KnifeKitchen, tr("Cut"), QKeySequence::Cut);
+		action = menu->addAction(CALIconFactory::createIconType(ALIcon::AweSomeIcon::KnifeKitchen), tr("Cut"), QKeySequence::Cut);
 		action->setEnabled(!lineEdit->isReadOnly() && lineEdit->hasSelectedText() && lineEdit->echoMode() == QLineEdit::Normal);
 		connect(action, &QAction::triggered, lineEdit, &QLineEdit::cut);
 	}
 
-	action = menu->addAction(ALIcon::AweSomeIcon::Copy, tr("Copy"), QKeySequence::Copy);
+	action = menu->addAction(CALIconFactory::createIconType(ALIcon::AweSomeIcon::Copy), tr("Copy"), QKeySequence::Copy);
 	action->setEnabled(lineEdit->hasSelectedText() && lineEdit->echoMode() == QLineEdit::Normal);
 	connect(action, &QAction::triggered, lineEdit, &QLineEdit::copy);
 
 	if (!lineEdit->isReadOnly()) {
-		action = menu->addAction(ALIcon::AweSomeIcon::Paste, tr("Paste"), QKeySequence::Paste);
+		action = menu->addAction(CALIconFactory::createIconType(ALIcon::AweSomeIcon::Paste), tr("Paste"), QKeySequence::Paste);
 		action->setEnabled(!lineEdit->isReadOnly() && !QGuiApplication::clipboard()->text().isEmpty());
 		connect(action, &QAction::triggered, lineEdit, &QLineEdit::paste);
 	}
 #endif
 	if (!lineEdit->isReadOnly()) {
-		action = menu->addAction(ALIcon::AweSomeIcon::DeleteLeft, tr("delete"));
+		action = menu->addAction(CALIconFactory::createIconType(ALIcon::AweSomeIcon::DeleteLeft), tr("delete"));
 		action->setEnabled(!lineEdit->isReadOnly() && !lineEdit->text().isEmpty() && lineEdit->hasSelectedText());
 		connect(action, &QAction::triggered, this, [lineEdit]() {
 			if (lineEdit->hasSelectedText()) {
@@ -122,9 +123,9 @@ void CALDoubleSpinBox::contextMenuEvent(QContextMenuEvent* event) {
 	CALMenu* menu = d->createStandardContextMenu();
 	menu->addSeparator();
 	const uint step = stepEnabled();
-	QAction* up = menu->addAction(ALIcon::AweSomeIcon::Plus, tr("add"));
+	QAction* up = menu->addAction(CALIconFactory::createIconType(ALIcon::AweSomeIcon::Plus), tr("add"));
 	up->setEnabled(step & StepUpEnabled);
-	QAction* down = menu->addAction(ALIcon::AweSomeIcon::Minus, tr("subtract"));
+	QAction* down = menu->addAction(CALIconFactory::createIconType(ALIcon::AweSomeIcon::Minus), tr("subtract"));
 	down->setEnabled(step & StepDownEnabled);
 	menu->addSeparator();
 

@@ -3,6 +3,7 @@
 #include <QMouseEvent>
 #include <QScroller>
 
+#include "alicon.hpp"
 #include "almenu.hpp"
 #include "alnavigationstyle.hpp"
 #include "alscrollbar.hpp"
@@ -37,7 +38,6 @@ CALNavigationView::CALNavigationView(QWidget* parent): QTreeView(parent) {
 	setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 	const auto floatVerticalScrollBar = new CALScrollBar(vertivalScrollBar, this);
 	floatVerticalScrollBar->setIsAnimation(true);
-	floatVerticalScrollBar->installEventFilter(this);
 
 	m_navigationStyle = new CALNavigationStyle(this->style());
 	m_navigationStyle->setNavigationView(this);
@@ -84,7 +84,7 @@ void CALNavigationView::slotCustomContextMenuRequested(const QPoint& pos) {
 	if (const auto posNode = static_cast<CALNavigationNode*>(posIndex.internalPointer()); !posNode->getIsExpanderNode()) {
 		CALMenu menu;
 		menu.setMenuItemHeight(27);
-		const QAction* openAction = menu.addAction(ALIcon::AweSomeIcon::ObjectGroup, tr("Opens in a new window"));
+		const QAction* openAction = menu.addAction(CALIconFactory::createIconType(ALIcon::AweSomeIcon::ObjectGroup), tr("Opens in a new window"));
 		connect(openAction, &QAction::triggered, this, [this, posNode]() { Q_EMIT sigNavigationOpenNewWindow(posNode->getNodeKey()); });
 		menu.exec(mapToGlobal(pos));
 	}

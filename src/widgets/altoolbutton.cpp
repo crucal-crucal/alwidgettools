@@ -8,6 +8,7 @@
 #include <QDebug>
 
 #include "alawesometoolbutton_p.hpp"
+#include "alicon.hpp"
 #include "altoolbuttonstyle.hpp"
 #include "almenu.hpp"
 #include "altooltip.hpp"
@@ -80,11 +81,11 @@ void CALToolButton::setMenu(CALMenu* menu) {
 	menu->installEventFilter(this);
 }
 
-void CALToolButton::setAweSomeIcon(const ALIcon::AweSomeIcon& awewomeicon) {
-	d_func()->style->setALIconType(ALIcon::Awesome);
-	setProperty(ALIcon::iconProperty, QChar(static_cast<unsigned short>(awewomeicon)));\
+void CALToolButton::setALIcon(const std::unique_ptr<CALIconType>& icon_type) {
+	d_func()->style->setALIconType(icon_type->iconType());
+	setProperty(ALIcon::iconProperty, QChar(icon_type->value()));
 	constexpr int pixelSize = 1;
-	QFont iconFont(ALIcon::getEnumTypeFontName(awewomeicon));
+	QFont iconFont(icon_type->familyName());
 	QPixmap pix(pixelSize, pixelSize);
 	pix.fill(Qt::transparent);
 	QPainter painter;
@@ -92,24 +93,7 @@ void CALToolButton::setAweSomeIcon(const ALIcon::AweSomeIcon& awewomeicon) {
 	painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
 	iconFont.setPixelSize(pixelSize);
 	painter.setFont(iconFont);
-	painter.drawText(pix.rect(), Qt::AlignCenter, QChar(static_cast<unsigned short>(awewomeicon)));
-	painter.end();
-	setIcon(QIcon(pix));
-}
-
-void CALToolButton::setFluentIcon(const ALIcon::FluentIcon& fluenticon) {
-	d_func()->style->setALIconType(ALIcon::Fluent);
-	setProperty(ALIcon::iconProperty, QChar(static_cast<unsigned short>(fluenticon)));
-	constexpr int pixelSize = 1;
-	QFont iconFont(ALIcon::getEnumTypeFontName(fluenticon));
-	QPixmap pix(pixelSize, pixelSize);
-	pix.fill(Qt::transparent);
-	QPainter painter;
-	painter.begin(&pix);
-	painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
-	iconFont.setPixelSize(pixelSize);
-	painter.setFont(iconFont);
-	painter.drawText(pix.rect(), Qt::AlignCenter, QChar(static_cast<unsigned short>(fluenticon)));
+	painter.drawText(pix.rect(), Qt::AlignCenter, QChar(icon_type->value()));
 	painter.end();
 	setIcon(QIcon(pix));
 }

@@ -4,6 +4,7 @@
 #include <QPainter>
 
 #include "aldockwidget.hpp"
+#include "alicon.hpp"
 #include "aliconbutton.hpp"
 #include "altext.hpp"
 #include "althememanager.hpp"
@@ -24,11 +25,11 @@ CALDockWidgetTitleBar::CALDockWidgetTitleBar(QWidget* parent): QWidget(parent) {
 	m_titleLabel->setWordWrap(false);
 	m_titleLabel->setTextPixelSize(13);
 
-	m_floatButton = new CALIconButton(ALIcon::FluentIcon::Up, 13, 32, 26, this);
+	m_floatButton = new CALIconButton(CALIconFactory::createIconType(ALIcon::FluentIcon::Up), 13, 32, 26, this);
 	m_floatButton->setLightHoverColor(ALThemeColor(ALThemeType::Light, ALThemeType::BasicHoverAlpha));
 	m_floatButton->setDarkHoverColor(ALThemeColor(ALThemeType::Dark, ALThemeType::BasicHoverAlpha));
 	connect(m_floatButton, &CALIconButton::clicked, this, &CALDockWidgetTitleBar::slotFloatButtonClicked);
-	m_closeButton = new CALIconButton(ALIcon::FluentIcon::ChromeClose, 13, 32, 26, this);
+	m_closeButton = new CALIconButton(CALIconFactory::createIconType(ALIcon::FluentIcon::ChromeClose), 13, 32, 26, this);
 	m_closeButton->setLightHoverColor(ALThemeColor(ALThemeType::Light, ALThemeType::BasicHoverAlpha));
 	m_closeButton->setDarkHoverColor(ALThemeColor(ALThemeType::Dark, ALThemeType::BasicHoverAlpha));
 	connect(m_closeButton, &CALIconButton::clicked, this, &CALDockWidgetTitleBar::slotCloseButtonClicked);
@@ -66,7 +67,7 @@ void CALDockWidgetTitleBar::slotCloseButtonClicked() const {
 }
 
 void CALDockWidgetTitleBar::changeFloatButtonIcon(const bool isFloating) const {
-	m_floatButton->setFluentIcon(isFloating ? ALIcon::FluentIcon::Down : ALIcon::FluentIcon::Up);
+	m_floatButton->setALIcon(CALIconFactory::createIconType(isFloating ? ALIcon::FluentIcon::Down : ALIcon::FluentIcon::Up));
 }
 
 void CALDockWidgetTitleBar::paintEvent(QPaintEvent* event) {
