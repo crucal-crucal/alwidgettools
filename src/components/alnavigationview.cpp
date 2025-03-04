@@ -26,6 +26,7 @@ CALNavigationView::CALNavigationView(QWidget* parent): QTreeView(parent) {
 	setAutoScroll(false);
 	setMouseTracking(true);
 	setSelectionMode(QAbstractItemView::NoSelection);
+	installEventFilter(this);
 
 	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
@@ -65,7 +66,7 @@ CALNavigationView::CALNavigationView(QWidget* parent): QTreeView(parent) {
 	setContextMenuPolicy(Qt::CustomContextMenu);
 	connect(this, &CALNavigationView::customContextMenuRequested, this, &CALNavigationView::slotCustomContextMenuRequested);
 
-	m_compactToolTip = new CALToolTip(this);
+	m_compactToolTip = new CALToolTip(this, false);
 }
 
 CALNavigationView::~CALNavigationView() = default;
@@ -140,6 +141,10 @@ bool CALNavigationView::eventFilter(QObject* watched, QEvent* event) {
 			} else {
 				m_compactToolTip->hide();
 			}
+			break;
+		}
+		case QEvent::Leave: {
+			m_compactToolTip->hide();
 			break;
 		}
 		default: {
