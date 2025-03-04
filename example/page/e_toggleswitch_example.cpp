@@ -2,10 +2,12 @@
 
 #include <QDebug>
 #include <QHBoxLayout>
+#include <QPushButton>
 
 #include "alscrollpagearea.hpp"
 #include "altext.hpp"
 #include "altoggleswitch.hpp"
+#include "altooltip.hpp"
 
 using namespace AL;
 
@@ -24,8 +26,14 @@ E_ToggleSwitch_Example::E_ToggleSwitch_Example(QWidget* parent): E_BasePage(pare
 	const auto toggleSwitchHLayout = new QHBoxLayout(toggleSwitchArea);
 	const auto toggleSwitchText = new CALText("CALToggleSwitch", this);
 	toggleSwitchText->setTextPixelSize(15);
+	const auto button = new QPushButton("13", this);
+	button->setToolTipDuration(3000);
+	button->setToolTip("123");
+	const auto toolTipFilter = new CALToolTipFilter(button, 0, ALToolTipType::Position::BottomLeft);
+	button->installEventFilter(toolTipFilter);
 	toggleSwitchHLayout->addWidget(toggleSwitchText);
 	toggleSwitchHLayout->addWidget(toggleSwitch);
+	toggleSwitchHLayout->addWidget(button);
 	toggleSwitchHLayout->addStretch();
 	const auto toggleSwitchDisable = new CALToggleSwitch(this);
 	const auto toggleSwitchDisableText = new CALText(tr("Disable"), this);

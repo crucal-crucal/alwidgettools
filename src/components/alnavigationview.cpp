@@ -113,7 +113,7 @@ void CALNavigationView::mouseMoveEvent(QMouseEvent* event) {
 			return;
 		}
 		const auto posNode = static_cast<CALNavigationNode*>(posIndex.internalPointer());
-		m_compactToolTip->setToolTip(posNode->getNodeTitle());
+		m_compactToolTip->setText(posNode->getNodeTitle());
 		m_compactToolTip->updatePos();
 		m_compactToolTip->show();
 	} else {
@@ -134,7 +134,7 @@ bool CALNavigationView::eventFilter(QObject* watched, QEvent* event) {
 					break;
 				}
 				const auto posNode = static_cast<CALNavigationNode*>(posIndex.internalPointer());
-				m_compactToolTip->setToolTip(posNode->getNodeTitle());
+				m_compactToolTip->setText(posNode->getNodeTitle());
 				m_compactToolTip->updatePos();
 				m_compactToolTip->show();
 			} else {

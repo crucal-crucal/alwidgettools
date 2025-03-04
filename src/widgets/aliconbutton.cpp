@@ -235,13 +235,8 @@ bool CALIconButton::getIsSelected() const {
 	return d_func()->isSelected;
 }
 
-void CALIconButton::setToolTip(const QString& tooltip) {
-	Q_D(CALIconButton);
-
-	if (!d->tooltip) {
-		d->tooltip = new CALToolTip(this);
-	}
-	d->tooltip->setToolTip(tooltip);
+void CALIconButton::installToolTipFilter(const int showDelay, const ALToolTipType::Position& position) {
+	this->installEventFilter(new CALToolTipFilter(this, showDelay, position));
 }
 
 bool CALIconButton::event(QEvent* event) {

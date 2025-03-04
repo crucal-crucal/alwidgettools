@@ -347,6 +347,30 @@ Q_DECLARE_FLAGS(ShowPolicys, ShowPolicy)
 Q_DECLARE_OPERATORS_FOR_FLAGS(ALDialogPolicy::ShowPolicys)
 }
 
+namespace ALToolTipType {
+Q_NAMESPACE_EXPORT(CALWIDGETTOOLS_EXPORT)
+
+enum class Position {
+	Top         = 0,
+	Bottom      = 1,
+	Left        = 2,
+	Right       = 3,
+	TopLeft     = 4,
+	TopRight    = 5,
+	BottomLeft  = 6,
+	BottomRight = 7
+};
+
+Q_ENUM_NS(Position)
+
+enum ItemViewToolTipType {
+	List  = 0,
+	Table = 1
+};
+
+Q_ENUM_NS(ItemViewToolTipType)
+}
+
 /**
  * @brief \namespace ALIcon
  */

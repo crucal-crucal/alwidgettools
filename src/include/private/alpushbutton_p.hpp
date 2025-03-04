@@ -11,7 +11,6 @@
  */
 namespace AL {
 class CALPushButton;
-class CALToolTip;
 
 class CALPushButtonPrivate final : public QObject {
 	Q_OBJECT
@@ -27,7 +26,6 @@ protected:
 
 private:
 	ALThemeType::ThemeMode themeMode{};
-	CALToolTip* toolTip{ nullptr };
 	bool isPressed{};
 	CALPushButton::ButtonStyles customButtonStyles{};
 	int shadowBorderWidth{};

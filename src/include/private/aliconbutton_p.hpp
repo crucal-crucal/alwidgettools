@@ -9,7 +9,6 @@
  */
 namespace AL {
 class CALIconButton;
-class CALToolTip;
 
 class CALIconButtonPrivate final : public QObject {
 	Q_OBJECT
@@ -31,7 +30,6 @@ protected:
 	CALIconButton* const q_ptr{ nullptr };
 
 private:
-	CALToolTip* tooltip{ nullptr };
 	qreal borderRadius{};
 	qreal opacity{};
 	ALIcon::IconType iconType{};

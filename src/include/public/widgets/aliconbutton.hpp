@@ -68,7 +68,12 @@ public:
 	void setIsSelected(bool isSelected);
 	[[nodiscard]] bool getIsSelected() const;
 
-	void setToolTip(const QString& tooltip);
+	/**
+	 * @brief 安装 CALToolTip 悬浮提示，但前提需要先 setToolTip
+	 * @param showDelay 显示延时
+	 * @param position \see \enum ALToolTipType::Position
+	 */
+	void installToolTipFilter(int showDelay, const ALToolTipType::Position& position);
 
 Q_SIGNALS:
 	void sigBorderRadiusChanged();

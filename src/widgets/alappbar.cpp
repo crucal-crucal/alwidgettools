@@ -265,6 +265,7 @@ CALAppBar::CALAppBar(QWidget* parent): QWidget(parent), d_ptr(new CALAppBarPriva
 	d->routeBackButton->setFixedSize(d->appBarHeight, d->appBarHeight);
 	d->routeBackButton->setEnabled(false);
 	d->routeBackButton->setToolTip(tr("Back"));
+	d->routeBackButton->installToolTipFilter(200, ALToolTipType::Position::Top);
 	connect(d->routeBackButton, &CALToolButton::clicked, this, &CALAppBar::sigRouteBackButtonClicked);
 
 	// 导航栏展开
@@ -273,6 +274,7 @@ CALAppBar::CALAppBar(QWidget* parent): QWidget(parent), d_ptr(new CALAppBarPriva
 	d->navigationButton->setFixedSize(40, 30);
 	d->navigationButton->setObjectName("CALNavigationButton");
 	d->navigationButton->setToolTip(tr("Navigation"));
+	d->navigationButton->installToolTipFilter(200, ALToolTipType::Position::Top);
 	connect(d->navigationButton, &CALToolButton::clicked, this, &CALAppBar::sigNavigationButtonClicked);
 
 	// 置顶
@@ -280,6 +282,7 @@ CALAppBar::CALAppBar(QWidget* parent): QWidget(parent), d_ptr(new CALAppBarPriva
 	d->stayTopButton->setAweSomeIcon(ALIcon::AweSomeIcon::ArrowUpToArc);
 	d->stayTopButton->setFixedSize(d->appBarHeight, d->appBarHeight);
 	d->stayTopButton->setToolTip(tr("Stay Top"));
+	d->stayTopButton->installToolTipFilter(200, ALToolTipType::Position::Top);
 	d->buttonMap[ALAppBarType::StayTopButtonHint] = d->stayTopButton;
 	connect(d->stayTopButton, &CALToolButton::clicked, this, [this]() { this->setIsStayTop(!this->getIsStayTop()); });
 	connect(d->stayTopButton, &CALToolButton::sigSelectedChanged, this, [d]() { d->stayTopButton->setToolTip(d->stayTopButton->getIsSelected() ? tr("Cancel Stay Top") : tr("Stay Top")); });
@@ -316,6 +319,7 @@ CALAppBar::CALAppBar(QWidget* parent): QWidget(parent), d_ptr(new CALAppBarPriva
 	d->themeChangeButton->setFluentIcon(ALIcon::FluentIcon::QuietHours);
 	d->themeChangeButton->setFixedSize(d->appBarHeight, d->appBarHeight);
 	d->themeChangeButton->setToolTip(ALTheme->getThemeMode() == ALThemeType::Light ? tr("Switch to dark theme") : tr("Switch to light theme"));
+	d->themeChangeButton->installToolTipFilter(200, ALToolTipType::Position::Top);
 	d->buttonMap[ALAppBarType::ThemeChangeButtonHint] = d->themeChangeButton;
 	connect(d->themeChangeButton, &CALToolButton::clicked, this, &CALAppBar::sigThemeChangeButtonClicked);
 	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, d, &CALAppBarPrivate::slotThemeModeChanged);
@@ -325,6 +329,7 @@ CALAppBar::CALAppBar(QWidget* parent): QWidget(parent), d_ptr(new CALAppBarPriva
 	d->minButton->setFluentIcon(ALIcon::FluentIcon::ChromeMinimize);
 	d->minButton->setFixedSize(d->appBarHeight, d->appBarHeight);
 	d->minButton->setToolTip(tr("Minimize"));
+	d->minButton->installToolTipFilter(200, ALToolTipType::Position::Top);
 	d->buttonMap[ALAppBarType::MinimizeButtonHint] = d->minButton;
 	connect(d->minButton, &CALToolButton::clicked, d, &CALAppBarPrivate::slotMinButtonClicked);
 
@@ -343,6 +348,7 @@ CALAppBar::CALAppBar(QWidget* parent): QWidget(parent), d_ptr(new CALAppBarPriva
 	d->closeButton->setLightHoverIconColor(Qt::white);
 	d->closeButton->setDarkHoverIconColor(Qt::white);
 	d->closeButton->setToolTip(tr("Close"));
+	d->closeButton->installToolTipFilter(200, ALToolTipType::Position::Top);
 	d->buttonMap[ALAppBarType::CloseButtonHint] = d->closeButton;
 	connect(d->closeButton, &CALIconButton::clicked, d, &CALAppBarPrivate::slotCloseButtonClicked);
 

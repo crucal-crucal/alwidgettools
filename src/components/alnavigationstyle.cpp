@@ -287,8 +287,8 @@ void CALNavigationStyle::drawControl(const ControlElement element, const QStyleO
 						p->drawText(textX, itemRect.y() + itemRect.height() / 2 + 4, keyPointstext);
 					}
 				}
-				p->restore();
 			}
+			p->restore();
 			return;
 		}
 		default: break;

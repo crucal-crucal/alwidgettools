@@ -5,79 +5,94 @@
 #include "alsingleton.hpp"
 #include "alwidgettoolsdef.hpp"
 
+class QAbstractItemView;
+
 /**
  * @brief \namespace AL
  */
 namespace AL {
-class CALToolTipHelper;
 class CALToolTipPrivate;
 
 class CALWIDGETTOOLS_EXPORT CALToolTip : public QWidget {
 	Q_OBJECT
 	Q_DISABLE_COPY(CALToolTip)
 	Q_DECLARE_PRIVATE(CALToolTip)
-	Q_PROPERTY(int displayMsec READ getDisplayMsec WRITE setDisplayMsec NOTIFY sigDisplayMsecChanged)
-	Q_PROPERTY(int showDelayMsec READ getShowDelayMsec WRITE setShowDelayMsec NOTIFY sigShowDelayMsecChanged)
-	Q_PROPERTY(int hideDelayMsec READ getHideDelayMsec WRITE setHideDelayMsec NOTIFY sigHideDelayMsecChanged)
 	Q_PROPERTY(qreal borderRadius READ getBorderRadius WRITE setBorderRadius NOTIFY sigBorderRadiusChanged)
-	Q_PROPERTY(QString toolTip READ getToolTip WRITE setToolTip NOTIFY sigToolTipChanged)
+	Q_PROPERTY(QString text READ getText WRITE setText NOTIFY sigTextChanged)
 	Q_PROPERTY(QWidget* customWidget READ getCustomWidget WRITE setCustomWidget NOTIFY sigCustomWidgetChanged)
 
 public:
-	explicit CALToolTip(QWidget* parent = nullptr);
+	explicit CALToolTip(QWidget* parent = nullptr, bool installFilterToShow = true);
 	~CALToolTip() override;
 
 	void setBorderRadius(qreal borderRadius);
 	[[nodiscard]] qreal getBorderRadius() const;
 
-	void setDisplayMsec(int displayMsec);
-	[[nodiscard]] int getDisplayMsec() const;
+	void setText(const QString& text);
+	[[nodiscard]] QString getText() const;
 
-	void setShowDelayMsec(int delayMsec);
-	[[nodiscard]] int getShowDelayMsec() const;
-
-	void setHideDelayMsec(int delayMsec);
-	[[nodiscard]] int getHideDelayMsec() const;
-
-	void setToolTip(const QString& tooltip);
-	[[nodiscard]] QString getToolTip() const;
+	void setDuration(int duration);
+	[[nodiscard]] int getDuration() const;
 
 	void setCustomWidget(QWidget* customWidget);
 	[[nodiscard]] QWidget* getCustomWidget() const;
 
 	void updatePos();
+	void adjustPos(QWidget* widget, const ALToolTipType::Position& position);
 
 Q_SIGNALS:
 	void sigBorderRadiusChanged();
-	void sigDisplayMsecChanged();
-	void sigShowDelayMsecChanged();
-	void sigHideDelayMsecChanged();
-	void sigToolTipChanged();
+	void sigTextChanged();
 	void sigCustomWidgetChanged();
 
 protected:
 	const QScopedPointer<CALToolTipPrivate> d_ptr{ nullptr };
 
-	friend CALToolTipHelper;
 	void paintEvent(QPaintEvent* event) override;
+	void showEvent(QShowEvent* event) override;
+	void hideEvent(QHideEvent* event) override;
 };
 
-class CALWIDGETTOOLS_EXPORT CALToolTipHelper : public QObject {
+class CALToolTipFilterPrivate;
+
+class CALWIDGETTOOLS_EXPORT CALToolTipFilter : public QObject {
 	Q_OBJECT
+	Q_DISABLE_COPY(CALToolTipFilter)
+	Q_DECLARE_PRIVATE(CALToolTipFilter)
 
 public:
-	static CALToolTip* instance();
+	explicit CALToolTipFilter(QWidget* parent, int showDelay = 300, const ALToolTipType::Position& position = ALToolTipType::Position::Top);
+	~CALToolTipFilter() override;
 
-	static void showText(const QPoint& pos, const QString& text, QWidget* w = nullptr);
-	static void showText(const QPoint& pos, const QString& text, QWidget* w, const QRect& rect);
-	static void showText(const QPoint& pos, const QString& text, QWidget* w, const QRect& rect, int msecShowTime);
-	static inline void hideText() { showText(QPoint(), QString()); }
-
-	static bool isVisible();
-	static QString text();
+	void hideToolTip();
+	void setToolTipDelay(int delay);
 
 protected:
-	friend class CALToolTip;
-	friend class CALSingleton<CALToolTip>;
+	const QScopedPointer<CALToolTipFilterPrivate> d_ptr{ nullptr };
+
+	bool eventFilter(QObject* watched, QEvent* event) override;
+
+	virtual CALToolTip* createToolTip();
+	[[nodiscard]] virtual bool canShowToolTip() const;
+
+private:
+	Q_SLOT void slotShowToolTip();
 };
+
+// class ItemViewToolTipPrivate;
+//
+// class CALWIDGETTOOLS_EXPORT ItemViewToolTip : public ToolTip {
+// 	Q_OBJECT
+// 	Q_DISABLE_COPY(ItemViewToolTip)
+// 	Q_DECLARE_PRIVATE(ItemViewToolTip)
+//
+// public:
+// 	explicit ItemViewToolTip(const QString& text = QString(), QWidget* parent = nullptr);
+// 	~ItemViewToolTip() override;
+//
+// 	void adjustPos(QAbstractItemView* view, const QRect& itemRect, const ALToolTipType::ItemViewToolTipType& toolTipType);
+//
+// protected:
+// 	const QScopedPointer<ItemViewToolTipPrivate> d_ptr{ nullptr };
+// };
 }

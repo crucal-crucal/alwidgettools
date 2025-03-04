@@ -6,7 +6,6 @@
  * @brief \namespace AL
  */
 namespace AL {
-class CALToolTip;
 class CALToolButton;
 class CALToolButtonStyle;
 
@@ -24,6 +23,5 @@ protected:
 
 private:
 	CALToolButtonStyle* style{ nullptr };
-	CALToolTip* tooltip{ nullptr };
 };
 }

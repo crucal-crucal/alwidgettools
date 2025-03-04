@@ -215,14 +215,8 @@ int CALPushButton::getTextPointSize() const {
 	return this->font().pointSize();
 }
 
-void CALPushButton::setToolTip(const QString& tooltip) {
-	Q_D(CALPushButton);
-
-	if (!d->toolTip) {
-		d->toolTip = new CALToolTip(this);
-	}
-
-	d->toolTip->setToolTip(tooltip);
+void CALPushButton::installToolTipFilter(const int showDelay, const ALToolTipType::Position& position) {
+	this->installEventFilter(new CALToolTipFilter(this, showDelay, position));
 }
 
 void CALPushButton::mousePressEvent(QMouseEvent* event) {

@@ -82,9 +82,7 @@ CALAwesomeButton::CALAwesomeButton(const ALIcon::AweSomeIcon& iconType, const in
 	this->setFixedSize(fixedWidth, fixedHeight);
 }
 
-CALAwesomeButton::~CALAwesomeButton() {
-	SAFE_DELETE(d_func()->tooltip)
-}
+CALAwesomeButton::~CALAwesomeButton() = default;
 
 void CALAwesomeButton::setAwesomeIcon(const ALIcon::AweSomeIcon& iconType) {
 	Q_D(CALAwesomeButton);
@@ -221,14 +219,8 @@ qreal CALAwesomeButton::getOpacity() const {
 	return d_func()->opacity;
 }
 
-void CALAwesomeButton::setToolTip(const QString& tooltip) {
-	Q_D(CALAwesomeButton);
-
-	if (!d->tooltip) {
-		d->tooltip = new CALToolTip(this);
-	}
-
-	d->tooltip->setToolTip(tooltip);
+void CALAwesomeButton::installToolTipFilter(const int showDelay, const ALToolTipType::Position& position) {
+	this->installEventFilter(new CALToolTipFilter(this, showDelay, position));
 }
 
 void CALAwesomeButton::paintEvent(QPaintEvent* event) {

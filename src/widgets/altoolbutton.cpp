@@ -41,7 +41,6 @@ CALToolButton::CALToolButton(QWidget* parent): QToolButton(parent), d_ptr(new CA
 }
 
 CALToolButton::~CALToolButton() {
-	SAFE_DELETE(d_func()->tooltip)
 	SAFE_DELETE(d_func()->style)
 }
 
@@ -115,14 +114,8 @@ void CALToolButton::setFluentIcon(const ALIcon::FluentIcon& fluenticon) {
 	setIcon(QIcon(pix));
 }
 
-void CALToolButton::setToolTip(const QString& tooltip) {
-	Q_D(CALToolButton);
-
-	if (!d->tooltip) {
-		d->tooltip = new CALToolTip(this);
-	}
-
-	d->tooltip->setToolTip(tooltip);
+void CALToolButton::installToolTipFilter(const int showDelay, const ALToolTipType::Position& position) {
+	this->installEventFilter(new CALToolTipFilter(this, showDelay, position));
 }
 
 bool CALToolButton::eventFilter(QObject* watched, QEvent* event) {

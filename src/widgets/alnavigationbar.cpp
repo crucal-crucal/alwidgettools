@@ -619,6 +619,7 @@ CALNavigationBar::CALNavigationBar(QWidget* parent): QWidget(parent), d_ptr(new 
 	d->navigationButton->setAweSomeIcon(ALIcon::AweSomeIcon::Bars);
 	d->navigationButton->setBorderRadius(8);
 	d->navigationButton->setToolTip(tr("collapse"));
+	d->navigationButton->installToolTipFilter(200, ALToolTipType::Position::Right);
 	connect(d->navigationButton, &CALToolButton::clicked, d, &CALNavigationBarPrivate::slotNavigationButtonClicked);
 	// search button
 	d->searchButton = new CALToolButton(this);
@@ -627,6 +628,7 @@ CALNavigationBar::CALNavigationBar(QWidget* parent): QWidget(parent), d_ptr(new 
 	d->searchButton->setBorderRadius(8);
 	d->searchButton->setVisible(false);
 	d->searchButton->setToolTip(tr("search"));
+	d->searchButton->installToolTipFilter(200, ALToolTipType::Position::Right);
 	connect(d->searchButton, &CALToolButton::clicked, d, &CALNavigationBarPrivate::slotNavigationButtonClicked);
 	// navigation suggest box
 	d->navigationSuggestBox = new CALSuggestBox(this);
@@ -675,7 +677,7 @@ CALNavigationBar::CALNavigationBar(QWidget* parent): QWidget(parent), d_ptr(new 
 	d->footerView->setModel(d->footerModel);
 	connect(d->footerView, &CALBaseListView::sigMouseMove, this, [d](const QModelIndex& index) {
 		if (const auto posNode = d->footerModel->getNavigationNode(index); posNode && d->currentDisplayMode == ALNavigationType::Compact) {
-			d->footerToolTip->setToolTip(posNode->getNodeTitle());
+			d->footerToolTip->setText(posNode->getNodeTitle());
 			d->footerToolTip->updatePos();
 			d->footerToolTip->show();
 		} else {

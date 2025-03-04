@@ -9,7 +9,6 @@
  * @brief \namespace AL
  */
 namespace AL {
-class CALToolTip;
 class CALAwesomeButton;
 
 class CALAwesomeButtonPrivate final : public QObject {
@@ -27,7 +26,6 @@ protected:
 	CALAwesomeButton* const q_ptr{ nullptr };
 
 private:
-	CALToolTip* tooltip{ nullptr };
 	int borderRaius{};
 	qreal opacity{};
 	QFont iconFont{};
