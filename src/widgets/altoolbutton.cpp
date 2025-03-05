@@ -5,7 +5,6 @@
 #include <QMouseEvent>
 #include <QPainter>
 #include <QPropertyAnimation>
-#include <QDebug>
 
 #include "alawesometoolbutton_p.hpp"
 #include "alicon.hpp"
@@ -81,7 +80,12 @@ void CALToolButton::setMenu(CALMenu* menu) {
 	menu->installEventFilter(this);
 }
 
-void CALToolButton::setALIcon(const std::unique_ptr<CALIconType>& icon_type) {
+void CALToolButton::setALIcon(const std::shared_ptr<CALIconType>& icon_type) {
+	if (!icon_type) {
+		qWarning() << __func__ << " received a nullptr icon_type!";
+		return;
+	}
+
 	d_func()->style->setALIconType(icon_type->iconType());
 	setProperty(ALIcon::iconProperty, QChar(icon_type->value()));
 	constexpr int pixelSize = 1;

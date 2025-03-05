@@ -10,6 +10,7 @@
  */
 namespace AL {
 class CALMainWindowPrivate;
+class CALIconType;
 
 class CALWIDGETTOOLS_EXPORT CALMainWindow : public QMainWindow {
 	Q_OBJECT
@@ -58,97 +59,49 @@ public:
 	 * @brief 添加扩展节点
 	 * @param expanderTitle 扩展节点 title
 	 * @param expanderKey 扩展节点 key, 供给其他 node 使用的 targetExpanderKey
-	 * @param awesomeIcon 扩展节点 icon \enum ALIcon::AweSomeIcon
+	 * @param icon_type 扩展节点图标类, 使用 CALIconFactory 创造
 	 * @return \enum ALNavigationType::NodeOperateReturnType
 	 */
-	ALNavigationType::NodeOperateReturnType addExpanderNode(const QString& expanderTitle, QString& expanderKey, const ALIcon::AweSomeIcon& awesomeIcon) const;
-
-	/**
-	 * @brief 添加扩展节点
-	 * @param expanderTitle 扩展节点 title
-	 * @param expanderKey 扩展节点 key, 供给其他 node 使用的 targetExpanderKey
-	 * @param fluentIcon 扩展节点 icon \enum ALIcon::FluentIcon
-	 * @return \enum ALNavigationType::NodeOperateReturnType
-	 */
-	ALNavigationType::NodeOperateReturnType addExpanderNode(const QString& expanderTitle, QString& expanderKey, const ALIcon::FluentIcon& fluentIcon = ALIcon::FluentIcon::None) const;
+	ALNavigationType::NodeOperateReturnType addExpanderNode(const QString& expanderTitle, QString& expanderKey, const std::shared_ptr<CALIconType>& icon_type = nullptr) const;
 
 	/**
 	 * @brief 添加扩展节点，并指定目标扩展节点键
 	 * @param expanderTitle 扩展节点标题
 	 * @param expanderKey 扩展节点键, 供给其他 node 使用的 targetExpanderKey
 	 * @param targetExpanderKey 目标扩展节点键, ExpanderNode 的 expander Key
-	 * @param awesomeIcon 扩展节点图标 \enum ALIcon::AweSomeIcon
+	 * @param icon_type 扩展节点图标类, 使用 CALIconFactory 创造
 	 * @return \enum ALNavigationType::NodeOperateReturnType
 	 */
-	ALNavigationType::NodeOperateReturnType addExpanderNode(const QString& expanderTitle, QString& expanderKey, const QString& targetExpanderKey, const ALIcon::AweSomeIcon& awesomeIcon) const;
-
-	/**
-	 * @brief 添加扩展节点，并指定目标扩展节点键
-	 * @param expanderTitle 扩展节点标题
-	 * @param expanderKey 扩展节点键, 供给其他 node 使用的 targetExpanderKey
-	 * @param targetExpanderKey 目标扩展节点键, ExpanderNode 的 expander Key
-	 * @param fluentIcon 扩展节点图标 \enum ALIcon::FluentIcon
-	 * @return \enum ALNavigationType::NodeOperateReturnType
-	 */
-	ALNavigationType::NodeOperateReturnType addExpanderNode(const QString& expanderTitle, QString& expanderKey, const QString& targetExpanderKey, const ALIcon::FluentIcon& fluentIcon = ALIcon::FluentIcon::None) const;
+	ALNavigationType::NodeOperateReturnType addExpanderNode(const QString& expanderTitle, QString& expanderKey, const QString& targetExpanderKey, const std::shared_ptr<CALIconType>& icon_type = nullptr) const;
 
 	/**
 	 * @brief 添加页面节点
 	 * @param pageTitle 页面标题
 	 * @param page 页面控件
-	 * @param awesomeIcon 节点图标 \enum ALIcon::AweSomeIcon
+	 * @param icon_type 扩展节点图标类, 使用 CALIconFactory 创造
 	 * @return \enum ALNavigationType::NodeOperateReturnType
 	 */
-	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QWidget* page, const ALIcon::AweSomeIcon& awesomeIcon) const;
-
-	/**
-	 * @brief 添加页面节点
-	 * @param pageTitle 页面标题
-	 * @param page 页面控件
-	 * @param fluentIcon 扩展节点图标 \enum ALIcon::FluentIcon
-	 * @return \enum ALNavigationType::NodeOperateReturnType
-	 */
-	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QWidget* page, const ALIcon::FluentIcon& fluentIcon = ALIcon::FluentIcon::None) const;
+	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QWidget* page, const std::shared_ptr<CALIconType>& icon_type = nullptr) const;
 
 	/**
 	 * @brief 添加页面节点，并指定目标扩展节点键
 	 * @param pageTitle 页面标题
 	 * @param page 页面控件
 	 * @param targetExpanderKey 目标扩展节点键, ExpanderNode 的 expander Key
-	 * @param awesomeIcon 节点图标 \enum ALIcon::AweSomeIcon
+	 * @param icon_type 扩展节点图标类, 使用 CALIconFactory 创造
 	 * @return \enum ALNavigationType::NodeOperateReturnType
 	 */
-	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QWidget* page, const QString& targetExpanderKey, const ALIcon::AweSomeIcon& awesomeIcon) const;
-
-	/**
-	 * @brief 添加页面节点，并指定目标扩展节点键
-	 * @param pageTitle 页面标题
-	 * @param page 页面控件
-	 * @param targetExpanderKey 目标扩展节点键, ExpanderNode 的 expander Key
-	 * @param fluentIcon 扩展节点图标 \enum ALIcon::FluentIcon
-	 * @return \enum ALNavigationType::NodeOperateReturnType
-	 */
-	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QWidget* page, const QString& targetExpanderKey, const ALIcon::FluentIcon& fluentIcon = ALIcon::FluentIcon::None) const;
+	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QWidget* page, const QString& targetExpanderKey, const std::shared_ptr<CALIconType>& icon_type = nullptr) const;
 
 	/**
 	 * @brief 添加页面节点，并设置关键点数
 	 * @param pageTitle 页面标题
 	 * @param page 页面控件
 	 * @param keyPoints 节点关键点数, 小于等于 0 不会显示, 超过 99 则会显示 99+
-	 * @param awesomeIcon 节点图标 \enum ALIcon::AweSomeIcon
+	 * @param icon_type 扩展节点图标类, 使用 CALIconFactory 创造
 	 * @return \enum ALNavigationType::NodeOperateReturnType
 	 */
-	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QWidget* page, int keyPoints, const ALIcon::AweSomeIcon& awesomeIcon) const;
-
-	/**
-	 * @brief 添加页面节点，并设置关键点数
-	 * @param pageTitle 页面标题
-	 * @param page 页面控件
-	 * @param keyPoints 节点关键点数, 小于等于 0 不会显示, 超过 99 则会显示 99+
-	 * @param fluentIcon 扩展节点图标 \enum ALIcon::FluentIcon
-	 * @return \enum ALNavigationType::NodeOperateReturnType
-	 */
-	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QWidget* page, int keyPoints, const ALIcon::FluentIcon& fluentIcon = ALIcon::FluentIcon::None) const;
+	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QWidget* page, int keyPoints, const std::shared_ptr<CALIconType>& icon_type = nullptr) const;
 
 	/**
 	 * @brief 添加页面节点，并指定目标扩展节点键和关键点数
@@ -156,41 +109,20 @@ public:
 	 * @param page 页面控件
 	 * @param targetExpanderKey 目标扩展节点键, ExpanderNode 的 expander Key
 	 * @param keyPoints 节点关键点数, 小于等于 0 不会显示, 超过 99 则会显示 99+
-	 * @param awesomeIcon 节点图标 \enum ALIcon::AweSomeIcon
+	 * @param icon_type 扩展节点图标类, 使用 CALIconFactory 创造
 	 * @return \enum ALNavigationType::NodeOperateReturnType
 	 */
-	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QWidget* page, const QString& targetExpanderKey, int keyPoints = 0, const ALIcon::AweSomeIcon& awesomeIcon = ALIcon::AweSomeIcon::None) const;
-
-	/**
-	 * @brief 添加页面节点，并指定目标扩展节点键和关键点数
-	 * @param pageTitle 页面标题
-	 * @param page 页面控件
-	 * @param targetExpanderKey 目标扩展节点键, ExpanderNode 的 expander Key
-	 * @param keyPoints 节点关键点数, 小于等于 0 不会显示, 超过 99 则会显示 99+
-	 * @param fluentIcon 扩展节点图标 \enum ALIcon::FluentIcon
-	 * @return \enum ALNavigationType::NodeOperateReturnType
-	 */
-	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QWidget* page, const QString& targetExpanderKey, int keyPoints = 0, const ALIcon::FluentIcon& fluentIcon = ALIcon::FluentIcon::None) const;
+	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QWidget* page, const QString& targetExpanderKey, int keyPoints = 0, const std::shared_ptr<CALIconType>& icon_type = nullptr) const;
 
 	/**
 	 * @brief 添加页脚节点
 	 * @param footerTitle 页脚标题
 	 * @param footerKey 页脚键
 	 * @param keyPoints 节点关键点数, 小于等于 0 不会显示, 超过 99 则会显示 99+
-	 * @param awesomeIcon 节点图标 \enum ALIcon::AweSomeIcon
+	 * @param icon_type 扩展节点图标类, 使用 CALIconFactory 创造
 	 * @return \enum ALNavigationType::NodeOperateReturnType
 	 */
-	ALNavigationType::NodeOperateReturnType addFooterNode(const QString& footerTitle, QString& footerKey, int keyPoints, const ALIcon::AweSomeIcon& awesomeIcon) const;
-
-	/**
-	 * @brief 添加页脚节点
-	 * @param footerTitle 页脚标题
-	 * @param footerKey 页脚键
-	 * @param keyPoints 节点关键点数, 小于等于 0 不会显示, 超过 99 则会显示 99+
-	 * @param fluentIcon 扩展节点图标 \enum ALIcon::FluentIcon
-	 * @return \enum ALNavigationType::NodeOperateReturnType
-	 */
-	ALNavigationType::NodeOperateReturnType addFooterNode(const QString& footerTitle, QString& footerKey, int keyPoints, const ALIcon::FluentIcon& fluentIcon = ALIcon::FluentIcon::None) const;
+	ALNavigationType::NodeOperateReturnType addFooterNode(const QString& footerTitle, QString& footerKey, int keyPoints, const std::shared_ptr<CALIconType>& icon_type = nullptr) const;
 
 	/**
 	 * @brief 添加页脚节点，并指定页面控件
@@ -198,21 +130,10 @@ public:
 	 * @param page 页面控件
 	 * @param footerKey 页脚键
 	 * @param keyPoints 节点关键点数, 小于等于 0 不会显示, 超过 99 则会显示 99+
-	 * @param awesomeIcon 节点图标 \enum ALIcon::AweSomeIcon
+	 * @param icon_type 扩展节点图标类, 使用 CALIconFactory 创造
 	 * @return \enum ALNavigationType::NodeOperateReturnType
 	 */
-	ALNavigationType::NodeOperateReturnType addFooterNode(const QString& footerTitle, QWidget* page, QString& footerKey, int keyPoints, const ALIcon::AweSomeIcon& awesomeIcon) const;
-
-	/**
-	 * @brief 添加页脚节点，并指定页面控件
-	 * @param footerTitle 页脚标题
-	 * @param page 页面控件
-	 * @param footerKey 页脚键
-	 * @param keyPoints 节点关键点数, 小于等于 0 不会显示, 超过 99 则会显示 99+
-	 * @param fluentIcon 扩展节点图标 \enum ALIcon::FluentIcon
-	 * @return \enum ALNavigationType::NodeOperateReturnType
-	 */
-	ALNavigationType::NodeOperateReturnType addFooterNode(const QString& footerTitle, QWidget* page, QString& footerKey, int keyPoints, const ALIcon::FluentIcon& fluentIcon = ALIcon::FluentIcon::None) const;
+	ALNavigationType::NodeOperateReturnType addFooterNode(const QString& footerTitle, QWidget* page, QString& footerKey, int keyPoints, const std::shared_ptr<CALIconType>& icon_type = nullptr) const;
 
 	/**
 	 * @brief 删除节点

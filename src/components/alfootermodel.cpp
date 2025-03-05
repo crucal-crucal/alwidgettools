@@ -19,7 +19,7 @@ CALFooterModel::~CALFooterModel() {
 	qDeleteAll(m_listFooterNodes);
 }
 
-ALNavigationType::NodeOperateReturnType CALFooterModel::addFooterNode(const QString& footerTitle, QString& footerKey, const bool isHasFooterPage, const int keyPoints, const ALIcon::AweSomeIcon& awesomeicon) {
+ALNavigationType::NodeOperateReturnType CALFooterModel::addFooterNode(const QString& footerTitle, QString& footerKey, const bool isHasFooterPage, const int keyPoints, const std::shared_ptr<CALIconType>& icon_type) {
 	if (m_listFooterNodes.count() >= FOOTER_NODE_LIMIT) {
 		return ALNavigationType::FooterUpperLimit;
 	}
@@ -28,26 +28,7 @@ ALNavigationType::NodeOperateReturnType CALFooterModel::addFooterNode(const QStr
 	node->setKeyPoints(keyPoints);
 	node->setIsFooterNode(true);
 	node->setIsHasFooterNode(isHasFooterPage);
-	node->setAwesomeIcon(awesomeicon);
-	beginResetModel();
-	m_listFooterNodes.append(node);
-	endResetModel();
-	footerKey = node->getNodeKey();
-	node->setModelIndex(this->index(m_listFooterNodes.count() - 1));
-
-	return ALNavigationType::Success;
-}
-
-ALNavigationType::NodeOperateReturnType CALFooterModel::addFooterNode(const QString& footerTitle, QString& footerKey, const bool isHasFooterPage, const int keyPoints, const ALIcon::FluentIcon& fluenticon) {
-	if (m_listFooterNodes.count() >= FOOTER_NODE_LIMIT) {
-		return ALNavigationType::FooterUpperLimit;
-	}
-
-	const auto node = new CALNavigationNode(footerTitle);
-	node->setKeyPoints(keyPoints);
-	node->setIsFooterNode(true);
-	node->setIsHasFooterNode(isHasFooterPage);
-	node->setFluentIcon(fluenticon);
+	node->setALIcon(icon_type);
 	beginResetModel();
 	m_listFooterNodes.append(node);
 	endResetModel();
@@ -74,7 +55,7 @@ CALNavigationNode* CALFooterModel::getNavigationNode(const QString& footerKey) {
 	return resNode;
 }
 
-CALNavigationNode* CALFooterModel::getNavigationNode(const QModelIndex& index) {
+CALNavigationNode* CALFooterModel::getNavigationNode(const QModelIndex& index) const {
 	if (!index.isValid()) {
 		return nullptr;
 	}
@@ -90,7 +71,7 @@ CALNavigationNode* CALFooterModel::getNavigationNode(const QModelIndex& index) {
 bool CALFooterModel::removeNavigationNode(const QString& footerKey) {
 	bool bRet{ false };
 
-	for (auto& node : m_listFooterNodes) {
+	for (const auto& node : m_listFooterNodes) {
 		if (node->getNodeKey() == footerKey) {
 			bRet = m_listFooterNodes.removeOne(node);
 			break;

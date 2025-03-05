@@ -1,6 +1,5 @@
 ﻿#include "alnavigationbar.hpp"
 
-#include <QDebug>
 #include <QLayout>
 #include <QPainter>
 #include <QPainterPath>
@@ -223,12 +222,7 @@ void CALNavigationBarPrivate::addStackedPage(QWidget* page, const QString& pageK
 	QVariantMap suggestData{};
 	suggestData.insert("CALNodeType", "Stacked");
 	suggestData.insert("CALPageKey", pageKey);
-	QString suggestKey{};
-	if (node->getIconType() == ALIcon::Awesome) {
-		suggestKey = navigationSuggestBox->addSuggestion(node->getAwesomeIcon(), node->getNodeTitle(), suggestData);
-	} else {
-		suggestKey = navigationSuggestBox->addSuggestion(node->getFluentIcon(), node->getNodeTitle(), suggestData);
-	}
+	const QString suggestKey = navigationSuggestBox->addSuggestion(std::shared_ptr<CALIconType>(node->getALIcon()), node->getNodeTitle(), suggestData);
 	mapSuggestKey.insert(pageKey, suggestKey);
 }
 
@@ -244,12 +238,7 @@ void CALNavigationBarPrivate::addFooterPage(QWidget* page, const QString& footKe
 	QVariantMap suggestData{};
 	suggestData.insert("CALNodeType", "Footer");
 	suggestData.insert("CALPageKey", footKey);
-	QString suggestKey{};
-	if (node->getIconType() == ALIcon::Awesome) {
-		suggestKey = navigationSuggestBox->addSuggestion(node->getAwesomeIcon(), node->getNodeTitle(), suggestData);
-	} else {
-		suggestKey = navigationSuggestBox->addSuggestion(node->getFluentIcon(), node->getNodeTitle(), suggestData);
-	}
+	const QString suggestKey = navigationSuggestBox->addSuggestion(std::shared_ptr<CALIconType>(node->getALIcon()), node->getNodeTitle(), suggestData);
 	mapSuggestKey.insert(footKey, suggestKey);
 }
 
@@ -755,10 +744,10 @@ void CALNavigationBar::setUserInfoCardSubTitle(const QString& subTitle) {
 	d_func()->userInfoCard->setSubTitle(subTitle);
 }
 
-ALNavigationType::NodeOperateReturnType CALNavigationBar::addExpanderNode(const QString& expanderTitle, QString& expanderKey, const ALIcon::AweSomeIcon& awesomeIcon) {
+ALNavigationType::NodeOperateReturnType CALNavigationBar::addExpanderNode(const QString& expanderTitle, QString& expanderKey, const std::shared_ptr<CALIconType>& icon_type) {
 	Q_D(CALNavigationBar);
 
-	const ALNavigationType::NodeOperateReturnType resType = d->navigationModel->addExpanderNode(expanderTitle, expanderKey, awesomeIcon);
+	const ALNavigationType::NodeOperateReturnType resType = d->navigationModel->addExpanderNode(expanderTitle, expanderKey, icon_type);
 	if (resType == ALNavigationType::Success) {
 		d->initNodeModelIndex({});
 		d->resetNodeSelected();
@@ -767,10 +756,10 @@ ALNavigationType::NodeOperateReturnType CALNavigationBar::addExpanderNode(const 
 	return resType;
 }
 
-ALNavigationType::NodeOperateReturnType CALNavigationBar::addExpanderNode(const QString& expanderTitle, QString& expanderKey, const ALIcon::FluentIcon& fluentIcon) {
+ALNavigationType::NodeOperateReturnType CALNavigationBar::addExpanderNode(const QString& expanderTitle, QString& expanderKey, const QString& targetExpanderKey, const std::shared_ptr<CALIconType>& icon_type) {
 	Q_D(CALNavigationBar);
 
-	const ALNavigationType::NodeOperateReturnType resType = d->navigationModel->addExpanderNode(expanderTitle, expanderKey, fluentIcon);
+	const ALNavigationType::NodeOperateReturnType resType = d->navigationModel->addExpanderNode(expanderTitle, expanderKey, targetExpanderKey, icon_type);
 	if (resType == ALNavigationType::Success) {
 		d->initNodeModelIndex({});
 		d->resetNodeSelected();
@@ -779,38 +768,14 @@ ALNavigationType::NodeOperateReturnType CALNavigationBar::addExpanderNode(const 
 	return resType;
 }
 
-ALNavigationType::NodeOperateReturnType CALNavigationBar::addExpanderNode(const QString& expanderTitle, QString& expanderKey, const QString& targetExpanderKey, const ALIcon::AweSomeIcon& awesomeIcon) {
-	Q_D(CALNavigationBar);
-
-	const ALNavigationType::NodeOperateReturnType resType = d->navigationModel->addExpanderNode(expanderTitle, expanderKey, targetExpanderKey, awesomeIcon);
-	if (resType == ALNavigationType::Success) {
-		d->initNodeModelIndex({});
-		d->resetNodeSelected();
-	}
-
-	return resType;
-}
-
-ALNavigationType::NodeOperateReturnType CALNavigationBar::addExpanderNode(const QString& expanderTitle, QString& expanderKey, const QString& targetExpanderKey, const ALIcon::FluentIcon& fluentIcon) {
-	Q_D(CALNavigationBar);
-
-	const ALNavigationType::NodeOperateReturnType resType = d->navigationModel->addExpanderNode(expanderTitle, expanderKey, targetExpanderKey, fluentIcon);
-	if (resType == ALNavigationType::Success) {
-		d->initNodeModelIndex({});
-		d->resetNodeSelected();
-	}
-
-	return resType;
-}
-
-ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QString& pageTitle, QWidget* page, const ALIcon::AweSomeIcon& awesomeIcon) {
+ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QString& pageTitle, QWidget* page, const std::shared_ptr<CALIconType>& icon_type) {
 	Q_D(CALNavigationBar);
 	if (!page) {
 		return ALNavigationType::PageInvalid;
 	}
 
 	QString pageKey{};
-	const ALNavigationType::NodeOperateReturnType resType = d->navigationModel->addPageNode(pageTitle, pageKey, awesomeIcon);
+	const ALNavigationType::NodeOperateReturnType resType = d->navigationModel->addPageNode(pageTitle, pageKey, icon_type);
 	if (resType == ALNavigationType::Success) {
 		d->mapPageMeta.insert(pageKey, page->metaObject());
 		d->addStackedPage(page, pageKey);
@@ -821,25 +786,7 @@ ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QStr
 	return resType;
 }
 
-ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QString& pageTitle, QWidget* page, const ALIcon::FluentIcon& fluentIcon) {
-	Q_D(CALNavigationBar);
-	if (!page) {
-		return ALNavigationType::PageInvalid;
-	}
-
-	QString pageKey{};
-	const ALNavigationType::NodeOperateReturnType resType = d->navigationModel->addPageNode(pageTitle, pageKey, fluentIcon);
-	if (resType == ALNavigationType::Success) {
-		d->mapPageMeta.insert(pageKey, page->metaObject());
-		d->addStackedPage(page, pageKey);
-		d->initNodeModelIndex({});
-		d->resetNodeSelected();
-	}
-
-	return resType;
-}
-
-ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QString& pageTitle, QWidget* page, const QString& targetExpanderKey, const ALIcon::AweSomeIcon& awesomeIcon) {
+ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QString& pageTitle, QWidget* page, const QString& targetExpanderKey, const std::shared_ptr<CALIconType>& icon_type) {
 	Q_D(CALNavigationBar);
 	if (!page) {
 		return ALNavigationType::PageInvalid;
@@ -849,17 +796,17 @@ ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QStr
 	}
 
 	QString pageKey{};
-	const ALNavigationType::NodeOperateReturnType resType = d->navigationModel->addPageNode(pageTitle, pageKey, targetExpanderKey, awesomeIcon);
+	const ALNavigationType::NodeOperateReturnType resType = d->navigationModel->addPageNode(pageTitle, pageKey, targetExpanderKey, icon_type);
 	if (resType == ALNavigationType::Success) {
 		d->mapPageMeta.insert(pageKey, page->metaObject());
 		CALNavigationNode* node = d->navigationModel->getNavigationNode(pageKey);
 		if (CALNavigationNode* originalNode = node->getOriginalNode(); d->mapCompactMenu.contains(originalNode)) {
 			CALMenu* menu = d->mapCompactMenu.value(originalNode);
-			const QAction* action = menu->addAction(CALIconFactory::createIconType(node->getAwesomeIcon()), node->getNodeTitle());
+			const QAction* action = menu->addAction(std::shared_ptr<CALIconType>(node->getALIcon()), node->getNodeTitle());
 			connect(action, &QAction::triggered, this, [d, node]() { d->slotTreeViewClicked(node->getModelIndex()); });
 		} else {
 			const auto menu = new CALMenu(const_cast<CALNavigationBar*>(this));
-			const QAction* action = menu->addAction(CALIconFactory::createIconType(node->getAwesomeIcon()), node->getNodeTitle());
+			const QAction* action = menu->addAction(std::shared_ptr<CALIconType>(node->getALIcon()), node->getNodeTitle());
 			connect(action, &QAction::triggered, this, [d, node]() { d->slotTreeViewClicked(node->getModelIndex()); });
 			d->mapCompactMenu.insert(originalNode, menu);
 		}
@@ -871,7 +818,25 @@ ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QStr
 	return resType;
 }
 
-ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QString& pageTitle, QWidget* page, const QString& targetExpanderKey, const ALIcon::FluentIcon& fluentIcon) {
+ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QString& pageTitle, QWidget* page, const int keyPoints, const std::shared_ptr<CALIconType>& icon_type) {
+	Q_D(CALNavigationBar);
+	if (!page) {
+		return ALNavigationType::PageInvalid;
+	}
+
+	QString pageKey{};
+	const ALNavigationType::NodeOperateReturnType resType = d->navigationModel->addPageNode(pageTitle, pageKey, keyPoints, icon_type);
+	if (resType == ALNavigationType::Success) {
+		d->mapPageMeta.insert(pageKey, page->metaObject());
+		d->addStackedPage(page, pageKey);
+		d->initNodeModelIndex({});
+		d->resetNodeSelected();
+	}
+
+	return resType;
+}
+
+ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QString& pageTitle, QWidget* page, const QString& targetExpanderKey, const int keyPoints, const std::shared_ptr<CALIconType>& icon_type) {
 	Q_D(CALNavigationBar);
 	if (!page) {
 		return ALNavigationType::PageInvalid;
@@ -881,17 +846,17 @@ ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QStr
 	}
 
 	QString pageKey{};
-	const ALNavigationType::NodeOperateReturnType resType = d->navigationModel->addPageNode(pageTitle, pageKey, targetExpanderKey, fluentIcon);
+	const ALNavigationType::NodeOperateReturnType resType = d->navigationModel->addPageNode(pageTitle, pageKey, targetExpanderKey, keyPoints, icon_type);
 	if (resType == ALNavigationType::Success) {
 		d->mapPageMeta.insert(pageKey, page->metaObject());
 		CALNavigationNode* node = d->navigationModel->getNavigationNode(pageKey);
 		if (CALNavigationNode* originalNode = node->getOriginalNode(); d->mapCompactMenu.contains(originalNode)) {
 			CALMenu* menu = d->mapCompactMenu.value(originalNode);
-			const QAction* action = menu->addAction(CALIconFactory::createIconType(node->getFluentIcon()), node->getNodeTitle());
+			const QAction* action = menu->addAction(std::shared_ptr<CALIconType>(node->getALIcon()), node->getNodeTitle());
 			connect(action, &QAction::triggered, this, [d, node]() { d->slotTreeViewClicked(node->getModelIndex()); });
 		} else {
 			const auto menu = new CALMenu(const_cast<CALNavigationBar*>(this));
-			const QAction* action = menu->addAction(CALIconFactory::createIconType(node->getFluentIcon()), node->getNodeTitle());
+			const QAction* action = menu->addAction(std::shared_ptr<CALIconType>(node->getALIcon()), node->getNodeTitle());
 			connect(action, &QAction::triggered, this, [d, node]() { d->slotTreeViewClicked(node->getModelIndex()); });
 			d->mapCompactMenu.insert(originalNode, menu);
 		}
@@ -903,129 +868,14 @@ ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QStr
 	return resType;
 }
 
-ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QString& pageTitle, QWidget* page, const int keyPoints, const ALIcon::AweSomeIcon& awesomeIcon) {
-	Q_D(CALNavigationBar);
-	if (!page) {
-		return ALNavigationType::PageInvalid;
-	}
-
-	QString pageKey{};
-	const ALNavigationType::NodeOperateReturnType resType = d->navigationModel->addPageNode(pageTitle, pageKey, keyPoints, awesomeIcon);
-	if (resType == ALNavigationType::Success) {
-		d->mapPageMeta.insert(pageKey, page->metaObject());
-		d->addStackedPage(page, pageKey);
-		d->initNodeModelIndex({});
-		d->resetNodeSelected();
-	}
-
-	return resType;
+ALNavigationType::NodeOperateReturnType CALNavigationBar::addFooterNode(const QString& footerTitle, QString& footerKey, const int keyPoints, const std::shared_ptr<CALIconType>& icon_type) {
+	return addFooterNode(footerTitle, nullptr, footerKey, keyPoints, icon_type);
 }
 
-ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QString& pageTitle, QWidget* page, const int keyPoints, const ALIcon::FluentIcon& fluentIcon) {
-	Q_D(CALNavigationBar);
-	if (!page) {
-		return ALNavigationType::PageInvalid;
-	}
-
-	QString pageKey{};
-	const ALNavigationType::NodeOperateReturnType resType = d->navigationModel->addPageNode(pageTitle, pageKey, keyPoints, fluentIcon);
-	if (resType == ALNavigationType::Success) {
-		d->mapPageMeta.insert(pageKey, page->metaObject());
-		d->addStackedPage(page, pageKey);
-		d->initNodeModelIndex({});
-		d->resetNodeSelected();
-	}
-
-	return resType;
-}
-
-ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QString& pageTitle, QWidget* page, const QString& targetExpanderKey, const int keyPoints, const ALIcon::AweSomeIcon& awesomeIcon) {
-	Q_D(CALNavigationBar);
-	if (!page) {
-		return ALNavigationType::PageInvalid;
-	}
-	if (targetExpanderKey.isEmpty()) {
-		return ALNavigationType::TargetNodeInvalid;
-	}
-
-	QString pageKey{};
-	const ALNavigationType::NodeOperateReturnType resType = d->navigationModel->addPageNode(pageTitle, pageKey, targetExpanderKey, keyPoints, awesomeIcon);
-	if (resType == ALNavigationType::Success) {
-		d->mapPageMeta.insert(pageKey, page->metaObject());
-		CALNavigationNode* node = d->navigationModel->getNavigationNode(pageKey);
-		if (CALNavigationNode* originalNode = node->getOriginalNode(); d->mapCompactMenu.contains(originalNode)) {
-			CALMenu* menu = d->mapCompactMenu.value(originalNode);
-			const QAction* action = menu->addAction(CALIconFactory::createIconType(node->getAwesomeIcon()), node->getNodeTitle());
-			connect(action, &QAction::triggered, this, [d, node]() { d->slotTreeViewClicked(node->getModelIndex()); });
-		} else {
-			const auto menu = new CALMenu(const_cast<CALNavigationBar*>(this));
-			const QAction* action = menu->addAction(CALIconFactory::createIconType(node->getAwesomeIcon()), node->getNodeTitle());
-			connect(action, &QAction::triggered, this, [d, node]() { d->slotTreeViewClicked(node->getModelIndex()); });
-			d->mapCompactMenu.insert(originalNode, menu);
-		}
-		d->addStackedPage(page, pageKey);
-		d->initNodeModelIndex({});
-		d->resetNodeSelected();
-	}
-
-	return resType;
-}
-
-ALNavigationType::NodeOperateReturnType CALNavigationBar::addPageNode(const QString& pageTitle, QWidget* page, const QString& targetExpanderKey, const int keyPoints, const ALIcon::FluentIcon& fluentIcon) {
-	Q_D(CALNavigationBar);
-	if (!page) {
-		return ALNavigationType::PageInvalid;
-	}
-	if (targetExpanderKey.isEmpty()) {
-		return ALNavigationType::TargetNodeInvalid;
-	}
-
-	QString pageKey{};
-	const ALNavigationType::NodeOperateReturnType resType = d->navigationModel->addPageNode(pageTitle, pageKey, targetExpanderKey, keyPoints, fluentIcon);
-	if (resType == ALNavigationType::Success) {
-		d->mapPageMeta.insert(pageKey, page->metaObject());
-		CALNavigationNode* node = d->navigationModel->getNavigationNode(pageKey);
-		if (CALNavigationNode* originalNode = node->getOriginalNode(); d->mapCompactMenu.contains(originalNode)) {
-			CALMenu* menu = d->mapCompactMenu.value(originalNode);
-			const QAction* action = menu->addAction(CALIconFactory::createIconType(node->getFluentIcon()), node->getNodeTitle());
-			connect(action, &QAction::triggered, this, [d, node]() { d->slotTreeViewClicked(node->getModelIndex()); });
-		} else {
-			const auto menu = new CALMenu(const_cast<CALNavigationBar*>(this));
-			const QAction* action = menu->addAction(CALIconFactory::createIconType(node->getFluentIcon()), node->getNodeTitle());
-			connect(action, &QAction::triggered, this, [d, node]() { d->slotTreeViewClicked(node->getModelIndex()); });
-			d->mapCompactMenu.insert(originalNode, menu);
-		}
-		d->addStackedPage(page, pageKey);
-		d->initNodeModelIndex({});
-		d->resetNodeSelected();
-	}
-
-	return resType;
-}
-
-ALNavigationType::NodeOperateReturnType CALNavigationBar::addFooterNode(const QString& footerTitle, QString& footerKey, const int keyPoints, const ALIcon::AweSomeIcon& awesomeIcon) {
-	return addFooterNode(footerTitle, nullptr, footerKey, keyPoints, awesomeIcon);
-}
-
-ALNavigationType::NodeOperateReturnType CALNavigationBar::addFooterNode(const QString& footerTitle, QString& footerKey, const int keyPoints, const ALIcon::FluentIcon& fluentIcon) {
-	return addFooterNode(footerTitle, nullptr, footerKey, keyPoints, fluentIcon);
-}
-
-ALNavigationType::NodeOperateReturnType CALNavigationBar::addFooterNode(const QString& footerTitle, QWidget* page, QString& footerKey, const int keyPoints, const ALIcon::AweSomeIcon& awesomeIcon) {
+ALNavigationType::NodeOperateReturnType CALNavigationBar::addFooterNode(const QString& footerTitle, QWidget* page, QString& footerKey, const int keyPoints, const std::shared_ptr<CALIconType>& icon_type) {
 	Q_D(CALNavigationBar);
 
-	const auto resType = d->footerModel->addFooterNode(footerTitle, footerKey, page ? true : false, keyPoints, awesomeIcon);
-	if (resType == ALNavigationType::Success) {
-		d->addFooterPage(page, footerKey);
-	}
-
-	return resType;
-}
-
-ALNavigationType::NodeOperateReturnType CALNavigationBar::addFooterNode(const QString& footerTitle, QWidget* page, QString& footerKey, const int keyPoints, const ALIcon::FluentIcon& fluentIcon) {
-	Q_D(CALNavigationBar);
-
-	const auto resType = d->footerModel->addFooterNode(footerTitle, footerKey, page ? true : false, keyPoints, fluentIcon);
+	const auto resType = d->footerModel->addFooterNode(footerTitle, footerKey, page ? true : false, keyPoints, icon_type);
 	if (resType == ALNavigationType::Success) {
 		d->addFooterPage(page, footerKey);
 	}

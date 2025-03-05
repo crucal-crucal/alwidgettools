@@ -9,6 +9,7 @@
  */
 namespace AL {
 class CALNavigationBarPrivate;
+class CALIconType;
 
 class CALWIDGETTOOLS_EXPORT CALNavigationBar : public QWidget {
 	Q_OBJECT
@@ -24,23 +25,14 @@ public:
 	void setUserInfoCardSubTitle(const QString& subTitle);
 
 	// \see almainwindow.hpp 解释
-	ALNavigationType::NodeOperateReturnType addExpanderNode(const QString& expanderTitle, QString& expanderKey, const ALIcon::AweSomeIcon& awesomeIcon = ALIcon::AweSomeIcon::None);
-	ALNavigationType::NodeOperateReturnType addExpanderNode(const QString& expanderTitle, QString& expanderKey, const ALIcon::FluentIcon& fluentIcon = ALIcon::FluentIcon::None);
-	ALNavigationType::NodeOperateReturnType addExpanderNode(const QString& expanderTitle, QString& expanderKey, const QString& targetExpanderKey, const ALIcon::AweSomeIcon& awesomeIcon = ALIcon::AweSomeIcon::None);
-	ALNavigationType::NodeOperateReturnType addExpanderNode(const QString& expanderTitle, QString& expanderKey, const QString& targetExpanderKey, const ALIcon::FluentIcon& fluentIcon = ALIcon::FluentIcon::None);
-
-	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QWidget* page, const ALIcon::AweSomeIcon& awesomeIcon = ALIcon::AweSomeIcon::None);
-	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QWidget* page, const ALIcon::FluentIcon& fluentIcon = ALIcon::FluentIcon::None);
-	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QWidget* page, const QString& targetExpanderKey, const ALIcon::AweSomeIcon& awesomeIcon = ALIcon::AweSomeIcon::None);
-	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QWidget* page, const QString& targetExpanderKey, const ALIcon::FluentIcon& fluentIcon = ALIcon::FluentIcon::None);
-	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QWidget* page, int keyPoints = 0, const ALIcon::AweSomeIcon& awesomeIcon = ALIcon::AweSomeIcon::None);
-	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QWidget* page, int keyPoints = 0, const ALIcon::FluentIcon& fluentIcon = ALIcon::FluentIcon::None);
-	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QWidget* page, const QString& targetExpanderKey, int keyPoints = 0, const ALIcon::AweSomeIcon& awesomeIcon = ALIcon::AweSomeIcon::None);
-	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QWidget* page, const QString& targetExpanderKey, int keyPoints = 0, const ALIcon::FluentIcon& fluentIcon = ALIcon::FluentIcon::None);
-	ALNavigationType::NodeOperateReturnType addFooterNode(const QString& footerTitle, QString& footerKey, int keyPoints = 0, const ALIcon::AweSomeIcon& awesomeIcon = ALIcon::AweSomeIcon::None);
-	ALNavigationType::NodeOperateReturnType addFooterNode(const QString& footerTitle, QString& footerKey, int keyPoints = 0, const ALIcon::FluentIcon& fluentIcon = ALIcon::FluentIcon::None);
-	ALNavigationType::NodeOperateReturnType addFooterNode(const QString& footerTitle, QWidget* page, QString& footerKey, int keyPoints = 0, const ALIcon::AweSomeIcon& awesomeIcon = ALIcon::AweSomeIcon::None);
-	ALNavigationType::NodeOperateReturnType addFooterNode(const QString& footerTitle, QWidget* page, QString& footerKey, int keyPoints = 0, const ALIcon::FluentIcon& fluentIcon = ALIcon::FluentIcon::None);
+	ALNavigationType::NodeOperateReturnType addExpanderNode(const QString& expanderTitle, QString& expanderKey, const std::shared_ptr<CALIconType>& icon_type = nullptr);
+	ALNavigationType::NodeOperateReturnType addExpanderNode(const QString& expanderTitle, QString& expanderKey, const QString& targetExpanderKey, const std::shared_ptr<CALIconType>& icon_type = nullptr);
+	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QWidget* page, const std::shared_ptr<CALIconType>& icon_type = nullptr);
+	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QWidget* page, const QString& targetExpanderKey, const std::shared_ptr<CALIconType>& icon_type = nullptr);
+	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QWidget* page, int keyPoints = 0, const std::shared_ptr<CALIconType>& icon_type = nullptr);
+	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QWidget* page, const QString& targetExpanderKey, int keyPoints = 0, const std::shared_ptr<CALIconType>& icon_type = nullptr);
+	ALNavigationType::NodeOperateReturnType addFooterNode(const QString& footerTitle, QString& footerKey, int keyPoints = 0, const std::shared_ptr<CALIconType>& icon_type = nullptr);
+	ALNavigationType::NodeOperateReturnType addFooterNode(const QString& footerTitle, QWidget* page, QString& footerKey, int keyPoints = 0, const std::shared_ptr<CALIconType>& icon_type = nullptr);
 
 	bool removeNavigationNode(const QString& nodeKey);
 

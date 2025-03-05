@@ -125,51 +125,51 @@ bool CALFluentIconType::isNull() const {
 	return d_ptr->icon == ALIcon::FluentIcon::None;
 }
 
-QIcon CALIcon::getQIconFromAwesomeIcon(const ALIcon::AweSomeIcon& awesomeIcon) {
+QIcon CALIcon::getQIconFromALIcon(const ALIcon::AweSomeIcon& awesomeIcon) {
 	return createIcon(awesomeIcon);
 }
 
-QIcon CALIcon::getQIconFromFluentIcon(const ALIcon::FluentIcon& fluentIcon) {
+QIcon CALIcon::getQIconFromALIcon(const ALIcon::FluentIcon& fluentIcon) {
 	return createIcon(fluentIcon);
 }
 
-QIcon CALIcon::getQIconFromAwesomeIcon(const ALIcon::AweSomeIcon& awesomeIcon, const QColor& iconColor) {
+QIcon CALIcon::getQIconFromALIcon(const ALIcon::AweSomeIcon& awesomeIcon, const QColor& iconColor) {
 	return createIcon(awesomeIcon, 25, 30, 30, iconColor);
 }
 
-QIcon CALIcon::getQIconFromFluentIcon(const ALIcon::FluentIcon& fluentIcon, const QColor& iconColor) {
+QIcon CALIcon::getQIconFromALIcon(const ALIcon::FluentIcon& fluentIcon, const QColor& iconColor) {
 	return createIcon(fluentIcon, 25, 30, 30, iconColor);
 }
 
-QIcon CALIcon::getQIconFromAwesomeIcon(const ALIcon::AweSomeIcon& awesomeIcon, const int pixelSize) {
+QIcon CALIcon::getQIconFromALIcon(const ALIcon::AweSomeIcon& awesomeIcon, const int pixelSize) {
 	return createIcon(awesomeIcon, pixelSize);
 }
 
-QIcon CALIcon::getQIconFromFluentIcon(const ALIcon::FluentIcon& fluentIcon, const int pixelSize) {
+QIcon CALIcon::getQIconFromALIcon(const ALIcon::FluentIcon& fluentIcon, const int pixelSize) {
 	return createIcon(fluentIcon, pixelSize);
 }
 
-QIcon CALIcon::getQIconFromAwesomeIcon(const ALIcon::AweSomeIcon& awesomeIcon, const int pixelSize, const QColor& iconColor) {
+QIcon CALIcon::getQIconFromALIcon(const ALIcon::AweSomeIcon& awesomeIcon, const int pixelSize, const QColor& iconColor) {
 	return createIcon(awesomeIcon, pixelSize, 30, 30, iconColor);
 }
 
-QIcon CALIcon::getQIconFromFluentIcon(const ALIcon::FluentIcon& fluentIcon, const int pixelSize, const QColor& iconColor) {
+QIcon CALIcon::getQIconFromALIcon(const ALIcon::FluentIcon& fluentIcon, const int pixelSize, const QColor& iconColor) {
 	return createIcon(fluentIcon, pixelSize, 30, 30, iconColor);
 }
 
-QIcon CALIcon::getQIconFromAwesomeIcon(const ALIcon::AweSomeIcon& awesomeIcon, const int pixelSize, const int fixedWidth, const int fixedHeight) {
+QIcon CALIcon::getQIconFromALIcon(const ALIcon::AweSomeIcon& awesomeIcon, const int pixelSize, const int fixedWidth, const int fixedHeight) {
 	return createIcon(awesomeIcon, pixelSize, fixedWidth, fixedHeight);
 }
 
-QIcon CALIcon::getQIconFromFluentIcon(const ALIcon::FluentIcon& fluentIcon, const int pixelSize, const int fixedWidth, const int fixedHeight) {
+QIcon CALIcon::getQIconFromALIcon(const ALIcon::FluentIcon& fluentIcon, const int pixelSize, const int fixedWidth, const int fixedHeight) {
 	return createIcon(fluentIcon, pixelSize, fixedWidth, fixedHeight);
 }
 
-QIcon CALIcon::getQIconFromAwesomeIcon(const ALIcon::AweSomeIcon& awesomeIcon, const int pixelSize, const int fixedWidth, const int fixedHeight, const QColor& iconColor) {
+QIcon CALIcon::getQIconFromALIcon(const ALIcon::AweSomeIcon& awesomeIcon, const int pixelSize, const int fixedWidth, const int fixedHeight, const QColor& iconColor) {
 	return createIcon(awesomeIcon, pixelSize, fixedWidth, fixedHeight, iconColor);
 }
 
-QIcon CALIcon::getQIconFromFluentIcon(const ALIcon::FluentIcon& fluentIcon, const int pixelSize, const int fixedWidth, const int fixedHeight, const QColor& iconColor) {
+QIcon CALIcon::getQIconFromALIcon(const ALIcon::FluentIcon& fluentIcon, const int pixelSize, const int fixedWidth, const int fixedHeight, const QColor& iconColor) {
 	return createIcon(fluentIcon, pixelSize, fixedWidth, fixedHeight, iconColor);
 }
 

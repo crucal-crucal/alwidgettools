@@ -54,78 +54,56 @@ CALMenu* CALMenuBar::addMenu(const QIcon& icon, const QString& title) {
 	return menu;
 }
 
-CALMenu* CALMenuBar::addMenu(const ALIcon::AweSomeIcon& awesomeicon, const QString& title) {
+CALMenu* CALMenuBar::addMenu(const std::shared_ptr<CALIconType>& icon_type, const QString& title) {
 	const auto menu = new CALMenu(title, this);
 	menu->setMenuItemHeight(27);
-	menu->menuAction()->setProperty(ALIcon::iconProperty, QChar(static_cast<unsigned short>(awesomeicon)));
-	menu->menuAction()->setProperty(ALIcon::iconTypeProperty, ALIcon::Awesome);
-	menu->menuAction()->setIcon(CALIcon::getQIconFromAwesomeIcon(ALIcon::AweSomeIcon::Broom, 1));
+	menu->menuAction()->setProperty(ALIcon::iconProperty, QChar(icon_type->value()));
+	menu->menuAction()->setProperty(ALIcon::iconTypeProperty, icon_type->iconType());
+	if (icon_type->iconType() == ALIcon::IconType::Awesome) {
+		menu->menuAction()->setIcon(CALIcon::getQIconFromALIcon(ALIcon::AweSomeIcon::Broom, 1));
+	} else if (icon_type->iconType() == ALIcon::IconType::Fluent) {
+		menu->menuAction()->setIcon(CALIcon::getQIconFromALIcon(ALIcon::FluentIcon::Broom, 1));
+	}
 	QMenuBar::addAction(menu->menuAction());
 	return menu;
 }
 
-CALMenu* CALMenuBar::addMenu(const ALIcon::FluentIcon& fluenticon, const QString& title) {
-	const auto menu = new CALMenu(title, this);
-	menu->setMenuItemHeight(27);
-	menu->menuAction()->setProperty(ALIcon::iconProperty, QChar(static_cast<unsigned short>(fluenticon)));
-	menu->menuAction()->setProperty(ALIcon::iconTypeProperty, ALIcon::Fluent);
-	menu->menuAction()->setIcon(CALIcon::getQIconFromFluentIcon(ALIcon::FluentIcon::Broom, 1));
-	QMenuBar::addAction(menu->menuAction());
-	return menu;
-}
-
-QAction* CALMenuBar::addAweSomeIconAction(const ALIcon::AweSomeIcon& awesomeicon) {
+QAction* CALMenuBar::addALIconAction(const std::shared_ptr<CALIconType>& icon_type) {
 	const auto action = new QAction(this);
-	action->setProperty(ALIcon::iconProperty, QChar(static_cast<unsigned short>(awesomeicon)));
-	action->setProperty(ALIcon::iconTypeProperty, ALIcon::Awesome);
-	action->setIcon(CALIcon::getQIconFromAwesomeIcon(ALIcon::AweSomeIcon::Broom, 1));
+	action->setProperty(ALIcon::iconProperty, QChar(icon_type->value()));
+	action->setProperty(ALIcon::iconTypeProperty, icon_type->iconType());
+	if (icon_type->iconType() == ALIcon::IconType::Awesome) {
+		action->setIcon(CALIcon::getQIconFromALIcon(ALIcon::AweSomeIcon::Broom, 1));
+	} else if (icon_type->iconType() == ALIcon::IconType::Fluent) {
+		action->setIcon(CALIcon::getQIconFromALIcon(ALIcon::FluentIcon::Broom, 1));
+	}
 	QMenuBar::addAction(action);
 	return action;
 }
 
-QAction* CALMenuBar::addFluentIconAction(const ALIcon::FluentIcon& fluenticon) {
-	const auto action = new QAction(this);
-	action->setProperty(ALIcon::iconProperty, QChar(static_cast<unsigned short>(fluenticon)));
-	action->setProperty(ALIcon::iconTypeProperty, ALIcon::Fluent);
-	action->setIcon(CALIcon::getQIconFromFluentIcon(ALIcon::FluentIcon::Broom, 1));
-	QMenuBar::addAction(action);
-	return action;
-}
-
-QAction* CALMenuBar::addAweSomeIconAction(const ALIcon::AweSomeIcon& awesomeicon, const QString& text) {
+QAction* CALMenuBar::addALIconAction(const std::shared_ptr<CALIconType>& icon_type, const QString& text) {
 	const auto action = new QAction(text, this);
-	action->setProperty(ALIcon::iconProperty, QChar(static_cast<unsigned short>(awesomeicon)));
-	action->setProperty(ALIcon::iconTypeProperty, ALIcon::Awesome);
-	action->setIcon(CALIcon::getQIconFromAwesomeIcon(ALIcon::AweSomeIcon::Broom, 1));
+	action->setProperty(ALIcon::iconProperty, QChar(icon_type->value()));
+	action->setProperty(ALIcon::iconTypeProperty, icon_type->iconType());
+	if (icon_type->iconType() == ALIcon::IconType::Awesome) {
+		action->setIcon(CALIcon::getQIconFromALIcon(ALIcon::AweSomeIcon::Broom, 1));
+	} else if (icon_type->iconType() == ALIcon::IconType::Fluent) {
+		action->setIcon(CALIcon::getQIconFromALIcon(ALIcon::FluentIcon::Broom, 1));
+	}
 	QMenuBar::addAction(action);
 	return action;
 }
 
-QAction* CALMenuBar::addFluentIconAction(const ALIcon::FluentIcon& fluenticon, const QString& text) {
-	const auto action = new QAction(text, this);
-	action->setProperty(ALIcon::iconProperty, QChar(static_cast<unsigned short>(fluenticon)));
-	action->setProperty(ALIcon::iconTypeProperty, ALIcon::Fluent);
-	action->setIcon(CALIcon::getQIconFromFluentIcon(ALIcon::FluentIcon::Broom, 1));
-	QMenuBar::addAction(action);
-	return action;
-}
-
-QAction* CALMenuBar::addAweSomeIconAction(const ALIcon::AweSomeIcon& awesomeicon, const QString& text, const QKeySequence& shortcut) {
+QAction* CALMenuBar::addALIconAction(const std::shared_ptr<CALIconType>& icon_type, const QString& text, const QKeySequence& shortcut) {
 	const auto action = new QAction(text, this);
 	action->setShortcut(shortcut);
-	action->setProperty(ALIcon::iconProperty, QChar(static_cast<unsigned short>(awesomeicon)));
-	action->setProperty(ALIcon::iconTypeProperty, ALIcon::Awesome);
-	action->setIcon(CALIcon::getQIconFromAwesomeIcon(ALIcon::AweSomeIcon::Broom, 1));
-	QMenuBar::addAction(action);
-	return action;
-}
-
-QAction* CALMenuBar::addFluentIconAction(const ALIcon::FluentIcon& fluenticon, const QString& text, const QKeySequence& shortcut) {
-	const auto action = new QAction(text, this);
-	action->setShortcut(shortcut);
-	action->setProperty(ALIcon::iconProperty, QChar(static_cast<unsigned short>(fluenticon)));
-	action->setProperty(ALIcon::iconTypeProperty, ALIcon::Fluent);
-	action->setIcon(CALIcon::getQIconFromFluentIcon(ALIcon::FluentIcon::Broom, 1));
+	action->setProperty(ALIcon::iconProperty, QChar(icon_type->value()));
+	action->setProperty(ALIcon::iconTypeProperty, icon_type->iconType());
+	if (icon_type->iconType() == ALIcon::IconType::Awesome) {
+		action->setIcon(CALIcon::getQIconFromALIcon(ALIcon::AweSomeIcon::Broom, 1));
+	} else if (icon_type->iconType() == ALIcon::IconType::Fluent) {
+		action->setIcon(CALIcon::getQIconFromALIcon(ALIcon::FluentIcon::Broom, 1));
+	}
 	QMenuBar::addAction(action);
 	return action;
 }

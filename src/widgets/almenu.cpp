@@ -87,7 +87,7 @@ QAction* CALMenu::addAction(const QString& text) {
 	return QMenu::addAction(text);
 }
 
-QAction* CALMenu::addAction(const std::unique_ptr<CALIconType>& icon_type, const QString& text) {
+QAction* CALMenu::addAction(const std::shared_ptr<CALIconType>& icon_type, const QString& text) {
 	const auto action = new QAction(text, this);
 	if (!icon_type->isNull()) {
 		action->setProperty(ALIcon::iconProperty, QChar(icon_type->value()));
@@ -101,7 +101,7 @@ QAction* CALMenu::addAction(const QIcon& icon, const QString& text) {
 	return QMenu::addAction(icon, text);
 }
 
-QAction* CALMenu::addAction(const std::unique_ptr<CALIconType>& icon_type, const QString& text, const QKeySequence& shortcut) {
+QAction* CALMenu::addAction(const std::shared_ptr<CALIconType>& icon_type, const QString& text, const QKeySequence& shortcut) {
 	const auto action = new QAction(text, this);
 	action->setProperty(ALIcon::iconProperty, QChar(icon_type->value()));
 	action->setProperty(ALIcon::iconTypeProperty, icon_type->iconType());
@@ -118,7 +118,7 @@ QAction* CALMenu::addAction(const QIcon& icon, const QString& text, const QKeySe
 	return action;
 }
 
-QAction* CALMenu::addAction(const std::unique_ptr<CALIconType>& icon_type, const QString& text, const QObject* receiver, const char* member, const QKeySequence& shortcut) {
+QAction* CALMenu::addAction(const std::shared_ptr<CALIconType>& icon_type, const QString& text, const QObject* receiver, const char* member, const QKeySequence& shortcut) {
 	const auto action = new QAction(text, this);
 	action->setProperty(ALIcon::iconProperty, QChar(icon_type->value()));
 	action->setProperty(ALIcon::iconTypeProperty, icon_type->iconType());

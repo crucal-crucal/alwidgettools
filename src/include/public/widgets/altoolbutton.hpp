@@ -32,7 +32,7 @@ public:
 	[[nodiscard]] bool getIsTransparent() const;
 
 	void setMenu(CALMenu* menu);
-	void setALIcon(const std::unique_ptr<CALIconType>& icon_type);
+	void setALIcon(const std::shared_ptr<CALIconType>& icon_type);
 
 	/**
 	 * @brief 安装 CALToolTip 悬浮提示，但前提需要先 setToolTip

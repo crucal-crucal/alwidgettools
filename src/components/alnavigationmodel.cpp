@@ -86,13 +86,13 @@ QVariant CALNavigationModel::data(const QModelIndex& index, int role) const {
 	return {};
 }
 
-ALNavigationType::NodeOperateReturnType CALNavigationModel::addExpanderNode(const QString& expanderTitle, QString& expanderKey, const ALIcon::AweSomeIcon& awesomeIcon) {
+ALNavigationType::NodeOperateReturnType CALNavigationModel::addExpanderNode(const QString& expanderTitle, QString& expanderKey, const std::shared_ptr<CALIconType>& icon_type) {
 #if 0
 	const auto node = new CALNavigationNode(expanderTitle, m_rootNode);
 	node->setDepth(1);
 	node->setIsVisible(true);
 	node->setIsExpanderNode(true);
-	node->setAwesomeIcon(awesomeIcon);
+	node->setALIcon(icon_type);
 	beginInsertRows({}, m_rootNode->getChildrenNodes().count(), m_rootNode->getChildrenNodes().count());
 	m_rootNode->addChildNode(node);
 	m_mapNodes[node->getNodeKey()] = node;
@@ -101,28 +101,10 @@ ALNavigationType::NodeOperateReturnType CALNavigationModel::addExpanderNode(cons
 
 	return ALNavigationType::Success;
 #endif
-	return addNodeInternal(m_rootNode, expanderTitle, expanderKey, true, std::variant<ALIcon::AweSomeIcon, ALIcon::FluentIcon>(awesomeIcon));
+	return addNodeInternal(m_rootNode, expanderTitle, expanderKey, true, icon_type);
 }
 
-ALNavigationType::NodeOperateReturnType CALNavigationModel::addExpanderNode(const QString& expanderTitle, QString& expanderKey, const ALIcon::FluentIcon& fluentIcon) {
-#if 0
-	const auto node = new CALNavigationNode(expanderTitle, m_rootNode);
-	node->setDepth(1);
-	node->setIsVisible(true);
-	node->setIsExpanderNode(true);
-	node->setFluentIcon(fluentIcon);
-	beginInsertRows({}, m_rootNode->getChildrenNodes().count(), m_rootNode->getChildrenNodes().count());
-	m_rootNode->addChildNode(node);
-	m_mapNodes[node->getNodeKey()] = node;
-	endInsertRows();
-	expanderKey = node->getNodeKey();
-
-	return ALNavigationType::Success;
-#endif
-	return addNodeInternal(m_rootNode, expanderTitle, expanderKey, true, std::variant<ALIcon::AweSomeIcon, ALIcon::FluentIcon>(fluentIcon));
-}
-
-ALNavigationType::NodeOperateReturnType CALNavigationModel::addExpanderNode(const QString& expanderTitle, QString& expanderKey, const QString& targetExpanderKey, const ALIcon::AweSomeIcon& awesomeIcon) {
+ALNavigationType::NodeOperateReturnType CALNavigationModel::addExpanderNode(const QString& expanderTitle, QString& expanderKey, const QString& targetExpanderKey, const std::shared_ptr<CALIconType>& icon_type) {
 	if (!m_mapNodes.contains(targetExpanderKey)) {
 		return ALNavigationType::TargetNodeInvalid;
 	}
@@ -136,7 +118,7 @@ ALNavigationType::NodeOperateReturnType CALNavigationModel::addExpanderNode(cons
 		const auto node = new CALNavigationNode(expanderTitle, parentNode);
 		node->setDepth(parentNode->getDepth() + 1);
 		node->setIsExpanderNode(true);
-		node->setAwesomeIcon(awesomeIcon);
+		node->setALIcon(icon_type);
 		node->setIsVisible(parentNode->getIsVisible() && parentNode->getIsExpanded());
 		beginInsertRows(parentNode->getModelIndex(), parentNode->getChildrenNodes().count(), parentNode->getChildrenNodes().count());
 		parentNode->addChildNode(node);
@@ -147,47 +129,16 @@ ALNavigationType::NodeOperateReturnType CALNavigationModel::addExpanderNode(cons
 		return ALNavigationType::Success;
 #endif
 
-		return addNodeInternal(parentNode, expanderTitle, expanderKey, true, std::variant<ALIcon::AweSomeIcon, ALIcon::FluentIcon>(awesomeIcon));
+		return addNodeInternal(parentNode, expanderTitle, expanderKey, true, icon_type);
 	}
 
 	return ALNavigationType::TargetNodeTypeError;
 }
 
-ALNavigationType::NodeOperateReturnType CALNavigationModel::addExpanderNode(const QString& expanderTitle, QString& expanderKey, const QString& targetExpanderKey, const ALIcon::FluentIcon& fluentIcon) {
-	if (!m_mapNodes.contains(targetExpanderKey)) {
-		return ALNavigationType::TargetNodeInvalid;
-	}
-
-	if (CALNavigationNode* parentNode = m_mapNodes.value(targetExpanderKey); parentNode->getIsExpanderNode()) {
-		if (parentNode->getDepth() > NODE_MAX_DEPTHS) {
-			return ALNavigationType::TargetNodeDepthLimit;
-		}
-
-#if 0
-		const auto node = new CALNavigationNode(expanderTitle, parentNode);
-		node->setDepth(parentNode->getDepth() + 1);
-		node->setIsExpanderNode(true);
-		node->setFluentIcon(fluentIcon);
-		node->setIsVisible(parentNode->getIsVisible() && parentNode->getIsExpanded());
-		beginInsertRows(parentNode->getModelIndex(), parentNode->getChildrenNodes().count(), parentNode->getChildrenNodes().count());
-		parentNode->addChildNode(node);
-		m_mapNodes[node->getNodeKey()] = node;
-		endInsertRows();
-		expanderKey = node->getNodeKey();
-
-		return ALNavigationType::Success;
-#endif
-
-		return addNodeInternal(parentNode, expanderTitle, expanderKey, true, std::variant<ALIcon::AweSomeIcon, ALIcon::FluentIcon>(fluentIcon));
-	}
-
-	return ALNavigationType::TargetNodeTypeError;
-}
-
-ALNavigationType::NodeOperateReturnType CALNavigationModel::addPageNode(const QString& pageTitle, QString& pageKey, const ALIcon::AweSomeIcon& awewomeIcon) {
+ALNavigationType::NodeOperateReturnType CALNavigationModel::addPageNode(const QString& pageTitle, QString& pageKey, const std::shared_ptr<CALIconType>& icon_type) {
 	const auto node = new CALNavigationNode(pageTitle, m_rootNode);
 	node->setDepth(1);
-	node->setAwesomeIcon(awewomeIcon);
+	node->setALIcon(icon_type);
 	node->setIsVisible(true);
 	beginInsertRows({}, m_rootNode->getChildrenNodes().count(), m_rootNode->getChildrenNodes().count());
 	m_rootNode->addChildNode(node);
@@ -202,25 +153,7 @@ ALNavigationType::NodeOperateReturnType CALNavigationModel::addPageNode(const QS
 	return ALNavigationType::Success;
 }
 
-ALNavigationType::NodeOperateReturnType CALNavigationModel::addPageNode(const QString& pageTitle, QString& pageKey, const ALIcon::FluentIcon& fluentIcon) {
-	const auto node = new CALNavigationNode(pageTitle, m_rootNode);
-	node->setDepth(1);
-	node->setFluentIcon(fluentIcon);
-	node->setIsVisible(true);
-	beginInsertRows({}, m_rootNode->getChildrenNodes().count(), m_rootNode->getChildrenNodes().count());
-	m_rootNode->addChildNode(node);
-	m_mapNodes[node->getNodeKey()] = node;
-	endInsertRows();
-	pageKey = node->getNodeKey();
-
-	if (!m_selectedNode) {
-		m_selectedNode = node;
-	}
-
-	return ALNavigationType::Success;
-}
-
-ALNavigationType::NodeOperateReturnType CALNavigationModel::addPageNode(const QString& pageTitle, QString& pageKey, const QString& targetExpanderKey, const ALIcon::AweSomeIcon& awesomeIcon) {
+ALNavigationType::NodeOperateReturnType CALNavigationModel::addPageNode(const QString& pageTitle, QString& pageKey, const QString& targetExpanderKey, const std::shared_ptr<CALIconType>& icon_type) {
 	if (!m_mapNodes.contains(targetExpanderKey)) {
 		return ALNavigationType::TargetNodeInvalid;
 	}
@@ -232,7 +165,7 @@ ALNavigationType::NodeOperateReturnType CALNavigationModel::addPageNode(const QS
 
 		const auto node = new CALNavigationNode(pageTitle, parentNode);
 		node->setDepth(parentNode->getDepth() + 1);
-		node->setAwesomeIcon(awesomeIcon);
+		node->setALIcon(icon_type);
 		node->setIsVisible(parentNode->getIsVisible() && parentNode->getIsExpanded());
 		beginInsertRows(parentNode->getModelIndex(), parentNode->getChildrenNodes().count(), parentNode->getChildrenNodes().count());
 		parentNode->addChildNode(node);
@@ -249,39 +182,10 @@ ALNavigationType::NodeOperateReturnType CALNavigationModel::addPageNode(const QS
 	return ALNavigationType::TargetNodeTypeError;
 }
 
-ALNavigationType::NodeOperateReturnType CALNavigationModel::addPageNode(const QString& pageTitle, QString& pageKey, const QString& targetExpanderKey, const ALIcon::FluentIcon& fluentIcon) {
-	if (!m_mapNodes.contains(targetExpanderKey)) {
-		return ALNavigationType::TargetNodeInvalid;
-	}
-
-	if (CALNavigationNode* parentNode = m_mapNodes.value(targetExpanderKey); parentNode->getIsExpanderNode()) {
-		if (parentNode->getDepth() > NODE_MAX_DEPTHS) {
-			return ALNavigationType::TargetNodeDepthLimit;
-		}
-
-		const auto node = new CALNavigationNode(pageTitle, parentNode);
-		node->setDepth(parentNode->getDepth() + 1);
-		node->setFluentIcon(fluentIcon);
-		node->setIsVisible(parentNode->getIsVisible() && parentNode->getIsExpanded());
-		beginInsertRows(parentNode->getModelIndex(), parentNode->getChildrenNodes().count(), parentNode->getChildrenNodes().count());
-		parentNode->addChildNode(node);
-		m_mapNodes[node->getNodeKey()] = node;
-		endInsertRows();
-		pageKey = node->getNodeKey();
-		if (!m_selectedNode) {
-			m_selectedNode = node;
-		}
-
-		return ALNavigationType::Success;
-	}
-
-	return ALNavigationType::TargetNodeTypeError;
-}
-
-ALNavigationType::NodeOperateReturnType CALNavigationModel::addPageNode(const QString& pageTitle, QString& pageKey, const int keyPoints, const ALIcon::AweSomeIcon& awesomeIcon) {
+ALNavigationType::NodeOperateReturnType CALNavigationModel::addPageNode(const QString& pageTitle, QString& pageKey, const int keyPoints, const std::shared_ptr<CALIconType>& icon_type) {
 	const auto node = new CALNavigationNode(pageTitle, m_rootNode);
 	node->setDepth(1);
-	node->setAwesomeIcon(awesomeIcon);
+	node->setALIcon(icon_type);
 	node->setIsVisible(true);
 	node->setKeyPoints(keyPoints);
 	beginInsertRows({}, m_rootNode->getChildrenNodes().count(), m_rootNode->getChildrenNodes().count());
@@ -296,25 +200,7 @@ ALNavigationType::NodeOperateReturnType CALNavigationModel::addPageNode(const QS
 	return ALNavigationType::Success;
 }
 
-ALNavigationType::NodeOperateReturnType CALNavigationModel::addPageNode(const QString& pageTitle, QString& pageKey, const int keyPoints, const ALIcon::FluentIcon& fluentIcon) {
-	const auto node = new CALNavigationNode(pageTitle, m_rootNode);
-	node->setDepth(1);
-	node->setFluentIcon(fluentIcon);
-	node->setIsVisible(true);
-	node->setKeyPoints(keyPoints);
-	beginInsertRows({}, m_rootNode->getChildrenNodes().count(), m_rootNode->getChildrenNodes().count());
-	m_rootNode->addChildNode(node);
-	m_mapNodes[node->getNodeKey()] = node;
-	endInsertRows();
-	pageKey = node->getNodeKey();
-	if (!m_selectedNode) {
-		m_selectedNode = node;
-	}
-
-	return ALNavigationType::Success;
-}
-
-ALNavigationType::NodeOperateReturnType CALNavigationModel::addPageNode(const QString& pageTitle, QString& pageKey, const QString& targetExpanderKey, const int keyPoints, const ALIcon::AweSomeIcon& awesomeIcon) {
+ALNavigationType::NodeOperateReturnType CALNavigationModel::addPageNode(const QString& pageTitle, QString& pageKey, const QString& targetExpanderKey, const int keyPoints, const std::shared_ptr<CALIconType>& icon_type) {
 	if (!m_mapNodes.contains(targetExpanderKey)) {
 		return ALNavigationType::TargetNodeInvalid;
 	}
@@ -326,37 +212,7 @@ ALNavigationType::NodeOperateReturnType CALNavigationModel::addPageNode(const QS
 
 		const auto node = new CALNavigationNode(pageTitle, parentNode);
 		node->setDepth(parentNode->getDepth() + 1);
-		node->setAwesomeIcon(awesomeIcon);
-		node->setKeyPoints(keyPoints);
-		node->setIsVisible(parentNode->getIsVisible() && parentNode->getIsExpanded());
-		beginInsertRows(parentNode->getModelIndex(), parentNode->getChildrenNodes().count(), parentNode->getChildrenNodes().count());
-		parentNode->addChildNode(node);
-		m_mapNodes[node->getNodeKey()] = node;
-		endInsertRows();
-		pageKey = node->getNodeKey();
-		if (!m_selectedNode) {
-			m_selectedNode = node;
-		}
-
-		return ALNavigationType::Success;
-	}
-
-	return ALNavigationType::TargetNodeTypeError;
-}
-
-ALNavigationType::NodeOperateReturnType CALNavigationModel::addPageNode(const QString& pageTitle, QString& pageKey, const QString& targetExpanderKey, const int keyPoints, const ALIcon::FluentIcon& fluentIcon) {
-	if (!m_mapNodes.contains(targetExpanderKey)) {
-		return ALNavigationType::TargetNodeInvalid;
-	}
-
-	if (CALNavigationNode* parentNode = m_mapNodes.value(targetExpanderKey); parentNode->getIsExpanderNode()) {
-		if (parentNode->getDepth() > NODE_MAX_DEPTHS) {
-			return ALNavigationType::TargetNodeDepthLimit;
-		}
-
-		const auto node = new CALNavigationNode(pageTitle, parentNode);
-		node->setDepth(parentNode->getDepth() + 1);
-		node->setFluentIcon(fluentIcon);
+		node->setALIcon(icon_type);
 		node->setKeyPoints(keyPoints);
 		node->setIsVisible(parentNode->getIsVisible() && parentNode->getIsExpanded());
 		beginInsertRows(parentNode->getModelIndex(), parentNode->getChildrenNodes().count(), parentNode->getChildrenNodes().count());
@@ -442,15 +298,14 @@ CALNavigationNode* CALNavigationModel::getSelectedExpandedNode() const {
 	return m_selectedExpandedNode;
 }
 
-ALNavigationType::NodeOperateReturnType CALNavigationModel::addNodeInternal(CALNavigationNode* parentNode, const QString& title, QString& outKey, const bool isExpander,
-                                                                            const std::optional<std::variant<ALIcon::AweSomeIcon, ALIcon::FluentIcon>>& icon, const int keyPoints) {
+ALNavigationType::NodeOperateReturnType CALNavigationModel::addNodeInternal(CALNavigationNode* parentNode, const QString& title, QString& outKey, const bool isExpander, const std::shared_ptr<CALIconType>& icon_type, const int keyPoints) {
 	try {
 		const auto node = new CALNavigationNode(title, parentNode);
 		node->setDepth(parentNode->getDepth() + 1);
 		node->setIsExpanderNode(isExpander);
 		node->setIsVisible(parentNode->getIsVisible() && parentNode->getIsExpanded());
 		outKey = node->getNodeKey();
-		setNodeIcon(node, icon);
+		node->setALIcon(icon_type);
 		if (!isExpander && keyPoints > 0) {
 			node->setKeyPoints(keyPoints);
 		}
@@ -472,18 +327,5 @@ void CALNavigationModel::addNodeToModel(CALNavigationNode* node, CALNavigationNo
 	parentNode->addChildNode(node);
 	m_mapNodes[node->getNodeKey()] = node;
 	endInsertRows();
-}
-
-void CALNavigationModel::setNodeIcon(CALNavigationNode* node, const std::optional<std::variant<ALIcon::AweSomeIcon, ALIcon::FluentIcon>>& icon) {
-	if (icon.has_value()) {
-		std::visit([node](const auto& iconValue) {
-			using T = std::decay_t<decltype(iconValue)>;
-			if constexpr (std::is_same_v<T, ALIcon::AweSomeIcon>) {
-				node->setAwesomeIcon(iconValue);
-			} else if constexpr (std::is_same_v<T, ALIcon::FluentIcon>) {
-				node->setFluentIcon(iconValue);
-			}
-		}, *icon);
-	}
 }
 }

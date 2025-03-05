@@ -10,10 +10,10 @@ class QVBoxLayout;
  * @brief \namespace AL
  */
 namespace AL {
+class CALIconType;
+
 class CALSuggestion final : public QObject {
 	Q_OBJECT
-	Q_PROPERTY(ALIcon::AweSomeIcon awesomeIcon READ getAwesomeIcon WRITE setAwesomeIcon NOTIFY sigAwesomeIconChanged)
-	Q_PROPERTY(ALIcon::FluentIcon fluentIcon READ getFluentIcon WRITE setFluentIcon NOTIFY sigFluentIconChanged)
 	Q_PROPERTY(QString suggestText READ getSuggestText WRITE setSuggestText NOTIFY sigSuggestTextChanged)
 	Q_PROPERTY(QString suggestKey READ getSuggestKey WRITE setSuggestKey NOTIFY sigSuggestKeyChanged)
 	Q_PROPERTY(QVariantMap suggestData READ getSuggestData WRITE setSuggestData NOTIFY sigSuggestDataChanged)
@@ -22,11 +22,8 @@ public:
 	explicit CALSuggestion(QObject* parent = nullptr);
 	~CALSuggestion() override;
 
-	void setAwesomeIcon(const ALIcon::AweSomeIcon& icon);
-	[[nodiscard]] ALIcon::AweSomeIcon getAwesomeIcon() const;
-
-	void setFluentIcon(const ALIcon::FluentIcon& icon);
-	[[nodiscard]] ALIcon::FluentIcon getFluentIcon() const;
+	void setALIcon(const std::shared_ptr<CALIconType>& icon_type);
+	[[nodiscard]] std::shared_ptr<CALIconType> getALIcon() const;
 
 	void setSuggestText(const QString& text);
 	[[nodiscard]] QString getSuggestText() const;
@@ -40,8 +37,6 @@ public:
 	[[nodiscard]] ALIcon::IconType getIconType() const;
 
 Q_SIGNALS:
-	void sigAwesomeIconChanged();
-	void sigFluentIconChanged();
 	void sigSuggestTextChanged();
 	void sigSuggestKeyChanged();
 	void sigSuggestDataChanged();

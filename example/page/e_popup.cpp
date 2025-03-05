@@ -7,6 +7,7 @@
 #include "alcalendarpicker.hpp"
 #include "alcheckbox.hpp"
 #include "aldrawerarea.hpp"
+#include "alicon.hpp"
 #include "alpushbutton.hpp"
 #include "alroller.hpp"
 #include "alscrollpagearea.hpp"
@@ -100,7 +101,7 @@ void E_Popup::initDrawerAreaArea() {
 	const auto drawerIcon = new CALText(this);
 	drawerIcon->setAttribute(Qt::WA_TransparentForMouseEvents);
 	drawerIcon->setTextPixelSize(15);
-	drawerIcon->setFluentIcon(ALIcon::FluentIcon::Message);
+	drawerIcon->setALIcon(CALIconFactory::createIconType(ALIcon::FluentIcon::Message));
 	drawerIcon->setFixedSize(25, 25);
 	const auto drawerText = new CALText("CALDrawerArea", this);
 	drawerText->setAttribute(Qt::WA_TransparentForMouseEvents);

@@ -69,40 +69,29 @@ int CALToolBar::getToolBarSpacing() const {
 	return layout()->spacing();
 }
 
-QAction* CALToolBar::addAweIconAction(const ALIcon::AweSomeIcon& awesomeicon, const QString& text) {
+QAction* CALToolBar::addALIconAction(const std::shared_ptr<CALIconType>& icon_type, const QString& text) {
 	const auto action = new QAction(text, this);
-	action->setProperty(ALIcon::iconProperty, QChar(static_cast<unsigned short>(awesomeicon)));
-	action->setProperty(ALIcon::iconTypeProperty, ALIcon::Awesome);
-	action->setIcon(CALIcon::getQIconFromAwesomeIcon(ALIcon::AweSomeIcon::Broom, 1));
+	action->setProperty(ALIcon::iconProperty, QChar(icon_type->value()));
+	action->setProperty(ALIcon::iconTypeProperty, icon_type->iconType());
+	if (icon_type->iconType() == ALIcon::IconType::Awesome) {
+		action->setIcon(CALIcon::getQIconFromALIcon(ALIcon::AweSomeIcon::Broom, 1));
+	} else if (icon_type->iconType() == ALIcon::IconType::Fluent) {
+		action->setIcon(CALIcon::getQIconFromALIcon(ALIcon::FluentIcon::Broom, 1));
+	}
 	addAction(action);
 	return action;
 }
 
-QAction* CALToolBar::addFluentIconAction(const ALIcon::FluentIcon& fluenticon, const QString& text) {
-	const auto action = new QAction(text, this);
-	action->setProperty(ALIcon::iconProperty, QChar(static_cast<unsigned short>(fluenticon)));
-	action->setProperty(ALIcon::iconTypeProperty, ALIcon::Fluent);
-	action->setIcon(CALIcon::getQIconFromFluentIcon(ALIcon::FluentIcon::Broom, 1));
-	addAction(action);
-	return action;
-}
-
-QAction* CALToolBar::addAweIconAction(const ALIcon::AweSomeIcon& awesomeicon, const QString& text, const QKeySequence& shortcut) {
+QAction* CALToolBar::addALIconAction(const std::shared_ptr<CALIconType>& icon_type, const QString& text, const QKeySequence& shortcut) {
 	const auto action = new QAction(text, this);
 	action->setShortcut(shortcut);
-	action->setProperty(ALIcon::iconProperty, QChar(static_cast<unsigned short>(awesomeicon)));
-	action->setProperty(ALIcon::iconTypeProperty, ALIcon::Awesome);
-	action->setIcon(CALIcon::getQIconFromAwesomeIcon(ALIcon::AweSomeIcon::Broom, 1));
-	addAction(action);
-	return action;
-}
-
-QAction* CALToolBar::addFluentIconAction(const ALIcon::FluentIcon& fluenticon, const QString& text, const QKeySequence& shortcut) {
-	const auto action = new QAction(text, this);
-	action->setShortcut(shortcut);
-	action->setProperty(ALIcon::iconProperty, QChar(static_cast<unsigned short>(fluenticon)));
-	action->setProperty(ALIcon::iconTypeProperty, ALIcon::Fluent);
-	action->setIcon(CALIcon::getQIconFromFluentIcon(ALIcon::FluentIcon::Broom, 1));
+	action->setProperty(ALIcon::iconProperty, QChar(icon_type->value()));
+	action->setProperty(ALIcon::iconTypeProperty, icon_type->iconType());
+	if (icon_type->iconType() == ALIcon::IconType::Awesome) {
+		action->setIcon(CALIcon::getQIconFromALIcon(ALIcon::AweSomeIcon::Broom, 1));
+	} else if (icon_type->iconType() == ALIcon::IconType::Fluent) {
+		action->setIcon(CALIcon::getQIconFromALIcon(ALIcon::FluentIcon::Broom, 1));
+	}
 	addAction(action);
 	return action;
 }

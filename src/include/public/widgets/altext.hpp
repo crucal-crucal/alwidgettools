@@ -9,12 +9,11 @@
  */
 namespace AL {
 class CALTextPrivate;
+class CALIconType;
 
 class CALWIDGETTOOLS_EXPORT CALText : public QLabel {
 	Q_OBJECT
 	Q_DECLARE_PRIVATE(CALText)
-	Q_PROPERTY(ALIcon::AweSomeIcon aweSomeIcon READ getAweSomeIcon WRITE setAweSomeIcon NOTIFY sigAweSomeIconChanged)
-	Q_PROPERTY(ALIcon::FluentIcon fluentIcon READ getFluentIcon WRITE setFluentIcon NOTIFY sigFluentIconChanged)
 
 public:
 	explicit CALText(QWidget* parent = nullptr);
@@ -34,15 +33,8 @@ public:
 	void setTextStyle(const ALTextType::TextStyle& textStyle);
 	[[nodiscard]] ALTextType::TextStyle getTextStyle() const;
 
-	void setAweSomeIcon(const ALIcon::AweSomeIcon& icon);
-	[[nodiscard]] ALIcon::AweSomeIcon getAweSomeIcon() const;
-
-	void setFluentIcon(const ALIcon::FluentIcon& icon);
-	[[nodiscard]] ALIcon::FluentIcon getFluentIcon() const;
-
-Q_SIGNALS:
-	void sigAweSomeIconChanged();
-	void sigFluentIconChanged();
+	void setALIcon(const std::shared_ptr<CALIconType>& icon_type);
+	[[nodiscard]] std::shared_ptr<CALIconType> getALIcon() const;
 
 protected:
 	const QScopedPointer<CALTextPrivate> d_ptr{ nullptr };

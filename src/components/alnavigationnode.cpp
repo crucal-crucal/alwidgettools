@@ -1,7 +1,8 @@
 ﻿#include "alnavigationnode.hpp"
 
-#include <QMetaEnum>
 #include <QUuid>
+
+#include "alicon.hpp"
 
 /**
  * @brief \namespace AL
@@ -47,24 +48,24 @@ QList<CALNavigationNode*> CALNavigationNode::getChildrenNodes() const {
 	return m_childrenNodes;
 }
 
-void CALNavigationNode::setAwesomeIcon(const ALIcon::AweSomeIcon& awesomeIcon) {
-	m_iconType = ALIcon::Awesome;
-	setProperty(ALIcon::iconProperty, QChar(static_cast<unsigned short>(awesomeIcon)));
-	Q_EMIT sigAwesomeIconChanged();
+void CALNavigationNode::setALIcon(const std::shared_ptr<CALIconType>& icon_type) {
+	if (!icon_type) {
+		qWarning() << __func__ << " received a nullptr icon_type!";
+		return;
+	}
+
+	m_iconType = icon_type->iconType();
+	setProperty(ALIcon::iconProperty, QChar(icon_type->value()));
 }
 
-ALIcon::AweSomeIcon CALNavigationNode::getAwesomeIcon() const {
-	return static_cast<ALIcon::AweSomeIcon>(this->property(ALIcon::iconProperty).toInt());
-}
+std::shared_ptr<CALIconType> CALNavigationNode::getALIcon() const {
+	if (m_iconType == ALIcon::IconType::Awesome) {
+		return CALIconFactory::createIconType(static_cast<ALIcon::AweSomeIcon>(this->property(ALIcon::iconProperty).toInt()));
+	} else if (m_iconType == ALIcon::IconType::Fluent) {
+		return CALIconFactory::createIconType(static_cast<ALIcon::FluentIcon>(this->property(ALIcon::iconProperty).toInt()));
+	}
 
-void CALNavigationNode::setFluentIcon(const ALIcon::FluentIcon& fluentIcon) {
-	m_iconType = ALIcon::Fluent;
-	setProperty(ALIcon::iconProperty, QChar(static_cast<unsigned short>(fluentIcon)));
-	Q_EMIT sigFluentIconChanged();
-}
-
-ALIcon::FluentIcon CALNavigationNode::getFluentIcon() const {
-	return static_cast<ALIcon::FluentIcon>(this->property(ALIcon::iconProperty).toInt());
+	return nullptr;
 }
 
 void CALNavigationNode::setModelIndex(const QModelIndex& modelIndex) {

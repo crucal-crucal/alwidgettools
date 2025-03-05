@@ -91,26 +91,26 @@ protected:
 };
 
 /**
- * @brief ALIcon 工厂类，可以通过此类获取图标
+ * @brief ALIcon 工厂类，可以通过此类获取图标, 获取到所有图标为基类 CALIconType 的 shard_ptr，方便可能存储指针时移交管理权
  */
 class CALWIDGETTOOLS_EXPORT CALIconFactory {
 public:
-	static std::unique_ptr<CALIconType> createIconType(const ALIcon::AweSomeIcon& awesomeicon) {
-		return std::make_unique<CALAwesomeIconType>(awesomeicon);
+	static std::shared_ptr<CALIconType> createIconType(const ALIcon::AweSomeIcon& awesomeicon) {
+		return std::make_shared<CALAwesomeIconType>(awesomeicon);
 	}
 
-	static std::unique_ptr<CALIconType> createIconType(const ALIcon::FluentIcon& fluenticon) {
-		return std::make_unique<CALFluentIconType>(fluenticon);
+	static std::shared_ptr<CALIconType> createIconType(const ALIcon::FluentIcon& fluenticon) {
+		return std::make_shared<CALFluentIconType>(fluenticon);
 	}
 
-	static std::unique_ptr<CALIconType> createIconType(const QMetaEnum& metaEnum, const QString& iconName) {
+	static std::shared_ptr<CALIconType> createIconType(const QMetaEnum& metaEnum, const QString& iconName) {
 		if (metaEnum.name() == QMetaEnum::fromType<ALIcon::AweSomeIcon>().name()) {
 			if (int value = metaEnum.keysToValue(iconName.toUtf8().constData()); value != -1) {
-				return std::make_unique<CALAwesomeIconType>(static_cast<ALIcon::AweSomeIcon>(value));
+				return std::make_shared<CALAwesomeIconType>(static_cast<ALIcon::AweSomeIcon>(value));
 			}
 		} else if (metaEnum.name() == QMetaEnum::fromType<ALIcon::FluentIcon>().name()) {
 			if (int value = metaEnum.keysToValue(iconName.toUtf8().constData()); value != -1) {
-				return std::make_unique<CALFluentIconType>(static_cast<ALIcon::FluentIcon>(value));
+				return std::make_shared<CALFluentIconType>(static_cast<ALIcon::FluentIcon>(value));
 			}
 		}
 
@@ -126,14 +126,14 @@ public:
 	 * @param awesomeIcon \enum ALIcon::AweSomeIcon
 	 * @return QIcon 生成的图标
 	 */
-	static QIcon getQIconFromAwesomeIcon(const ALIcon::AweSomeIcon& awesomeIcon);
+	static QIcon getQIconFromALIcon(const ALIcon::AweSomeIcon& awesomeIcon);
 
 	/**
 	 * @brief 从 FluentIcon 创建一个 QIcon
 	 * @param fluentIcon \enum ALIcon::FluentIcon
 	 * @return QIcon 生成的图标
 	 */
-	static QIcon getQIconFromFluentIcon(const ALIcon::FluentIcon& fluentIcon);
+	static QIcon getQIconFromALIcon(const ALIcon::FluentIcon& fluentIcon);
 
 	/**
 	 * @brief 从 AwesomeIcon 创建一个指定颜色的 QIcon
@@ -141,7 +141,7 @@ public:
 	 * @param iconColor 图标颜色
 	 * @return QIcon 生成的图标
 	 */
-	static QIcon getQIconFromAwesomeIcon(const ALIcon::AweSomeIcon& awesomeIcon, const QColor& iconColor);
+	static QIcon getQIconFromALIcon(const ALIcon::AweSomeIcon& awesomeIcon, const QColor& iconColor);
 
 	/**
 	 * @brief 从 FluentIcon 创建一个指定颜色的 QIcon
@@ -149,7 +149,7 @@ public:
 	 * @param iconColor 图标颜色
 	 * @return QIcon 生成的图标
 	 */
-	static QIcon getQIconFromFluentIcon(const ALIcon::FluentIcon& fluentIcon, const QColor& iconColor);
+	static QIcon getQIconFromALIcon(const ALIcon::FluentIcon& fluentIcon, const QColor& iconColor);
 
 	/**
 	 * @brief 从 AwesomeIcon 创建一个指定大小的 QIcon
@@ -157,7 +157,7 @@ public:
 	 * @param pixelSize 图标像素大小
 	 * @return QIcon 生成的图标
 	 */
-	static QIcon getQIconFromAwesomeIcon(const ALIcon::AweSomeIcon& awesomeIcon, int pixelSize);
+	static QIcon getQIconFromALIcon(const ALIcon::AweSomeIcon& awesomeIcon, int pixelSize);
 
 	/**
 	 * @brief 从 FluentIcon 创建一个指定大小的 QIcon
@@ -165,7 +165,7 @@ public:
 	 * @param pixelSize 图标像素大小
 	 * @return QIcon 生成的图标
 	 */
-	static QIcon getQIconFromFluentIcon(const ALIcon::FluentIcon& fluentIcon, int pixelSize);
+	static QIcon getQIconFromALIcon(const ALIcon::FluentIcon& fluentIcon, int pixelSize);
 
 	/**
 	 * @brief 从 AwesomeIcon 创建一个指定大小和颜色的 QIcon
@@ -174,7 +174,7 @@ public:
 	 * @param iconColor 图标颜色
 	 * @return QIcon 生成的图标
 	 */
-	static QIcon getQIconFromAwesomeIcon(const ALIcon::AweSomeIcon& awesomeIcon, int pixelSize, const QColor& iconColor);
+	static QIcon getQIconFromALIcon(const ALIcon::AweSomeIcon& awesomeIcon, int pixelSize, const QColor& iconColor);
 
 	/**
 	 * @brief 从 FluentIcon 创建一个指定大小和颜色的 QIcon
@@ -183,7 +183,7 @@ public:
 	 * @param iconColor 图标颜色
 	 * @return QIcon 生成的图标
 	 */
-	static QIcon getQIconFromFluentIcon(const ALIcon::FluentIcon& fluentIcon, int pixelSize, const QColor& iconColor);
+	static QIcon getQIconFromALIcon(const ALIcon::FluentIcon& fluentIcon, int pixelSize, const QColor& iconColor);
 
 	/**
 	 * @brief 从 AwesomeIcon 创建一个指定大小和固定宽高的 QIcon
@@ -193,7 +193,7 @@ public:
 	 * @param fixedHeight 图标高度
 	 * @return QIcon 生成的图标
 	 */
-	static QIcon getQIconFromAwesomeIcon(const ALIcon::AweSomeIcon& awesomeIcon, int pixelSize, int fixedWidth, int fixedHeight);
+	static QIcon getQIconFromALIcon(const ALIcon::AweSomeIcon& awesomeIcon, int pixelSize, int fixedWidth, int fixedHeight);
 
 	/**
 	 * @brief 从 FluentIcon 创建一个指定大小和固定宽高的 QIcon
@@ -203,7 +203,7 @@ public:
 	 * @param fixedHeight 图标高度
 	 * @return QIcon 生成的图标
 	 */
-	static QIcon getQIconFromFluentIcon(const ALIcon::FluentIcon& fluentIcon, int pixelSize, int fixedWidth, int fixedHeight);
+	static QIcon getQIconFromALIcon(const ALIcon::FluentIcon& fluentIcon, int pixelSize, int fixedWidth, int fixedHeight);
 
 	/**
 	 * @brief 从 AwesomeIcon 创建一个指定大小、固定宽高和颜色的 QIcon
@@ -214,7 +214,7 @@ public:
 	 * @param iconColor 图标颜色
 	 * @return QIcon 生成的图标
 	 */
-	static QIcon getQIconFromAwesomeIcon(const ALIcon::AweSomeIcon& awesomeIcon, int pixelSize, int fixedWidth, int fixedHeight, const QColor& iconColor);
+	static QIcon getQIconFromALIcon(const ALIcon::AweSomeIcon& awesomeIcon, int pixelSize, int fixedWidth, int fixedHeight, const QColor& iconColor);
 
 	/**
 	 * @brief 从 FluentIcon 创建一个指定大小、固定宽高和颜色的 QIcon
@@ -225,7 +225,7 @@ public:
 	 * @param iconColor 图标颜色
 	 * @return QIcon 生成的图标
 	 */
-	static QIcon getQIconFromFluentIcon(const ALIcon::FluentIcon& fluentIcon, int pixelSize, int fixedWidth, int fixedHeight, const QColor& iconColor);
+	static QIcon getQIconFromALIcon(const ALIcon::FluentIcon& fluentIcon, int pixelSize, int fixedWidth, int fixedHeight, const QColor& iconColor);
 
 private:
 	explicit CALIcon();

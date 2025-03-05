@@ -26,12 +26,12 @@ class CALWIDGETTOOLS_EXPORT CALIconButton : public QPushButton {
 
 public:
 	explicit CALIconButton(const QPixmap& pix, QWidget* parent = nullptr);
-	explicit CALIconButton(const std::unique_ptr<CALIconType>& icon_type, QWidget* parent = nullptr);
-	explicit CALIconButton(const std::unique_ptr<CALIconType>& icon_type, const int& pixelSize, QWidget* parent = nullptr);
-	explicit CALIconButton(const std::unique_ptr<CALIconType>& icon_type, const int& pixelSize, const int& fixedWidth, const int& fixedHeight, QWidget* parent = nullptr);
+	explicit CALIconButton(const std::shared_ptr<CALIconType>& icon_type, QWidget* parent = nullptr);
+	explicit CALIconButton(const std::shared_ptr<CALIconType>& icon_type, const int& pixelSize, QWidget* parent = nullptr);
+	explicit CALIconButton(const std::shared_ptr<CALIconType>& icon_type, const int& pixelSize, const int& fixedWidth, const int& fixedHeight, QWidget* parent = nullptr);
 	~CALIconButton() override;
 
-	void setALIcon(const std::unique_ptr<CALIconType>& icon_type);
+	void setALIcon(const std::shared_ptr<CALIconType>& icon_type);
 
 	void setPixmap(const QPixmap& pix);
 

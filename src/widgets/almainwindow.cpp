@@ -397,68 +397,36 @@ void CALMainWindow::setUserInfoCardSubTitle(const QString& subTitle) {
 	d_func()->navigationBar->setUserInfoCardSubTitle(subTitle);
 }
 
-ALNavigationType::NodeOperateReturnType CALMainWindow::addExpanderNode(const QString& expanderTitle, QString& expanderKey, const ALIcon::AweSomeIcon& awesomeIcon) const {
-	return d_func()->navigationBar->addExpanderNode(expanderTitle, expanderKey, awesomeIcon);
+ALNavigationType::NodeOperateReturnType CALMainWindow::addExpanderNode(const QString& expanderTitle, QString& expanderKey, const std::shared_ptr<CALIconType>& icon_type) const {
+	return d_func()->navigationBar->addExpanderNode(expanderTitle, expanderKey, icon_type);
 }
 
-ALNavigationType::NodeOperateReturnType CALMainWindow::addExpanderNode(const QString& expanderTitle, QString& expanderKey, const ALIcon::FluentIcon& fluentIcon) const {
-	return d_func()->navigationBar->addExpanderNode(expanderTitle, expanderKey, fluentIcon);
+ALNavigationType::NodeOperateReturnType CALMainWindow::addExpanderNode(const QString& expanderTitle, QString& expanderKey, const QString& targetExpanderKey, const std::shared_ptr<CALIconType>& icon_type) const {
+	return d_func()->navigationBar->addExpanderNode(expanderTitle, expanderKey, targetExpanderKey, icon_type);
 }
 
-ALNavigationType::NodeOperateReturnType CALMainWindow::addExpanderNode(const QString& expanderTitle, QString& expanderKey, const QString& targetExpanderKey, const ALIcon::AweSomeIcon& awesomeIcon) const {
-	return d_func()->navigationBar->addExpanderNode(expanderTitle, expanderKey, targetExpanderKey, awesomeIcon);
+ALNavigationType::NodeOperateReturnType CALMainWindow::addPageNode(const QString& pageTitle, QWidget* page, const std::shared_ptr<CALIconType>& icon_type) const {
+	return d_func()->navigationBar->addPageNode(pageTitle, page, icon_type);
 }
 
-ALNavigationType::NodeOperateReturnType CALMainWindow::addExpanderNode(const QString& expanderTitle, QString& expanderKey, const QString& targetExpanderKey, const ALIcon::FluentIcon& fluentIcon) const {
-	return d_func()->navigationBar->addExpanderNode(expanderTitle, expanderKey, targetExpanderKey, fluentIcon);
+ALNavigationType::NodeOperateReturnType CALMainWindow::addPageNode(const QString& pageTitle, QWidget* page, const QString& targetExpanderKey, const std::shared_ptr<CALIconType>& icon_type) const {
+	return d_func()->navigationBar->addPageNode(pageTitle, page, targetExpanderKey, icon_type);
 }
 
-ALNavigationType::NodeOperateReturnType CALMainWindow::addPageNode(const QString& pageTitle, QWidget* page, const ALIcon::AweSomeIcon& awesomeIcon) const {
-	return d_func()->navigationBar->addPageNode(pageTitle, page, awesomeIcon);
+ALNavigationType::NodeOperateReturnType CALMainWindow::addPageNode(const QString& pageTitle, QWidget* page, const int keyPoints, const std::shared_ptr<CALIconType>& icon_type) const {
+	return d_func()->navigationBar->addPageNode(pageTitle, page, keyPoints, icon_type);
 }
 
-ALNavigationType::NodeOperateReturnType CALMainWindow::addPageNode(const QString& pageTitle, QWidget* page, const ALIcon::FluentIcon& fluentIcon) const {
-	return d_func()->navigationBar->addPageNode(pageTitle, page, fluentIcon);
+ALNavigationType::NodeOperateReturnType CALMainWindow::addPageNode(const QString& pageTitle, QWidget* page, const QString& targetExpanderKey, const int keyPoints, const std::shared_ptr<CALIconType>& icon_type) const {
+	return d_func()->navigationBar->addPageNode(pageTitle, page, targetExpanderKey, keyPoints, icon_type);
 }
 
-ALNavigationType::NodeOperateReturnType CALMainWindow::addPageNode(const QString& pageTitle, QWidget* page, const QString& targetExpanderKey, const ALIcon::AweSomeIcon& awesomeIcon) const {
-	return d_func()->navigationBar->addPageNode(pageTitle, page, targetExpanderKey, awesomeIcon);
+ALNavigationType::NodeOperateReturnType CALMainWindow::addFooterNode(const QString& footerTitle, QString& footerKey, const int keyPoints, const std::shared_ptr<CALIconType>& icon_type) const {
+	return d_func()->navigationBar->addFooterNode(footerTitle, footerKey, keyPoints, icon_type);
 }
 
-ALNavigationType::NodeOperateReturnType CALMainWindow::addPageNode(const QString& pageTitle, QWidget* page, const QString& targetExpanderKey, const ALIcon::FluentIcon& fluentIcon) const {
-	return d_func()->navigationBar->addPageNode(pageTitle, page, targetExpanderKey, fluentIcon);
-}
-
-ALNavigationType::NodeOperateReturnType CALMainWindow::addPageNode(const QString& pageTitle, QWidget* page, const int keyPoints, const ALIcon::AweSomeIcon& awesomeIcon) const {
-	return d_func()->navigationBar->addPageNode(pageTitle, page, keyPoints, awesomeIcon);
-}
-
-ALNavigationType::NodeOperateReturnType CALMainWindow::addPageNode(const QString& pageTitle, QWidget* page, const int keyPoints, const ALIcon::FluentIcon& fluentIcon) const {
-	return d_func()->navigationBar->addPageNode(pageTitle, page, keyPoints, fluentIcon);
-}
-
-ALNavigationType::NodeOperateReturnType CALMainWindow::addPageNode(const QString& pageTitle, QWidget* page, const QString& targetExpanderKey, const int keyPoints, const ALIcon::AweSomeIcon& awesomeIcon) const {
-	return d_func()->navigationBar->addPageNode(pageTitle, page, targetExpanderKey, keyPoints, awesomeIcon);
-}
-
-ALNavigationType::NodeOperateReturnType CALMainWindow::addPageNode(const QString& pageTitle, QWidget* page, const QString& targetExpanderKey, const int keyPoints, const ALIcon::FluentIcon& fluentIcon) const {
-	return d_func()->navigationBar->addPageNode(pageTitle, page, targetExpanderKey, keyPoints, fluentIcon);
-}
-
-ALNavigationType::NodeOperateReturnType CALMainWindow::addFooterNode(const QString& footerTitle, QString& footerKey, const int keyPoints, const ALIcon::AweSomeIcon& awesomeIcon) const {
-	return d_func()->navigationBar->addFooterNode(footerTitle, footerKey, keyPoints, awesomeIcon);
-}
-
-ALNavigationType::NodeOperateReturnType CALMainWindow::addFooterNode(const QString& footerTitle, QString& footerKey, const int keyPoints, const ALIcon::FluentIcon& fluentIcon) const {
-	return d_func()->navigationBar->addFooterNode(footerTitle, footerKey, keyPoints, fluentIcon);
-}
-
-ALNavigationType::NodeOperateReturnType CALMainWindow::addFooterNode(const QString& footerTitle, QWidget* page, QString& footerKey, const int keyPoints, const ALIcon::AweSomeIcon& awesomeIcon) const {
-	return d_func()->navigationBar->addFooterNode(footerTitle, page, footerKey, keyPoints, awesomeIcon);
-}
-
-ALNavigationType::NodeOperateReturnType CALMainWindow::addFooterNode(const QString& footerTitle, QWidget* page, QString& footerKey, const int keyPoints, const ALIcon::FluentIcon& fluentIcon) const {
-	return d_func()->navigationBar->addFooterNode(footerTitle, page, footerKey, keyPoints, fluentIcon);
+ALNavigationType::NodeOperateReturnType CALMainWindow::addFooterNode(const QString& footerTitle, QWidget* page, QString& footerKey, const int keyPoints, const std::shared_ptr<CALIconType>& icon_type) const {
+	return d_func()->navigationBar->addFooterNode(footerTitle, page, footerKey, keyPoints, icon_type);
 }
 
 bool CALMainWindow::removeNavigationNode(const QString& nodeKey) {

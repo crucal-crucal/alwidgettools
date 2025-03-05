@@ -1,7 +1,9 @@
 ﻿#pragma once
 
+#include <memory>
 #include <QAbstractListModel>
 
+#include "alicon.hpp"
 #include "alwidgettoolsdef.hpp"
 
 /**
@@ -9,6 +11,7 @@
  */
 namespace AL {
 class CALNavigationNode;
+class CALIconType;
 
 class CALFooterModel final : public QAbstractListModel {
 	Q_OBJECT
@@ -17,11 +20,10 @@ public:
 	explicit CALFooterModel(QObject* parent = nullptr);
 	~CALFooterModel() override;
 
-	ALNavigationType::NodeOperateReturnType addFooterNode(const QString& footerTitle, QString& footerKey, bool isHasFooterPage, int keyPoints = 0, const ALIcon::AweSomeIcon& awesomeicon = ALIcon::AweSomeIcon::None);
-	ALNavigationType::NodeOperateReturnType addFooterNode(const QString& footerTitle, QString& footerKey, bool isHasFooterPage, int keyPoints = 0, const ALIcon::FluentIcon& fluenticon = ALIcon::FluentIcon::None);
+	ALNavigationType::NodeOperateReturnType addFooterNode(const QString& footerTitle, QString& footerKey, bool isHasFooterPage, int keyPoints = 0, const std::shared_ptr<CALIconType>& icon_type = nullptr);
 	[[nodiscard]] int getFooterNodeCount() const;
 	CALNavigationNode* getNavigationNode(const QString& footerKey);
-	CALNavigationNode* getNavigationNode(const QModelIndex& index);
+	[[nodiscard]] CALNavigationNode* getNavigationNode(const QModelIndex& index) const;
 	bool removeNavigationNode(const QString& footerKey);
 
 	void setSelectedNode(CALNavigationNode* node);

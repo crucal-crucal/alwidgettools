@@ -63,10 +63,10 @@ CALIconButton::CALIconButton(const QPixmap& pix, QWidget* parent): QPushButton(p
 	});
 }
 
-CALIconButton::CALIconButton(const std::unique_ptr<CALIconType>& icon_type, QWidget* parent): CALIconButton(icon_type, 15, parent) {
+CALIconButton::CALIconButton(const std::shared_ptr<CALIconType>& icon_type, QWidget* parent): CALIconButton(icon_type, 15, parent) {
 }
 
-CALIconButton::CALIconButton(const std::unique_ptr<CALIconType>& icon_type, const int& pixelSize, QWidget* parent): QPushButton(parent), d_ptr(new CALIconButtonPrivate(this, this)) {
+CALIconButton::CALIconButton(const std::shared_ptr<CALIconType>& icon_type, const int& pixelSize, QWidget* parent): QPushButton(parent), d_ptr(new CALIconButtonPrivate(this, this)) {
 	Q_D(CALIconButton);
 
 	d->hoverAlpha = 0;
@@ -93,13 +93,18 @@ CALIconButton::CALIconButton(const std::unique_ptr<CALIconType>& icon_type, cons
 	});
 }
 
-CALIconButton::CALIconButton(const std::unique_ptr<CALIconType>& icon_type, const int& pixelSize, const int& fixedWidth, const int& fixedHeight, QWidget* parent): CALIconButton(icon_type, pixelSize, parent) {
+CALIconButton::CALIconButton(const std::shared_ptr<CALIconType>& icon_type, const int& pixelSize, const int& fixedWidth, const int& fixedHeight, QWidget* parent): CALIconButton(icon_type, pixelSize, parent) {
 	this->setFixedSize(fixedWidth, fixedHeight);
 }
 
 CALIconButton::~CALIconButton() = default;
 
-void CALIconButton::setALIcon(const std::unique_ptr<CALIconType>& icon_type) {
+void CALIconButton::setALIcon(const std::shared_ptr<CALIconType>& icon_type) {
+	if (!icon_type) {
+		qWarning() << __func__ << " received a nullptr icon_type!";
+		return;
+	}
+
 	this->setProperty(ALIcon::iconProperty, QChar(icon_type->value()));
 	this->setText(QChar(icon_type->value()));
 }

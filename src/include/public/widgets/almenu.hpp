@@ -33,11 +33,11 @@ public:
 	using QWidget::addAction;
 	QAction* addAction(const QString& text);
 	QAction* addAction(const QIcon& icon, const QString& text);
-	QAction* addAction(const std::unique_ptr<CALIconType>& icon_type, const QString& text);
+	QAction* addAction(const std::shared_ptr<CALIconType>& icon_type, const QString& text);
 	QAction* addAction(const QIcon& icon, const QString& text, const QKeySequence& shortcut);
-	QAction* addAction(const std::unique_ptr<CALIconType>& icon_type, const QString& text, const QKeySequence& shortcut);
+	QAction* addAction(const std::shared_ptr<CALIconType>& icon_type, const QString& text, const QKeySequence& shortcut);
 	QAction* addAction(const QIcon& icon, const QString& text, const QObject* receiver, const char* member, const QKeySequence& shortcut = 0);
-	QAction* addAction(const std::unique_ptr<CALIconType>& icon_type, const QString& text, const QObject* receiver, const char* member, const QKeySequence& shortcut = 0);
+	QAction* addAction(const std::shared_ptr<CALIconType>& icon_type, const QString& text, const QObject* receiver, const char* member, const QKeySequence& shortcut = 0);
 
 
 	[[nodiscard]] bool isHasChildMenu() const;

@@ -1,5 +1,6 @@
 ﻿#pragma once
 
+#include <memory>
 #include <optional>
 #include <QAbstractItemModel>
 #include <variant>
@@ -12,6 +13,7 @@
  */
 namespace AL {
 class CALNavigationNode;
+class CALIconType;
 
 class CALNavigationModel final : public QAbstractItemModel {
 	Q_OBJECT
@@ -26,18 +28,12 @@ public:
 	[[nodiscard]] int columnCount(const QModelIndex& parent) const override;
 	[[nodiscard]] QVariant data(const QModelIndex& index, int role) const override;
 
-	ALNavigationType::NodeOperateReturnType addExpanderNode(const QString& expanderTitle, QString& expanderKey, const ALIcon::AweSomeIcon& awesomeIcon);
-	ALNavigationType::NodeOperateReturnType addExpanderNode(const QString& expanderTitle, QString& expanderKey, const ALIcon::FluentIcon& fluentIcon);
-	ALNavigationType::NodeOperateReturnType addExpanderNode(const QString& expanderTitle, QString& expanderKey, const QString& targetExpanderKey, const ALIcon::AweSomeIcon& awesomeIcon);
-	ALNavigationType::NodeOperateReturnType addExpanderNode(const QString& expanderTitle, QString& expanderKey, const QString& targetExpanderKey, const ALIcon::FluentIcon& fluentIcon);
-	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QString& pageKey, const ALIcon::AweSomeIcon& awewomeIcon);
-	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QString& pageKey, const ALIcon::FluentIcon& fluentIcon);
-	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QString& pageKey, const QString& targetExpanderKey, const ALIcon::AweSomeIcon& awesomeIcon);
-	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QString& pageKey, const QString& targetExpanderKey, const ALIcon::FluentIcon& fluentIcon);
-	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QString& pageKey, int keyPoints, const ALIcon::AweSomeIcon& awesomeIcon);
-	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QString& pageKey, int keyPoints, const ALIcon::FluentIcon& fluentIcon);
-	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QString& pageKey, const QString& targetExpanderKey, int keyPoints, const ALIcon::AweSomeIcon& awesomeIcon);
-	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QString& pageKey, const QString& targetExpanderKey, int keyPoints, const ALIcon::FluentIcon& fluentIcon);
+	ALNavigationType::NodeOperateReturnType addExpanderNode(const QString& expanderTitle, QString& expanderKey, const std::shared_ptr<CALIconType>& icon_type);
+	ALNavigationType::NodeOperateReturnType addExpanderNode(const QString& expanderTitle, QString& expanderKey, const QString& targetExpanderKey, const std::shared_ptr<CALIconType>& icon_type);
+	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QString& pageKey, const std::shared_ptr<CALIconType>& icon_type);
+	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QString& pageKey, const QString& targetExpanderKey, const std::shared_ptr<CALIconType>& icon_type);
+	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QString& pageKey, int keyPoints, const std::shared_ptr<CALIconType>& icon_type);
+	ALNavigationType::NodeOperateReturnType addPageNode(const QString& pageTitle, QString& pageKey, const QString& targetExpanderKey, int keyPoints, const std::shared_ptr<CALIconType>& icon_type);
 
 	QStringList removeNavigationNode(const QString& nodeKey);
 
@@ -57,9 +53,7 @@ private:
 	CALNavigationNode* m_selectedNode{ nullptr };
 	CALNavigationNode* m_selectedExpandedNode{ nullptr };
 
-	ALNavigationType::NodeOperateReturnType addNodeInternal(CALNavigationNode* parentNode, const QString& title, QString& outKey, bool isExpander,
-	                                                        const std::optional<std::variant<ALIcon::AweSomeIcon, ALIcon::FluentIcon>>& icon = std::nullopt, int keyPoints = 0);
+	ALNavigationType::NodeOperateReturnType addNodeInternal(CALNavigationNode* parentNode, const QString& title, QString& outKey, bool isExpander, const std::shared_ptr<CALIconType>& icon_type, int keyPoints = 0);
 	void addNodeToModel(CALNavigationNode* node, CALNavigationNode* parentNode);
-	static void setNodeIcon(CALNavigationNode* node, const std::optional<std::variant<ALIcon::AweSomeIcon, ALIcon::FluentIcon>>& icon) ;
 };
 }

@@ -3,8 +3,8 @@
 #include <QPainter>
 #include <QPalette>
 #include <QTimer>
-#include <QVariant>
 
+#include "alicon.hpp"
 #include "altext_p.hpp"
 #include "althememanager.hpp"
 
@@ -158,26 +158,27 @@ ALTextType::TextStyle CALText::getTextStyle() const {
 	return d_func()->textStyle;
 }
 
-void CALText::setAweSomeIcon(const ALIcon::AweSomeIcon& icon) {
-	this->setProperty(ALIcon::iconProperty, QChar(static_cast<unsigned short>(icon)));
-	d_func()->iconType = ALIcon::Awesome;
+void CALText::setALIcon(const std::shared_ptr<CALIconType>& icon_type) {
+	if (!icon_type) {
+		qWarning() << __func__ << " received a nullptr icon_type!";
+		return;
+	}
+
+	this->setProperty(ALIcon::iconProperty, QChar(icon_type->value()));
+	d_func()->iconType = icon_type->iconType();
 	update();
-	Q_EMIT sigAweSomeIconChanged();
 }
 
-ALIcon::AweSomeIcon CALText::getAweSomeIcon() const {
-	return static_cast<ALIcon::AweSomeIcon>(this->property(ALIcon::iconProperty).toInt());
-}
+std::shared_ptr<CALIconType> CALText::getALIcon() const {
+	Q_D(const CALText);
 
-void CALText::setFluentIcon(const ALIcon::FluentIcon& icon) {
-	this->setProperty(ALIcon::iconProperty, QChar(static_cast<unsigned short>(icon)));
-	d_func()->iconType = ALIcon::Fluent;
-	update();
-	Q_EMIT sigFluentIconChanged();
-}
+	if (d->iconType == ALIcon::IconType::Awesome) {
+		return CALIconFactory::createIconType(static_cast<ALIcon::AweSomeIcon>(this->property(ALIcon::iconProperty).toInt()));
+	} else if (d->iconType == ALIcon::IconType::Fluent) {
+		return CALIconFactory::createIconType(static_cast<ALIcon::FluentIcon>(this->property(ALIcon::iconProperty).toInt()));
+	}
 
-ALIcon::FluentIcon CALText::getFluentIcon() const {
-	return static_cast<ALIcon::FluentIcon>(this->property(ALIcon::iconProperty).toInt());
+	return nullptr;
 }
 
 void CALText::paintEvent(QPaintEvent* event) {

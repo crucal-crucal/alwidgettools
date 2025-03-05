@@ -4,6 +4,10 @@
 
 #include "alwidgettoolsdef.hpp"
 
+namespace AL {
+class CALIconType;
+}
+
 /**
  * @brief \namespace AL
  */
@@ -29,8 +33,7 @@ public:
 	void setPlaceholderText(const QString& placaHolderText);
 
 	QString addSuggestion(const QString& suggestText, const QVariantMap& suggestData = {});
-	QString addSuggestion(const ALIcon::AweSomeIcon& awesomeIcon, const QString& suggestText, const QVariantMap& suggestData = {});
-	QString addSuggestion(const ALIcon::FluentIcon& fluentIcon, const QString& suggestText, const QVariantMap& suggestData = {});
+	QString addSuggestion(const std::shared_ptr<CALIconType>& icon_type, const QString& suggestText, const QVariantMap& suggestData = {});
 	bool removeSuggestion(const QString& suggestKey);
 	bool removeSuggestion(int index);
 

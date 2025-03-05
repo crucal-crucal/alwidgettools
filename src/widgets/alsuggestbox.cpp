@@ -1,7 +1,5 @@
 ﻿#include "alsuggestbox.hpp"
 
-#include <QDebug>
-#include <QMetaEnum>
 #include <QPropertyAnimation>
 #include <QUuid>
 #include <QVBoxLayout>
@@ -34,24 +32,24 @@ CALSuggestion::CALSuggestion(QObject* parent): QObject(parent) {
 
 CALSuggestion::~CALSuggestion() = default;
 
-void CALSuggestion::setAwesomeIcon(const ALIcon::AweSomeIcon& icon) {
-	m_iconType = ALIcon::Awesome;
-	setProperty(ALIcon::iconProperty, QChar(static_cast<unsigned short>(icon)));
-	Q_EMIT sigAwesomeIconChanged();
+void CALSuggestion::setALIcon(const std::shared_ptr<CALIconType>& icon_type) {
+	if (!icon_type) {
+		qWarning() << __func__ << " received a nullptr icon_type!";
+		return;
+	}
+
+	m_iconType = icon_type->iconType();
+	setProperty(ALIcon::iconProperty, QChar(icon_type->value()));
 }
 
-ALIcon::AweSomeIcon CALSuggestion::getAwesomeIcon() const {
-	return static_cast<ALIcon::AweSomeIcon>(this->property(ALIcon::iconProperty).toInt());
-}
+std::shared_ptr<CALIconType> CALSuggestion::getALIcon() const {
+	if (m_iconType == ALIcon::IconType::Awesome) {
+		return CALIconFactory::createIconType(static_cast<ALIcon::AweSomeIcon>(this->property(ALIcon::iconProperty).toInt()));
+	} else if (m_iconType == ALIcon::IconType::Fluent) {
+		return CALIconFactory::createIconType(static_cast<ALIcon::FluentIcon>(this->property(ALIcon::iconProperty).toInt()));
+	}
 
-void CALSuggestion::setFluentIcon(const ALIcon::FluentIcon& icon) {
-	m_iconType = ALIcon::Fluent;
-	setProperty(ALIcon::iconProperty, QChar(static_cast<unsigned short>(icon)));
-	Q_EMIT sigFluentIconChanged();
-}
-
-ALIcon::FluentIcon CALSuggestion::getFluentIcon() const {
-	return static_cast<ALIcon::FluentIcon>(this->property(ALIcon::iconProperty).toInt());
+	return nullptr;
 }
 
 void CALSuggestion::setSuggestText(const QString& text) {
@@ -231,8 +229,8 @@ CALSuggestBox::CALSuggestBox(QWidget* parent): QWidget(parent), d_ptr(new CALSug
 	d->themeMode = ALTheme->getThemeMode();
 	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, d, &CALSuggestBoxPrivate::slotThemeModeChanged);
 
-	d->lightSearchAction = new QAction(CALIcon::getQIconFromAwesomeIcon(ALIcon::AweSomeIcon::MagnifyingGlass), tr("search"), this);
-	d->darkSearchAction = new QAction(CALIcon::getQIconFromAwesomeIcon(ALIcon::AweSomeIcon::MagnifyingGlass, QColor(0xFF, 0xFF, 0xFF)), tr("search"), this);
+	d->lightSearchAction = new QAction(CALIcon::getQIconFromALIcon(ALIcon::AweSomeIcon::MagnifyingGlass), tr("search"), this);
+	d->darkSearchAction = new QAction(CALIcon::getQIconFromALIcon(ALIcon::AweSomeIcon::MagnifyingGlass, QColor(0xFF, 0xFF, 0xFF)), tr("search"), this);
 
 	d->searchLineEdit = new CALLineEdit(this);
 	d->searchLineEdit->setFixedHeight(35);
@@ -301,19 +299,9 @@ QString CALSuggestBox::addSuggestion(const QString& suggestText, const QVariantM
 	return suggest->getSuggestKey();
 }
 
-QString CALSuggestBox::addSuggestion(const ALIcon::AweSomeIcon& awesomeIcon, const QString& suggestText, const QVariantMap& suggestData) {
+QString CALSuggestBox::addSuggestion(const std::shared_ptr<CALIconType>& icon_type, const QString& suggestText, const QVariantMap& suggestData) {
 	const auto suggest = new CALSuggestion(this);
-	suggest->setAwesomeIcon(awesomeIcon);
-	suggest->setSuggestText(suggestText);
-	suggest->setSuggestData(suggestData);
-	d_func()->suggestionVector.append(suggest);
-
-	return suggest->getSuggestKey();
-}
-
-QString CALSuggestBox::addSuggestion(const ALIcon::FluentIcon& fluentIcon, const QString& suggestText, const QVariantMap& suggestData) {
-	const auto suggest = new CALSuggestion(this);
-	suggest->setFluentIcon(fluentIcon);
+	suggest->setALIcon(icon_type);
 	suggest->setSuggestText(suggestText);
 	suggest->setSuggestData(suggestData);
 	d_func()->suggestionVector.append(suggest);
