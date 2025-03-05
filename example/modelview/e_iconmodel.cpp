@@ -53,11 +53,11 @@ QString E_IconModel::getIconNameFromModelIndex(const QModelIndex& index) const {
 	QString iconName{};
 	if (m_isSearchMode) {
 		if (index.row() < m_searchKeyList.count()) {
-			iconName = m_iconNamePrefix + m_searchKeyList.at(index.row());
+			iconName = m_searchKeyList.at(index.row());
 		}
 	} else {
 		if (index.row() < m_metaEnum.keyCount() - 1) {
-			iconName = m_iconNamePrefix + m_metaEnum.key(index.row() + 1);
+			iconName = m_metaEnum.key(index.row() + 1);
 		}
 	}
 	return iconName;

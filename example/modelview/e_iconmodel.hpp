@@ -20,6 +20,7 @@ public:
 	[[nodiscard]] QStringList getSearchKeyList() const;
 
 	[[nodiscard]] QString getIconNameFromModelIndex(const QModelIndex& index) const;
+	[[nodiscard]] QString getIconNamePrefix() const { return m_iconNamePrefix; }
 
 	void setIsSearchMode(bool isSearchMode);
 	[[nodiscard]] bool getIsSearchMode() const;
@@ -27,7 +28,7 @@ public:
 	[[nodiscard]] ALIcon::IconType getIconType() const { return m_iconType; }
 
 Q_SIGNALS:
-	 void sigIsSearchModeChanged();
+	void sigIsSearchModeChanged();
 
 private:
 	ALIcon::IconType m_iconType{};

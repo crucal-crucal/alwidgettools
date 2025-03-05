@@ -95,7 +95,7 @@ void E_Icon::slotSearchEditTextChanged(const QString& searchText) const {
 }
 
 void E_Icon::slotIconViewClicked(const QModelIndex& index) {
-	const QString iconName = m_iconModel->getIconNameFromModelIndex(index);
+	const QString iconName = m_iconModel->getIconNamePrefix() + m_iconModel->getIconNameFromModelIndex(index);
 	if (iconName.isEmpty()) {
 		return;
 	}
@@ -110,7 +110,7 @@ void E_Icon::slotIconMouseOverItem(const QModelIndex& index) const {
 		return;
 	}
 
-	const QString iconName = m_metaEnum.key(index.row() + 1);
+	const QString iconName = m_iconModel->getIconNameFromModelIndex(index);
 	if (const auto icon = CALIconFactory::createIconType(m_metaEnum, iconName)) {
 		const QString text = QString("name: %1\nfamily Name: %2\nhex value: %3\nclick to copy")
 		                     .arg(icon->name(), icon->familyName()).arg(icon->value(), 0, 16);
