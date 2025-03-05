@@ -34,7 +34,7 @@ source_group(components FILES ${COMPONENTS})
 
 # Define the installation prefix (where the package will be installed)
 # 定义安装路径（安装包将会放在这个路径下）
-set(CMAKE_INSTALL_PREFIX ${CMAKE_BINARY_DIR}/install CACHE PATH "Install path" FORCE)
+set(CMAKE_INSTALL_PREFIX ${CMAKE_SOURCE_DIR}/${PROJECT_NAME} CACHE PATH "Install path" FORCE)
 # Option to choose between static or shared library
 # 选择静态库或动态库
 option(CALWIDGETTOOLS_BUILD_STATIC_LIB "Build static library." OFF)
@@ -44,8 +44,7 @@ option(CALWIDGETTOOLS_BUILD_STATIC_LIB "Build static library." OFF)
 if (CALWIDGETTOOLS_BUILD_STATIC_LIB)
     set(LIB_TYPE STATIC)
 else ()
-    set(LIB_TYPE SHARED
-            include/private/alicon_p.hpp)
+    set(LIB_TYPE SHARED)
 endif ()
 
 # Add include directories for public, private, and component headers
@@ -77,17 +76,17 @@ endif ()
 
 # Link necessary libraries based on platform
 target_link_libraries(${TARGET_NAME} PUBLIC Qt5::Widgets)
-if (WIN32)
-    target_link_libraries(${TARGET_NAME} PUBLIC
-            D3D11
-            DXGI
-    )
-endif ()
+#if (WIN32)
+#    target_link_libraries(${TARGET_NAME} PUBLIC
+#            D3D11
+#            DXGI
+#    )
+#endif ()
 # Define compile-time library definition for the target
 target_compile_definitions(${TARGET_NAME} PRIVATE CALWIDGETTOOLS_LIB)
 
 #######  Installation commands  #######
-set(EXPORT_RESOURCE_FILE ${CMAKE_SOURCE_DIR}/resource/libalwidgettoolsresource${CMAKE_SHARED_LIBRARY_SUFFIX})
+set(EXPORT_RESOURCE_FILE ${CMAKE_SOURCE_DIR}/resource/lib${PROJECT_NAME}resource${CMAKE_SHARED_LIBRARY_SUFFIX})
 
 # Set the include directories for the target, with proper interface handling for build and installation
 # 设置目标的包含目录，对于安装时和构建时的路径使用不同的变量
@@ -141,7 +140,7 @@ set(ALWIDGETTOOLS_CMAKE_DIR cmake CACHE PATH "CMake directory")
 # Write the basic version file for the package
 # 写入包版本文件
 write_basic_package_version_file(
-        ${CMAKE_BINARY_DIR}/${TARGET_NAME}configversion.cmake
+        ${CMAKE_BINARY_DIR}/${TARGET_NAME}-config-version.cmake
         VERSION ${PROJECT_VERSION}
         COMPATIBILITY SameMajorVersion
 )
@@ -154,8 +153,8 @@ message(STATUS "ALWIDGETTOOLS_CMAKE_DIR: ${ALWIDGETTOOLS_CMAKE_DIR}")
 # Configure the package config file with paths to the necessary directories
 # 配置包的配置文件，传递需要的变量路径
 configure_package_config_file(
-        ${CMAKE_SOURCE_DIR}/cmake/${TARGET_NAME}config.cmake.in
-        ${CMAKE_BINARY_DIR}/${TARGET_NAME}config.cmake
+        ${CMAKE_SOURCE_DIR}/cmake/${TARGET_NAME}-config.cmake.in
+        ${CMAKE_BINARY_DIR}/${TARGET_NAME}-config.cmake
         INSTALL_DESTINATION cmake
         PATH_VARS ALWIDGETTOOLS_INCLUDE_DIRS ALWIDGETTOOLS_LIBRARIES ALWIDGETTOOLS_LIB_DIR ALWIDGETTOOLS_CMAKE_DIR
         INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX}
@@ -163,4 +162,4 @@ configure_package_config_file(
 
 # Install the package config files
 # 安装包配置文件
-install(FILES ${CMAKE_BINARY_DIR}/${TARGET_NAME}config.cmake ${CMAKE_BINARY_DIR}/${TARGET_NAME}configversion.cmake DESTINATION cmake)
+install(FILES ${CMAKE_BINARY_DIR}/${TARGET_NAME}-config.cmake ${CMAKE_BINARY_DIR}/${TARGET_NAME}-config-version.cmake DESTINATION cmake)
