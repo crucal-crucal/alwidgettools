@@ -34,6 +34,9 @@ public:
 	ALNavigationType::NodeOperateReturnType addFooterNode(const QString& footerTitle, QString& footerKey, int keyPoints = 0, const std::shared_ptr<CALIconType>& icon_type = nullptr);
 	ALNavigationType::NodeOperateReturnType addFooterNode(const QString& footerTitle, QWidget* page, QString& footerKey, int keyPoints = 0, const std::shared_ptr<CALIconType>& icon_type = nullptr);
 
+	[[nodiscard]] bool getNavigationNodeIsExpanded(const QString& nodeKey) const;
+	void expandNavigationNode(const QString& nodeKey);
+	void collpaseNavigationNode(const QString& nodeKey);
 	bool removeNavigationNode(const QString& nodeKey);
 
 	void setIsTransparent(bool isTransparent);

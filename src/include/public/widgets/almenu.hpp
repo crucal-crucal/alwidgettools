@@ -39,7 +39,6 @@ public:
 	QAction* addAction(const QIcon& icon, const QString& text, const QObject* receiver, const char* member, const QKeySequence& shortcut = 0);
 	QAction* addAction(const std::shared_ptr<CALIconType>& icon_type, const QString& text, const QObject* receiver, const char* member, const QKeySequence& shortcut = 0);
 
-
 	[[nodiscard]] bool isHasChildMenu() const;
 	[[nodiscard]] bool isHasIcon() const;
 

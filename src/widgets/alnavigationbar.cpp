@@ -85,11 +85,7 @@ void CALNavigationBarPrivate::slotTreeViewClicked(const QModelIndex& index, cons
 	}
 
 	if (node->getIsExpanderNode()) {
-		if (currentDisplayMode == ALNavigationType::Compact) {
-			handleExpanderNodeInCompactMode(node);
-		} else {
-			handleExpanderNodeInNormalMode(node, index);
-		}
+		expandOrCollpaseExpanderNode(node, !navigationView->isExpanded(index));
 	} else {
 		handlePageNodeSelection(node, isLogRoute);
 	}
@@ -196,6 +192,22 @@ void CALNavigationBarPrivate::expandSelectedNodeParent() const {
 		parentNode->setIsExpanded(true);
 		navigationView->expand(parentNode->getModelIndex());
 		parentNode = parentNode->getParentNode();
+	}
+}
+
+void CALNavigationBarPrivate::expandOrCollpaseExpanderNode(CALNavigationNode* node, bool isExpand) const {
+	if (currentDisplayMode == ALNavigationType::Compact) {
+		handleExpanderNodeInCompactMode(node);
+	} else {
+		const QModelIndex index = node->getModelIndex();
+		bool isExpanded = navigationView->isExpanded(index);
+		if (node->getIsHasChild() && isExpand != isExpanded) {
+			QVariantMap postData{};
+			postData.insert(isExpanded ? "Collapse" : "Expand", QVariant::fromValue(node));
+			node->setIsExpanded(isExpanded ? isExpand : true);
+			navigationView->navigationNodeStateChanged(postData);
+			isExpanded ? navigationView->collapse(index) : navigationView->expand(index);
+		}
 	}
 }
 
@@ -472,19 +484,6 @@ void CALNavigationBarPrivate::handleExpanderNodeInCompactMode(CALNavigationNode*
 		const QPoint nodeTopRight = navigationView->mapToGlobal(navigationView->visualRect(node->getModelIndex()).topRight());
 		menu->popup(QPoint(nodeTopRight.x() + 10, nodeTopRight.y()));
 	}
-}
-
-void CALNavigationBarPrivate::handleExpanderNodeInNormalMode(CALNavigationNode* node, const QModelIndex& index) const {
-	if (!node->getIsHasChild()) {
-		return;
-	}
-
-	QVariantMap data;
-	const bool isExpanded = navigationView->isExpanded(index);
-	data.insert(isExpanded ? "Collapse" : "Expand", QVariant::fromValue(node));
-	node->setIsExpanded(!isExpanded);
-	navigationView->navigationNodeStateChanged(data);
-	isExpanded ? navigationView->collapse(index) : navigationView->expand(index);
 }
 
 void CALNavigationBarPrivate::logNavigationRoute(const CALNavigationNode* selectedNode) {
@@ -881,6 +880,41 @@ ALNavigationType::NodeOperateReturnType CALNavigationBar::addFooterNode(const QS
 	}
 
 	return resType;
+}
+
+bool CALNavigationBar::getNavigationNodeIsExpanded(const QString& nodeKey) const {
+	Q_D(const CALNavigationBar);
+
+	const CALNavigationNode* node = d->navigationModel->getNavigationNode(nodeKey);
+	if (!node || !node->getIsExpanderNode()) {
+		return false;
+	}
+
+	return d->navigationView->isExpanded(node->getModelIndex());
+}
+
+void CALNavigationBar::expandNavigationNode(const QString& nodeKey) {
+	Q_D(CALNavigationBar);
+
+	CALNavigationNode* node = d->navigationModel->getNavigationNode(nodeKey);
+	if (!node || !node->getIsExpanderNode()) {
+		return;
+	}
+
+	d->expandOrCollpaseExpanderNode(node, true);
+	d->resetNodeSelected();
+}
+
+void CALNavigationBar::collpaseNavigationNode(const QString& nodeKey) {
+	Q_D(CALNavigationBar);
+
+	CALNavigationNode* node = d->navigationModel->getNavigationNode(nodeKey);
+	if (!node || !node->getIsExpanderNode()) {
+		return;
+	}
+
+	d->expandOrCollpaseExpanderNode(node, false);
+	d->resetNodeSelected();
 }
 
 bool CALNavigationBar::removeNavigationNode(const QString& nodeKey) {

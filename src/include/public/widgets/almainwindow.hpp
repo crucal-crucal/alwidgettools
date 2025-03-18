@@ -136,6 +136,25 @@ public:
 	ALNavigationType::NodeOperateReturnType addFooterNode(const QString& footerTitle, QWidget* page, QString& footerKey, int keyPoints, const std::shared_ptr<CALIconType>& icon_type = nullptr) const;
 
 	/**
+	 * @brief 获取节点是否展开
+	 * @param nodeKey 添加节点时获取到的节点 key
+	 * @return 是否展开
+	 */
+	[[nodiscard]] bool getNavigationNodeIsExpanded(const QString& nodeKey) const;
+
+	/**
+	 * @brief 展开节点
+	 * @param nodeKey 添加节点时获取到的节点 key
+	 */
+	void expandNavigationNode(const QString& nodeKey);
+
+	/**
+	 * @brief 折叠节点
+	 * @param nodeKey 添加节点时获取到的节点 key
+	 */
+	void collpaseNavigationNode(const QString& nodeKey);
+
+	/**
 	 * @brief 删除节点
 	 * @param nodeKey 添加节点时获取到的节点 key
 	 * @return 是否删除成功

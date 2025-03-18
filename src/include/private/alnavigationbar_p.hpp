@@ -85,6 +85,7 @@ private:
 
 	void resetNodeSelected() const;
 	void expandSelectedNodeParent() const;
+	void expandOrCollpaseExpanderNode(CALNavigationNode* node, bool isExpand) const;
 	void initNodeModelIndex(const QModelIndex& parentIndex);
 	void addStackedPage(QWidget* page, const QString& pageKey);
 	void addFooterPage(QWidget* page, const QString& footKey);
@@ -100,7 +101,6 @@ private:
 	void doSearchButtonAnimation(bool isCompact, bool isAnimation) const;
 	void doUserButtonAnimation(bool isCompact, bool isAnimation);
 	void handleExpanderNodeInCompactMode(CALNavigationNode* node) const;                          // 处理紧凑模式下的展开节点
-	void handleExpanderNodeInNormalMode(CALNavigationNode* node, const QModelIndex& index) const; // 处理普通模式下的展开节点
 	void logNavigationRoute(const CALNavigationNode* selectedNode);                               // 记录导航路径
 	void clearFooterSelection() const;                                                            // 清除页脚选择
 	void updateNodeSelection(CALNavigationNode* node) const;                                      // 更新节点选择

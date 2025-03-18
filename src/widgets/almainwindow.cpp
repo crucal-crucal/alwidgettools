@@ -429,6 +429,18 @@ ALNavigationType::NodeOperateReturnType CALMainWindow::addFooterNode(const QStri
 	return d_func()->navigationBar->addFooterNode(footerTitle, page, footerKey, keyPoints, icon_type);
 }
 
+bool CALMainWindow::getNavigationNodeIsExpanded(const QString& nodeKey) const {
+	return d_func()->navigationBar->getNavigationNodeIsExpanded(nodeKey);
+}
+
+void CALMainWindow::expandNavigationNode(const QString& nodeKey) {
+	d_func()->navigationBar->expandNavigationNode(nodeKey);
+}
+
+void CALMainWindow::collpaseNavigationNode(const QString& nodeKey) {
+	d_func()->navigationBar->collpaseNavigationNode(nodeKey);
+}
+
 bool CALMainWindow::removeNavigationNode(const QString& nodeKey) {
 	return d_func()->navigationBar->removeNavigationNode(nodeKey);
 }
