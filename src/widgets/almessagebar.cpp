@@ -487,13 +487,7 @@ qreal CALMessageBarPrivate::getOpacity() const {
 
 void CALMessageBarPrivate::showMessageBar(const ALMessageBarType::PositionPolicy& positionPolicy, const ALMessageBarType::MessageLevel& messageLevel, const QString& title, const QString& message, const int displayMsec, QWidget* parent) {
 	if (!parent) {
-		QList<QWidget*> widgetList = QApplication::topLevelWidgets();
-		for (const auto& widget : widgetList) {
-			if (widget->property("CALBaseClassName").toString() == "CALMainWindow") {
-				parent = widget;
-				break;
-			}
-		}
+		parent = QApplication::activeWindow();
 		if (!parent) {
 			return;
 		}
@@ -502,7 +496,7 @@ void CALMessageBarPrivate::showMessageBar(const ALMessageBarType::PositionPolicy
 	const auto bar = new CALMessageBar(positionPolicy, messageLevel, title, message, displayMsec, parent);
 #ifdef Q_OS_WIN
 	// 显示置顶
-	const auto hwnd = reinterpret_cast<HWND>(bar->getWinID());
+	const auto hwnd = reinterpret_cast<HWND>(bar->winId());
 	::SetWindowPos(hwnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
 #else
 	bar->setWindowFlags(bar->windowFlags() | Qt::WindowStaysOnTopHint);
@@ -543,25 +537,28 @@ CALMessageBar::CALMessageBar(const ALMessageBarType::PositionPolicy& policy, con
 	switch (d->messageMode) {
 		case ALMessageBarType::Success: {
 			d->closeButton->setLightHoverColor(QColor(0xE6, 0xFC, 0xE3));
+			d->closeButton->setLightIconColor(Qt::black);
 			d->closeButton->setDarkHoverColor(QColor(0xE6, 0xFC, 0xE3));
-			d->closeButton->setDarkIconColor(Qt::white);
+			d->closeButton->setDarkIconColor(Qt::black);
 			break;
 		}
 		case ALMessageBarType::Warning: {
 			d->closeButton->setLightHoverColor(QColor(0x5E, 0x4C, 0x22));
-			d->closeButton->setDarkHoverColor(QColor(0x5E, 0x4C, 0x22));
 			d->closeButton->setLightIconColor(Qt::white);
+			d->closeButton->setDarkHoverColor(QColor(0x5E, 0x4C, 0x22));
 			d->closeButton->setDarkIconColor(Qt::white);
 			break;
 		}
 		case ALMessageBarType::Info: {
 			d->closeButton->setLightHoverColor(QColor(0xEB, 0xEB, 0xEB));
+			d->closeButton->setLightIconColor(Qt::black);
 			d->closeButton->setDarkHoverColor(QColor(0xEB, 0xEB, 0xEB));
 			d->closeButton->setDarkIconColor(Qt::black);
 			break;
 		}
 		case ALMessageBarType::Error: {
 			d->closeButton->setLightHoverColor(QColor(0xF7, 0xE1, 0xE4));
+			d->closeButton->setLightIconColor(Qt::black);
 			d->closeButton->setDarkHoverColor(QColor(0xF7, 0xE1, 0xE4));
 			d->closeButton->setDarkIconColor(Qt::black);
 			break;
@@ -704,132 +701,4 @@ bool CALMessageBar::eventFilter(QObject* watched, QEvent* event) {
 
 	return QWidget::eventFilter(watched, event);
 }
-
-WId CALMessageBar::getWinID() const {
-#if 0
-	return static_cast<WId>(d_func()->currentWinID);
-#else
-	return this->winId();
-#endif
-}
-
-#if 0
-#ifdef Q_OS_WIN
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-bool CALMessageBar::nativeEvent(const QByteArray& eventType, void* message, qintptr* result)
-#else
-bool CALMessageBar::nativeEvent(const QByteArray& eventType, void* message, long* result)
-#endif
-{
-	Q_D(CALMessageBar);
-
-	// 验证消息类型和指针有效性
-	if ((eventType != "windows_generic_MSG") || !message) {
-		return false;
-	}
-
-	const auto msg = static_cast<const MSG*>(message);
-	HWND hwnd = msg->hwnd;
-	if (!hwnd) {
-		return false;
-	}
-
-	d->currentWinID = reinterpret_cast<qint64>(hwnd);
-	const UINT uMsg = msg->message;
-	const WPARAM wParam = msg->wParam;
-	const LPARAM lParam = msg->lParam;
-
-	switch (uMsg) {
-		case WM_WINDOWPOSCHANGING: {
-			if (const auto wp = reinterpret_cast<WINDOWPOS*>(lParam); wp != nullptr && (wp->flags & SWP_NOSIZE) == 0) {
-				wp->flags |= SWP_NOCOPYBITS; // 防止复制位图（即窗口重绘时产生闪烁）
-
-				if (const LRESULT defProcResult = ::DefWindowProcW(hwnd, uMsg, wParam, lParam);
-					defProcResult <= LONG_MAX && defProcResult >= LONG_MIN) {
-					*result = static_cast<long>(defProcResult);
-				} else {
-					return false;
-				}
-				return true;
-			}
-			return false;
-		}
-		case WM_NCACTIVATE: {
-			*result = true; // 启用非客户区域的激活状态
-			return true;
-		}
-		case WM_NCCALCSIZE: { // 计算客户区大小，决定窗口的边框或阴影
-#if (QT_VERSION >= QT_VERSION_CHECK(6, 5, 3) && QT_VERSION <= QT_VERSION_CHECK(6, 6, 1))
-			if (wParam == FALSE) {
-				return false;
-			}
-
-			// 根据窗口状态调整内容边距
-			if (::IsZoomed(hwnd)) {
-				setContentsMargins(8, 8, 8, 8);
-			} else {
-				setContentsMargins(0, 0, 0, 0);
-			}
-			*result = 0;
-			return true;
-#else
-			if (wParam == FALSE) {
-				return false;
-			}
-
-			RECT* clientRect = &reinterpret_cast<NCCALCSIZE_PARAMS*>(lParam)->rgrc[0];
-			if (!::IsZoomed(hwnd)) {
-				clientRect->top -= 1;
-				clientRect->bottom -= 1;
-			}
-			*result = WVR_REDRAW;
-			return true;
-#endif
-		}
-#if 0
-		case WM_NCHITTEST: {
-			POINT nativeLocalPos{ GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam) };
-			::ScreenToClient(hwnd, &nativeLocalPos);
-			RECT clientRect{ 0, 0, 0, 0 };
-			::GetClientRect(hwnd, &clientRect);
-			const auto clientWidth = clientRect.right - clientRect.left;
-			const auto clientHeight = clientRect.bottom - clientRect.top;
-			const bool left = nativeLocalPos.x < 8;
-			const bool right = nativeLocalPos.x > clientWidth - 8;
-			const bool top = nativeLocalPos.y < 8;
-			const bool bottom = nativeLocalPos.y > clientHeight - 8;
-			*result = 0;
-			if (!window()->isFullScreen() && !window()->isMaximized()) {
-				if (left && top) {
-					*result = HTTOPLEFT;
-				} else if (left && bottom) {
-					*result = HTBOTTOMLEFT;
-				} else if (right && top) {
-					*result = HTTOPRIGHT;
-				} else if (right && bottom) {
-					*result = HTBOTTOMRIGHT;
-				} else if (left) {
-					*result = HTLEFT;
-				} else if (right) {
-					*result = HTRIGHT;
-				} else if (top) {
-					*result = HTTOP;
-				} else if (bottom) {
-					*result = HTBOTTOM;
-				}
-			}
-			if (0 != *result) {
-				return true;
-			}
-			// 默认情况下是客户区
-			*result = HTCLIENT;
-			return true;
-		}
-#endif
-		default: break;
-	}
-	return QWidget::nativeEvent(eventType, message, result);
-}
-#endif
-#endif
 }

@@ -52,12 +52,12 @@ MainWindow::~MainWindow() = default;
 void MainWindow::initWindow() {
 	resize(1200, 700);
 	setWindowTitle("alwidgettools");
-	setWindowIcon(QIcon(":alwidgettools/image/crucal.png"));
+	setWindowIcon(QIcon(":alwidgettools/CALImage-crucal"));
 }
 
 void MainWindow::initEdgeLayout() {
 	/// menuBar
-#if 1
+#if 0
 	const auto menuBar = new CALMenuBar(this);
 	menuBar->setFixedHeight(30);
 	const auto customWidget = new QWidget(this);
@@ -75,7 +75,7 @@ void MainWindow::initEdgeLayout() {
 	iconMenu->addAction(CALIconFactory::createIconType(ALIcon::FluentIcon::Airplane), tr("Airplane"), QKeySequence::SelectAll);
 #endif
 	/// dockWidget
-#if 1
+#if 0
 	const auto logDockWidget = new CALDockWidget("log msg", this);
 	const auto label = new CALText("log label", logDockWidget);
 	label->setAlignment(Qt::AlignTop | Qt::AlignHCenter);
@@ -84,7 +84,7 @@ void MainWindow::initEdgeLayout() {
 	resizeDocks({ logDockWidget }, { 200 }, Qt::Horizontal);
 #endif
 	/// toolBar
-#if 1
+#if 0
 	const auto toolBar = new CALToolBar(tr("Toolbar"), this);
 	toolBar->setAllowedAreas(Qt::TopToolBarArea | Qt::BottomToolBarArea);
 	toolBar->setToolBarSpacing(3);

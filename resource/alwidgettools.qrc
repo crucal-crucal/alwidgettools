@@ -1,10 +1,11 @@
 <RCC>
     <qresource prefix="alwidgettools/">
-        <file>font/ALAwesome.ttf</file>
-        <file>font/ALFluent.ttf</file>
-        <file>font/segoe_slboot_EX.ttf</file>
-        <file>font/segoen_slboot_EX.ttf</file>
-        <file>image/crucal.png</file>
-        <file>translation/zh_CN.qm</file>
+        <file alias="CALAwesomeFont">font/ALAwesome.ttf</file>
+        <file alias="CALFluentFont">font/ALFluent.ttf</file>
+        <file alias="CALSegoeFont">font/segoe_slboot_EX.ttf</file>
+        <file alias="CALSegoenFont">font/segoen_slboot_EX.ttf</file>
+        <file alias="CALImage-crucal">image/crucal.png</file>
+        <file alias="CALImage-noise">image/noise.png</file>
+        <file alias="CALTranslate">translation/zh_CN.qm</file>
     </qresource>
 </RCC>

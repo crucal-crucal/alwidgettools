@@ -40,10 +40,8 @@ bool CALApplicationPrivate::eventFilter(QObject* watched, QEvent* event) {
 		case QEvent::Show:
 		case QEvent::Move:
 		case QEvent::Resize: {
-			if (isEnableMica) {
-				if (const auto widget = qobject_cast<QWidget*>(watched)) {
-					updateMica(widget);
-				}
+			if (const auto widget = qobject_cast<QWidget*>(watched); isEnableMica && widget) {
+				updateMica(widget);
 			}
 			break;
 		}
@@ -60,7 +58,7 @@ bool CALApplicationPrivate::eventFilter(QObject* watched, QEvent* event) {
 }
 
 void CALApplicationPrivate::initMicaBaseImage(const QImage& img) {
-	Q_Q(AL::CALApplication);
+	Q_Q(CALApplication);
 
 	if (img.isNull()) {
 		return;
@@ -101,22 +99,26 @@ QRect CALApplicationPrivate::calculateWindowVirtualGeometry(const QWidget* widge
 }
 
 void CALApplicationPrivate::updateMica(QWidget* widget, const bool isProcessEvent) const {
-	if (widget->isVisible()) {
-		QPalette palette = widget->palette();
-		const QImage& baseImage = themeMode == ALThemeType::Light ? lightBaseImage : darkBaseImage;
-		palette.setBrush(QPalette::Window, baseImage.copy(calculateWindowVirtualGeometry(widget)).scaled(widget->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
-		widget->setPalette(palette);
-		if (isProcessEvent) {
-			QApplication::processEvents();
-		}
+	if (!widget->isVisible()) {
+		return;
+	}
+
+	QPalette palette = widget->palette();
+	const QImage& baseImage = themeMode == ALThemeType::Light ? lightBaseImage : darkBaseImage;
+	palette.setBrush(QPalette::Window, baseImage.copy(calculateWindowVirtualGeometry(widget)).scaled(widget->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+	widget->setPalette(palette);
+	if (isProcessEvent) {
+		QApplication::processEvents();
 	}
 }
 
 void CALApplicationPrivate::updateAllMicaWidget() {
-	if (isEnableMica) {
-		for (const auto& widget : micaWidgetList) {
-			updateMica(widget, false);
-		}
+	if (!isEnableMica) {
+		return;
+	}
+
+	for (const auto& widget : micaWidgetList) {
+		updateMica(widget, false);
 	}
 }
 
@@ -131,33 +133,33 @@ CALApplication* CALApplication::instance() {
 void CALApplication::initializeApplication() {
 	Q_D(CALApplication);
 
-	QApplication::setAttribute(Qt::AA_DontCreateNativeWidgetSiblings);
-
 	/// register resource
-	if (!QResource::registerResource(QApplication::applicationDirPath() + QDir::separator() +
+	const QString rccFileName =
 #ifdef Q_OS_WIN
-		"libalwidgettoolsresource.dll"
+			"libalwidgettoolsresource.dll"
 #else
 		"libalwidgettoolsresource.so"
 #endif
-	)) {
+		;
+	if (!QResource::registerResource(QApplication::applicationDirPath() + QDir::separator() + rccFileName)) {
 		qWarning() << "Failed to register libalwidgettoolsresource";
 	}
 	/// add font
 	const QStringList fonts = {
-		":alwidgettools/font/ALAwesome.ttf",
-		":alwidgettools/font/ALFluent.ttf",
-		":alwidgettools/font/segoe_slboot_EX.ttf",
-		":alwidgettools/font/segoen_slboot_EX.ttf"
+		":alwidgettools/CALAwesomeFont",
+		":alwidgettools/CALFluentFont",
+		":alwidgettools/CALSegoeFont",
+		":alwidgettools/CALSegoenFont"
 	};
 	for (const auto& font : fonts) {
 		if (-1 == QFontDatabase::addApplicationFont(font)) {
-			qWarning() << "Failed to load font:" << font;
+			qWarning() << "Failed to load font: " << font <<
+				"\nplease check the resource file: " + rccFileName;
 		}
 	}
 	/// load & install translation
-	if (!d->translator->load(":alwidgettools/translation/zh_CN.qm")) {
-		qWarning() << "Failed to load zh_CN.qm";
+	if (!d->translator->load(":alwidgettools/CALTranslate")) {
+		qWarning() << "Failed to load CALTranslate, please check the resource file: " + rccFileName;
 	}
 	if (!QApplication::installTranslator(d->translator)) {
 		qWarning() << "Failed to install translator";
@@ -230,7 +232,7 @@ CALApplication::CALApplication(QObject* parent): QObject(parent), d_ptr(new CALA
 	Q_D(CALApplication);
 
 	d->isEnableMica = false;
-	d->micaImagePath = ":alwidgettools/image/crucal.png";
+	d->micaImagePath = ":alwidgettools/CALImage-crucal";
 	d->themeMode = ALTheme->getThemeMode();
 	connect(ALTheme, &CALThemeManager::sigThemeModeChanged, d, &CALApplicationPrivate::slotThemeModeChanged);
 

@@ -195,13 +195,12 @@ void CALNavigationBarPrivate::expandSelectedNodeParent() const {
 	}
 }
 
-void CALNavigationBarPrivate::expandOrCollpaseExpanderNode(CALNavigationNode* node, bool isExpand) const {
+void CALNavigationBarPrivate::expandOrCollpaseExpanderNode(CALNavigationNode* node, const bool isExpand) const {
 	if (currentDisplayMode == ALNavigationType::Compact) {
 		handleExpanderNodeInCompactMode(node);
 	} else {
 		const QModelIndex index = node->getModelIndex();
-		bool isExpanded = navigationView->isExpanded(index);
-		if (node->getIsHasChild() && isExpand != isExpanded) {
+		if (const bool isExpanded = navigationView->isExpanded(index); node->getIsHasChild() && isExpand != isExpanded) {
 			QVariantMap postData{};
 			postData.insert(isExpanded ? "Collapse" : "Expand", QVariant::fromValue(node));
 			node->setIsExpanded(isExpanded ? isExpand : true);
@@ -578,12 +577,12 @@ CALNavigationBar::CALNavigationBar(QWidget* parent): QWidget(parent), d_ptr(new 
 	/// user
 	// user card
 	d->userInfoCard = new CALInteractiveCard(this);
-	d->userInfoCard->setCardPixmap(QPixmap(":alwidgettools/image/crucal.png"));
+	d->userInfoCard->setCardPixmap(QPixmap(":alwidgettools/CALImage-crucal"));
 	d->userInfoCard->setTitle("crucal");
 	d->userInfoCard->setSubTitle("alwidgettools");
 	// user card tooltip widget
 	const auto card_toolTipWidget = new CALInteractiveCard(this);
-	card_toolTipWidget->setCardPixmap(QPixmap(":alwidgettools/image/crucal.png"));
+	card_toolTipWidget->setCardPixmap(QPixmap(":alwidgettools/CALImage-crucal"));
 	card_toolTipWidget->setTitle("crucal");
 	card_toolTipWidget->setSubTitle("alwidgettools 1.0.0");
 	card_toolTipWidget->setFixedSize(d->userInfoCard->width(), d->userInfoCard->height());
@@ -591,7 +590,7 @@ CALNavigationBar::CALNavigationBar(QWidget* parent): QWidget(parent), d_ptr(new 
 	toolTip->setCustomWidget(card_toolTipWidget);
 	connect(d->userInfoCard, &CALInteractiveCard::clicked, this, &CALNavigationBar::sigUserInfoCardClicked);
 	// user button
-	d->userButton = new CALIconButton(QPixmap(":alwidgettools/image/crucal.png"), this);
+	d->userButton = new CALIconButton(QPixmap(":alwidgettools/CALImage-crucal"), this);
 	d->userButton->setFixedSize(36, 36);
 	d->userButton->setVisible(false);
 	d->userButton->setBorderRadius(8);

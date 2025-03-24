@@ -21,6 +21,7 @@ int main(int argc, char* argv[]) {
 #endif
 
 	QApplication app(argc, argv);
+	QApplication::setAttribute(Qt::AA_DontCreateNativeWidgetSiblings);
 	alApp->initializeApplication();
 	/// register rcc
 	const QString applicationDirPath = QApplication::applicationDirPath();

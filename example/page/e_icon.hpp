@@ -41,6 +41,6 @@ private:
 	E_IconModel* m_iconModel{ nullptr };
 	E_IconDelegate* m_iconDelegate{ nullptr };
 
-	Q_SLOT void slotIconViewClicked(const QModelIndex& index);
+	Q_SLOT void slotIconViewClicked(const QModelIndex& index) const;
 	Q_SLOT void slotIconMouseOverItem(const QModelIndex& index) const;
 };

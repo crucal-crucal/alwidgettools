@@ -72,16 +72,5 @@ protected:
 
 	void paintEvent(QPaintEvent* event) override;
 	bool eventFilter(QObject* watched, QEvent* event) override;
-
-	[[nodiscard]] WId getWinID() const;
-#if 0
-#ifdef Q_OS_WIN
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0);
-	bool nativeEvent(const QByteArray& eventType, void* message, qintptr* result) override;
-#else
-	bool nativeEvent(const QByteArray& eventType, void* message, long* result) override;
-#endif
-#endif
-#endif
 };
 }

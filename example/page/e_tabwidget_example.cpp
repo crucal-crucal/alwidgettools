@@ -28,7 +28,7 @@ E_TabWidget_Example::E_TabWidget_Example(QWidget* parent): E_BasePage(parent) {
 		QFont font = page->font();
 		font.setPixelSize(32);
 		page->setFont(font);
-		tabWidget->addTab(page, QIcon(":alwidgettools/image/crucal.png"), QString("tab %1").arg(i));
+		tabWidget->addTab(page, QIcon(":alwidgettools/CALImage-crucal"), QString("tab %1").arg(i));
 	}
 
 	mainVLayout->addWidget(tabWidgetText);

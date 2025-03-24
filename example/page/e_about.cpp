@@ -10,7 +10,7 @@ using namespace AL;
 
 E_About::E_About(QWidget* parent): CALWidget(parent) {
 	setWindowTitle(tr("about..."));
-	setWindowIcon(QIcon(":alwidgettools/image/crucal.png"));
+	setWindowIcon(QIcon(":alwidgettools/CALImage-crucal"));
 	setWindowModality(Qt::ApplicationModal);
 	setIsStayTop(true);
 	setWindowButtonFlags(ALAppBarType::CloseButtonHint);
@@ -32,7 +32,7 @@ void E_About::initImageCardArea() {
 	const auto pixCard = new CALImageCard(this);
 	pixCard->setFixedSize(60, 60);
 	pixCard->setIsPreserveAspectCrop(false);
-	pixCard->setCardImage(QImage(":alwidgettools/image/crucal.png"));
+	pixCard->setCardImage(QImage(":alwidgettools/CALImage-crucal"));
 	const auto pixCardVLayout = new QVBoxLayout;
 	pixCardVLayout->addWidget(pixCard);
 	pixCardVLayout->addStretch();

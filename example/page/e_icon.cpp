@@ -94,13 +94,13 @@ void E_Icon::slotSearchEditTextChanged(const QString& searchText) const {
 	m_iconListView->viewport()->update();
 }
 
-void E_Icon::slotIconViewClicked(const QModelIndex& index) {
+void E_Icon::slotIconViewClicked(const QModelIndex& index) const {
 	const QString iconName = m_iconModel->getIconNamePrefix() + m_iconModel->getIconNameFromModelIndex(index);
 	if (iconName.isEmpty()) {
 		return;
 	}
 	QApplication::clipboard()->setText(iconName);
-	CALMessageBar::success(tr("copy finish"), iconName + tr("Copied to Clipboard"), 2000, ALMessageBarType::Top, this);
+	CALMessageBar::success(tr("copy finish"), iconName + tr("Copied to Clipboard"), 2000, ALMessageBarType::Top);
 	m_iconToolTip->hide();
 }
 
