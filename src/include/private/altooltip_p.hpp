@@ -128,26 +128,4 @@ private:
 	QTimer* timer{ nullptr };
 	QWidget* parentWidget{ nullptr };
 };
-
-// class ItemViewToolTip;
-//
-// class ItemViewToolTipPrivate final : QObject {
-// 	Q_OBJECT
-// 	Q_DISABLE_COPY(ItemViewToolTipPrivate)
-// 	Q_DECLARE_PUBLIC(ItemViewToolTip)
-//
-// public:
-// 	explicit ItemViewToolTipPrivate(ItemViewToolTip* q, QObject* parent = nullptr);
-// 	~ItemViewToolTipPrivate() override;
-//
-// protected:
-// 	ItemViewToolTip* const q_ptr{ nullptr };
-//
-// private:
-// 	QString text{};
-// 	QModelIndex currentIndex{};
-// 	int toolTipDuration{};
-// 	ALToolTipType::ItemViewToolTipType toolTipType{};
-// 	QWidget* viewport{ nullptr };
-// };
 }

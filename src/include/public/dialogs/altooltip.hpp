@@ -78,21 +78,4 @@ protected:
 private:
 	Q_SLOT void slotShowToolTip();
 };
-
-// class ItemViewToolTipPrivate;
-//
-// class CALWIDGETTOOLS_EXPORT ItemViewToolTip : public ToolTip {
-// 	Q_OBJECT
-// 	Q_DISABLE_COPY(ItemViewToolTip)
-// 	Q_DECLARE_PRIVATE(ItemViewToolTip)
-//
-// public:
-// 	explicit ItemViewToolTip(const QString& text = QString(), QWidget* parent = nullptr);
-// 	~ItemViewToolTip() override;
-//
-// 	void adjustPos(QAbstractItemView* view, const QRect& itemRect, const ALToolTipType::ItemViewToolTipType& toolTipType);
-//
-// protected:
-// 	const QScopedPointer<ItemViewToolTipPrivate> d_ptr{ nullptr };
-// };
 }
