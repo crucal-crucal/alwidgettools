@@ -71,7 +71,7 @@ void CALDrawerContainer::doDrawerAnimation(const bool isExpand) {
 	heightAnimation->setEasingCurve(QEasingCurve::OutCubic);
 	heightAnimation->setDuration(isExpand ? 300 : 450);
 	heightAnimation->setStartValue(maximumHeight());
-	heightAnimation->setEndValue(isExpand ? 200 : 0);
+	heightAnimation->setEndValue(isExpand ? calculateContainertMiniHeight() : 0);
 	heightAnimation->start(QAbstractAnimation::DeleteWhenStopped);
 
 	const auto opacityAnimation = new QPropertyAnimation(m_opacityEffect, "opacity");
@@ -106,5 +106,14 @@ void CALDrawerContainer::paintEvent(QPaintEvent* event) {
 		painter.drawLine(0, drawerHeight, width(), drawerHeight);
 	}
 	painter.restore();
+}
+
+int CALDrawerContainer::calculateContainertMiniHeight() const {
+	int minimumHeight = 0;
+	for (const auto& widget : m_drawerWidgetList) {
+		minimumHeight += widget->minimumHeight();
+	}
+	minimumHeight = qMax(100, minimumHeight);
+	return minimumHeight;
 }
 }

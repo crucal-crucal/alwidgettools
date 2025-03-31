@@ -37,5 +37,7 @@ private:
 	QVBoxLayout* m_mainVLayout{ nullptr };
 	QVBoxLayout* m_containerVLayout{ nullptr };
 	QWidget* m_containerWidget{ nullptr };
+
+	[[nodiscard]] int calculateContainertMiniHeight() const;
 };
 }

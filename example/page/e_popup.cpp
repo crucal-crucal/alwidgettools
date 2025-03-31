@@ -113,6 +113,7 @@ void E_Popup::initDrawerAreaArea() {
 
 	for (int i = 0; i < 3; ++i) {
 		const auto drawerWidget = new QWidget(this);
+		drawerWidget->setFixedHeight(75);
 		const auto drawerWidgetHLayout = new QHBoxLayout(drawerWidget);
 		const auto drawerCheckBox = new CALCheckBox(QString("test interface %1").arg(i), this);
 		drawerWidgetHLayout->addSpacing(60);
