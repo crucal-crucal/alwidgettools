@@ -106,13 +106,13 @@ set(examples_SOURCES
 add_executable(${TARGET_NAME} main.cc ${examples_SOURCES})
 
 if (alwidgettools_FOUND)
-    message(STATUS "Found alwidgettools: ${ALWIDGETTOOLS_LIBRARIES}")
-    message(STATUS ${ALWIDGETTOOLS_INCLUDE_DIRS})
+    message(STATUS "alwidgettools version: ${ALWIDGETTOOLS_VERSION}")
     include_directories(${ALWIDGETTOOLS_INCLUDE_DIRS})
-    target_link_directories(${TARGET_NAME} PUBLIC ${ALWIDGETTOOLS_LIBRARY_DIRS})
-    target_include_directories(${TARGET_NAME} PUBLIC ${ALWIDGETTOOLS_INCLUDE_DIRS})
-    target_link_libraries(${TARGET_NAME} ${ALWIDGETTOOLS_LIBRARIES})
+    target_link_directories(${PROJECT_NAME} PUBLIC ${ALWIDGETTOOLS_LIBRARIES})
+    target_include_directories(${PROJECT_NAME} PUBLIC ${ALWIDGETTOOLS_INCLUDE_DIRS})
+    target_link_libraries(${PROJECT_NAME} ${ALWIDGETTOOLS_LIBRARIES})
 endif ()
+
 
 target_link_libraries(${TARGET_NAME} Qt5::Widgets)
 
