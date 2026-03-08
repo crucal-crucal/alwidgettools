@@ -110,7 +110,6 @@ if (alwidgettools_FOUND)
     include_directories(${ALWIDGETTOOLS_INCLUDE_DIRS})
     target_link_directories(${PROJECT_NAME} PUBLIC ${ALWIDGETTOOLS_LIBRARIES})
     target_include_directories(${PROJECT_NAME} PUBLIC ${ALWIDGETTOOLS_INCLUDE_DIRS})
-    target_link_libraries(${PROJECT_NAME} ${ALWIDGETTOOLS_LIBRARIES})
 endif ()
 
 
