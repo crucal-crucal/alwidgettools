@@ -14,12 +14,11 @@ find_package(alwidgettools REQUIRED)
 The following statements must be executed after the executable file or library generates the statement
 ```angular2html
 if (alwidgettools_FOUND)
-    message(STATUS "Found alwidgettools: ${alwidgettools_LIBRARIES}")
-    message(STATUS ${alwidgettools_INCLUDE_DIRS})
-    include_directories(${alwidgettools_INCLUDE_DIRS})
-    target_link_directories(${PROJECT_NAME} PUBLIC ${alwidgettools_LIBRARY_DIRS})
-    target_include_directories(${PROJECT_NAME} PUBLIC ${alwidgettools_INCLUDE_DIRS})
-    target_link_libraries(${PROJECT_NAME} ${alwidgettools_LIBRARIES})
+    message(STATUS "alwidgettools version: ${ALWIDGETTOOLS_VERSION}")
+    include_directories(${ALWIDGETTOOLS_INCLUDE_DIRS})
+    target_link_directories(${PROJECT_NAME} PUBLIC ${ALWIDGETTOOLS_LIBRARIES})
+    target_include_directories(${PROJECT_NAME} PUBLIC ${ALWIDGETTOOLS_INCLUDE_DIRS})
+    target_link_libraries(${PROJECT_NAME} ${ALWIDGETTOOLS_LIBRARIES})
 endif ()
 ```
 add copy the dll file to your execute directory
@@ -32,12 +31,16 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy
         ${ALWIDGETTOOLS_PATH}/bin/alwidgettools.dll
         $<TARGET_FILE_DIR:${PROJECT_NAME}>
+
+        COMMAND ${CMAKE_COMMAND} -E copy
+        ${ALWIDGETTOOLS_PATH}/lib/alwidgettools.lib
+        $<TARGET_FILE_DIR:${PROJECT_NAME}>
 )
 ```
 or
 ```angular2html
-FILE(GLOB BIN_FILES  ${ALWIDGETTOOLS_BIN_DIRS}/*)
-FILE(COPY ${BIN_FILES} DESTINATION ${CMAKE_BINARY_DIR})
+file(GLOB NECESSARY_FILES ${ALWIDGETTOOLS_BIN_DIRS}/* ${ALWIDGETTOOLS_LIBRARY_DIRS}/*)
+file(COPY ${NECESSARY_FILES} DESTINATION ${CMAKE_BINARY_DIR})
 ```
 
 # Complete example
@@ -121,7 +124,7 @@ install(TARGETS ${TARGET_NAME}
 )
 
 #copy rcc file to execute directory
-file(GLOB NECESSARY_FILES ${ALWIDGETTOOLS_BIN_DIRS}/* ${ALWIDGETTOOLS_LIBRARY_DIRS})
+file(GLOB NECESSARY_FILES ${ALWIDGETTOOLS_BIN_DIRS}/* ${ALWIDGETTOOLS_LIBRARY_DIRS}/*)
 file(COPY ${NECESSARY_FILES} DESTINATION ${CMAKE_BINARY_DIR})
 
 set_target_properties(${TARGET_NAME} PROPERTIES
