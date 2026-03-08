@@ -12,6 +12,10 @@ namespace AL {
 class CALMainWindowPrivate;
 class CALIconType;
 
+/**
+ * @brief 使用 alwidgttools 框架不能与qss文件共同使用，否则会出现未定义行为
+ * 在创建 CALMainWindow 对象之前，需要先调用 alApp 的初始化函数，以确保准备操作做完
+ */
 class CALWIDGETTOOLS_EXPORT CALMainWindow : public QMainWindow {
 	Q_OBJECT
 	Q_DECLARE_PRIVATE(CALMainWindow)
